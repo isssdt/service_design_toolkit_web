@@ -14,6 +14,6 @@ import javax.ejb.LocalBean;
  */
 @Stateless
 @LocalBean
-public class JourneyBean {
+public class JourneyService {
     
 }
