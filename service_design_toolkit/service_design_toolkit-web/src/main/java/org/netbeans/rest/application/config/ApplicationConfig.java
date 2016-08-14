@@ -7,7 +7,6 @@ package org.netbeans.rest.application.config;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 /**
  *
@@ -31,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(team8ft.rest.common.jackson.MyJacksonJSONProvider.class);      
+        resources.add(team8ft.rest.journey.Get_journeyResource.class);
     }
     
 }

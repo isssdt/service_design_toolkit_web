@@ -5,8 +5,10 @@
  */
 package team8ft.journey.ejb;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import team8ft.journey.entity.Journey;
 
 /**
  *
@@ -15,5 +17,11 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class JourneyService {
+
+    @EJB
+    private JourneyFacadeLocal journeyFacade;
     
+    public Journey getJourney() {
+        return journeyFacade.find(1);
+    }
 }
