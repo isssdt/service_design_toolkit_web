@@ -1,0 +1,7 @@
+node {
+        stage 'Clean and Redeploy'
+        git url: 'git@github.com:ndlongez/service_design_toolkit.git', credentialsId: 'Github'
+        def mvnHome = tool 'maven'
+        sh "${mvnHome}/bin/mvn clean package"
+   sh "/var/lib/jenkins/workspace/iss_service_design/tomcat-deployment.sh"
+}
