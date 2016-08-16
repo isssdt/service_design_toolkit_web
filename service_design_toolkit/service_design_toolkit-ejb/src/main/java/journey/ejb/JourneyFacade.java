@@ -34,8 +34,7 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
     public Journey find(Object id) {
         Query query = em.createNamedQuery("Journey.findById");
         query.setParameter("id", 2);
-        Journey result = (Journey)query.getSingleResult();
-//        result.setJourneyName(query.getSingleResult().toString());
+        Journey result = (Journey)query.getSingleResult();        
         result.getTouchPointList().size();
         return result;
     }

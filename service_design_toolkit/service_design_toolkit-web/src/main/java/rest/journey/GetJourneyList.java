@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package team8ft.rest.journey;
+package rest.journey;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -15,17 +15,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import journey.dto.JourneyListDTO;
 import journey.ejb.JourneyService;
-import journey.entity.Journey;
 
 /**
  * REST Web Service
  *
  * @author longnguyen
  */
-@Path("get_journey")
+@Path("get_journey_list")
 @RequestScoped
-public class Get_journeyResource {
+public class GetJourneyList {
 
     @Context
     private UriInfo context;
@@ -36,26 +36,26 @@ public class Get_journeyResource {
     /**
      * Creates a new instance of Get_journeyResource
      */
-    public Get_journeyResource() {
+    public GetJourneyList() {
     }
 
     /**
-     * Retrieves representation of an instance of team8ft.rest.journey.Get_journeyResource
+     * Retrieves representation of an instance of team8ft.rest.journey.GetJourneyList
      * @return an instance of team8ft.journey.entity.Journey
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Journey getJson() {     
-        return journeyService.getJourney();
+    public JourneyListDTO getJson() {     
+        return journeyService.getJourneyList();
     }
 
     /**
-     * PUT method for updating or creating an instance of Get_journeyResource
-     * @param content representation for the resource
+     * PUT method for updating or creating an instance of GetJourneyList
+     * @param journeyListDTO 
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(Journey content) {
-        journeyService.createJourney(content);
+    public void putJson(JourneyListDTO journeyListDTO) {
+        
     }
 }

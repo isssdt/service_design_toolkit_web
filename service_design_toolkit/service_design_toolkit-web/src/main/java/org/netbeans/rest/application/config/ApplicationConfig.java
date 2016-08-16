@@ -29,8 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(team8ft.rest.common.jackson.MyJacksonJSONProvider.class);      
-        resources.add(team8ft.rest.journey.Get_journeyResource.class);
+        resources.add(rest.common.jackson.MyJacksonJSONProvider.class);      
+        resources.add(rest.journey.GetJourneyList.class);
     }
     
 }
