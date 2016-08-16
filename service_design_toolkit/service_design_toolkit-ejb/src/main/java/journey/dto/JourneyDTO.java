@@ -5,6 +5,9 @@
  */
 package journey.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author longnguyen
@@ -13,6 +16,15 @@ public class JourneyDTO {
     private String journeyName;
     private Integer noOfFieldResearcher;
     private Character isActive;
+    private List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+
+    public List<TouchPointDTO> getTouchPointDTOList() {
+        return touchPointDTOList;
+    }
+
+    public void setTouchPointDTOList(List<TouchPointDTO> touchPointDTOList) {
+        this.touchPointDTOList = touchPointDTOList;
+    }
 
     public String getJourneyName() {
         return journeyName;

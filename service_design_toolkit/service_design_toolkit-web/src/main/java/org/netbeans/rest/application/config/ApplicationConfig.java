@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(rest.common.jackson.MyJacksonJSONProvider.class);      
         resources.add(rest.journey.GetJourneyList.class);
+        resources.add(rest.journey.GetTouchPointListOfJourney.class);
     }
     
 }

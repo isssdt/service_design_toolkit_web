@@ -13,7 +13,9 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
+import journey.dto.TouchPointDTO;
 import journey.entity.Journey;
+import journey.entity.TouchPoint;
 import org.apache.commons.beanutils.BeanUtils;
 
 /**
@@ -42,12 +44,26 @@ public class JourneyService {
     }
     
     public void createJourney(JourneyDTO journeyDTO) {
-        Journey journey = new Journey();
         try {
+            Journey journey = new Journey();
             BeanUtils.copyProperties(journey, journeyDTO);
+            journeyFacade.create(journey);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);              
+        }        
+    }
+    
+    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {
+        Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
+        for (TouchPoint touchPoint: journey.getTouchPointList()) {
+            try {
+                TouchPointDTO touchPointDTO = new TouchPointDTO();
+                BeanUtils.copyProperties(touchPointDTO, touchPoint);
+                journeyDTO.getTouchPointDTOList().add(touchPointDTO);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        journeyFacade.create(journey);
+        return journeyDTO;
     }
 }

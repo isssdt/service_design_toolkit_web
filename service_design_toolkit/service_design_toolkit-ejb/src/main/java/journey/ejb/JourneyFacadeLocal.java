@@ -30,4 +30,6 @@ public interface JourneyFacadeLocal {
 
     int count();
     
+    Journey findJourneyByName(Object journeyName);
+    
 }

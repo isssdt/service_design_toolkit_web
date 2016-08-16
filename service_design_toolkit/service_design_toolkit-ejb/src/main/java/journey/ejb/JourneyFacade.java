@@ -38,5 +38,14 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
         result.getTouchPointList().size();
         return result;
     }
+
+    @Override
+    public Journey findJourneyByName(Object journeyName) {
+        Query query = em.createNamedQuery("Journey.findByJourneyName");
+        query.setParameter("journeyName", journeyName);
+        Journey journey = (Journey)query.getSingleResult();        
+        journey.getTouchPointList().size();
+        return journey;
+    }
     
 }
