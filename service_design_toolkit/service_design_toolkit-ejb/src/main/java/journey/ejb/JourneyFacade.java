@@ -5,6 +5,7 @@
  */
 package journey.ejb;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,21 +32,19 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
     }
 
     @Override
-    public Journey find(Object id) {
-        Query query = em.createNamedQuery("Journey.findById");
-        query.setParameter("id", 2);
-        Journey result = (Journey)query.getSingleResult();        
-        result.getTouchPointList().size();
-        return result;
-    }
-
-    @Override
     public Journey findJourneyByName(Object journeyName) {
         Query query = em.createNamedQuery("Journey.findByJourneyName");
         query.setParameter("journeyName", journeyName);
         Journey journey = (Journey)query.getSingleResult();        
         journey.getTouchPointList().size();
         return journey;
+    }
+
+    @Override
+    public List<Journey> findListOfJourneyByIsActive(Object isActive) {
+        Query query = em.createNamedQuery("Journey.findByIsActive");
+        query.setParameter("isActive", isActive);
+        return query.getResultList();       
     }
     
 }

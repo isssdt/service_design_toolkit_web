@@ -29,9 +29,9 @@ public class JourneyService {
     @EJB
     private JourneyFacadeLocal journeyFacade;
     
-    public JourneyListDTO getJourneyList() {
+    public JourneyListDTO getJourneyList(JourneyDTO content) {
         JourneyListDTO journeyListDTO = new JourneyListDTO();        
-        for (Journey journey: journeyFacade.findAll()) {                        
+        for (Journey journey: journeyFacade.findListOfJourneyByIsActive(content.getIsActive())) {                        
             try {
                 JourneyDTO journeyDTO = new JourneyDTO();
                 BeanUtils.copyProperties(journeyDTO, journey);

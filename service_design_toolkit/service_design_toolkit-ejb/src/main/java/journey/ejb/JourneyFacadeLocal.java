@@ -32,4 +32,6 @@ public interface JourneyFacadeLocal {
     
     Journey findJourneyByName(Object journeyName);
     
+    List<Journey> findListOfJourneyByIsActive(Object isActive);
+    
 }

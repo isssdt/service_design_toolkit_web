@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
 import journey.ejb.JourneyService;
 
@@ -41,12 +42,14 @@ public class GetJourneyList {
 
     /**
      * Retrieves representation of an instance of team8ft.rest.journey.GetJourneyList
+     * @param content
      * @return an instance of team8ft.journey.entity.Journey
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JourneyListDTO getJson() {     
-        return journeyService.getJourneyList();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public JourneyListDTO getJson(JourneyDTO content) {     
+        return journeyService.getJourneyList(content);
     }
 
     /**
