@@ -15,8 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
-import team8ft.journey.ejb.JourneyService;
-import team8ft.journey.entity.Journey;
+import journey.ejb.JourneyService;
+import journey.entity.Journey;
 
 /**
  * REST Web Service

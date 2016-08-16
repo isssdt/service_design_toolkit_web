@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package team8ft.journey.ejb;
+package journey.ejb;
 
 import java.util.List;
 import javax.ejb.Local;
-import team8ft.journey.entity.Journey;
+import journey.entity.Journey;
 
 /**
  *
