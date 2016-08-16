@@ -41,31 +41,26 @@
             <!-- servlet 2.x compatibility -->
             <artifactId>jersey-container-servlet</artifactId>
             <version>${jersey.version}</version>
-<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>${jersey.version}</version>
-            <!--<scope>provided</scope>-->
+            <version>${jersey.version}</version>            
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-processing</artifactId>
-            <version>${jersey.version}</version>
-            <!--<scope>provided</scope>-->
+            <version>${jersey.version}</version>            
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
-            <version>${jersey.version}</version>
-            <!--<scope>provided</scope>-->
+            <version>${jersey.version}</version>            
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-sse</artifactId>
-            <version>${jersey.version}</version>
-            <!--<scope>provided</scope>-->
+            <version>${jersey.version}</version>           
         </dependency>
     </dependencies>
 

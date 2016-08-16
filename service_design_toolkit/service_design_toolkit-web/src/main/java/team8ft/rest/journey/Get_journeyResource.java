@@ -45,8 +45,7 @@ public class Get_journeyResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Journey getJson() {
-        //TODO return proper representation object        
+    public Journey getJson() {     
         return journeyService.getJourney();
     }
 
@@ -57,5 +56,6 @@ public class Get_journeyResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(Journey content) {
+        journeyService.createJourney(content);
     }
 }

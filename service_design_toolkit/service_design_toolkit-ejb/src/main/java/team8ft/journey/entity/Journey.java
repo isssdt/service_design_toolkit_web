@@ -5,6 +5,7 @@
  */
 package team8ft.journey.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -52,10 +53,11 @@ public class Journey implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "no_of_field_researcher")
-    private int noOfFieldResearcher;
+    private Integer noOfFieldResearcher;
     @Column(name = "is_active")
     private Character isActive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "journeyId")
+    @JsonManagedReference
     private List<TouchPoint> touchPointList;
 
     public Journey() {
@@ -65,7 +67,7 @@ public class Journey implements Serializable {
         this.id = id;
     }
 
-    public Journey(Integer id, String journeyName, int noOfFieldResearcher) {
+    public Journey(Integer id, String journeyName, Integer noOfFieldResearcher) {
         this.id = id;
         this.journeyName = journeyName;
         this.noOfFieldResearcher = noOfFieldResearcher;
@@ -87,11 +89,11 @@ public class Journey implements Serializable {
         this.journeyName = journeyName;
     }
 
-    public int getNoOfFieldResearcher() {
+    public Integer getNoOfFieldResearcher() {
         return noOfFieldResearcher;
     }
 
-    public void setNoOfFieldResearcher(int noOfFieldResearcher) {
+    public void setNoOfFieldResearcher(Integer noOfFieldResearcher) {
         this.noOfFieldResearcher = noOfFieldResearcher;
     }
 

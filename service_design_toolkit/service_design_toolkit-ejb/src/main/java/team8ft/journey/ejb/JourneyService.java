@@ -24,4 +24,8 @@ public class JourneyService {
     public Journey getJourney() {
         return journeyFacade.find(1);
     }
+    
+    public void createJourney(Journey journey) {
+        journeyFacade.create(journey);
+    }
 }

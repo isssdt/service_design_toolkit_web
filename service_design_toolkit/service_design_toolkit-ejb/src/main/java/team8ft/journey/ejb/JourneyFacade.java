@@ -8,6 +8,7 @@ package team8ft.journey.ejb;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import team8ft.journey.entity.Journey;
 
 /**
@@ -27,6 +28,16 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
 
     public JourneyFacade() {
         super(Journey.class);
+    }
+
+    @Override
+    public Journey find(Object id) {
+        Query query = em.createNamedQuery("Journey.findById");
+        query.setParameter("id", 2);
+        Journey result = (Journey)query.getSingleResult();
+//        result.setJourneyName(query.getSingleResult().toString());
+        result.getTouchPointList().size();
+        return result;
     }
     
 }

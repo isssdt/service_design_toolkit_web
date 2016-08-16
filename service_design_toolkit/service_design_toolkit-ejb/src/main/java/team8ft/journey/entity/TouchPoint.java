@@ -5,6 +5,7 @@
  */
 package team8ft.journey.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -65,6 +66,7 @@ public class TouchPoint implements Serializable {
     private String radius;
     @JoinColumn(name = "journey_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Journey journeyId;
 
     public TouchPoint() {
