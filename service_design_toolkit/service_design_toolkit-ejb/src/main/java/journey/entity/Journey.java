@@ -39,6 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findByIsActive", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive")})
 public class Journey implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "no_of_field_researcher")
+    private Integer noOfFieldResearcher;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,10 +55,6 @@ public class Journey implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "journey_name")
     private String journeyName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "no_of_field_researcher")
-    private Integer noOfFieldResearcher;
     @Column(name = "is_active")
     private Character isActive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "journeyId")
@@ -137,6 +138,5 @@ public class Journey implements Serializable {
     @Override
     public String toString() {
         return "team8ft.journey.entity.Journey[ id=" + id + " ]";
-    }
-    
+    }    
 }

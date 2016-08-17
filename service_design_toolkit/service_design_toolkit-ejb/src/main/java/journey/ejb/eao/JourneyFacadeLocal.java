@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.ejb;
+package journey.ejb.eao;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -16,7 +16,7 @@ import journey.entity.Journey;
 @Local
 public interface JourneyFacadeLocal {
 
-    void create(Journey journey);
+    Journey create(Journey journey);
 
     void edit(Journey journey);
 

@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.ejb;
+package common.ejb.eao;
 
+import common.dto.QueryParamValue;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -23,20 +27,36 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
+    public T create(T entity) {
         getEntityManager().persist(entity);
+        getEntityManager().flush();
+        return entity;
     }
 
     public void edit(T entity) {
         getEntityManager().merge(entity);
+        getEntityManager().flush();
     }
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
+        getEntityManager().flush();
     }
 
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
+    }
+
+    public T findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues) {
+        TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
+        for (QueryParamValue queryParamValue : queryParamValues) {
+            typedQuery.setParameter(queryParamValue.getParam(), queryParamValue.getValue());
+        }
+        try {
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<T> findAll() {
@@ -61,5 +81,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

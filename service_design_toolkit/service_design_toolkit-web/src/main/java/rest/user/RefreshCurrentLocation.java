@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest.journey;
+package rest.user;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -15,48 +15,47 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
-import journey.dto.JourneyDTO;
-import journey.ejb.business.JourneyService;
+import user.dto.FieldResearcherDTO;
+import user.ejb.business.FieldResearcherServiceLocal;
 
 /**
  * REST Web Service
  *
  * @author longnguyen
  */
-@Path("get_touch_point_list_of_journey")
+@Path("refresh_current_location")
 @RequestScoped
-public class GetTouchPointListOfJourney {
+public class RefreshCurrentLocation {
 
     @Context
     private UriInfo context;
     
     @EJB
-    private JourneyService journeyService;
-
+    private FieldResearcherServiceLocal fieldResearcherService;
     /**
-     * Creates a new instance of GetTouchPointListOfJourney
+     * Creates a new instance of RefreshCurrentLocation
      */
-    public GetTouchPointListOfJourney() {
+    public RefreshCurrentLocation() {
     }
 
     /**
-     * Retrieves representation of an instance of rest.journey.GetTouchPointListOfJourney
-     * @param journeyDTO
-     * @return an instance of journey.dto.JourneyDTO
+     * Retrieves representation of an instance of rest.user.RefreshCurrentLocation
+     * @return an instance of user.dto.FieldResearcherDTO
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public JourneyDTO getJson(JourneyDTO journeyDTO) {
-        return journeyService.getTouchPointListOfJourney(journeyDTO);
+    public FieldResearcherDTO getJson() {
+        //TODO return proper representation object
+        throw new UnsupportedOperationException();
     }
 
     /**
-     * PUT method for updating or creating an instance of GetTouchPointListOfJourney
+     * PUT method for updating or creating an instance of RefreshCurrentLocation
      * @param content representation for the resource
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyDTO content) {
+    public void putJson(FieldResearcherDTO content) {
+        fieldResearcherService.refreshCurrentLocation(content);
     }
 }

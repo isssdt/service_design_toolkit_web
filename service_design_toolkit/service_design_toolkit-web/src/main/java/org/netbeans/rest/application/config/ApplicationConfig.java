@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.common.jackson.MyJacksonJSONProvider.class);      
         resources.add(rest.journey.GetJourneyList.class);
         resources.add(rest.journey.GetTouchPointListOfJourney.class);
+        resources.add(rest.user.RefreshCurrentLocation.class);
     }
     
 }

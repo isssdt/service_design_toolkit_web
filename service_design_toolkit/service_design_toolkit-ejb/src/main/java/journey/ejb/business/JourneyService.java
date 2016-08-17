@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.ejb;
+package journey.ejb.business;
 
+import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,11 @@ public class JourneyService {
         try {
             Journey journey = new Journey();
             BeanUtils.copyProperties(journey, journeyDTO);
+            for (TouchPointDTO touchPointDTO: journeyDTO.getTouchPointDTOList()) {
+                TouchPoint touchPoint = new TouchPoint();
+                BeanUtils.copyProperties(touchPoint, touchPointDTO);
+                journey.getTouchPointList().add(touchPoint);
+            }
             journeyFacade.create(journey);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);              

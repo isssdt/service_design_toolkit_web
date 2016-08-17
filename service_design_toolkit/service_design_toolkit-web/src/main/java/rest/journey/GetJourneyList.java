@@ -17,7 +17,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
-import journey.ejb.JourneyService;
+import journey.ejb.business.JourneyService;
 
 /**
  * REST Web Service
