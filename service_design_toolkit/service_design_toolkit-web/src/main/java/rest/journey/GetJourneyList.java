@@ -17,7 +17,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
-import journey.ejb.business.JourneyService;
+import journey.ejb.business.JourneyServiceLocal;
 
 /**
  * REST Web Service
@@ -32,7 +32,7 @@ public class GetJourneyList {
     private UriInfo context;
     
     @EJB
-    private JourneyService journeyService;
+    private JourneyServiceLocal journeyService;
 
     /**
      * Creates a new instance of Get_journeyResource

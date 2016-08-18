@@ -16,7 +16,7 @@ import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import journey.dto.JourneyDTO;
-import journey.ejb.business.JourneyService;
+import journey.ejb.business.JourneyServiceLocal;
 
 /**
  * REST Web Service
@@ -31,7 +31,7 @@ public class GetTouchPointListOfJourney {
     private UriInfo context;
     
     @EJB
-    private JourneyService journeyService;
+    private JourneyServiceLocal journeyService;
 
     /**
      * Creates a new instance of GetTouchPointListOfJourney
