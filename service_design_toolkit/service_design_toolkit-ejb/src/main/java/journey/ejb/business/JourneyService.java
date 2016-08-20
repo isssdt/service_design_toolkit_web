@@ -7,11 +7,12 @@ package journey.ejb.business;
 
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointDTO;
@@ -24,12 +25,12 @@ import org.apache.commons.beanutils.BeanUtils;
  * @author longnguyen
  */
 @Stateless
-@LocalBean
-public class JourneyService {
+public class JourneyService implements JourneyServiceLocal {
 
     @EJB
     private JourneyFacadeLocal journeyFacade;
     
+    @Override
     public JourneyListDTO getJourneyList(JourneyDTO content) {
         JourneyListDTO journeyListDTO = new JourneyListDTO();        
         for (Journey journey: journeyFacade.findListOfJourneyByIsActive(content.getIsActive())) {                        
@@ -44,21 +45,27 @@ public class JourneyService {
         return journeyListDTO;
     }
     
+    @Override
     public void createJourney(JourneyDTO journeyDTO) {
         try {
             Journey journey = new Journey();
             BeanUtils.copyProperties(journey, journeyDTO);
+            List<TouchPoint> touchPointList = new ArrayList<>();
             for (TouchPointDTO touchPointDTO: journeyDTO.getTouchPointDTOList()) {
                 TouchPoint touchPoint = new TouchPoint();
                 BeanUtils.copyProperties(touchPoint, touchPointDTO);
-                journey.getTouchPointList().add(touchPoint);
+                touchPoint.setJourneyId(journey);
+                touchPointList.add(touchPoint);
             }
+            journey.setTouchPointList(touchPointList);
+            
             journeyFacade.create(journey);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);              
         }        
     }
     
+    @Override
     public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {
         Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
         for (TouchPoint touchPoint: journey.getTouchPointList()) {
