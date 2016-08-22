@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
 import journey.dto.TouchPointDTO;
@@ -38,22 +40,26 @@ public class JourneyController implements Serializable {
      * Creates a new instance of JourneyController
      */
     public JourneyController() {
-    }    
+    }
 
     @Inject
     private JourneyModel journeyModel;
-    
+
     @Inject
     private TouchPointListModel touchPointListModel;
-    
+
     public void createJourney() {
+        if (touchPointListModel.getGeoModel().getMarkers().isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Marker"));
+            return;
+        }
         try {
             JourneyDTO journeyDTO = new JourneyDTO();
             BeanUtils.copyProperties(journeyDTO, journeyModel);
             journeyDTO.setIsActive('Y');
             List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
             for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {
-                TouchPointDTO touchPointDTO = new TouchPointDTO(); 
+                TouchPointDTO touchPointDTO = new TouchPointDTO();
                 touchPointDTO.setLatitude(Double.toString(marker.getLatlng().getLat()));
                 touchPointDTO.setLongitude(Double.toString(marker.getLatlng().getLng()));
                 touchPointDTO.setTouchPointDesc(marker.getTitle());
@@ -62,10 +68,11 @@ public class JourneyController implements Serializable {
             }
             journeyDTO.setTouchPointDTOList(touchPointDTOList);
             touchPointListModel.getGeoModel().getMarkers().clear();
-            
-            journeyService.createJourney(journeyDTO);                 
+
+            journeyService.createJourney(journeyDTO);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Journey has been created!"));
     }
 }

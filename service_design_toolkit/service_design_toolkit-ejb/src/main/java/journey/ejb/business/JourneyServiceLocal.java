@@ -18,4 +18,5 @@ public interface JourneyServiceLocal {
     public JourneyListDTO getJourneyList(JourneyDTO content);
     public void createJourney(JourneyDTO journeyDTO);
     public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO);
+    public boolean isJourneyWithNameExist(JourneyDTO journeyDTO);
 }

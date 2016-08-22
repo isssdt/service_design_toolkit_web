@@ -57,14 +57,16 @@ public class JourneyCreateView implements Serializable {
             centerGeoMap = center.getLat() + "," + center.getLng();
              
             for (GeocodeResult geocodeResult : geocodeResultList) {                
-                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));
+                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
             }
+            touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
         }
     }
     
     public void onAddMaker() {
         Marker marker = new Marker(new LatLng(touchPointModel.getLatitude(), touchPointModel.getLongitude()), touchPointModel.getTouchPointDesc());
         touchPointListModel.getGeoModel().addOverlay(marker);
+        touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
           
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
                 "Lat:" + touchPointModel.getLatitude() + ", Lng:" + touchPointModel.getLongitude()));

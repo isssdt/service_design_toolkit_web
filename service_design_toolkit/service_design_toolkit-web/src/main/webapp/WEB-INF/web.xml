@@ -11,7 +11,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -19,6 +19,16 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>/index.xhtml</welcome-file>
     </welcome-file-list>
+    <ejb-local-ref>
+        <ejb-ref-name>JourneyService</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>journey.ejb.business.JourneyServiceLocal</local>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>JourneyService1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>journey.ejb.business.JourneyServiceLocal</local>
+    </ejb-local-ref>
 </web-app>

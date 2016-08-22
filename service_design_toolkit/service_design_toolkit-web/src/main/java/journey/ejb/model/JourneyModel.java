@@ -8,6 +8,8 @@ package journey.ejb.model;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.validation.constraints.Min;
+import journey.constraint.Journey;
 
 /**
  *
@@ -23,11 +25,18 @@ public class JourneyModel implements Serializable {
     public JourneyModel() {
     }
     
+    @Journey(message = "This journey name already exists!")
     private String journeyName;
+    
+    @Min(1)
     private Integer noOfFieldResearcher;
+    
     private String radius;
 
     public String getRadius() {
+        if (null == radius || radius.length() == 0) {
+            return "1";
+        }
         return radius;
     }
 
@@ -35,7 +44,7 @@ public class JourneyModel implements Serializable {
         this.radius = radius;
     }
 
-    public Integer getNoOfFieldResearcher() {
+    public Integer getNoOfFieldResearcher() {        
         return noOfFieldResearcher;
     }
 

@@ -5,6 +5,7 @@
  */
 package journey.ejb.business;
 
+import common.dto.QueryParamValue;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -78,5 +79,11 @@ public class JourneyService implements JourneyServiceLocal {
             }
         }
         return journeyDTO;
+    }
+
+    @Override
+    public boolean isJourneyWithNameExist(JourneyDTO journeyDTO) {
+        return null  != journeyFacade.findSingleByQueryName("Journey.findByJourneyName", 
+                new QueryParamValue[] {new QueryParamValue("journeyName", journeyDTO.getJourneyName())});       
     }
 }

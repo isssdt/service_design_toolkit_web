@@ -28,9 +28,20 @@ public class TouchPointListModel implements Serializable {
     
     private MapModel geoModel;
     
+    private Integer no_of_touch_point;
+    
     @PostConstruct
     public void init() {
         geoModel = new DefaultMapModel();        
+        no_of_touch_point = 0;
+    }
+
+    public Integer getNo_of_touch_point() {
+        return no_of_touch_point;
+    }
+
+    public void setNo_of_touch_point(Integer no_of_touch_point) {
+        this.no_of_touch_point = no_of_touch_point;
     }
 
     public MapModel getGeoModel() {

@@ -59,16 +59,28 @@
             <h:form prependId="false">
 
                 <h3 style="margin-top:0">Create Journey</h3>
-                <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6" id="grid">
                     <p:outputLabel for="journey_name" value="Journey Name:" />
-                    <p:inputText id="journey_name" value="#{journeyModel.journeyName}" /><br></br>
-                    <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers:" />
-                    <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" /><br></br>
+                    <p:inputText id="journey_name" value="#{journeyModel.journeyName}" required="true" label="Journey Name"/> 
+                    <p:message for="journey_name"/>                                                            
+                    <br></br>                      
+                    <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers:" />                    
+                    <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true" 
+                                 label="Number Of Field Researcher">
+                        <f:validateLongRange minimum="1" />
+                    </p:inputText>
+                    <p:message for="no_of_field_researcher" />                    
+                    <br></br>         
                     <p:outputLabel for="radius" value="Radius:" />
-                    <p:inputText id="radius" value="#{journeyModel.radius}" /><br></br>
+                    <p:inputText id="radius" value="#{journeyModel.radius}" required="true" 
+                                 label="Radius">
+                        <f:validateLongRange minimum="1" />
+                    </p:inputText>
+                    <p:message for="radius" />                    
+                    <br></br>         
                     <p:outputLabel for="address" value="Address:" />
-                    <p:inputText id="address" />
-                    <p:commandButton value="Add Touch Point" icon="ui-icon-search" onclick="addMakerByGeoCode()" type="button" />
+                    <p:inputText id="address" />                                        
+                    <p:commandButton value="Add Touch Point" icon="ui-icon-search" onclick="addMakerByGeoCode()" type="button" />                    
                 </h:panelGrid>                
 
                 <p:growl id="messages" showDetail="true" />
@@ -77,7 +89,7 @@
                     <p:ajax event="geocode" listener="#{journeyCreateView.onAddMakerByGeoCode}" update="@this" />
                 </p:gmap> 
                 <p:commandButton value="Create Journey" icon="ui-icon-disk" actionListener="#{journeyController.createJourney}" 
-                                 oncomplete="clearScreen()"/>
+                                 validateClient="true" ajax="false"/>
 
                 <p:dialog widgetVar="dlg" showEffect="fade">
                     <h:form prependId="false">

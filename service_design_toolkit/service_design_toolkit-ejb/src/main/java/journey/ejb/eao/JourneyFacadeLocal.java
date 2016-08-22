@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.dto.QueryParamValue;
 import java.util.List;
 import javax.ejb.Local;
 import journey.entity.Journey;
@@ -33,5 +34,7 @@ public interface JourneyFacadeLocal {
     Journey findJourneyByName(Object journeyName);
     
     List<Journey> findListOfJourneyByIsActive(Object isActive);
+    
+    Journey findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
     
 }
