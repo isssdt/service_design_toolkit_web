@@ -53,10 +53,13 @@ public class GetTouchPointListOfJourney {
 
     /**
      * PUT method for updating or creating an instance of GetTouchPointListOfJourney
-     * @param content representation for the resource
+     * @param journeyDTO
+     * @return 
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyDTO content) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public JourneyDTO putJson(JourneyDTO journeyDTO) {
+        return journeyService.getTouchPointListOfJourney(journeyDTO);
     }
 }

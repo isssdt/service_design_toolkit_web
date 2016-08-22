@@ -54,11 +54,13 @@ public class GetJourneyList {
 
     /**
      * PUT method for updating or creating an instance of GetJourneyList
-     * @param journeyListDTO 
+     * @param journeyDTO
+     * @return 
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyListDTO journeyListDTO) {
-        
+    @Produces(MediaType.APPLICATION_JSON)
+    public JourneyListDTO putJson(JourneyDTO journeyDTO) {
+        return journeyService.getJourneyList(journeyDTO);
     }
 }
