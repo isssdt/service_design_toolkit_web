@@ -33,4 +33,5 @@ public interface FieldResearcherFacadeLocal {
     
     public FieldResearcher findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
     
+    public List<FieldResearcher> findListByQueryName(String queryName, QueryParamValue[] queryParamValues);    
 }

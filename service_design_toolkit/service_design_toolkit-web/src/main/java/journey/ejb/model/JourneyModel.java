@@ -6,9 +6,9 @@
 package journey.ejb.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.validation.constraints.Min;
 import journey.constraint.Journey;
 
 /**
@@ -28,10 +28,10 @@ public class JourneyModel implements Serializable {
     @Journey(message = "This journey name already exists!")
     private String journeyName;
     
-    @Min(1)
-    private Integer noOfFieldResearcher;
-    
+    private int noOfFieldResearcher;    
     private String radius;
+    private Date startDate;
+    private int journeyLength;
 
     public String getRadius() {
         if (null == radius || radius.length() == 0) {
@@ -44,11 +44,11 @@ public class JourneyModel implements Serializable {
         this.radius = radius;
     }
 
-    public Integer getNoOfFieldResearcher() {        
+    public int getNoOfFieldResearcher() {        
         return noOfFieldResearcher;
     }
 
-    public void setNoOfFieldResearcher(Integer noOfFieldResearcher) {
+    public void setNoOfFieldResearcher(int noOfFieldResearcher) {
         this.noOfFieldResearcher = noOfFieldResearcher;
     }
 
@@ -59,5 +59,20 @@ public class JourneyModel implements Serializable {
     public void setJourneyName(String journeyName) {
         this.journeyName = journeyName;
     }
-    
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getJourneyLength() {
+        return journeyLength;
+    }
+
+    public void setJourneyLength(int journeyLength) {
+        this.journeyLength = journeyLength;
+    }
 }

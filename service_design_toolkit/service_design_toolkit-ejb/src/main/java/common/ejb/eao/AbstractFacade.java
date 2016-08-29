@@ -57,6 +57,18 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
+    
+    public List<T> findListByQueryName(String queryName, QueryParamValue[] queryParamValues) {
+        TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
+        for (QueryParamValue queryParamValue : queryParamValues) {
+            typedQuery.setParameter(queryParamValue.getParam(), queryParamValue.getValue());
+        }
+        try {
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
@@ -80,5 +92,4 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-
 }

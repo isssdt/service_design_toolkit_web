@@ -7,6 +7,7 @@ package journey.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +45,18 @@ public class Journey implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "no_of_field_researcher")
-    private Integer noOfFieldResearcher;
+    private int noOfFieldResearcher;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "journey_length")
+    private int journeyLength;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "journeyId")
+    private List<JourneyFieldResearcher> journeyFieldResearcherList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,14 +104,6 @@ public class Journey implements Serializable {
         this.journeyName = journeyName;
     }
 
-    public Integer getNoOfFieldResearcher() {
-        return noOfFieldResearcher;
-    }
-
-    public void setNoOfFieldResearcher(Integer noOfFieldResearcher) {
-        this.noOfFieldResearcher = noOfFieldResearcher;
-    }
-
     public Character getIsActive() {
         return isActive;
     }
@@ -139,4 +145,37 @@ public class Journey implements Serializable {
     public String toString() {
         return "team8ft.journey.entity.Journey[ id=" + id + " ]";
     }    
+
+    @XmlTransient
+    public List<JourneyFieldResearcher> getJourneyFieldResearcherList() {
+        return journeyFieldResearcherList;
+    }
+
+    public void setJourneyFieldResearcherList(List<JourneyFieldResearcher> journeyFieldResearcherList) {
+        this.journeyFieldResearcherList = journeyFieldResearcherList;
+    }
+
+    public int getNoOfFieldResearcher() {
+        return noOfFieldResearcher;
+    }
+
+    public void setNoOfFieldResearcher(int noOfFieldResearcher) {
+        this.noOfFieldResearcher = noOfFieldResearcher;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getJourneyLength() {
+        return journeyLength;
+    }
+
+    public void setJourneyLength(int journeyLength) {
+        this.journeyLength = journeyLength;
+    }
 }

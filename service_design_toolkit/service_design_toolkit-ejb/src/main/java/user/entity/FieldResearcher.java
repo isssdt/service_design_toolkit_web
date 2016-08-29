@@ -7,13 +7,16 @@ package user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,6 +24,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import journey.entity.JourneyFieldResearcher;
 
 /**
  *
@@ -37,10 +42,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FieldResearcher.findByLastActive", query = "SELECT f FROM FieldResearcher f WHERE f.lastActive = :lastActive")})
 public class FieldResearcher implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fieldResearcherId")
+    private List<JourneyFieldResearcher> journeyFieldResearcherList;
+
+    private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -138,5 +149,13 @@ public class FieldResearcher implements Serializable {
     public String toString() {
         return "user.entity.FieldResearcher[ id=" + id + " ]";
     }
-    
+
+    @XmlTransient
+    public List<JourneyFieldResearcher> getJourneyFieldResearcherList() {
+        return journeyFieldResearcherList;
+    }
+
+    public void setJourneyFieldResearcherList(List<JourneyFieldResearcher> journeyFieldResearcherList) {
+        this.journeyFieldResearcherList = journeyFieldResearcherList;
+    }    
 }

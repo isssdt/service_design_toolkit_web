@@ -8,6 +8,7 @@ package journey.ejb.view;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -40,6 +41,15 @@ public class JourneyCreateView implements Serializable {
     private TouchPointListModel touchPointListModel;
     
     private String centerGeoMap = "1.3521, 103.8198";
+    private Date currentDate = new Date();
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
 
     public String getCenterGeoMap() {
         return centerGeoMap;

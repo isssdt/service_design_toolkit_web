@@ -7,6 +7,7 @@ package journey.ejb.business;
 
 import javax.ejb.Local;
 import journey.dto.JourneyDTO;
+import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 
 /**
@@ -15,8 +16,38 @@ import journey.dto.JourneyListDTO;
  */
 @Local
 public interface JourneyServiceLocal {
+
+    /**
+     *
+     * @param content
+     * @return
+     */
     public JourneyListDTO getJourneyList(JourneyDTO content);
+
+    /**
+     *
+     * @param journeyDTO
+     */
     public void createJourney(JourneyDTO journeyDTO);
+
+    /**
+     *
+     * @param journeyDTO
+     * @return
+     */
     public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO);
+
+    /**
+     *
+     * @param journeyDTO
+     * @return
+     */
     public boolean isJourneyWithNameExist(JourneyDTO journeyDTO);
+
+    /**
+     *
+     * @param journeySdtUserDTO
+     * @return
+     */
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
 }

@@ -15,11 +15,16 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import journey.dto.JourneyDTO;
+import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointDTO;
+import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
 import journey.entity.Journey;
+import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import org.apache.commons.beanutils.BeanUtils;
+import user.ejb.business.UserServiceLocal;
+import user.entity.FieldResearcher;
 
 /**
  *
@@ -29,7 +34,13 @@ import org.apache.commons.beanutils.BeanUtils;
 public class JourneyService implements JourneyServiceLocal {
 
     @EJB
+    private JourneyFieldResearcherFacadeLocal journeyFieldResearcherFacade;
+
+    @EJB
     private JourneyFacadeLocal journeyFacade;
+    
+    @EJB
+    private UserServiceLocal userService;
     
     @Override
     public JourneyListDTO getJourneyList(JourneyDTO content) {
@@ -85,5 +96,19 @@ public class JourneyService implements JourneyServiceLocal {
     public boolean isJourneyWithNameExist(JourneyDTO journeyDTO) {
         return null  != journeyFacade.findSingleByQueryName("Journey.findByJourneyName", 
                 new QueryParamValue[] {new QueryParamValue("journeyName", journeyDTO.getJourneyName())});       
+    }
+
+    @Override
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
+        JourneyFieldResearcher journeyFieldResearcher = new JourneyFieldResearcher();
+        Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());        
+        FieldResearcher fieldResearcher = userService.getFieldResearcherByName(journeyFieldResearcherDTO.getFieldResearcherDTO());
+        
+        journeyFieldResearcher.setJourneyId(journey);
+        journeyFieldResearcher.setFieldResearcherId(fieldResearcher);
+        
+        journeyFieldResearcherFacade.create(journeyFieldResearcher);
+        
+        return "OK";
     }
 }

@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.apache.commons.beanutils.BeanUtils;
 import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 import user.ejb.eao.FieldResearcherFacadeLocal;
 import user.ejb.eao.SdtUserFacadeLocal;
 import user.ejb.eao.UserRoleFacadeLocal;
@@ -26,7 +27,7 @@ import user.entity.SdtUser;
  * @author longnguyen
  */
 @Stateless
-public class FieldResearcherService implements FieldResearcherServiceLocal {
+public class UserService implements UserServiceLocal {
 
     @EJB
     private UserRoleFacadeLocal userRoleFacade;
@@ -79,7 +80,7 @@ public class FieldResearcherService implements FieldResearcherServiceLocal {
                 
             }
         } catch (IllegalAccessException | InvocationTargetException ex) {
-            Logger.getLogger(FieldResearcherService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,8 +94,15 @@ public class FieldResearcherService implements FieldResearcherServiceLocal {
             
             return fieldResearcher;
         } catch (IllegalAccessException | InvocationTargetException ex) {
-            Logger.getLogger(FieldResearcherService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }    
+
+    @Override
+    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) {
+        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
+                    new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
+        return sdtUser.getFieldResearcher();
     }
 }

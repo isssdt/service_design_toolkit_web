@@ -7,12 +7,14 @@ package user.ejb.business;
 
 import javax.ejb.Local;
 import user.dto.FieldResearcherDTO;
+import user.entity.FieldResearcher;
 
 /**
  *
  * @author longnguyen
  */
 @Local
-public interface FieldResearcherServiceLocal {
+public interface UserServiceLocal {
     public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
+    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO);    
 }

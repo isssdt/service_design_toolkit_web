@@ -3,59 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest.user;
+package rest.journey;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
-import user.dto.FieldResearcherDTO;
-import user.ejb.business.UserServiceLocal;
+import journey.dto.JourneyFieldResearcherDTO;
+import journey.ejb.business.JourneyServiceLocal;
 
 /**
  * REST Web Service
  *
  * @author longnguyen
  */
-@Path("refresh_current_location")
+@Path("register_field_researcher_with_journey")
 @RequestScoped
-public class RefreshCurrentLocation {
+public class RegisterFieldResearcherWithJourney {
 
     @Context
     private UriInfo context;
     
     @EJB
-    private UserServiceLocal fieldResearcherService;
+    private JourneyServiceLocal journeyService;
+
     /**
-     * Creates a new instance of RefreshCurrentLocation
+     * Creates a new instance of RegisterFieldResearcherWithJourney
      */
-    public RefreshCurrentLocation() {
+    public RegisterFieldResearcherWithJourney() {
     }
 
     /**
-     * Retrieves representation of an instance of rest.user.RefreshCurrentLocation
-     * @return an instance of user.dto.FieldResearcherDTO
+     * Retrieves representation of an instance of rest.journey.RegisterFieldResearcherWithJourney
+     * @return an instance of journey.dto.JourneyFieldResearcherDTO
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public FieldResearcherDTO getJson() {
+    public JourneyFieldResearcherDTO getJson() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
 
     /**
-     * PUT method for updating or creating an instance of RefreshCurrentLocation
+     * PUT method for updating or creating an instance of RegisterFieldResearcherWithJourney
      * @param content representation for the resource
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(FieldResearcherDTO content) {
-        fieldResearcherService.refreshCurrentLocation(content);
+    public void putJson(JourneyFieldResearcherDTO content) {
+        journeyService.registerFieldResearcherWithJourney(content);
     }
 }

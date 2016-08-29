@@ -37,15 +37,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SdtUser.findByIsActive", query = "SELECT s FROM SdtUser s WHERE s.isActive = :isActive")})
 public class SdtUser implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
+    @Column(name = "username")
     private String username;
+
+    private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_active")
@@ -132,6 +136,11 @@ public class SdtUser implements Serializable {
     @Override
     public String toString() {
         return "user.entity.SdtUser[ id=" + id + " ]";
+    }
+
+    public SdtUser(Integer id, String username) {
+        this.id = id;
+        this.username = username;
     }
     
 }

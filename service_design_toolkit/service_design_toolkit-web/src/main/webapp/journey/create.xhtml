@@ -60,25 +60,37 @@
 
                 <h3 style="margin-top:0">Create Journey</h3>
                 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6" id="grid">
-                    <p:outputLabel for="journey_name" value="Journey Name:" />
+                    <p:outputLabel for="journey_name" value="Journey Name" />
                     <p:inputText id="journey_name" value="#{journeyModel.journeyName}" required="true" label="Journey Name"/> 
                     <p:message for="journey_name"/>                                                            
                     <br></br>                      
-                    <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers:" />                    
+                    <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
                     <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true" 
                                  label="Number Of Field Researcher">
                         <f:validateLongRange minimum="1" />
                     </p:inputText>
                     <p:message for="no_of_field_researcher" />                    
-                    <br></br>         
-                    <p:outputLabel for="radius" value="Radius:" />
+                    <br></br> 
+                    <p:outputLabel for="start_date" value="Start Date" />                    
+                    <p:calendar id="start_date" value="#{journeyModel.startDate}" required="true" 
+                                label="Start Date" mindate="#{journeyCreateView.currentDate}"/>              
+                    <p:message for="start_date" />                    
+                    <br></br> 
+                    <p:outputLabel for="journey_length" value="Length" />                    
+                    <p:inputText id="journey_length" value="#{journeyModel.journeyLength}" required="true" 
+                                 label="Length">
+                        <f:validateLongRange minimum="1" />
+                    </p:inputText>
+                    <p:message for="journey_length" />                    
+                    <br></br> 
+                    <p:outputLabel for="radius" value="Radius" />
                     <p:inputText id="radius" value="#{journeyModel.radius}" required="true" 
                                  label="Radius">
                         <f:validateLongRange minimum="1" />
                     </p:inputText>
                     <p:message for="radius" />                    
                     <br></br>         
-                    <p:outputLabel for="address" value="Address:" />
+                    <p:outputLabel for="address" value="Address" />
                     <p:inputText id="address" />                                        
                     <p:commandButton value="Add Touch Point" icon="ui-icon-search" onclick="addMakerByGeoCode()" type="button" />                    
                 </h:panelGrid>                

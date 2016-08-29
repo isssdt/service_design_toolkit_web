@@ -6,6 +6,7 @@
 package journey.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,25 @@ public class JourneyDTO {
     private String journeyName;
     private Integer noOfFieldResearcher;
     private Character isActive;
+    private Date startDate;
+    private int journeyLength;
     private List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+    
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getJourneyLength() {
+        return journeyLength;
+    }
+
+    public void setJourneyLength(int journeyLength) {
+        this.journeyLength = journeyLength;
+    }
 
     public List<TouchPointDTO> getTouchPointDTOList() {
         return touchPointDTOList;

@@ -14,7 +14,10 @@ create table journey (
     id int not null auto_increment primary key,
     journey_name varchar(100) unique not null,
     no_of_field_researcher int not null,
-    is_active char(1) not null default 'Y');
+    is_active char(1) not null default 'Y',
+    start_date date not null,
+    journey_length int not null
+);
 
 create table touch_point (
     id int not null auto_increment primary key,
@@ -45,4 +48,12 @@ create table field_researcher (
     current_longitude varchar(20) not null,
     last_active timestamp not null default current_timestamp,
     foreign key (id) references sdt_user(id) on update cascade on delete restrict
+);
+
+create table journey_field_researcher (
+    id int not null auto_increment primary key,    
+    journey_id int not null,
+    field_researcher_id int not null,
+    foreign key (journey_id) references journey(id) on update cascade on delete restrict,
+    foreign key (field_researcher_id) references field_researcher(id) on update cascade on delete restrict
 );
