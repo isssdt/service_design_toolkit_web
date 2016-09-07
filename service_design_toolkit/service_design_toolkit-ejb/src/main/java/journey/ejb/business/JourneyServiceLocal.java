@@ -5,10 +5,12 @@
  */
 package journey.ejb.business;
 
+import java.util.List;
 import javax.ejb.Local;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
+import user.dto.FieldResearcherDTO;
 
 /**
  *
@@ -42,7 +44,7 @@ public interface JourneyServiceLocal {
      * @param journeyDTO
      * @return
      */
-    public boolean isJourneyWithNameExist(JourneyDTO journeyDTO);
+    public JourneyDTO getJourneyByName(JourneyDTO journeyDTO);
 
     /**
      *
@@ -50,4 +52,6 @@ public interface JourneyServiceLocal {
      * @return
      */
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
+    
+    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
 }

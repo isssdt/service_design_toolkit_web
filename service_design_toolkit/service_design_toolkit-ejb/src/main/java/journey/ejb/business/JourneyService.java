@@ -23,8 +23,11 @@ import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import org.apache.commons.beanutils.BeanUtils;
+import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 import user.ejb.business.UserServiceLocal;
 import user.entity.FieldResearcher;
+import user.entity.SdtUser;
 
 /**
  *
@@ -93,9 +96,18 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public boolean isJourneyWithNameExist(JourneyDTO journeyDTO) {
-        return null  != journeyFacade.findSingleByQueryName("Journey.findByJourneyName", 
+    public JourneyDTO getJourneyByName(JourneyDTO journeyDTO) {
+        Journey journey = journeyFacade.findSingleByQueryName("Journey.findByJourneyName", 
                 new QueryParamValue[] {new QueryParamValue("journeyName", journeyDTO.getJourneyName())});       
+        if (null == journey) {
+            return null;
+        }
+        try {
+            BeanUtils.copyProperties(journeyDTO, journey);
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return journeyDTO;
     }
 
     @Override
@@ -110,5 +122,27 @@ public class JourneyService implements JourneyServiceLocal {
         journeyFieldResearcherFacade.create(journeyFieldResearcher);
         
         return "OK";
+    }
+
+    @Override
+    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO) {
+        Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
+        List<FieldResearcherDTO> fieldResearcherDTOList = new ArrayList<>();
+        for (JourneyFieldResearcher journeyFieldResearcher : journey.getJourneyFieldResearcherList()) {
+            FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();                                
+            FieldResearcher fieldResearcher = journeyFieldResearcher.getFieldResearcherId();
+            
+            SdtUserDTO sdtUserDTO = new SdtUserDTO();
+            SdtUser sdtUser = fieldResearcher.getSdtUser();
+            try {
+                BeanUtils.copyProperties(fieldResearcherDTO, fieldResearcher);
+                BeanUtils.copyProperties(sdtUserDTO, sdtUser);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
+            fieldResearcherDTOList.add(fieldResearcherDTO);
+        }
+        return fieldResearcherDTOList;
     }
 }

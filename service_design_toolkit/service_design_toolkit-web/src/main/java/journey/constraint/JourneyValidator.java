@@ -30,6 +30,6 @@ public class JourneyValidator implements ConstraintValidator<Journey, String> {
     public boolean isValid(String value, ConstraintValidatorContext context) {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(value);
-        return !journeyService.isJourneyWithNameExist(journeyDTO);
+        return null == journeyService.getJourneyByName(journeyDTO);
     }
 }

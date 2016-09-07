@@ -22,7 +22,7 @@ create table journey (
 create table touch_point (
     id int not null auto_increment primary key,
     journey_id int not null,
-    touch_point_desc varchar(100) not null,
+    touch_point_desc varchar(500) not null,
     latitude varchar(20) not null,
     longitude varchar(20) not null,
     radius varchar(10) not null default '2',
@@ -57,3 +57,5 @@ create table journey_field_researcher (
     foreign key (journey_id) references journey(id) on update cascade on delete restrict,
     foreign key (field_researcher_id) references field_researcher(id) on update cascade on delete restrict
 );
+
+insert into user_role(role_name) values('Field Researcher');

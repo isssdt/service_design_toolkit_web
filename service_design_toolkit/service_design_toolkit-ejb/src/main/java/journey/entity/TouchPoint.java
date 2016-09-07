@@ -46,7 +46,7 @@ public class TouchPoint implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 500)
     @Column(name = "touch_point_desc")
     private String touchPointDesc;
     @Basic(optional = false)

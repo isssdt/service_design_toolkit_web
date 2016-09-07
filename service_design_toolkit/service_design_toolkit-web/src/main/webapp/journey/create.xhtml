@@ -102,6 +102,12 @@
                 </p:gmap> 
                 <p:commandButton value="Create Journey" icon="ui-icon-disk" actionListener="#{journeyController.createJourney}" 
                                  validateClient="true" ajax="false"/>
+                <p:menu toggleable="true">                    
+                    <p:submenu label="Navigations">
+                        <p:menuitem value="Dashboard" url="/index.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem value="Create Journey" outcome="/journey/create.xhtml" icon="ui-icon-star"/>
+                    </p:submenu>
+                </p:menu>
 
                 <p:dialog widgetVar="dlg" showEffect="fade">
                     <h:form prependId="false">
