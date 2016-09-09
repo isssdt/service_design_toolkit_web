@@ -48,11 +48,13 @@ public class JourneyService implements JourneyServiceLocal {
     @Override
     public JourneyListDTO getJourneyList(JourneyDTO content) {
         JourneyListDTO journeyListDTO = new JourneyListDTO();        
-        for (Journey journey: journeyFacade.findListOfJourneyByIsActive(content.getIsActive())) {                        
-            try {
+        String query = "select * from journey a where a.is_active = 'Y' "
+                + "and a.no_of_field_researcher > (select count(*) from journey_field_researcher b where a.id = b.journey_id)";
+        for (Journey journey: journeyFacade.findListByNativeQuery(query, null)) {                        
+            try {                
                 JourneyDTO journeyDTO = new JourneyDTO();
                 BeanUtils.copyProperties(journeyDTO, journey);
-                journeyListDTO.getJourneyDTOList().add(journeyDTO);
+                journeyListDTO.getJourneyDTOList().add(journeyDTO);                
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }

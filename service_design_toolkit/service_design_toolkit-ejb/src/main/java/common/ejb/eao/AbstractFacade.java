@@ -7,8 +7,10 @@ package common.ejb.eao;
 
 import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -57,7 +59,7 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
-    
+
     public List<T> findListByQueryName(String queryName, QueryParamValue[] queryParamValues) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (QueryParamValue queryParamValue : queryParamValues) {
@@ -65,6 +67,20 @@ public abstract class AbstractFacade<T> {
         }
         try {
             return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<T> findListByNativeQuery(String query, List<Object> params) {
+        Query nativeQuery = getEntityManager().createNativeQuery(query, entityClass);
+        if (null != params) {
+            for (int i = 0; i < params.size(); i++) {
+                nativeQuery.setParameter(i + 1, params.get(i));
+            }
+        }
+        try {
+            return nativeQuery.getResultList();
         } catch (NoResultException e) {
             return null;
         }

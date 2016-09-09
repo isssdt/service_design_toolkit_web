@@ -53,5 +53,5 @@ public interface JourneyServiceLocal {
      */
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
     
-    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
+    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);    
 }
