@@ -7,7 +7,6 @@ package common.ejb.eao;
 
 import common.dto.QueryParamValue;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -37,7 +36,7 @@ public abstract class AbstractFacade<T> {
     public void edit(T entity) {
         getEntityManager().merge(entity);
         getEntityManager().flush();
-    }
+    }    
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
@@ -81,6 +80,20 @@ public abstract class AbstractFacade<T> {
         }
         try {
             return nativeQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    public T findSingleByNativeQuery(String query, List<Object> params) {
+        Query nativeQuery = getEntityManager().createNativeQuery(query, entityClass);
+        if (null != params) {
+            for (int i = 0; i < params.size(); i++) {
+                nativeQuery.setParameter(i + 1, params.get(i));
+            }
+        }
+        try {
+            return (T)nativeQuery.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }

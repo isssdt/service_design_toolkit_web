@@ -39,4 +39,6 @@ public interface JourneyFacadeLocal {
     
     List<Journey> findListByNativeQuery(String query, List<Object> params);
     
+    Journey findSingleByNativeQuery(String query, List<Object> params);
+    
 }

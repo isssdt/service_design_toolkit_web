@@ -28,6 +28,5 @@ public interface JourneyFieldResearcherFacadeLocal {
 
     List<JourneyFieldResearcher> findRange(int[] range);
 
-    int count();
-    
+    int count();   
 }

@@ -115,9 +115,21 @@ public class JourneyService implements JourneyServiceLocal {
     @Override
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
         JourneyFieldResearcher journeyFieldResearcher = new JourneyFieldResearcher();
-        Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());        
+        Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());     
+        if (journey.getNoOfFieldResearcher() <= journey.getJourneyFieldResearcherList().size()) {
+            return "OK";
+        }
         FieldResearcher fieldResearcher = userService.getFieldResearcherByName(journeyFieldResearcherDTO.getFieldResearcherDTO());
         
+        String query = "select a.* from journey a, sdt_user b, journey_field_researcher c " +
+                        "where a.id = c.journey_id and b.id = c.field_researcher_id " +
+                        "and a.journey_name = ? and b.username = ?";
+        List<Object> params = new ArrayList<>();
+        params.add(journey.getJourneyName());
+        params.add(fieldResearcher.getSdtUser().getUsername());        
+        if (null != journeyFacade.findSingleByNativeQuery(query, params)) {
+            return "OK";
+        }
         journeyFieldResearcher.setJourneyId(journey);
         journeyFieldResearcher.setFieldResearcherId(fieldResearcher);
         
