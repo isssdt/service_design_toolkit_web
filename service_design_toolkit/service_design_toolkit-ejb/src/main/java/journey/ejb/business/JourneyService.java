@@ -6,11 +6,9 @@
 package journey.ejb.business;
 
 import common.dto.QueryParamValue;
-import java.lang.reflect.Field;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,7 +25,6 @@ import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.PropertyUtilsBean;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 import user.ejb.business.UserServiceLocal;
@@ -88,17 +85,19 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {
+    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {        
         Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
+        List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
         for (TouchPoint touchPoint : journey.getTouchPointList()) {
             try {
                 TouchPointDTO touchPointDTO = new TouchPointDTO();
                 BeanUtils.copyProperties(touchPointDTO, touchPoint);
-                journeyDTO.getTouchPointDTOList().add(touchPointDTO);
+                touchPointDTOList.add(touchPointDTO);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        journeyDTO.setTouchPointDTOList(touchPointDTOList);
         return journeyDTO;
     }
 
