@@ -7,6 +7,7 @@ package journey.ejb.eao;
 
 import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 import journey.entity.Journey;
 
@@ -40,5 +41,7 @@ public interface JourneyFacadeLocal {
     List<Journey> findListByNativeQuery(String query, List<Object> params);
     
     Journey findSingleByNativeQuery(String query, List<Object> params);
+    
+    List<Journey> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
     
 }

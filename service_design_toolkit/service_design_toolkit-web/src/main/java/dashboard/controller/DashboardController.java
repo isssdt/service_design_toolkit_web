@@ -33,8 +33,8 @@ public class DashboardController implements Serializable {
     
     public List<JourneyDTO> getActiveJourneyList() {
         JourneyDTO journeyDTO = new JourneyDTO();
-        journeyDTO.setIsActive('Y');
-        JourneyListDTO journeyListDTO = journeyService.getJourneyList(journeyDTO);
+        journeyDTO.setIsActive('Y');        
+        JourneyListDTO journeyListDTO = journeyService.getJourneyList(journeyDTO, "Journey.findByIsActive");
         if (null != journeyListDTO) {
             return journeyListDTO.getJourneyDTOList();
         }

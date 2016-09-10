@@ -39,8 +39,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE j.id = :id"),
     @NamedQuery(name = "Journey.findByJourneyName", query = "SELECT j FROM Journey j WHERE j.journeyName = :journeyName"),
     @NamedQuery(name = "Journey.findByNoOfFieldResearcher", query = "SELECT j FROM Journey j WHERE j.noOfFieldResearcher = :noOfFieldResearcher"),
+    @NamedQuery(name = "Journey.findByIsActiveAndCanBeRegistered", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive and j.canBeRegistered = :canBeRegistered"),
     @NamedQuery(name = "Journey.findByIsActive", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive")})
 public class Journey implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "can_be_registered")
+    private Character canBeRegistered;
 
     @Basic(optional = false)
     @NotNull
@@ -177,5 +183,13 @@ public class Journey implements Serializable {
 
     public void setJourneyLength(int journeyLength) {
         this.journeyLength = journeyLength;
+    }
+
+    public Character getCanBeRegistered() {
+        return canBeRegistered;
+    }
+
+    public void setCanBeRegistered(Character canBeRegistered) {
+        this.canBeRegistered = canBeRegistered;
     }
 }

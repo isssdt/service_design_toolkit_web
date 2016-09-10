@@ -7,6 +7,7 @@ package user.ejb.eao;
 
 import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 import user.entity.FieldResearcher;
 
@@ -33,5 +34,5 @@ public interface FieldResearcherFacadeLocal {
     
     public FieldResearcher findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
     
-    public List<FieldResearcher> findListByQueryName(String queryName, QueryParamValue[] queryParamValues);    
+    public List<FieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);    
 }

@@ -7,6 +7,7 @@ package common.ejb.eao;
 
 import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -36,7 +37,7 @@ public abstract class AbstractFacade<T> {
     public void edit(T entity) {
         getEntityManager().merge(entity);
         getEntityManager().flush();
-    }    
+    }
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
@@ -59,10 +60,12 @@ public abstract class AbstractFacade<T> {
         }
     }
 
-    public List<T> findListByQueryName(String queryName, QueryParamValue[] queryParamValues) {
+    public List<T> findListByQueryName(String queryName, Map<String, Object> queryParamValues) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
-        for (QueryParamValue queryParamValue : queryParamValues) {
-            typedQuery.setParameter(queryParamValue.getParam(), queryParamValue.getValue());
+        for (Map.Entry<String, Object> param : queryParamValues.entrySet()) {
+            if (null != param.getValue() && !"class".equals(param.getKey())) {
+                typedQuery.setParameter(param.getKey(), param.getValue());
+            }
         }
         try {
             return typedQuery.getResultList();
@@ -84,7 +87,7 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
-    
+
     public T findSingleByNativeQuery(String query, List<Object> params) {
         Query nativeQuery = getEntityManager().createNativeQuery(query, entityClass);
         if (null != params) {
@@ -93,7 +96,7 @@ public abstract class AbstractFacade<T> {
             }
         }
         try {
-            return (T)nativeQuery.getSingleResult();
+            return (T) nativeQuery.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }

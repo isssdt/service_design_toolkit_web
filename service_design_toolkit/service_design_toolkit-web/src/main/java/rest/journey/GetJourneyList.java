@@ -49,7 +49,8 @@ public class GetJourneyList {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public JourneyListDTO getJson(JourneyDTO content) {     
-        return journeyService.getJourneyList(content);
+        content.setCanBeRegistered('Y');
+        return journeyService.getJourneyList(content, "Journey.findByIsActiveAndCanBeRegistered");
     }
 
     /**
@@ -61,6 +62,7 @@ public class GetJourneyList {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public JourneyListDTO putJson(JourneyDTO journeyDTO) {
-        return journeyService.getJourneyList(journeyDTO);
+        journeyDTO.setCanBeRegistered('Y');
+        return journeyService.getJourneyList(journeyDTO, "Journey.findByIsActiveAndCanBeRegistered");
     }
 }

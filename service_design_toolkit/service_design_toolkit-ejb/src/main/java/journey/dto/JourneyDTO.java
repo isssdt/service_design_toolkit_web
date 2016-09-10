@@ -5,7 +5,6 @@
  */
 package journey.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +17,17 @@ public class JourneyDTO {
     private Integer noOfFieldResearcher;
     private Character isActive;
     private Date startDate;
-    private int journeyLength;
-    private List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+    private Integer journeyLength;
+    private Character canBeRegistered;
+    private List<TouchPointDTO> touchPointDTOList = null;
+
+    public Character getCanBeRegistered() {
+        return canBeRegistered;
+    }
+
+    public void setCanBeRegistered(Character canBeRegistered) {
+        this.canBeRegistered = canBeRegistered;
+    }
     
     public Date getStartDate() {
         return startDate;
@@ -29,11 +37,11 @@ public class JourneyDTO {
         this.startDate = startDate;
     }
 
-    public int getJourneyLength() {
+    public Integer getJourneyLength() {
         return journeyLength;
     }
 
-    public void setJourneyLength(int journeyLength) {
+    public void setJourneyLength(Integer journeyLength) {
         this.journeyLength = journeyLength;
     }
 

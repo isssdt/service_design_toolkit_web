@@ -15,7 +15,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.apache.commons.beanutils.BeanUtils;
 import user.dto.FieldResearcherDTO;
-import user.dto.SdtUserDTO;
 import user.ejb.eao.FieldResearcherFacadeLocal;
 import user.ejb.eao.SdtUserFacadeLocal;
 import user.ejb.eao.UserRoleFacadeLocal;

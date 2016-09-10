@@ -57,6 +57,7 @@ public class JourneyController implements Serializable {
             JourneyDTO journeyDTO = new JourneyDTO();
             BeanUtils.copyProperties(journeyDTO, journeyModel);
             journeyDTO.setIsActive('Y');
+            journeyDTO.setCanBeRegistered('Y');
             List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
             for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {
                 TouchPointDTO touchPointDTO = new TouchPointDTO();

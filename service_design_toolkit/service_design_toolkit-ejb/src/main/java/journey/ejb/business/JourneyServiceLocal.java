@@ -22,9 +22,10 @@ public interface JourneyServiceLocal {
     /**
      *
      * @param content
+     * @param queryName
      * @return
      */
-    public JourneyListDTO getJourneyList(JourneyDTO content);
+    public JourneyListDTO getJourneyList(JourneyDTO content, String queryName);
 
     /**
      *
@@ -53,5 +54,5 @@ public interface JourneyServiceLocal {
      */
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
     
-    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);    
+    public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);        
 }
