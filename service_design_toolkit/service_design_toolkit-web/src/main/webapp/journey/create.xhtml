@@ -5,12 +5,17 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:view>
-        <h:head>             
-            <script 
-                type="text/javascript" 
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization&amp;callback=initialize">
-            </script>      
+        <h:head>                                            
             <script type="text/javascript">
+                var placeSearch, autocomplete;
+                function initAutocomplete() {
+                    // Create the autocomplete object, restricting the search to geographical
+                    // location types.
+                    autocomplete = new google.maps.places.Autocomplete(
+                            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+                            {types: ['geocode']});                    
+                }                             
+
                 function addMakerByGeoCode() {
                     PF('geoMap').geocode(document.getElementById('address').value);
                 }
@@ -53,7 +58,10 @@
                     alert("Journey has been created");
                     location.reload();
                 }
-            </script>    
+            </script>   
+            <script 
+                type="text/javascript" 
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places"/>  
         </h:head>
         <h:body>
             <h:form prependId="false">
@@ -91,7 +99,7 @@
                     <p:message for="radius" />                    
                     <br></br>         
                     <p:outputLabel for="address" value="Address" />
-                    <p:inputText id="address" />                                        
+                    <p:inputText id="address" onfocus="initAutocomplete()"/>                                                                                
                     <p:commandButton value="Add Touch Point" icon="ui-icon-search" onclick="addMakerByGeoCode()" type="button" />                    
                 </h:panelGrid>                
 
