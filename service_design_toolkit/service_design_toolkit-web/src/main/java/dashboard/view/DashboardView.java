@@ -45,7 +45,7 @@ public class DashboardView implements Serializable {
     }
 
     @PostConstruct
-    public void init() {
+    public void init() {        
         journeyNameMap = new HashMap<>();
         List<JourneyDTO> journeyDTOList = dashboardController.getActiveJourneyList();
         for (JourneyDTO journeyDTO : journeyDTOList) {
@@ -54,7 +54,7 @@ public class DashboardView implements Serializable {
         geoModel = new DefaultMapModel();
     }
 
-    public void onJourneyChange() {                        
+    public void onJourneyChange() {                                
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(journeyName);
         fieldResearcherDTOList = dashboardController.getRegisteredFieldResearchersByJourneyName(journeyDTO);
