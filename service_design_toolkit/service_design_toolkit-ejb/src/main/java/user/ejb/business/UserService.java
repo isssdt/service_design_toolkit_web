@@ -9,6 +9,8 @@ import common.constant.ConstantValues;
 import common.dto.QueryParamValue;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -43,15 +45,16 @@ public class UserService implements UserServiceLocal {
         SdtUser sdtUser;
         try {
             //check whether User of this Field Researcher already exist 
-            sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
-                    new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
+            Map<String, Object> params = new HashMap<>();
+            params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
+            sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
 
             //if exists then check whether this Field Researcher already exists
             if (null != sdtUser) {
                 fieldResearcher = sdtUser.getFieldResearcher();
 
                 //if this Field Researcher exist then just update
-                if (null != fieldResearcher) {                    
+                if (null != fieldResearcher) {
                     //TODO dirty way to copy properties
                     fieldResearcher.setCurrentLatitude(fieldResearcherDTO.getCurrentLatitude());
                     fieldResearcher.setCurrentLongitude(fieldResearcherDTO.getCurrentLongitude());
@@ -68,42 +71,41 @@ public class UserService implements UserServiceLocal {
                 BeanUtils.copyProperties(sdtUser, fieldResearcherDTO.getSdtUserDTO());
                 sdtUser.setIsActive('Y');
                 sdtUser.setUserRoleId(userRoleFacade.findSingleByQueryName("UserRole.findByRoleName",
-                        new QueryParamValue[]{new QueryParamValue("roleName", ConstantValues.FIELD_RESEARCHER_ROLE_NAME)}));              
+                        new QueryParamValue[]{new QueryParamValue("roleName", ConstantValues.FIELD_RESEARCHER_ROLE_NAME)}));
                 SdtUser newSdtUser = sdtUserFacade.create(sdtUser);
-                
-                fieldResearcher = initFieldResearcher(fieldResearcherDTO, newSdtUser);                
+
+                fieldResearcher = initFieldResearcher(fieldResearcherDTO, newSdtUser);
                 newSdtUser.setFieldResearcher(fieldResearcher);
-                
-                
+
                 fieldResearcherFacade.create(fieldResearcher);
-                
+
             }
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private FieldResearcher initFieldResearcher(FieldResearcherDTO fieldResearcherDTO, SdtUser sdtUser) {
         try {
             FieldResearcher fieldResearcher = new FieldResearcher();
             BeanUtils.copyProperties(fieldResearcher, fieldResearcherDTO);
-            fieldResearcher.setLastActive(new Date());   
+            fieldResearcher.setLastActive(new Date());
             fieldResearcher.setId(sdtUser.getId());
-            fieldResearcher.setSdtUser(sdtUser);         
-            
+            fieldResearcher.setSdtUser(sdtUser);
+
             return fieldResearcher;
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }    
+    }
 
     @Override
     public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) {
-        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
-                    new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
+        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
         return sdtUser.getFieldResearcher();
     }
-    
-    
+
 }

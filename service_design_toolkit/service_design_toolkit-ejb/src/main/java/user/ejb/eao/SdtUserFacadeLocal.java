@@ -5,8 +5,8 @@
  */
 package user.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 import user.entity.SdtUser;
 
@@ -31,6 +31,6 @@ public interface SdtUserFacadeLocal {
 
     int count();
     
-    public SdtUser findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params);
     
 }

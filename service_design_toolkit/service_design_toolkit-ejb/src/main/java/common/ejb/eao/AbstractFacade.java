@@ -59,6 +59,18 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
+    
+    public T findSingleByQueryName(String queryName, Map<String, Object> params) {
+        TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            typedQuery.setParameter(entry.getKey(), entry.getValue());
+        }
+        try {
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     public List<T> findListByQueryName(String queryName, Map<String, Object> queryParamValues) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);

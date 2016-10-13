@@ -9,6 +9,7 @@ import common.dto.QueryParamValue;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -241,8 +242,9 @@ public class JourneyService implements JourneyServiceLocal {
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
         touchpointFieldResearcher.setTouchpointId(touchpoint);
 
-        sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
-                new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
+        sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
         fieldResearcher.setCurrentLatitude(fieldResearcherDTO.getCurrentLatitude());
         fieldResearcher.setCurrentLongitude(fieldResearcherDTO.getCurrentLongitude());
         fieldResearcher.setLastActive(fieldResearcherDTO.getLastActive());

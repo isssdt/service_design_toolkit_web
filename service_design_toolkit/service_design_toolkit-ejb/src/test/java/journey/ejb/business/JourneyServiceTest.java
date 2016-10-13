@@ -6,9 +6,10 @@
 package journey.ejb.business;
 
 import common.EJBTestInjector;
-import common.dto.QueryParamValue;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import journey.dto.RatingDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
@@ -121,8 +122,10 @@ public class JourneyServiceTest {
 
         Mockito.when(touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId())).thenReturn(touchPoint);
         Mockito.when(ratingFacade.findRatingByValue(ratingDTO.getValue())).thenReturn(rating);
-        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
-                new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())})).thenReturn(sdtUser);
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
+        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
         Mockito.when(touchPointFieldResearcherFacade.create(new TouchpointFieldResearcher())).thenReturn(null);        
 
         TouchpointFieldResearcher touchpointFieldResearcher = journeyService.saveResponse(touchpointFieldResearcherDTO);
