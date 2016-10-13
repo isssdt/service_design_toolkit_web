@@ -9,7 +9,6 @@ import common.dto.QueryParamValue;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -57,25 +56,24 @@ public class JourneyService implements JourneyServiceLocal {
 
     @EJB
     private JourneyFacadeLocal journeyFacade;
-    
+
     @EJB
     private ChannelFacadeLocal channelFacade;
-     
+
     @EJB
     private RatingFacadeLocal ratingFacade;
-       
+
     @EJB
     private TouchPointFacadeLocal touchPointFacade;
-        
+
     @EJB
     private SdtUserFacadeLocal sdtUserFacade;
-    
+
     @EJB
     private FieldResearcherFacadeLocal fieldResearcherFacade;
-    
-     @EJB
-    private TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade;
 
+    @EJB
+    private TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade;
 
     @EJB
     private UserServiceLocal userService;
@@ -83,14 +81,14 @@ public class JourneyService implements JourneyServiceLocal {
     @Override
     public JourneyListDTO getJourneyList(JourneyDTO content, String queryName) {
         JourneyListDTO journeyListDTO = new JourneyListDTO();
-        try {            
-            Map<String, Object> queryParams = BeanUtilsBean.getInstance().getPropertyUtils().describe(content);                
+        try {
+            Map<String, Object> queryParams = BeanUtilsBean.getInstance().getPropertyUtils().describe(content);
             for (Journey journey : journeyFacade.findListByQueryName(queryName, queryParams)) {
                 JourneyDTO journeyDTO = new JourneyDTO();
                 BeanUtils.copyProperties(journeyDTO, journey);
                 journeyListDTO.getJourneyDTOList().add(journeyDTO);
-                
-            }            
+
+            }
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,10 +103,9 @@ public class JourneyService implements JourneyServiceLocal {
             List<TouchPoint> touchPointList = new ArrayList<>();
             for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointDTOList()) {
                 TouchPoint touchPoint = new TouchPoint();
-                Channel channel=new Channel();
-                channel=channelFacade.findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
+                Channel channel = channelFacade.findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
                 BeanUtils.copyProperties(touchPoint, touchPointDTO);
-                
+
                 touchPoint.setChannelId(channel);
                 touchPoint.setJourneyId(journey);
                 touchPointList.add(touchPoint);
@@ -122,7 +119,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {        
+    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {
         Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
         List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
         for (TouchPoint touchPoint : journey.getTouchPointList()) {
@@ -174,8 +171,8 @@ public class JourneyService implements JourneyServiceLocal {
         journeyFieldResearcher.setJourneyId(journey);
         journeyFieldResearcher.setFieldResearcherId(fieldResearcher);
 
-        journeyFieldResearcherFacade.create(journeyFieldResearcher);        
-        
+        journeyFieldResearcherFacade.create(journeyFieldResearcher);
+
         if (journey.getJourneyFieldResearcherList().size() + 1 == journey.getNoOfFieldResearcher()) {
             journey.setCanBeRegistered('N');
             journeyFacade.edit(journey);
@@ -205,64 +202,56 @@ public class JourneyService implements JourneyServiceLocal {
         }
         return fieldResearcherDTOList;
     }
-    
-   
-    
+
     @Override
     public ChannelListDTO getChannelList() {
         ChannelListDTO channelListDTO = new ChannelListDTO();
-                 
-                         
-            for (Channel channel : channelFacade.findAll()) {
+
+        for (Channel channel : channelFacade.findAll()) {
             try {
                 ChannelDTO channelDTO = new ChannelDTO();
                 BeanUtils.copyProperties(channelDTO, channel);
                 channelListDTO.getChannelDTOList().add(channelDTO);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvocationTargetException ex) {
+            } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }
-                
-            }            
-       
+
+        }
+
         return channelListDTO;
     }
-    
-     @Override
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
-       TouchpointFieldResearcher  touchpointFieldResearcher = new TouchpointFieldResearcher();
-       Rating rating ;
-       TouchPoint touchpoint;
-       SdtUser sdtUser;
-       FieldResearcher fieldResearcher = new FieldResearcher();
-       RatingDTO ratingDTO;
-       
-       FieldResearcherDTO  fieldResearcherDTO=touchpointFieldResearcherDTO.getFieldResearcherDTO();
-       touchpoint=touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId());
-      
-       ratingDTO = touchpointFieldResearcherDTO.getRatingDTO();
-       rating=ratingFacade.findRatingByValue(ratingDTO.getValue());
-       
-       touchpointFieldResearcher.setRatingId(rating);
-       touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
-       touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
-       touchpointFieldResearcher.setTouchpointId(touchpoint);
-   
-            sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
-                    new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
+
+    @Override
+    public TouchpointFieldResearcher saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
+        TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
+        Rating rating;
+        TouchPoint touchpoint;
+        SdtUser sdtUser;
+        FieldResearcher fieldResearcher = new FieldResearcher();
+        RatingDTO ratingDTO;
+
+        FieldResearcherDTO fieldResearcherDTO = touchpointFieldResearcherDTO.getFieldResearcherDTO();
+        touchpoint = touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId());
+
+        ratingDTO = touchpointFieldResearcherDTO.getRatingDTO();
+        rating = ratingFacade.findRatingByValue(ratingDTO.getValue());        
+
+        touchpointFieldResearcher.setRatingId(rating);
+        touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
+        touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
+        touchpointFieldResearcher.setTouchpointId(touchpoint);
+
+        sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername",
+                new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
         fieldResearcher.setCurrentLatitude(fieldResearcherDTO.getCurrentLatitude());
         fieldResearcher.setCurrentLongitude(fieldResearcherDTO.getCurrentLongitude());
         fieldResearcher.setLastActive(fieldResearcherDTO.getLastActive());
         fieldResearcher.setSdtUser(sdtUser);
-        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
-        
-        
-              touchPointFieldResearcherFacade.create(touchpointFieldResearcher);
-    
+        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);        
+
+        touchPointFieldResearcherFacade.create(touchpointFieldResearcher);
+
+        return touchpointFieldResearcher;
     }
-    
-    
-    
-   
+
 }

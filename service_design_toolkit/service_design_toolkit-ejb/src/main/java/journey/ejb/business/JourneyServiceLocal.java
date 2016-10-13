@@ -13,6 +13,7 @@ import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
+import journey.entity.TouchpointFieldResearcher;
 import user.dto.FieldResearcherDTO;
 
 /**
@@ -65,7 +66,7 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-     public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
+     public TouchpointFieldResearcher saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
      
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
     
