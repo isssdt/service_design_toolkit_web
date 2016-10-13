@@ -45,6 +45,12 @@ public class Journey implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "can_be_registered")
     private Character canBeRegistered;
 
@@ -57,10 +63,6 @@ public class Journey implements Serializable {
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "journey_length")
-    private int journeyLength;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "journeyId")
     private List<JourneyFieldResearcher> journeyFieldResearcherList;
 
@@ -177,13 +179,7 @@ public class Journey implements Serializable {
         this.startDate = startDate;
     }
 
-    public int getJourneyLength() {
-        return journeyLength;
-    }
-
-    public void setJourneyLength(int journeyLength) {
-        this.journeyLength = journeyLength;
-    }
+   
 
     public Character getCanBeRegistered() {
         return canBeRegistered;
@@ -191,5 +187,13 @@ public class Journey implements Serializable {
 
     public void setCanBeRegistered(Character canBeRegistered) {
         this.canBeRegistered = canBeRegistered;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

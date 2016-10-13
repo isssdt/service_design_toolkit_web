@@ -82,7 +82,7 @@ public class UserService implements UserServiceLocal {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private FieldResearcher initFieldResearcher(FieldResearcherDTO fieldResearcherDTO, SdtUser sdtUser) {
         try {
             FieldResearcher fieldResearcher = new FieldResearcher();
@@ -104,4 +104,6 @@ public class UserService implements UserServiceLocal {
                     new QueryParamValue[]{new QueryParamValue("username", fieldResearcherDTO.getSdtUserDTO().getUsername())});
         return sdtUser.getFieldResearcher();
     }
+    
+    
 }

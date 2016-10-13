@@ -10,10 +10,32 @@ package journey.dto;
  * @author longnguyen
  */
 public class TouchPointDTO {
+    
+    private Integer id;
     private String touchPointDesc;
     private String latitude;
     private String longitude;
     private String radius;
+    private String action;
+    private String channelDescription;
+    private ChannelDTO channelDTO;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ChannelDTO getChannelDTO() {
+        return channelDTO;
+    }
+
+    public void setChannelDTO(ChannelDTO channelDTO) {
+        this.channelDTO = channelDTO;
+    }
+    
 
     public String getTouchPointDesc() {
         return touchPointDesc;
@@ -46,4 +68,21 @@ public class TouchPointDTO {
     public void setRadius(String radius) {
         this.radius = radius;
     }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getChannelDescription() {
+        return channelDescription;
+    }
+
+    public void setChannelDescription(String channelDescription) {
+        this.channelDescription = channelDescription;
+    }
+    
 }

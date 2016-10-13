@@ -7,7 +7,9 @@ package journey.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
 
+    @Size(max = 200)
+    @Column(name = "action")
+    private String action;
+    @Size(max = 200)
+    @Column(name = "channel_description")
+    private String channelDescription;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "touchpointId")
+    private List<TouchpointFieldResearcher> touchpointFieldResearcherList;
+    @JoinColumn(name = "channel_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Channel channelId;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,12 +66,10 @@ public class TouchPoint implements Serializable {
     @Column(name = "touch_point_desc")
     private String touchPointDesc;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "latitude")
     private String latitude;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "longitude")
     private String longitude;
@@ -155,6 +169,39 @@ public class TouchPoint implements Serializable {
     @Override
     public String toString() {
         return "team8ft.journey.entity.TouchPoint[ id=" + id + " ]";
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getChannelDescription() {
+        return channelDescription;
+    }
+
+    public void setChannelDescription(String channelDescription) {
+        this.channelDescription = channelDescription;
+    }
+
+    @XmlTransient
+    public List<TouchpointFieldResearcher> getTouchpointFieldResearcherList() {
+        return touchpointFieldResearcherList;
+    }
+
+    public void setTouchpointFieldResearcherList(List<TouchpointFieldResearcher> touchpointFieldResearcherList) {
+        this.touchpointFieldResearcherList = touchpointFieldResearcherList;
+    }
+
+    public Channel getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Channel channelId) {
+        this.channelId = channelId;
     }
     
 }

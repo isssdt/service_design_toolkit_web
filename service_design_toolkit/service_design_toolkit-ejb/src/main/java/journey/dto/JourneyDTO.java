@@ -13,11 +13,13 @@ import java.util.List;
  * @author longnguyen
  */
 public class JourneyDTO {
+
+    
     private String journeyName;
     private Integer noOfFieldResearcher;
     private Character isActive;
     private Date startDate;
-    private Integer journeyLength;
+    private Date endDate;
     private Character canBeRegistered;
     private List<TouchPointDTO> touchPointDTOList = null;
 
@@ -35,14 +37,6 @@ public class JourneyDTO {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public Integer getJourneyLength() {
-        return journeyLength;
-    }
-
-    public void setJourneyLength(Integer journeyLength) {
-        this.journeyLength = journeyLength;
     }
 
     public List<TouchPointDTO> getTouchPointDTOList() {
@@ -75,5 +69,13 @@ public class JourneyDTO {
 
     public void setIsActive(Character isActive) {
         this.isActive = isActive;
+    }
+    
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

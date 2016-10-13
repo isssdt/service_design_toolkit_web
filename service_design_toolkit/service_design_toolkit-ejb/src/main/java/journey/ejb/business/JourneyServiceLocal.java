@@ -7,9 +7,12 @@ package journey.ejb.business;
 
 import java.util.List;
 import javax.ejb.Local;
+import journey.dto.ChannelDTO;
+import journey.dto.ChannelListDTO;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
+import journey.dto.TouchPointFieldResearcherDTO;
 import user.dto.FieldResearcherDTO;
 
 /**
@@ -52,6 +55,18 @@ public interface JourneyServiceLocal {
      * @param journeySdtUserDTO
      * @return
      */
+    
+  
+    /**
+     *
+     * @param content
+     * @param queryName
+     * @return
+     */
+    public ChannelListDTO getChannelList();
+
+     public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
+     
     public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
     
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);        
