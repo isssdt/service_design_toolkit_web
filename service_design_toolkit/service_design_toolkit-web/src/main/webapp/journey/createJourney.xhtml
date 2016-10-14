@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <h:head>
+        </h:head>
+        <h:body>
+            <h:form>
+                <h3 style="margin-top:0">Create Journey</h3>
+                    
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6" id="grid">
+                        <p:outputLabel for="journey_name" value="Journey Name" />
+                        <p:inputText id="journey_name" value="#{journeyModel.journeyName}" required="true" label="Journey Name"/>                       
+               
+                        <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
+                        <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true" 
+                            label="Number Of Field Researcher">
+                        <f:validateLongRange minimum="1" />
+                        </p:inputText>
+                    
+                        <p:outputLabel for="start_date" value="Start Date" />                    
+                        <p:calendar id="start_date" value="#{journeyModel.startDate}" required="true" 
+                                label="Start Date" mindate="#{journeyCreateView.currentDate}"/> 
+                        
+                        <p:outputLabel for="end_date" value="End Date" />                    
+                        <p:calendar id="end_date" value="#{journeyModel.endDate}" required="true" 
+                                label="End Date" mindate="#{journeyCreateView.currentDate}"/>
+                        
+                        <h:commandLink action="create?faces-redirect=true" value="NEXT" style="display:block;width:#{model.section * 50}px;height:20px;">
+                            <f:param name="model" value="#{journeyModel}"/>   
+                        </h:commandLink>
+                    </h:panelGrid> 
+                </h:form>            
+        </h:body>
+    </f:view>
+</html>
+

@@ -5,14 +5,17 @@
  */
 package journey.ejb.view;
 
+import java.awt.event.ActionEvent;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import journey.ejb.model.TouchPointModel;
 import org.primefaces.event.map.GeocodeEvent;
@@ -27,6 +30,7 @@ import org.primefaces.model.map.Marker;
 @Named(value = "journeyCreateView")
 @SessionScoped
 public class JourneyCreateView implements Serializable {
+	private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new instance of JourneyCreateView
@@ -36,19 +40,36 @@ public class JourneyCreateView implements Serializable {
     
     @Inject
     private TouchPointModel touchPointModel;
-    
     @Inject
     private TouchPointListModel touchPointListModel;
+    @Inject
+    private JourneyModel journeyModel;
     
     private String centerGeoMap = "1.3521, 103.8198";
     private Date currentDate = new Date();
 
-    public Date getCurrentDate() {
-        return currentDate;
+    public TouchPointModel getTouchPointModel() {
+        return touchPointModel;
     }
 
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
+    public void setTouchPointModel(TouchPointModel touchPointModel) {
+        this.touchPointModel = touchPointModel;
+    }
+
+    public TouchPointListModel getTouchPointListModel() {
+        return touchPointListModel;
+    }
+
+    public void setTouchPointListModel(TouchPointListModel touchPointListModel) {
+        this.touchPointListModel = touchPointListModel;
+    }
+
+    public JourneyModel getJourneyModel() {
+        return journeyModel;
+    }
+
+    public void setJourneyModel(JourneyModel journeyModel) {
+        this.journeyModel = journeyModel;
     }
 
     public String getCenterGeoMap() {
@@ -58,7 +79,15 @@ public class JourneyCreateView implements Serializable {
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
     }
-    
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+        
     public void onAddMakerByGeoCode(GeocodeEvent event) {
         List<GeocodeResult> geocodeResultList = event.getResults();
          
@@ -70,7 +99,7 @@ public class JourneyCreateView implements Serializable {
                 touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
             }
             touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
-        }
+        }   
     }
     
     public void onAddMaker() {
@@ -82,4 +111,10 @@ public class JourneyCreateView implements Serializable {
                 "Lat:" + touchPointModel.getLatitude() + ", Lng:" + touchPointModel.getLongitude()));
     }
     
+    public List<TouchPointModel> pressOK(ActionEvent actionEvent) {
+        
+        List<TouchPointModel> touchPointList = new ArrayList();   
+        System.out.println(touchPointList);
+        return touchPointList;
+    }
 }

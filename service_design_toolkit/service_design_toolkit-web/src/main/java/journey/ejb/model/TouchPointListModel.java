@@ -19,6 +19,7 @@ import org.primefaces.model.map.MapModel;
 @Named(value = "touchPointListModel")
 @SessionScoped
 public class TouchPointListModel implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new instance of TouchPointListModel
