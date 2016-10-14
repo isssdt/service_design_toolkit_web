@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Channel.findChannelAll", query = "SELECT c FROM Channel c"),
     @NamedQuery(name = "Channel.findByChannelId", query = "SELECT c FROM Channel c WHERE c.id = :id"),
-    @NamedQuery(name = "Channel.findByChannelName", query = "SELECT c FROM Channel c WHERE c.name = :name")})
+    @NamedQuery(name = "Channel.findByChannelName", query = "SELECT c FROM Channel c WHERE c.channelName = :channelName")})
 public class Channel implements Serializable {
 
     private static final long serialVersionUID = 1L;
