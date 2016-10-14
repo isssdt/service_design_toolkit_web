@@ -127,8 +127,8 @@ public class JourneyServiceTest {
         params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
         Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
         Mockito.when(touchPointFieldResearcherFacade.create(new TouchpointFieldResearcher())).thenReturn(null);        
-
-        TouchpointFieldResearcher touchpointFieldResearcher = journeyService.saveResponse(touchpointFieldResearcherDTO);
+        
+        TouchpointFieldResearcher touchpointFieldResearcher = journeyService.buildTouchpointFieldResearcher(touchpointFieldResearcherDTO);
 
         Assert.assertEquals("TP1", touchpointFieldResearcher.getTouchpointId().getTouchPointDesc());
         Assert.assertEquals("Rating", touchpointFieldResearcher.getRatingId().getValue());

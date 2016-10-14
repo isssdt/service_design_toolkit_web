@@ -21,7 +21,6 @@ import journey.dto.ChannelListDTO;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
-import journey.dto.RatingDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.eao.ChannelFacadeLocal;
@@ -32,7 +31,6 @@ import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import journey.entity.Channel;
 import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
-import journey.entity.Rating;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
@@ -223,36 +221,30 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public TouchpointFieldResearcher saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
+    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
+        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));        
+    }
+    
+    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
-        Rating rating;
-        TouchPoint touchpoint;
-        SdtUser sdtUser;
-        FieldResearcher fieldResearcher = new FieldResearcher();
-        RatingDTO ratingDTO;
-
-        FieldResearcherDTO fieldResearcherDTO = touchpointFieldResearcherDTO.getFieldResearcherDTO();
-        touchpoint = touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId());
-
-        ratingDTO = touchpointFieldResearcherDTO.getRatingDTO();
-        rating = ratingFacade.findRatingByValue(ratingDTO.getValue());        
-
-        touchpointFieldResearcher.setRatingId(rating);
+        
+        touchpointFieldResearcher.setRatingId(ratingFacade.findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
-        touchpointFieldResearcher.setTouchpointId(touchpoint);
-
+        touchpointFieldResearcher.setTouchpointId(touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));        
+        
         Map<String, Object> params = new HashMap<>();
-        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
-        sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
-        fieldResearcher.setCurrentLatitude(fieldResearcherDTO.getCurrentLatitude());
-        fieldResearcher.setCurrentLongitude(fieldResearcherDTO.getCurrentLongitude());
-        fieldResearcher.setLastActive(fieldResearcherDTO.getLastActive());
-        fieldResearcher.setSdtUser(sdtUser);
-        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);        
-
-        touchPointFieldResearcherFacade.create(touchpointFieldResearcher);
-
+        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
+        
+        FieldResearcher fieldResearcher = new FieldResearcher();
+        fieldResearcher.setCurrentLatitude(touchpointFieldResearcherDTO.getFieldResearcherDTO().getCurrentLatitude());
+        fieldResearcher.setCurrentLongitude(touchpointFieldResearcherDTO.getFieldResearcherDTO().getCurrentLongitude());
+        fieldResearcher.setLastActive(touchpointFieldResearcherDTO.getFieldResearcherDTO().getLastActive());
+        fieldResearcher.setSdtUser(sdtUser);  
+        
+        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);  
+        
         return touchpointFieldResearcher;
     }
 
