@@ -28,11 +28,11 @@ public class ApplicationConfig extends Application {
      * all resources defined in the project.
      * If required, comment out calling this method in getClasses().
      */
-    private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(rest.common.jackson.MyJacksonJSONProvider.class);      
+    private void addRestResourceClasses(Set<Class<?>> resources) {         
         resources.add(rest.journey.GetJourneyList.class);
         resources.add(rest.journey.GetTouchPointListOfJourney.class);
         resources.add(rest.journey.RegisterFieldResearcherWithJourney.class);
+        resources.add(rest.touchpoint.UpdateResearchWork.class);
         resources.add(rest.user.GetFieldResearcherList.class);
         resources.add(rest.user.RefreshCurrentLocation.class);
     }

@@ -31,6 +31,7 @@ import org.mockito.Mockito;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 import user.ejb.eao.SdtUserFacadeLocal;
+import user.entity.FieldResearcher;
 import user.entity.SdtUser;
 
 /**
@@ -119,8 +120,12 @@ public class JourneyServiceTest {
         fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
         touchpointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
         SdtUser sdtUser = new SdtUser(1, sdtUserDTO.getUsername());
+        
+        FieldResearcher fieldResearcher = new FieldResearcher(1);
+        sdtUser.setFieldResearcher(fieldResearcher);
+        fieldResearcher.setSdtUser(sdtUser);
 
-        Mockito.when(touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId())).thenReturn(touchPoint);
+        Mockito.when(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId())).thenReturn(touchPoint);
         Mockito.when(ratingFacade.findRatingByValue(ratingDTO.getValue())).thenReturn(rating);
         
         Map<String, Object> params = new HashMap<>();

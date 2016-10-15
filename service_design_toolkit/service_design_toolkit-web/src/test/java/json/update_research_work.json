@@ -1,0 +1,12 @@
+{
+    "fieldResearcherDTO": {
+        "sdtUserDTO": {"username":"langnguyen"}
+    },
+    "touchpointDTO": {
+        "touchPointDesc":"Utown",
+        "id":"1"
+        },
+    "comments":"I love it",
+    "reaction":"I work on it",
+    "ratingDTO":{"value":"Outstanding"}
+}

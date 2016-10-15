@@ -5,12 +5,15 @@
  */
 package user.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 /**
  *
  * @author longnguyen
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FieldResearcherDTO {
     private String currentLatitude;
     private String currentLongitude;

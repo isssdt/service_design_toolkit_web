@@ -30,16 +30,5 @@ public class TouchPointFacade  extends AbstractFacade<TouchPoint> implements Tou
 
     public TouchPointFacade() {
         super(TouchPoint.class);
-    }
-
-    @Override
-    public TouchPoint findTouchPointById(Object ID) {
-        Query query = em.createNamedQuery("TouchPoint.findById");
-        query.setParameter("id", ID);
-        TouchPoint touchpoint = (TouchPoint) query.getSingleResult(); 
-        return touchpoint;
-    }
-    
-   
-    
+    }    
 }

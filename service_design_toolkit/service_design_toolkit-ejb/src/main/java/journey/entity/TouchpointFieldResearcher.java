@@ -7,6 +7,7 @@ package journey.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,7 +55,7 @@ public class TouchpointFieldResearcher implements Serializable {
     @ManyToOne(optional = false)
     private TouchPoint touchpointId;
     @JoinColumn(name = "field_researcher_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private FieldResearcher fieldResearcherId;
     
 

@@ -26,9 +26,7 @@ public interface TouchPointFacadeLocal {
     
     List<TouchPoint> findRange(int[] range);
 
-    int count();
-    
-    TouchPoint findTouchPointById(Object ID);
+    int count();   
       
     TouchPoint findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
     

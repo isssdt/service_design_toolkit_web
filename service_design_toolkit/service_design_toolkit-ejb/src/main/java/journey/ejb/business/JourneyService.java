@@ -231,17 +231,11 @@ public class JourneyService implements JourneyServiceLocal {
         touchpointFieldResearcher.setRatingId(ratingFacade.findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
-        touchpointFieldResearcher.setTouchpointId(touchPointFacade.findTouchPointById(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));        
+        touchpointFieldResearcher.setTouchpointId(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));        
         
         Map<String, Object> params = new HashMap<>();
-        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
-        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
-        
-        FieldResearcher fieldResearcher = new FieldResearcher();
-        fieldResearcher.setCurrentLatitude(touchpointFieldResearcherDTO.getFieldResearcherDTO().getCurrentLatitude());
-        fieldResearcher.setCurrentLongitude(touchpointFieldResearcherDTO.getFieldResearcherDTO().getCurrentLongitude());
-        fieldResearcher.setLastActive(touchpointFieldResearcherDTO.getFieldResearcherDTO().getLastActive());
-        fieldResearcher.setSdtUser(sdtUser);  
+        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());       
+        FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();                          
         
         touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);  
         
