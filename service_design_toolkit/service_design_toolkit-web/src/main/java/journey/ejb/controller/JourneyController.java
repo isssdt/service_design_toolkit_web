@@ -63,8 +63,7 @@ public class JourneyController implements Serializable {
                 TouchPointDTO touchPointDTO = new TouchPointDTO();
                 touchPointDTO.setLatitude(Double.toString(marker.getLatlng().getLat()));
                 touchPointDTO.setLongitude(Double.toString(marker.getLatlng().getLng()));
-                touchPointDTO.setTouchPointDesc(marker.getTitle());
-                touchPointDTO.setRadius(journeyModel.getRadius());
+                touchPointDTO.setTouchPointDesc(marker.getTitle());               
                 touchPointDTOList.add(touchPointDTO);
             }
             journeyDTO.setTouchPointDTOList(touchPointDTOList);
