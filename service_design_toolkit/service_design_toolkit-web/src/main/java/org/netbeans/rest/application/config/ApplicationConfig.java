@@ -29,6 +29,9 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {         
+        resources.add(common.exception.AppExceptionMapper.class);
+        resources.add(common.exception.CustomReasonPhraseExceptionMapper.class);
+        resources.add(common.exception.GenericExceptionMapper.class);
         resources.add(rest.journey.GetJourneyList.class);
         resources.add(rest.journey.GetTouchPointListOfJourney.class);
         resources.add(rest.journey.RegisterFieldResearcherWithJourney.class);

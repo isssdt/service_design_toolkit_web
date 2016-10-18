@@ -5,6 +5,7 @@
  */
 package user.ejb.eao;
 
+import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -30,7 +31,7 @@ public interface SdtUserFacadeLocal {
     List<SdtUser> findRange(int[] range);
 
     int count();
-    
-    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params);
-    
+
+    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params) throws CustomReasonPhraseException;
+
 }

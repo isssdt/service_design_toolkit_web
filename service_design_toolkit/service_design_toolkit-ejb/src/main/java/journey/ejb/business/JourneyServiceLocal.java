@@ -5,6 +5,7 @@
  */
 package journey.ejb.business;
 
+import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import javax.ejb.Local;
 import journey.dto.ChannelListDTO;
@@ -62,9 +63,9 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
+    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException;
 
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws CustomReasonPhraseException;
 
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
 }

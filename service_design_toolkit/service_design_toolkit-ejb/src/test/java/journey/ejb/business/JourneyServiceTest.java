@@ -6,10 +6,13 @@
 package journey.ejb.business;
 
 import common.EJBTestInjector;
+import common.exception.CustomReasonPhraseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import journey.dto.RatingDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
@@ -120,23 +123,32 @@ public class JourneyServiceTest {
         fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
         touchpointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
         SdtUser sdtUser = new SdtUser(1, sdtUserDTO.getUsername());
-        
+
         FieldResearcher fieldResearcher = new FieldResearcher(1);
         sdtUser.setFieldResearcher(fieldResearcher);
         fieldResearcher.setSdtUser(sdtUser);
 
         Mockito.when(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId())).thenReturn(touchPoint);
         Mockito.when(ratingFacade.findRatingByValue(ratingDTO.getValue())).thenReturn(rating);
-        
+
         Map<String, Object> params = new HashMap<>();
         params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
-        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
-        Mockito.when(touchPointFieldResearcherFacade.create(new TouchpointFieldResearcher())).thenReturn(null);        
-        
-        TouchpointFieldResearcher touchpointFieldResearcher = journeyService.buildTouchpointFieldResearcher(touchpointFieldResearcherDTO);
+        try {
+            Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
+        } catch (CustomReasonPhraseException ex) {
+            Logger.getLogger(JourneyServiceTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Mockito.when(touchPointFieldResearcherFacade.create(new TouchpointFieldResearcher())).thenReturn(null);
 
-        Assert.assertEquals("TP1", touchpointFieldResearcher.getTouchpointId().getTouchPointDesc());
-        Assert.assertEquals("Rating", touchpointFieldResearcher.getRatingId().getValue());
-        Assert.assertEquals("long", touchpointFieldResearcher.getFieldResearcherId().getSdtUser().getUsername());
+        TouchpointFieldResearcher touchpointFieldResearcher;
+        try {
+            touchpointFieldResearcher = journeyService.buildTouchpointFieldResearcher(touchpointFieldResearcherDTO);
+            Assert.assertEquals("TP1", touchpointFieldResearcher.getTouchpointId().getTouchPointDesc());
+            Assert.assertEquals("Rating", touchpointFieldResearcher.getRatingId().getValue());
+            Assert.assertEquals("long", touchpointFieldResearcher.getFieldResearcherId().getSdtUser().getUsername());
+        } catch (CustomReasonPhraseException ex) {
+            Logger.getLogger(JourneyServiceTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

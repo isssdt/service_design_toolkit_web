@@ -6,6 +6,7 @@
 package journey.ejb.business;
 
 import common.dto.QueryParamValue;
+import common.exception.CustomReasonPhraseException;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -150,7 +151,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws CustomReasonPhraseException {
         JourneyFieldResearcher journeyFieldResearcher = new JourneyFieldResearcher();
         Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
         if (journey.getNoOfFieldResearcher() <= journey.getJourneyFieldResearcherList().size()) {
@@ -221,11 +222,11 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
-        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));        
+    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException {
+        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));                
     }
     
-    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
+    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException {
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
         
         touchpointFieldResearcher.setRatingId(ratingFacade.findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));

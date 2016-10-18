@@ -7,6 +7,7 @@ package user.ejb.business;
 
 import common.constant.ConstantValues;
 import common.dto.QueryParamValue;
+import common.exception.CustomReasonPhraseException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,14 +41,14 @@ public class UserService implements UserServiceLocal {
     private FieldResearcherFacadeLocal fieldResearcherFacade;
 
     @Override
-    public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) {
+    public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException {
         FieldResearcher fieldResearcher;
         SdtUser sdtUser;
         try {
             //check whether User of this Field Researcher already exist 
             Map<String, Object> params = new HashMap<>();
             params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
-            sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
+            sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);            
 
             //if exists then check whether this Field Researcher already exists
             if (null != sdtUser) {
@@ -101,10 +102,10 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) {
+    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException {
         Map<String, Object> params = new HashMap<>();
         params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
-        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);
+        SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);        
         return sdtUser.getFieldResearcher();
     }
 
