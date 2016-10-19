@@ -5,6 +5,7 @@
  */
 package rest.user;
 
+import common.exception.CustomReasonPhraseException;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -55,7 +56,7 @@ public class RefreshCurrentLocation {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(FieldResearcherDTO content) {
+    public void putJson(FieldResearcherDTO content) throws CustomReasonPhraseException {
         fieldResearcherService.refreshCurrentLocation(content);
     }
 }

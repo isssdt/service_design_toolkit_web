@@ -5,6 +5,7 @@
  */
 package rest.journey;
 
+import common.exception.CustomReasonPhraseException;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -53,10 +54,11 @@ public class RegisterFieldResearcherWithJourney {
     /**
      * PUT method for updating or creating an instance of RegisterFieldResearcherWithJourney
      * @param content representation for the resource
+     * @throws common.exception.CustomReasonPhraseException
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyFieldResearcherDTO content) {
+    public void putJson(JourneyFieldResearcherDTO content) throws CustomReasonPhraseException {
         journeyService.registerFieldResearcherWithJourney(content);
     }
 }

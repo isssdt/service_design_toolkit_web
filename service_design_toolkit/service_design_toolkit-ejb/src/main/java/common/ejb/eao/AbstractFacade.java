@@ -6,6 +6,7 @@
 package common.ejb.eao;
 
 import common.dto.QueryParamValue;
+import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -48,19 +49,17 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().find(entityClass, id);
     }
 
-    public T findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues) {
+    public T findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues) throws NoResultException {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (QueryParamValue queryParamValue : queryParamValues) {
             typedQuery.setParameter(queryParamValue.getParam(), queryParamValue.getValue());
         }
-        try {
-            return typedQuery.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+
+        return typedQuery.getSingleResult();
+
     }
-    
-    public T findSingleByQueryName(String queryName, Map<String, Object> params) {
+
+    public T findSingleByQueryName(String queryName, Map<String, Object> params) throws CustomReasonPhraseException {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             typedQuery.setParameter(entry.getKey(), entry.getValue());
@@ -68,7 +67,7 @@ public abstract class AbstractFacade<T> {
         try {
             return typedQuery.getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            throw new CustomReasonPhraseException(0, e.getMessage());
         }
     }
 
