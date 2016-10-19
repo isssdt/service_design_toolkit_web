@@ -241,6 +241,8 @@ public class JourneyService implements JourneyServiceLocal {
         
         return touchpointFieldResearcher;
     }
+    
+    
     @Override
     public TouchPointFieldResearcherDTO getTouchPointDetails(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {
         
@@ -250,7 +252,7 @@ public class JourneyService implements JourneyServiceLocal {
         params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());       
         FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();                          
         String query = "SELECT a.* FROM touchpoint_field_researcher a "
-                 + "where a.field_researcher_id=? and a.touchpoint_id=?";
+                        + "where a.field_researcher_id=? and a.touchpoint_id=? ";
         List<Object> param = new ArrayList<>();
         
         param.add(fieldResearcher.getSdtUser().getUsername());
