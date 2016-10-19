@@ -241,5 +241,33 @@ public class JourneyService implements JourneyServiceLocal {
         
         return touchpointFieldResearcher;
     }
+    @Override
+    public TouchPointFieldResearcherDTO getTouchPointDetails(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {
+        
+       TouchpointFieldResearcher touchpointFieldResearcher= new TouchpointFieldResearcher();
+              
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());       
+        FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();                          
+        String query = "SELECT a.* FROM touchpoint_field_researcher a "
+                 + "where a.field_researcher_id=? and a.touchpoint_id=?";
+        List<Object> param = new ArrayList<>();
+        
+        param.add(fieldResearcher.getSdtUser().getUsername());
+        param.add(touchPointFieldResearcherDTO.getTouchpointDTO().getId());
+       
+        if (null != touchPointFacade.findSingleByNativeQuery(query, param)) {
+           touchpointFieldResearcher= touchPointFieldResearcherFacade.findSingleByNativeQuery(query, param); 
+        }
+        try{
+        BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
+       
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+         return touchPointFieldResearcherDTO;
+    }
+
 
 }
