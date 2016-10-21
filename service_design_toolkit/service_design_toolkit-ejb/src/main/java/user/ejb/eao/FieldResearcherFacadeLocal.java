@@ -30,9 +30,7 @@ public interface FieldResearcherFacadeLocal {
 
     List<FieldResearcher> findRange(int[] range);
 
-    int count();
-    
-    public FieldResearcher findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    int count();    
     
     public List<FieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);    
 }

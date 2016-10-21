@@ -5,7 +5,6 @@
  */
 package rest.journey;
 
-import common.exception.CustomReasonPhraseException;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -16,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.ejb.business.JourneyServiceLocal;
 
@@ -54,11 +54,15 @@ public class RegisterFieldResearcherWithJourney {
     /**
      * PUT method for updating or creating an instance of RegisterFieldResearcherWithJourney
      * @param content representation for the resource
-     * @throws common.exception.CustomReasonPhraseException
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyFieldResearcherDTO content) throws CustomReasonPhraseException {
+    public Response putJson(JourneyFieldResearcherDTO content) {
         journeyService.registerFieldResearcherWithJourney(content);
+        String message = "Field Researcher " + content.getFieldResearcherDTO().getSdtUserDTO().getUsername() + " has registered for Journey " 
+                + content.getJourneyDTO().getJourneyName();
+        return Response.status(Response.Status.CREATED)// 201
+				.entity(message)
+				.build();
     }
 }

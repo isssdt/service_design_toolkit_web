@@ -70,8 +70,10 @@ public class UserService implements UserServiceLocal {
                 sdtUser = new SdtUser();
                 BeanUtils.copyProperties(sdtUser, fieldResearcherDTO.getSdtUserDTO());
                 sdtUser.setIsActive('Y');
-                sdtUser.setUserRoleId(userRoleFacade.findSingleByQueryName("UserRole.findByRoleName",
-                        new QueryParamValue[]{new QueryParamValue("roleName", ConstantValues.FIELD_RESEARCHER_ROLE_NAME)}));
+                
+                params.clear();
+                params.put("roleName", ConstantValues.FIELD_RESEARCHER_ROLE_NAME);
+                sdtUser.setUserRoleId(userRoleFacade.findSingleByQueryName("UserRole.findByRoleName", params));
                 SdtUser newSdtUser = sdtUserFacade.create(sdtUser);
 
                 fieldResearcher = initFieldResearcher(fieldResearcherDTO, newSdtUser);

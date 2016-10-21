@@ -5,8 +5,8 @@
  */
 package user.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 import user.entity.UserRole;
 
@@ -29,8 +29,7 @@ public interface UserRoleFacadeLocal {
 
     List<UserRole> findRange(int[] range);
 
-    int count();    
+    int count();        
     
-    UserRole findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
-    
+    public UserRole findSingleByQueryName(String queryName, Map<String, Object> params);
 }

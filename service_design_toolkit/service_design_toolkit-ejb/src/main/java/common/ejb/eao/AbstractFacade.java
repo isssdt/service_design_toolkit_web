@@ -48,16 +48,6 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().find(entityClass, id);
     }
 
-    public T findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues) throws NoResultException {
-        TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
-        for (QueryParamValue queryParamValue : queryParamValues) {
-            typedQuery.setParameter(queryParamValue.getParam(), queryParamValue.getValue());
-        }
-
-        return typedQuery.getSingleResult();
-
-    }
-
     public T findSingleByQueryName(String queryName, Map<String, Object> params) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (Map.Entry<String, Object> entry : params.entrySet()) {

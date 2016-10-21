@@ -30,9 +30,7 @@ public interface ChannelFacadeLocal {
 
     int count();
     
-    Channel findChannelByName(Object ChannelName);
-      
-    Channel findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    Channel findChannelByName(Object ChannelName);   
     
     List<Channel> findListByNativeQuery(String query, List<Object> params);
     

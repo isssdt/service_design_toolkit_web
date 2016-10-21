@@ -26,11 +26,7 @@ public interface TouchPointFieldResearcherFacadeLocal {
     
     List<TouchpointFieldResearcher> findRange(int[] range);
 
-    int count();
-    
-   
-      
-    TouchpointFieldResearcher findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    int count();    
     
     List<TouchpointFieldResearcher> findListByNativeQuery(String query, List<Object> params);
     

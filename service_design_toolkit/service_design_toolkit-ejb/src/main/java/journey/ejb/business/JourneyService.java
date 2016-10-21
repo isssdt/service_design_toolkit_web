@@ -6,7 +6,6 @@
 package journey.ejb.business;
 
 import common.dto.QueryParamValue;
-import common.exception.CustomReasonPhraseException;
 import journey.ejb.eao.JourneyFacadeLocal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -137,8 +136,9 @@ public class JourneyService implements JourneyServiceLocal {
 
     @Override
     public JourneyDTO getJourneyByName(JourneyDTO journeyDTO) {
-        Journey journey = journeyFacade.findSingleByQueryName("Journey.findByJourneyName",
-                new QueryParamValue[]{new QueryParamValue("journeyName", journeyDTO.getJourneyName())});
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", journeyDTO.getJourneyName());
+        Journey journey = journeyFacade.findSingleByQueryName("Journey.findByJourneyName", params);
         if (null == journey) {
             return null;
         }

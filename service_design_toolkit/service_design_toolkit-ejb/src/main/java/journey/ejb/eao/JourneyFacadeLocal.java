@@ -5,7 +5,6 @@
  */
 package journey.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -34,14 +33,14 @@ public interface JourneyFacadeLocal {
     
     Journey findJourneyByName(Object journeyName);
     
-    List<Journey> findListOfJourneyByIsActive(Object isActive);
-    
-    Journey findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    List<Journey> findListOfJourneyByIsActive(Object isActive);    
     
     List<Journey> findListByNativeQuery(String query, List<Object> params);
     
     Journey findSingleByNativeQuery(String query, List<Object> params);
     
     List<Journey> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
+    
+    Journey findSingleByQueryName(String queryName, Map<String, Object> params);
     
 }

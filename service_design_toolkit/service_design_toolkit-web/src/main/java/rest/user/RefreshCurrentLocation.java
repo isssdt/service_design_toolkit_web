@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import user.dto.FieldResearcherDTO;
 import user.ejb.business.UserServiceLocal;
 
@@ -56,7 +57,12 @@ public class RefreshCurrentLocation {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(FieldResearcherDTO content) throws CustomReasonPhraseException {
+    public Response putJson(FieldResearcherDTO content) {
         fieldResearcherService.refreshCurrentLocation(content);
+        String message = "Field Researcher " + content.getSdtUserDTO().getUsername() + " current location has been updated with " + content.getCurrentLatitude() + ";" 
+                + content.getCurrentLongitude();
+        return Response.status(Response.Status.CREATED)// 201
+				.entity(message)
+				.build();
     }
 }

@@ -31,9 +31,7 @@ public interface RatingFacadeLocal {
 
     int count();
     
-    Rating findRatingByValue(Object Rating);
-      
-    Rating findSingleByQueryName(String queryName, QueryParamValue[] queryParamValues);
+    Rating findRatingByValue(Object Rating);   
     
     List<Rating> findListByNativeQuery(String query, List<Object> params);
     

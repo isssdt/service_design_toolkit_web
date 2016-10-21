@@ -58,7 +58,7 @@ public class UpdateResearchWork {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(TouchPointFieldResearcherDTO content) throws CustomReasonPhraseException {
+    public Response putJson(TouchPointFieldResearcherDTO content) {
         journeyService.saveResponse(content);
         return Response.status(Response.Status.CREATED)// 201
 				.entity("A new research work has been created")
