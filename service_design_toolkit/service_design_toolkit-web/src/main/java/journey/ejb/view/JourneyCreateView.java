@@ -7,14 +7,19 @@ package journey.ejb.view;
 
 import java.awt.event.ActionEvent;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import journey.dto.ChannelDTO;
+import journey.ejb.controller.JourneyController;
 import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import journey.ejb.model.TouchPointModel;
@@ -44,9 +49,12 @@ public class JourneyCreateView implements Serializable {
     private TouchPointListModel touchPointListModel;
     @Inject
     private JourneyModel journeyModel;
+    @Inject 
+    private JourneyController journeyController;
     
     private String centerGeoMap = "1.3521, 103.8198";
     private Date currentDate = new Date();
+    private Map<String, String> channelmap; 
 
     public TouchPointModel getTouchPointModel() {
         return touchPointModel;
@@ -72,6 +80,14 @@ public class JourneyCreateView implements Serializable {
         this.journeyModel = journeyModel;
     }
 
+    public JourneyController getJourneyController() {
+        return journeyController;
+    }
+
+    public void setJourneyController(JourneyController journeyController) {
+        this.journeyController = journeyController;
+    }
+
     public String getCenterGeoMap() {
         return centerGeoMap;
     }
@@ -87,7 +103,24 @@ public class JourneyCreateView implements Serializable {
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
     }
-        
+
+    public Map<String, String> getChannelmap() {
+        return channelmap;
+    }
+
+    public void setChannelmap(Map<String, String> channelmap) {
+        this.channelmap = channelmap;
+    }
+    
+    @PostConstruct
+    public void init() {        
+        channelmap = new HashMap<>();
+        List<ChannelDTO> channelListDTO = journeyController.getChannelList();
+        for (ChannelDTO channelDTO : channelListDTO) {
+            channelmap.put(channelDTO.getChannelName(), channelDTO.getChannelName());
+        }
+    }
+    
     public void onAddMakerByGeoCode(GeocodeEvent event) {
         List<GeocodeResult> geocodeResultList = event.getResults();
          
@@ -103,18 +136,21 @@ public class JourneyCreateView implements Serializable {
     }
     
     public void onAddMaker() {
-        Marker marker = new Marker(new LatLng(touchPointModel.getLatitude(), touchPointModel.getLongitude()), touchPointModel.getTouchPointDesc());
+        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getTouchPointDesc());
         touchPointListModel.getGeoModel().addOverlay(marker);
         touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
           
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
-                "Lat:" + touchPointModel.getLatitude() + ", Lng:" + touchPointModel.getLongitude()));
+                "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
     }
+   
+    public TouchPointListModel pressOK(ActionEvent pressOK) {
+        touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
+        for (int i = 0; i <touchPointListModel.getTouchPointListModel().size(); i++) {
+            System.out.println(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());
+        }
+        return touchPointListModel;
+        }
     
-    public List<TouchPointModel> pressOK(ActionEvent actionEvent) {
-        
-        List<TouchPointModel> touchPointList = new ArrayList();   
-        System.out.println(touchPointList);
-        return touchPointList;
-    }
+    
 }

@@ -94,7 +94,7 @@
                     <br></br> 
                           
                     <!--<p:outputLabel for="address" value="Address" />
-                    <p:inputText id="address" onfocus="initAutocomplete()"/>  -->                                                                              
+                    <p:inputText id="address" onfocus=" ()"/>  -->                                                                              
                     <p:commandButton value="Add TouchPoints" icon="ui-icon-extlink"  
                                       onclick="PF('dlg1').show();">       
                         <!--<p:ajax event="dialogReturn" listener="#" update="growl" />-->
@@ -104,25 +104,54 @@
                     <h:form>
                         <h3 style="margin-top:0">Enter Touch point details</h3>   
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6" id="grid">
+                            
                             <p:outputLabel for="touchPoint_name" value="TouchPoint Name" />
-                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" label="TouchPoint Name">                       
+                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointDesc}" 
+                                         required="true" label="Name">                       
                             </p:inputText>
-                            <p:outputLabel for="touchPoint_Channel" value="TouchPoint Channel" />                    
-                            <p:inputText id="touchPoint_Channel" value="#{touchPointModel.touchPointChannel}" required="true" label="TouchPoint Channel">
+                            
+                            <p:outputLabel for="touchPoint_channel" value="TouchPoint Channel" />
+                            <p:selectOneMenu id="touchPoint_channel"
+                                             value="#{touchPointModel.touchPointChannel}" >
+                                            <!--<p:ajax listener="#{dashboardView.onJourneyChange}" 
+                                            update="geoGmap fs_list" />-->
+                                            <!--<f:selectItem itemLabel="Select one" itemValue="" 
+                                            noSelectionOption="true" />  -->              
+                                <f:selectItems value="#{journeyCreateView.channelmap}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="touchPoint_Radius" value="TouchPoint Radius" />                    
+                            <p:inputText id="touchPoint_Radius" value="#{touchPointModel.touchpointRadius}" 
+                                         required="true" label="Radius">
                             </p:inputText>
-                            <p:commandButton value="OK" icon="ui-icon-extlink" id="popup" actionListener="#{journeyCreateView.pressOK(actionEvent)}"
-                                             update = "touchpoint_list" onclick="PF('dlg1').hide();" ajax="true">
-                                
+                            
+                            <p:outputLabel for="touchPoint_Action" value="TouchPoint Action" />                    
+                            <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" 
+                                         required="true" label="Action">
+                            </p:inputText>
+
+                            <p:commandButton value="OK" icon="ui-icon-extlink" id="popup" 
+                                             actionListener="#{journeyCreateView.pressOK(pressOK)}"
+                                             update = "@form" onclick="PF('dlg1').hide();" ajax="true">
                             </p:commandButton>
                         </h:panelGrid> 
                     </h:form> 
                 </p:dialog>
-                <p:dataList value="#{journeyCreateView.touchPointListModel}" var="field_researcher" type="ordered" id="touchpoint_list">
-                <f:facet name="header">
-                    Touch Points
-                </f:facet>
-                #{touchPointList}
-                </p:dataList>
+                
+                <!--<p:dataTable var="Touch Points Added" value="#{journeyCreateView.touchPointListModel}">
+                    <p:column headerText="Touch point Description">
+                        <h:outputText value="#{touchPointModel.touchPointDesc}" />
+                    </p:column>
+ 
+                    <p:column headerText="Touch point Channel">
+                        <h:outputText value="#{touchPointModel.touchPointChannel}" />
+                    </p:column>
+                </p:dataTable>-->
+                <p:commandButton value="SAVE" icon="ui-icon-extlink" id="save" 
+                                 actionListener="#{journeyController.createJourney(pressSave)}">
+                </p:commandButton>
+                
+                
 
                 <p:growl id="messages" showDetail="true" />
                 <p:gmap id="geoGmap" widgetVar="geoMap" center="#{journeyCreateView.centerGeoMap}" zoom="13" type="ROADMAP" 
@@ -149,8 +178,8 @@
                             </f:facet>
                         </h:panelGrid>
 
-                        <h:inputHidden id="lat" value="#{touchPointModel.latitude}" />
-                        <h:inputHidden id="lng" value="#{touchPointModel.longitude}" />
+                        <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}" />
+                        <h:inputHidden id="lng" value="#{touchPointModel.touchpointLongitude}" />
                     </h:form>
                 </p:dialog>
             </h:form>

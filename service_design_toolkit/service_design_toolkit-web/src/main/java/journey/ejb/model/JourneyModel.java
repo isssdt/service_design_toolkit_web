@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import journey.constraint.Journey;
 
@@ -80,7 +82,13 @@ public class JourneyModel implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-   
     
-    
+    public JourneyModel createCopy() {
+        JourneyModel model = new JourneyModel();
+            model.setEndDate(endDate);
+            model.setJourneyName(journeyName);
+            model.setNoOfFieldResearcher(noOfFieldResearcher);
+            model.setStartDate(startDate);
+       return model;
+    }    
 }

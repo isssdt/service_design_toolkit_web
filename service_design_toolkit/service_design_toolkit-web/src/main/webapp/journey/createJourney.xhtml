@@ -29,9 +29,10 @@
                         <p:calendar id="end_date" value="#{journeyModel.endDate}" required="true" 
                                 label="End Date" mindate="#{journeyCreateView.currentDate}"/>
                         
-                        <h:commandLink action="create?faces-redirect=true" value="NEXT" style="display:block;width:#{model.section * 50}px;height:20px;">
+                        <h:commandButton action="create?faces-redirect=true" value="NEXT"  
+                                       style="display:block;width:#{model.section * 50}px;height:20px;">                                    
                             <f:param name="model" value="#{journeyModel}"/>   
-                        </h:commandLink>
+                        </h:commandButton>
                     </h:panelGrid> 
                 </h:form>            
         </h:body>

@@ -8,8 +8,6 @@ package journey.ejb.controller;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -18,12 +16,19 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
+import journey.dto.ChannelDTO;
+import journey.dto.ChannelListDTO;
 import journey.dto.TouchPointDTO;
 import journey.ejb.business.JourneyServiceLocal;
 import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import org.apache.commons.beanutils.BeanUtils;
-import org.primefaces.model.map.Marker;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import journey.ejb.model.TouchPointModel;
+
+
 
 /**
  *
@@ -47,25 +52,57 @@ public class JourneyController implements Serializable {
 
     @Inject
     private TouchPointListModel touchPointListModel;
-
-    public void createJourney() {
-        if (touchPointListModel.getGeoModel().getMarkers().isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Marker"));
-            return;
-        }
+    
+    private JourneyDTO journeyDTO = new JourneyDTO();
+    
+    private TouchPointDTO touchPointDTO = new TouchPointDTO();
+    
+    private ChannelDTO channelDTO  = new ChannelDTO();
+    
+    private ChannelListDTO channelListDTO = new ChannelListDTO();
+    
+    
+    public void createJourney(ActionEvent pressSave) {
+        System.out.println("inside create");
+        //if (touchPointListModel.getGeoModel().getMarkers().isEmpty()) {
+        //    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Marker"));
+        //    return;
+        //}
         try {
-            JourneyDTO journeyDTO = new JourneyDTO();
-            BeanUtils.copyProperties(journeyDTO, journeyModel);
+            
+            System.out.println("inside try1");
+            BeanUtils.copyProperties(journeyDTO, journeyModel.createCopy());
+            for (int i=0; i< touchPointListModel.getTouchPointListModel().size(); i++) {
+                System.out.println(">> Journey Touch Point Model" + touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
+            }
             journeyDTO.setIsActive('Y');
             journeyDTO.setCanBeRegistered('Y');
+//            System.out.println("inside try2");
+//            BeanUtils.copyProperties(journeyDTO.getTouchPointDTOList(), touchPointListModel.createCopy());
+//            for (int i=0; i< journeyDTO.getTouchPointDTOList().size(); i++) {
+//                System.out.println(">> Jounrney DTO :" + journeyDTO.getTouchPointDTOList().get(i).getTouchPointDesc());
+//            }
+            
+            System.out.println("inside try3");
+            System.out.println(journeyModel.createCopy().getJourneyName());
+            for (TouchPointModel t : touchPointListModel.getTouchPointListModel()){
+                System.out.println("list value "+t+ t.getTouchPointDesc());        
+            }
+            
             List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
-            for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {
-                TouchPointDTO touchPointDTO = new TouchPointDTO();
-                touchPointDTO.setLatitude(Double.toString(marker.getLatlng().getLat()));
-                touchPointDTO.setLongitude(Double.toString(marker.getLatlng().getLng()));
-                touchPointDTO.setTouchPointDesc(marker.getTitle());               
+            for (int i=0; i < touchPointListModel.createCopy().getTouchPointListModel().size(); i++){
+                touchPointDTO.setChannelDescription(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointDesc());
+                touchPointDTO.setTouchPointDesc(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointDesc()); 
                 touchPointDTOList.add(touchPointDTO);
             }
+            
+//            for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {
+//        
+//                touchPointDTO.setLatitude(Double.toString(marker.getLatlng().getLat()));
+//                touchPointDTO.setLongitude(Double.toString(marker.getLatlng().getLng()));
+//                touchPointDTO.setTouchPointDesc(marker.getTitle());               
+//                touchPointDTOList.add(touchPointDTO);
+//            }
             journeyDTO.setTouchPointDTOList(touchPointDTOList);
             touchPointListModel.getGeoModel().getMarkers().clear();
 
@@ -74,5 +111,13 @@ public class JourneyController implements Serializable {
             Logger.getLogger(JourneyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Journey has been created!"));
+    }
+    
+    public List<ChannelDTO> getChannelList() {
+        channelListDTO = journeyService.getChannelList();
+        if (null != channelListDTO) {
+            return channelListDTO.getChannelDTOList();
+        }
+        return null;
     }
 }
