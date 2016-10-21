@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
@@ -30,6 +28,7 @@ public class TouchPointListModel implements Serializable {
     /**
      * Creates a new instance of TouchPointListModel
      */
+    
     public TouchPointListModel() {
     }
     
@@ -49,8 +48,7 @@ public class TouchPointListModel implements Serializable {
     @PreDestroy
 	private void destroy() {
 	System.out.println(">>> @PreDestry: TouchPointListModel");
-	}
-
+        }
    
 
     public List<TouchPointModel> getTouchPointListModel() {
