@@ -6,7 +6,6 @@
 package common.ejb.eao;
 
 import common.dto.QueryParamValue;
-import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -59,7 +58,7 @@ public abstract class AbstractFacade<T> {
 
     }
 
-    public T findSingleByQueryName(String queryName, Map<String, Object> params) throws CustomReasonPhraseException {
+    public T findSingleByQueryName(String queryName, Map<String, Object> params) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             typedQuery.setParameter(entry.getKey(), entry.getValue());
@@ -67,7 +66,7 @@ public abstract class AbstractFacade<T> {
         try {
             return typedQuery.getSingleResult();
         } catch (NoResultException e) {
-            throw new CustomReasonPhraseException(0, e.getMessage());
+            return null;
         }
     }
 

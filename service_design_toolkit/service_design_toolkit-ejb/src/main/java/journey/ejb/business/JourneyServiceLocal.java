@@ -63,9 +63,9 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException;
+    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
 
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws CustomReasonPhraseException;
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
 
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
     

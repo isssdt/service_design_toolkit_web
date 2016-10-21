@@ -151,7 +151,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws CustomReasonPhraseException {
+    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
         JourneyFieldResearcher journeyFieldResearcher = new JourneyFieldResearcher();
         Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
         if (journey.getNoOfFieldResearcher() <= journey.getJourneyFieldResearcherList().size()) {
@@ -222,65 +222,55 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException {
-        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));                
+    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
+        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));
     }
-    
-    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws CustomReasonPhraseException {
+
+    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
-        
+
         touchpointFieldResearcher.setRatingId(ratingFacade.findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
-        touchpointFieldResearcher.setTouchpointId(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));        
-        
+        touchpointFieldResearcher.setTouchpointId(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));
+
         Map<String, Object> params = new HashMap<>();
-        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());       
-        FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();                          
-        
-        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);  
-        
+        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
+
+        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
+
         return touchpointFieldResearcher;
     }
-    
-    
+
     @Override
     public TouchPointFieldResearcherDTO getTouchPointDetails(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {
-        
-        try{
-            
-            TouchpointFieldResearcher touchpointFieldResearcher= new TouchpointFieldResearcher();
-            
-            Map<String, Object> params = new HashMap<>();
-            params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
-            FieldResearcher fieldResearcher;
-            
-            fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
-            
-            String query = "SELECT a.* FROM touchpoint_field_researcher a "
-                    + "where a.field_researcher_id=? and a.touchpoint_id=? ";
-            List<Object> param = new ArrayList<>();
-            
-            param.add(fieldResearcher.getSdtUser().getUsername());
-            param.add(touchPointFieldResearcherDTO.getTouchpointDTO().getId());
-            
-            if (null != touchPointFacade.findSingleByNativeQuery(query, param)) {
-                touchpointFieldResearcher= touchPointFieldResearcherFacade.findSingleByNativeQuery(query, param);
-            }
-            try{
-                BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
-                
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-           
-        } catch (CustomReasonPhraseException ex) {
-             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         return touchPointFieldResearcherDTO;
-    }
-    
+        TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
 
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        FieldResearcher fieldResearcher;
+
+        fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
+
+        String query = "SELECT a.* FROM touchpoint_field_researcher a "
+                + "where a.field_researcher_id=? and a.touchpoint_id=? ";
+        List<Object> param = new ArrayList<>();
+
+        param.add(fieldResearcher.getSdtUser().getUsername());
+        param.add(touchPointFieldResearcherDTO.getTouchpointDTO().getId());
+
+        if (null != touchPointFacade.findSingleByNativeQuery(query, param)) {
+            touchpointFieldResearcher = touchPointFieldResearcherFacade.findSingleByNativeQuery(query, param);
+        }
+        try {
+            BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
+
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return touchPointFieldResearcherDTO;
+    }
 
 }

@@ -32,6 +32,6 @@ public interface SdtUserFacadeLocal {
 
     int count();
 
-    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params) throws CustomReasonPhraseException;
+    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params);
 
 }

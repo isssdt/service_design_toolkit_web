@@ -7,7 +7,6 @@ package user.ejb.business;
 
 import common.constant.ConstantValues;
 import common.dto.QueryParamValue;
-import common.exception.CustomReasonPhraseException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class UserService implements UserServiceLocal {
     private FieldResearcherFacadeLocal fieldResearcherFacade;
 
     @Override
-    public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException {
+    public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) {
         FieldResearcher fieldResearcher;
         SdtUser sdtUser;
         try {
@@ -102,7 +101,7 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException {
+    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) {
         Map<String, Object> params = new HashMap<>();
         params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
         SdtUser sdtUser = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params);        
