@@ -55,45 +55,53 @@ public class JourneyController implements Serializable {
     
     private JourneyDTO journeyDTO = new JourneyDTO();
     
-    private TouchPointDTO touchPointDTO = new TouchPointDTO();
+    private TouchPointDTO touchPointDTO;
     
-    private ChannelDTO channelDTO  = new ChannelDTO();
+    private ChannelDTO channelDTO  ;
     
     private ChannelListDTO channelListDTO = new ChannelListDTO();
     
     
-    public void createJourney(ActionEvent pressSave) {
-        System.out.println("inside create");
+    public void createJourney() {
         //if (touchPointListModel.getGeoModel().getMarkers().isEmpty()) {
         //    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Marker"));
         //    return;
         //}
         try {
-            
-            System.out.println("inside try1");
             BeanUtils.copyProperties(journeyDTO, journeyModel.createCopy());
-            for (int i=0; i< touchPointListModel.getTouchPointListModel().size(); i++) {
-                System.out.println(">> Journey Touch Point Model" + touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
-            }
             journeyDTO.setIsActive('Y');
             journeyDTO.setCanBeRegistered('Y');
-//            System.out.println("inside try2");
-//            BeanUtils.copyProperties(journeyDTO.getTouchPointDTOList(), touchPointListModel.createCopy());
-//            for (int i=0; i< journeyDTO.getTouchPointDTOList().size(); i++) {
-//                System.out.println(">> Jounrney DTO :" + journeyDTO.getTouchPointDTOList().get(i).getTouchPointDesc());
-//            }
-            
-            System.out.println("inside try3");
-            System.out.println(journeyModel.createCopy().getJourneyName());
-            for (TouchPointModel t : touchPointListModel.getTouchPointListModel()){
-                System.out.println("list value "+t+ t.getTouchPointDesc());        
-            }
-            
+
             List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+         
             for (int i=0; i < touchPointListModel.createCopy().getTouchPointListModel().size(); i++){
-                touchPointDTO.setChannelDescription(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointDesc());
-                touchPointDTO.setTouchPointDesc(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointDesc()); 
+      channelDTO=new ChannelDTO();
+     touchPointDTO = new TouchPointDTO();
+                touchPointDTO.setTouchPointDesc(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointName());
+                System.out.println("Name" + touchPointDTO.getTouchPointDesc());
+                touchPointDTO.setChannelDescription(touchPointListModel.createCopy().getTouchPointListModel().get(i).getChannelDesc());
+                System.out.println("Channel Desc" + touchPointDTO.getChannelDescription());
+                touchPointDTO.setAction(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointAction());
+                System.out.println("action" + touchPointDTO.getAction());
+                touchPointDTO.setRadius(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointRadius().toString());
+                System.out.println("radius" + touchPointDTO.getRadius());
+                System.out.println("Channel " + touchPointDTO.getChannelDTO());
+                channelDTO.setChannelName(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
+                touchPointDTO.setChannelDTO(channelDTO);
+              //  touchPointDTO.getChannelDTO().setChannelName(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
+                System.out.println("channesl Name" + touchPointDTO.getChannelDTO().getChannelName());
                 touchPointDTOList.add(touchPointDTO);
+                System.out.println(touchPointDTOList.get(i).getAction());
+                System.out.println(touchPointDTOList.get(i).getTouchPointDesc());
+                System.out.println(touchPointDTOList.get(i).getChannelDTO().getChannelName());
+                System.out.println(touchPointDTOList.get(i).getChannelDescription());
+            }
+            System.out.println("inside try1");
+            for (int i =0; i < touchPointDTOList.size(); i++){
+                System.out.println("testing"+touchPointDTOList.get(i).getAction());
+                System.out.println(touchPointDTOList.get(i).getTouchPointDesc());
+                System.out.println(touchPointDTOList.get(i).getChannelDTO().getChannelName());
+                System.out.println(touchPointDTOList.get(i).getChannelDescription());
             }
             
 //            for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {

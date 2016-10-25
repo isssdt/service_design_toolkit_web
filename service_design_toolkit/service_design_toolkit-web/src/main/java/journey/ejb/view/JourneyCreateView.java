@@ -136,7 +136,7 @@ public class JourneyCreateView implements Serializable {
     }
     
     public void onAddMaker() {
-        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getTouchPointDesc());
+        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getChannelDesc());
         touchPointListModel.getGeoModel().addOverlay(marker);
         touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
           
@@ -144,7 +144,7 @@ public class JourneyCreateView implements Serializable {
                 "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
     }
    
-    public TouchPointListModel pressOK(ActionEvent pressOK) {
+    public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
         for (int i = 0; i <touchPointListModel.getTouchPointListModel().size(); i++) {
             System.out.println(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());

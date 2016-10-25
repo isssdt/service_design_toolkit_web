@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import journey.constraint.Journey;
 
@@ -45,16 +47,19 @@ public class JourneyModel implements Serializable {
 	private void destroy() {
 		System.out.println(">>> @PreDestry: JourneyModel");
 	}
-        
     public String getJourneyName() {
+
         return journeyName;
+        
     }
 
     public void setJourneyName(String journeyName) {
+
         this.journeyName = journeyName;
     }
 
     public int getNoOfFieldResearcher() {
+
         return noOfFieldResearcher;
     }
 

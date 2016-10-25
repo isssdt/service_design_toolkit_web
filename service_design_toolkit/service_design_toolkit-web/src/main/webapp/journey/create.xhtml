@@ -100,13 +100,13 @@
                         <!--<p:ajax event="dialogReturn" listener="#" update="growl" />-->
                     </p:commandButton>
                 </h:panelGrid>  
-                <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+                <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40" modal="true">
                     <h:form>
                         <h3 style="margin-top:0">Enter Touch point details</h3>   
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6" id="grid">
                             
                             <p:outputLabel for="touchPoint_name" value="TouchPoint Name" />
-                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointDesc}" 
+                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" 
                                          required="true" label="Name">                       
                             </p:inputText>
                             
@@ -120,6 +120,11 @@
                                 <f:selectItems value="#{journeyCreateView.channelmap}"/>
                             </p:selectOneMenu>
                             
+                            <p:outputLabel for="channel_desc" value="Channel Decription" />
+                            <p:inputText id="channel_desc" value="#{touchPointModel.channelDesc}" 
+                                         required="true" label="Name">                       
+                            </p:inputText>
+                            
                             <p:outputLabel for="touchPoint_Radius" value="TouchPoint Radius" />                    
                             <p:inputText id="touchPoint_Radius" value="#{touchPointModel.touchpointRadius}" 
                                          required="true" label="Radius">
@@ -131,57 +136,17 @@
                             </p:inputText>
 
                             <p:commandButton value="OK" icon="ui-icon-extlink" id="popup" 
-                                             actionListener="#{journeyCreateView.pressOK(pressOK)}"
+                                             actionListener="#{journeyCreateView.pressOK}"
                                              update = "@form" onclick="PF('dlg1').hide();" ajax="true">
                             </p:commandButton>
                         </h:panelGrid> 
-                    </h:form> 
+                    </h:form>  
                 </p:dialog>
                 
-                <!--<p:dataTable var="Touch Points Added" value="#{journeyCreateView.touchPointListModel}">
-                    <p:column headerText="Touch point Description">
-                        <h:outputText value="#{touchPointModel.touchPointDesc}" />
-                    </p:column>
- 
-                    <p:column headerText="Touch point Channel">
-                        <h:outputText value="#{touchPointModel.touchPointChannel}" />
-                    </p:column>
-                </p:dataTable>-->
                 <p:commandButton value="SAVE" icon="ui-icon-extlink" id="save" 
-                                 actionListener="#{journeyController.createJourney(pressSave)}">
+                                 actionListener="#{journeyController.createJourney}">
                 </p:commandButton>
                 
-                
-
-                <p:growl id="messages" showDetail="true" />
-                <p:gmap id="geoGmap" widgetVar="geoMap" center="#{journeyCreateView.centerGeoMap}" zoom="13" type="ROADMAP" 
-                        model="#{touchPointListModel.geoModel}" style="width:100%;height:400px" onPointClick="handlePointClick(event);">
-                    <p:ajax event="geocode" listener="#{journeyCreateView.onAddMakerByGeoCode}" update="@this" />
-                </p:gmap> 
-                <p:menu toggleable="true">                    
-                    <p:submenu label="Navigations">
-                        <p:menuitem value="Dashboard" url="/index.xhtml" icon="ui-icon-home"/>
-                        <p:menuitem value="Create Journey" outcome="/journey/create.xhtml" icon="ui-icon-star"/>
-                    </p:submenu>
-                </p:menu>
-
-                <p:dialog widgetVar="dlg" showEffect="fade">
-                    <h:form prependId="false">
-                        <h:panelGrid columns="2">
-                            <h:outputLabel for="title" value="Title:" />
-                            <p:inputText id="title" value="#{touchPointModel.touchPointDesc}" />
-
-                            <f:facet name="footer">
-                                <p:commandButton value="Add" actionListener="#{journeyCreateView.onAddMaker}" update=":messages" 
-                                                 oncomplete="markerAddComplete()" />
-                                <p:commandButton value="Cancel" onclick="return cancel()" />
-                            </f:facet>
-                        </h:panelGrid>
-
-                        <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}" />
-                        <h:inputHidden id="lng" value="#{touchPointModel.touchpointLongitude}" />
-                    </h:form>
-                </p:dialog>
             </h:form>
         </h:body>
     </f:view>

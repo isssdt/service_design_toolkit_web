@@ -8,8 +8,10 @@ package journey.ejb.model;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 
 /**
  *
@@ -24,13 +26,7 @@ public class TouchPointModel implements Serializable {
      */
     public TouchPointModel() {
     }
-    private String touchPointChannel;
-    private String touchPointDesc;
-    private String touchpointAction;
-    private Double touchpointLatitude;
-    private Double touchpointLongitude;
-    private Integer touchpointRadius;
-
+    
     @PostConstruct
 	private void init() {
 		System.out.println(">>> @PostConstruct: TouchPointModel");
@@ -40,6 +36,22 @@ public class TouchPointModel implements Serializable {
 	private void destroy() {
 		System.out.println(">>> @PreDestry: TouchPointModel");
 	}
+    private String touchPointName;
+    private String touchPointChannel;
+    private String channelDesc;
+    private String touchpointAction;
+    private Double touchpointLatitude;
+    private Double touchpointLongitude;
+    private Integer touchpointRadius;
+
+    public String getTouchPointName() {
+        return touchPointName;
+    }
+
+    public void setTouchPointName(String touchPointName) {
+        this.touchPointName = touchPointName;
+    }
+
     public String getTouchPointChannel() {
         return touchPointChannel;
     }
@@ -48,12 +60,12 @@ public class TouchPointModel implements Serializable {
         this.touchPointChannel = touchPointChannel;
     }
 
-    public String getTouchPointDesc() {
-        return touchPointDesc;
+    public String getChannelDesc() {
+        return channelDesc;
     }
 
-    public void setTouchPointDesc(String touchPointDesc) {
-        this.touchPointDesc = touchPointDesc;
+    public void setChannelDesc(String channelDesc) {
+        this.channelDesc = channelDesc;
     }
 
     public String getTouchpointAction() {
@@ -87,11 +99,13 @@ public class TouchPointModel implements Serializable {
     public void setTouchpointRadius(Integer touchpointRadius) {
         this.touchpointRadius = touchpointRadius;
     }
-    
+
+ 
     public TouchPointModel createCopy() {
         TouchPointModel model = new TouchPointModel();
+            model.setTouchPointName(touchPointName);
             model.setTouchPointChannel(touchPointChannel);
-            model.setTouchPointDesc(touchPointDesc);
+            model.setChannelDesc(channelDesc);
             model.setTouchpointAction(touchpointAction);
             model.setTouchpointLatitude(touchpointLatitude);
             model.setTouchpointLongitude(touchpointLongitude);
