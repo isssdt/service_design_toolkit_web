@@ -24,13 +24,16 @@ import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import journey.ejb.model.TouchPointModel;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+
 
 /**
  *
- * @author longnguyen
+ * @author Manish
  */
 @Named(value = "journeyCreateView")
 @SessionScoped
@@ -55,6 +58,25 @@ public class JourneyCreateView implements Serializable {
     private String centerGeoMap = "1.3521, 103.8198";
     private Date currentDate = new Date();
     private Map<String, String> channelmap; 
+    private MapModel geoModel;
+    
+    @PostConstruct
+    public void init() {      
+        geoModel = new DefaultMapModel();
+        channelmap = new HashMap<>();
+        List<ChannelDTO> channelListDTO = journeyController.getChannelList();
+        for (ChannelDTO channelDTO : channelListDTO) {
+            channelmap.put(channelDTO.getChannelName(), channelDTO.getChannelName());
+        }
+    }
+
+    public MapModel getGeoModel() {
+        return geoModel;
+    }
+
+    public void setGeoModel(MapModel geoModel) {
+        this.geoModel = geoModel;
+    }
 
     public TouchPointModel getTouchPointModel() {
         return touchPointModel;
@@ -112,38 +134,8 @@ public class JourneyCreateView implements Serializable {
         this.channelmap = channelmap;
     }
     
-    @PostConstruct
-    public void init() {        
-        channelmap = new HashMap<>();
-        List<ChannelDTO> channelListDTO = journeyController.getChannelList();
-        for (ChannelDTO channelDTO : channelListDTO) {
-            channelmap.put(channelDTO.getChannelName(), channelDTO.getChannelName());
-        }
-    }
     
-    public void onAddMakerByGeoCode(GeocodeEvent event) {
-        List<GeocodeResult> geocodeResultList = event.getResults();
-         
-        if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
-            LatLng center = geocodeResultList.get(0).getLatLng();
-            centerGeoMap = center.getLat() + "," + center.getLng();
-             
-            for (GeocodeResult geocodeResult : geocodeResultList) {                
-                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
-            }
-            touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
-        }   
-    }
     
-    public void onAddMaker() {
-        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getChannelDesc());
-        touchPointListModel.getGeoModel().addOverlay(marker);
-        touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
-          
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
-                "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
-    }
-   
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
         for (int i = 0; i <touchPointListModel.getTouchPointListModel().size(); i++) {
@@ -151,6 +143,47 @@ public class JourneyCreateView implements Serializable {
         }
         return touchPointListModel;
         }
+    
+    public void onGeocode(GeocodeEvent event) {
+        List<GeocodeResult> results = event.getResults();
+         
+        if (results != null && !results.isEmpty()) {
+            LatLng center = results.get(0).getLatLng();
+            centerGeoMap = center.getLat() + "," + center.getLng();
+             
+            for (int i = 0; i < results.size(); i++) {
+                GeocodeResult result = results.get(i);
+                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
+                System.out.println(result.getLatLng());
+                System.out.println(result.getAddress());
+            }
+        }
+    }
+    
+//    public void onAddMakerByGeoCode(GeocodeEvent event) {
+//        List<GeocodeResult> geocodeResultList = event.getResults();
+//         
+//        if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
+//            LatLng center = geocodeResultList.get(0).getLatLng();
+//            centerGeoMap = center.getLat() + "," + center.getLng();
+//             
+//            for (GeocodeResult geocodeResult : geocodeResultList) {                
+//                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
+//            }
+//            touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
+//        }   
+//    }
+//    
+//    public void onAddMaker() {
+//        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getChannelDesc());
+//        touchPointListModel.getGeoModel().addOverlay(marker);
+//        touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
+//          
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
+//                "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
+//    }
+   
+
     
     
 }
