@@ -13,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.Mockito;
 import user.ejb.eao.FieldResearcherFacadeLocal;
 import user.ejb.eao.SdtUserFacadeLocal;
@@ -62,16 +61,7 @@ public class UserServiceTest {
     
     @Test
     public void testgetFieldResearcherByName () {
-        FieldResearcher fd = new FieldResearcher();
-        SdtUser sdtUser = new SdtUser();
-        fd.setSdtUser(sdtUser);
-        sdtUser.setUsername("username");
         
-        FieldResearcher result = new FieldResearcher();
-        Map<String, Object> params = new HashMap<>();
-        user.dto.FieldResearcherDTO fieldResearcherDTO = new user.dto.FieldResearcherDTO();
-        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(result.getSdtUser());
-        Assert.assertEquals("username", userService.getFieldResearcherByName(fieldResearcherDTO).getSdtUser().getUsername());
     }
     
     
