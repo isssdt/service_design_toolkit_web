@@ -144,46 +144,41 @@ public class JourneyCreateView implements Serializable {
         return touchPointListModel;
         }
     
-    public void onGeocode(GeocodeEvent event) {
-        List<GeocodeResult> results = event.getResults();
-         
-        if (results != null && !results.isEmpty()) {
-            LatLng center = results.get(0).getLatLng();
-            centerGeoMap = center.getLat() + "," + center.getLng();
-             
-            for (int i = 0; i < results.size(); i++) {
-                GeocodeResult result = results.get(i);
-                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-                System.out.println(result.getLatLng());
-                System.out.println(result.getAddress());
-            }
-        }
-    }
-    
-//    public void onAddMakerByGeoCode(GeocodeEvent event) {
-//        List<GeocodeResult> geocodeResultList = event.getResults();
+//    public void onGeocode(GeocodeEvent event) {
+//        System.out.println("hi there");
+//        List<GeocodeResult> results = event.getResults();
 //         
-//        if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
-//            LatLng center = geocodeResultList.get(0).getLatLng();
+//        if (results != null && !results.isEmpty()) {
+//            LatLng center = results.get(0).getLatLng();
 //            centerGeoMap = center.getLat() + "," + center.getLng();
 //             
-//            for (GeocodeResult geocodeResult : geocodeResultList) {                
-//                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
+//            for (int i = 0; i < results.size(); i++) {
+//                GeocodeResult result = results.get(i);
+//                geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
 //            }
-//            touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
-//        }   
+//        }
 //    }
-//    
-//    public void onAddMaker() {
-//        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getChannelDesc());
-//        touchPointListModel.getGeoModel().addOverlay(marker);
-//        touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
-//          
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
-//                "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
-//    }
-   
-
     
+   public void onAddMakerByGeoCode(GeocodeEvent event) {
+        List<GeocodeResult> geocodeResultList = event.getResults();
+         
+        if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
+            LatLng center = geocodeResultList.get(0).getLatLng();
+            centerGeoMap = center.getLat() + "," + center.getLng();
+             
+            for (GeocodeResult geocodeResult : geocodeResultList) {                
+                touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
+            }
+            touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());            
+        }   
+    }
     
+    public void onAddMaker() {
+        Marker marker = new Marker(new LatLng(touchPointModel.getTouchpointLatitude(), touchPointModel.getTouchpointLongitude()), touchPointModel.getChannelDesc());
+        touchPointListModel.getGeoModel().addOverlay(marker);
+        touchPointListModel.setNo_of_touch_point(touchPointListModel.getGeoModel().getMarkers().size());
+          
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
+                "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
+    }
 }
