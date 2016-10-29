@@ -193,7 +193,8 @@
                         <p:gmap id="geoGmap" widgetVar="geoMap" center="#{journeyCreateView.centerGeoMap}" zoom="13" type="ROADMAP" 
                             model="#{touchPointListModel.geoModel}" style="width:100%;height:400px" onPointClick="handlePointClick(event);">
                         <p:ajax event="geocode" listener="#{journeyCreateView.onAddMakerByGeoCode}" update="@this" />
-                        </p:gmap>                    
+                        </p:gmap>    
+                        <p:commandButton value ="OK" onclick="PF('dlg2').hide();"/>
                 </p:dialog>    
                 <p:commandButton value="SAVE" 
                                  id="save"

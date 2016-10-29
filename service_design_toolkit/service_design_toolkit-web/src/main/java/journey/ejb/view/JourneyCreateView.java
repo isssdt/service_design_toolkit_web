@@ -134,13 +134,8 @@ public class JourneyCreateView implements Serializable {
         this.channelmap = channelmap;
     }
     
-    
-    
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
-        for (int i = 0; i <touchPointListModel.getTouchPointListModel().size(); i++) {
-            System.out.println(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());
-        }
         return touchPointListModel;
         }
     
@@ -163,9 +158,14 @@ public class JourneyCreateView implements Serializable {
         List<GeocodeResult> geocodeResultList = event.getResults();
          
         if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
-            LatLng center = geocodeResultList.get(0).getLatLng();
-            centerGeoMap = center.getLat() + "," + center.getLng();
-             
+             double lat = geocodeResultList.get(0).getLatLng().getLat();
+             double lng = geocodeResultList.get(0).getLatLng().getLng();
+
+            centerGeoMap = lat + "," + lng;
+            touchPointModel.setTouchpointLatitude(lat);
+            touchPointModel.setTouchpointLongitude(lng); 
+             System.out.println("Latitude :"+touchPointModel.getTouchpointLatitude());
+             System.out.println("Longitude :"+touchPointModel.getTouchpointLongitude());
             for (GeocodeResult geocodeResult : geocodeResultList) {                
                 touchPointListModel.getGeoModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));                
             }
