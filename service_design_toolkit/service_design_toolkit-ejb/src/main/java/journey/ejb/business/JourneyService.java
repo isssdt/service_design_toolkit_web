@@ -5,8 +5,10 @@
  */
 package journey.ejb.business;
 
-import common.dto.QueryParamValue;
-import journey.ejb.eao.JourneyFacadeLocal;
+import common.constant.ConstantValues;
+import common.ejb.eao.EAOFactory;
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.Response;
 import journey.dto.ChannelDTO;
 import journey.dto.ChannelListDTO;
 import journey.dto.JourneyDTO;
@@ -23,23 +26,14 @@ import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
-import journey.ejb.eao.ChannelFacadeLocal;
-import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
-import journey.ejb.eao.RatingFacadeLocal;
-import journey.ejb.eao.TouchPointFacadeLocal;
-import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import journey.entity.Channel;
 import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
-import user.ejb.business.UserServiceLocal;
-import user.ejb.eao.FieldResearcherFacadeLocal;
-import user.ejb.eao.SdtUserFacadeLocal;
 import user.entity.FieldResearcher;
 import user.entity.SdtUser;
 
@@ -51,94 +45,42 @@ import user.entity.SdtUser;
 public class JourneyService implements JourneyServiceLocal {
 
     @EJB
-    private JourneyFieldResearcherFacadeLocal journeyFieldResearcherFacade;
-
-    @EJB
-    private JourneyFacadeLocal journeyFacade;
-
-    @EJB
-    private ChannelFacadeLocal channelFacade;
-
-    @EJB
-    private RatingFacadeLocal ratingFacade;
-
-    @EJB
-    private TouchPointFacadeLocal touchPointFacade;
-
-    @EJB
-    private SdtUserFacadeLocal sdtUserFacade;
-
-    @EJB
-    private FieldResearcherFacadeLocal fieldResearcherFacade;
-
-    @EJB
-    private TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade;
-
-    @EJB
-    private UserServiceLocal userService;
+    private EAOFactory factory;
 
     @Override
-    public JourneyListDTO getJourneyList(JourneyDTO content, String queryName) {
-        JourneyListDTO journeyListDTO = new JourneyListDTO();
-        try {
-            Map<String, Object> queryParams = BeanUtilsBean.getInstance().getPropertyUtils().describe(content);
-            for (Journey journey : journeyFacade.findListByQueryName(queryName, queryParams)) {
-                JourneyDTO journeyDTO = new JourneyDTO();
-                BeanUtils.copyProperties(journeyDTO, journey);
-                journeyListDTO.getJourneyDTOList().add(journeyDTO);
+    public Integer createJourney(JourneyDTO journeyDTO) throws CustomReasonPhraseException {
 
-            }
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-            Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return journeyListDTO;
-    }
-
-    @Override
-    public void createJourney(JourneyDTO journeyDTO) {
+        Journey journey = new Journey();
         try {
-            Journey journey = new Journey();
             BeanUtils.copyProperties(journey, journeyDTO);
-            List<TouchPoint> touchPointList = new ArrayList<>();
-            for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointDTOList()) {
-                TouchPoint touchPoint = new TouchPoint();
-                Channel channel = channelFacade.findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
-                BeanUtils.copyProperties(touchPoint, touchPointDTO);
-
-                touchPoint.setChannelId(channel);
-                touchPoint.setJourneyId(journey);
-                touchPointList.add(touchPoint);
-            }
-            journey.setTouchPointList(touchPointList);
-
-            journeyFacade.create(journey);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
         }
-    }
-
-    @Override
-    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO) {
-        Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
-        List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
-        for (TouchPoint touchPoint : journey.getTouchPointList()) {
+        List<TouchPoint> touchPointList = new ArrayList<>();
+        for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointDTOList()) {
+            TouchPoint touchPoint = new TouchPoint();
+            Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
             try {
-                TouchPointDTO touchPointDTO = new TouchPointDTO();
-                BeanUtils.copyProperties(touchPointDTO, touchPoint);
-                touchPointDTOList.add(touchPointDTO);
+                BeanUtils.copyProperties(touchPoint, touchPointDTO);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
             }
+
+            touchPoint.setChannelId(channel);
+            touchPoint.setJourneyId(journey);
+            touchPointList.add(touchPoint);
         }
-        journeyDTO.setTouchPointDTOList(touchPointDTOList);
-        return journeyDTO;
+        journey.setTouchPointList(touchPointList);
+
+        return factory.getJourneyFacade().create(journey).getId();
+
     }
 
     @Override
-    public JourneyDTO getJourneyByName(JourneyDTO journeyDTO) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("journeyName", journeyDTO.getJourneyName());
-        Journey journey = journeyFacade.findSingleByQueryName("Journey.findByJourneyName", params);
+    public JourneyDTO getJourneyByName(JourneyDTO journeyDTO) {        
+        Journey journey = factory.getJourneyFacade().findJourneyByName(journeyDTO);
         if (null == journey) {
             return null;
         }
@@ -151,39 +93,50 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
-        JourneyFieldResearcher journeyFieldResearcher = new JourneyFieldResearcher();
-        Journey journey = journeyFacade.findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
-        if (journey.getNoOfFieldResearcher() <= journey.getJourneyFieldResearcherList().size()) {
-            return "OK";
-        }
-        FieldResearcher fieldResearcher = userService.getFieldResearcherByName(journeyFieldResearcherDTO.getFieldResearcherDTO());
+    public void registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws AppException {
+        journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+        JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
 
-        String query = "select a.* from journey a, sdt_user b, journey_field_researcher c "
-                + "where a.id = c.journey_id and b.id = c.field_researcher_id "
-                + "and a.journey_name = ? and b.username = ?";
-        List<Object> params = new ArrayList<>();
-        params.add(journey.getJourneyName());
-        params.add(fieldResearcher.getSdtUser().getUsername());
-        if (null != journeyFacade.findSingleByNativeQuery(query, params)) {
-            return "OK";
+        if (null != journeyFieldResearcher) {
+            throw new AppException(Response.Status.CONFLICT.getStatusCode(), 409,
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_ERROR,
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_DEV_INFO, ConstantValues.BLOG_POST_URL);
         }
+
+        journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyByNameAndFieldResearcher(journeyFieldResearcherDTO);
+        if (ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE.equals(journeyFieldResearcher.getStatus())) {
+            throw new AppException(Response.Status.CONFLICT.getStatusCode(), 409,
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_DONE_ALREADY_ERROR,
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_DONE_ALREADY_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+        }
+
+        SdtUser sdtUser = factory.getSdtUserFacade().findUserByUsername(journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO());
+        Journey journey = factory.getJourneyFacade().findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO());
+
+        journeyFieldResearcher = new JourneyFieldResearcher();
         journeyFieldResearcher.setJourneyId(journey);
-        journeyFieldResearcher.setFieldResearcherId(fieldResearcher);
+        journeyFieldResearcher.setFieldResearcherId(sdtUser.getFieldResearcher());
+        journeyFieldResearcher.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
 
-        journeyFieldResearcherFacade.create(journeyFieldResearcher);
+        factory.getJourneyFieldResearcherFacade().create(journeyFieldResearcher);
 
         if (journey.getJourneyFieldResearcherList().size() + 1 == journey.getNoOfFieldResearcher()) {
             journey.setCanBeRegistered('N');
-            journeyFacade.edit(journey);
+            factory.getJourneyFacade().edit(journey);
         }
 
-        return "OK";
+        for (TouchPoint touchPoint : journey.getTouchPointList()) {
+            TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
+            touchpointFieldResearcher.setTouchpointId(touchPoint);
+            touchpointFieldResearcher.setFieldResearcherId(sdtUser.getFieldResearcher());
+            touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+            factory.getTouchPointFieldResearcherFacade().create(touchpointFieldResearcher);
+        }
     }
 
     @Override
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO) {
-        Journey journey = journeyFacade.findJourneyByName(journeyDTO.getJourneyName());
+        Journey journey = factory.getJourneyFacade().findJourneyByName(journeyDTO);
         List<FieldResearcherDTO> fieldResearcherDTOList = new ArrayList<>();
         for (JourneyFieldResearcher journeyFieldResearcher : journey.getJourneyFieldResearcherList()) {
             FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
@@ -207,7 +160,7 @@ public class JourneyService implements JourneyServiceLocal {
     public ChannelListDTO getChannelList() {
         ChannelListDTO channelListDTO = new ChannelListDTO();
 
-        for (Channel channel : channelFacade.findAll()) {
+        for (Channel channel : factory.getChannelFacade().findAll()) {
             try {
                 ChannelDTO channelDTO = new ChannelDTO();
                 BeanUtils.copyProperties(channelDTO, channel);
@@ -222,28 +175,6 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
-        touchPointFieldResearcherFacade.create(buildTouchpointFieldResearcher(touchpointFieldResearcherDTO));
-    }
-
-    protected TouchpointFieldResearcher buildTouchpointFieldResearcher(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) {
-        TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
-
-        touchpointFieldResearcher.setRatingId(ratingFacade.findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
-        touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
-        touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
-        touchpointFieldResearcher.setTouchpointId(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId()));
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("username", touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
-        FieldResearcher fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
-
-        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
-
-        return touchpointFieldResearcher;
-    }
-
-    @Override
     public TouchPointFieldResearcherDTO getTouchPointDetails(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
 
@@ -251,7 +182,7 @@ public class JourneyService implements JourneyServiceLocal {
         params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
         FieldResearcher fieldResearcher;
 
-        fieldResearcher = sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
+        fieldResearcher = factory.getSdtUserFacade().findSingleByQueryName("SdtUser.findByUsername", params).getFieldResearcher();
 
         String query = "SELECT a.* FROM touchpoint_field_researcher a "
                 + "where a.field_researcher_id=? and a.touchpoint_id=? ";
@@ -260,8 +191,8 @@ public class JourneyService implements JourneyServiceLocal {
         param.add(fieldResearcher.getSdtUser().getUsername());
         param.add(touchPointFieldResearcherDTO.getTouchpointDTO().getId());
 
-        if (null != touchPointFacade.findSingleByNativeQuery(query, param)) {
-            touchpointFieldResearcher = touchPointFieldResearcherFacade.findSingleByNativeQuery(query, param);
+        if (null != factory.getTouchPointFacade().findSingleByNativeQuery(query, param)) {
+            touchpointFieldResearcher = factory.getTouchPointFieldResearcherFacade().findSingleByNativeQuery(query, param);
         }
         try {
             BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
@@ -273,4 +204,66 @@ public class JourneyService implements JourneyServiceLocal {
         return touchPointFieldResearcherDTO;
     }
 
+    @Override
+    public JourneyListDTO findJourneyListForRegister() throws AppException, CustomReasonPhraseException {
+        JourneyListDTO journeyListDTO = new JourneyListDTO();
+        List<Journey> journeyList = factory.getJourneyFacade().findJourneyListForRegister();
+        if (null == journeyList || journeyList.isEmpty()) {
+            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), 404, ConstantValues.JOURNEY_NO_REGISTER_ERROR,
+                    ConstantValues.JOURNEY_NO_REGISTER_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+        }
+        List<JourneyDTO> journeyDTOList = new ArrayList<>();
+        for (Journey journey : journeyList) {
+            JourneyDTO journeyDTO = new JourneyDTO();
+            try {
+                BeanUtils.copyProperties(journeyDTO, journey);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
+            }
+            journeyDTOList.add(journeyDTO);
+        }
+        journeyListDTO.setJourneyDTOList(journeyDTOList);
+        return journeyListDTO;
+    }
+
+    @Override
+    public List<JourneyDTO> getAllJourney() throws AppException, CustomReasonPhraseException {
+        List<Journey> journeyList = factory.getJourneyFacade().findAll();
+        List<JourneyDTO> journeyDTOList = new ArrayList<>();
+        for (Journey journey : journeyList) {
+            JourneyDTO journeyDTO = new JourneyDTO();
+            try {
+                BeanUtils.copyProperties(journeyDTO, journey);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
+            }
+            journeyDTOList.add(journeyDTO);
+        }
+        return journeyDTOList;
+    }
+
+    @Override
+    public Integer updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+        FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
+        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
+        
+        JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();
+        journeyFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
+        journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+        JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
+        
+        if (null == journeyFieldResearcher) {
+            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), Response.Status.NOT_FOUND.getStatusCode(), 
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_ERROR, 
+                    ConstantValues.JOURNEY_FIELD_RESEARCHER_NON_JOURNEY_IN_PROGRESS_DEV_INFO,
+                    ConstantValues.BLOG_POST_URL);
+        }
+        
+        journeyFieldResearcher.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE);
+        factory.getJourneyFieldResearcherFacade().edit(journeyFieldResearcher);
+        
+        return journeyFieldResearcher.getId();
+    }
 }

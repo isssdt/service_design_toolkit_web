@@ -5,9 +5,11 @@
  */
 package user.ejb.business;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import javax.ejb.Local;
 import user.dto.FieldResearcherDTO;
-import user.entity.FieldResearcher;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -16,5 +18,6 @@ import user.entity.FieldResearcher;
 @Local
 public interface UserServiceLocal {
     public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
-    public FieldResearcher getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO);    
+    public FieldResearcherDTO getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException;    
+    public String registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }

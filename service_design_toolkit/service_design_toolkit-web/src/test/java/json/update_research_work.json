@@ -1,10 +1,10 @@
 {
     "fieldResearcherDTO": {
-        "sdtUserDTO": {"username":"Sam"}
+        "sdtUserDTO": {"username":"Prasan"}
     },
     "touchpointDTO": {
         "touchPointDesc":"Departments",
-        "id":"2"
+        "id":"4"
         },
     "comments":"I really love it",
     "reaction":"Sam work on it",

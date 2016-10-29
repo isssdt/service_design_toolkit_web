@@ -6,6 +6,8 @@
 package user.ejb.eao;
 
 import common.ejb.eao.AbstractFacade;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,4 +31,11 @@ public class UserRoleFacade extends AbstractFacade<UserRole> implements UserRole
     public UserRoleFacade() {
         super(UserRole.class);
     }    
+
+    @Override
+    public UserRole findByRoleName(Object roleName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("roleName", roleName);
+        return findSingleByQueryName("UserRole.findByRoleName", params);
+    }
 }

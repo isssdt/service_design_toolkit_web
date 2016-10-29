@@ -6,9 +6,12 @@
 package user.ejb.eao;
 
 import common.ejb.eao.AbstractFacade;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import user.dto.SdtUserDTO;
 import user.entity.SdtUser;
 
 /**
@@ -28,6 +31,13 @@ public class SdtUserFacade extends AbstractFacade<SdtUser> implements SdtUserFac
 
     public SdtUserFacade() {
         super(SdtUser.class);
+    }
+
+    @Override
+    public SdtUser findUserByUsername(SdtUserDTO sdtUserDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", sdtUserDTO.getUsername());
+        return findSingleByQueryName("SdtUser.findByUsername", params); 
     }
     
 }

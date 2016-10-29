@@ -8,6 +8,7 @@ package journey.ejb.eao;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
+import journey.dto.JourneyDTO;
 import journey.entity.Journey;
 
 /**
@@ -31,7 +32,7 @@ public interface JourneyFacadeLocal {
 
     int count();
     
-    Journey findJourneyByName(Object journeyName);
+    Journey findJourneyByName(JourneyDTO journeyDTO);
     
     List<Journey> findListOfJourneyByIsActive(Object isActive);    
     
@@ -42,5 +43,7 @@ public interface JourneyFacadeLocal {
     List<Journey> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
     
     Journey findSingleByQueryName(String queryName, Map<String, Object> params);
+    
+    List<Journey> findJourneyListForRegister();
     
 }

@@ -14,6 +14,7 @@ import user.dto.FieldResearcherDTO;
 public class JourneyFieldResearcherDTO {
     private JourneyDTO journeyDTO;
     private FieldResearcherDTO fieldResearcherDTO;
+    private String status;
 
     public JourneyDTO getJourneyDTO() {
         return journeyDTO;
@@ -29,5 +30,13 @@ public class JourneyFieldResearcherDTO {
 
     public void setFieldResearcherDTO(FieldResearcherDTO fieldResearcherDTO) {
         this.fieldResearcherDTO = fieldResearcherDTO;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -5,10 +5,13 @@
  */
 /**
  * Author:  longnguyen
- * Created: Aug 14, 2016
+ * Created: Oct 28, 2016
  */
 
 use service_design_toolkit;
-drop table touch_point;
-drop table journey;
 
+alter table journey_field_researcher add column status varchar(50);
+
+alter table touchpoint_field_researcher add column status varchar(50);
+
+alter table touchpoint_field_researcher modify column `rating_id` int(11);

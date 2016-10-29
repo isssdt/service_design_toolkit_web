@@ -5,13 +5,20 @@
  */
 package user.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  *
  * @author longnguyen
  */
+
+@JsonInclude(Include.NON_NULL)
 public class SdtUserDTO {
-   private String username;
-   private Character isActive;
+
+    private String username;
+    private Character isActive;
+    private FieldResearcherDTO fieldResearcherDTO;
 
     public String getUsername() {
         return username;
@@ -27,5 +34,13 @@ public class SdtUserDTO {
 
     public void setIsActive(Character isActive) {
         this.isActive = isActive;
+    }
+
+    public FieldResearcherDTO getFieldResearcherDTO() {
+        return fieldResearcherDTO;
+    }
+
+    public void setFieldResearcherDTO(FieldResearcherDTO fieldResearcherDTO) {
+        this.fieldResearcherDTO = fieldResearcherDTO;
     }
 }

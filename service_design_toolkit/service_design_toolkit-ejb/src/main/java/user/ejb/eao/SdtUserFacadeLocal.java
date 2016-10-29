@@ -9,6 +9,7 @@ import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
+import user.dto.SdtUserDTO;
 import user.entity.SdtUser;
 
 /**
@@ -32,6 +33,10 @@ public interface SdtUserFacadeLocal {
 
     int count();
 
-    public SdtUser findSingleByQueryName(String queryName, Map<String, Object> params);
+    SdtUser findSingleByQueryName(String queryName, Map<String, Object> params);
+    
+    SdtUser findUserByUsername(SdtUserDTO sdtUserDTO);
+    
+    
 
 }

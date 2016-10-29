@@ -5,6 +5,8 @@
  */
 package rest.journey;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -57,7 +59,7 @@ public class RegisterFieldResearcherWithJourney {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(JourneyFieldResearcherDTO content) {
+    public Response putJson(JourneyFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {
         journeyService.registerFieldResearcherWithJourney(content);
         String message = "Field Researcher " + content.getFieldResearcherDTO().getSdtUserDTO().getUsername() + " has registered for Journey " 
                 + content.getJourneyDTO().getJourneyName();

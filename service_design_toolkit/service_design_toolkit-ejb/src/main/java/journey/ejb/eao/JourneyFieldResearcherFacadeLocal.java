@@ -6,7 +6,9 @@
 package journey.ejb.eao;
 
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
+import journey.dto.JourneyFieldResearcherDTO;
 import journey.entity.JourneyFieldResearcher;
 
 /**
@@ -29,4 +31,10 @@ public interface JourneyFieldResearcherFacadeLocal {
     List<JourneyFieldResearcher> findRange(int[] range);
 
     int count();   
+    
+    JourneyFieldResearcher findSingleByQueryName(String queryName, Map<String, Object> params);
+    
+    JourneyFieldResearcher findJourneyOfFieldResearcherByStatus(JourneyFieldResearcherDTO journeyFieldResearcherDTO);
+    
+    JourneyFieldResearcher findJourneyByNameAndFieldResearcher(JourneyFieldResearcherDTO journeyFieldResearcherDTO);
 }

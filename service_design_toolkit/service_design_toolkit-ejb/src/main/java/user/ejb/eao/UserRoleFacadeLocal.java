@@ -31,5 +31,7 @@ public interface UserRoleFacadeLocal {
 
     int count();        
     
-    public UserRole findSingleByQueryName(String queryName, Map<String, Object> params);
+    UserRole findSingleByQueryName(String queryName, Map<String, Object> params);
+    
+    UserRole findByRoleName(Object roleName);
 }

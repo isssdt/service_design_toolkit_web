@@ -5,7 +5,6 @@
  */
 package journey.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
 import java.util.Map;
 import journey.entity.TouchPoint;
@@ -32,8 +31,5 @@ public interface TouchPointFacadeLocal {
     
     TouchPoint findSingleByNativeQuery(String query, List<Object> params);
     
-    List<TouchPoint> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
-    
-   
-             
+    List<TouchPoint> findListByQueryName(String queryName, Map<String, Object> queryParamValues);             
 }

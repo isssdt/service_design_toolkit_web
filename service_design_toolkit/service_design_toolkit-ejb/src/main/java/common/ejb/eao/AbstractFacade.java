@@ -5,7 +5,6 @@
  */
 package common.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -63,9 +62,7 @@ public abstract class AbstractFacade<T> {
     public List<T> findListByQueryName(String queryName, Map<String, Object> queryParamValues) {
         TypedQuery<T> typedQuery = getEntityManager().createNamedQuery(queryName, entityClass);
         for (Map.Entry<String, Object> param : queryParamValues.entrySet()) {
-            if (null != param.getValue() && !"class".equals(param.getKey())) {
-                typedQuery.setParameter(param.getKey(), param.getValue());
-            }
+            typedQuery.setParameter(param.getKey(), param.getValue());
         }
         try {
             return typedQuery.getResultList();

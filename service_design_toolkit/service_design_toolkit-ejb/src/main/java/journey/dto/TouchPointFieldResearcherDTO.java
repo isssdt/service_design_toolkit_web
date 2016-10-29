@@ -5,18 +5,23 @@
  */
 package journey.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import user.dto.FieldResearcherDTO;
 
 /**
  *
  * @author samru
  */
+
+@JsonInclude(Include.NON_NULL)
 public class TouchPointFieldResearcherDTO {
     private FieldResearcherDTO fieldResearcherDTO;
     private TouchPointDTO touchpointDTO;
     private String comments;
     private String reaction;
     private RatingDTO ratingDTO;
+    private String status;
 
     public FieldResearcherDTO getFieldResearcherDTO() {
         return fieldResearcherDTO;
@@ -56,7 +61,13 @@ public class TouchPointFieldResearcherDTO {
 
     public void setRatingDTO(RatingDTO ratingDTO) {
         this.ratingDTO = ratingDTO;
+    }   
+
+    public String getStatus() {
+        return status;
     }
-    
-    
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

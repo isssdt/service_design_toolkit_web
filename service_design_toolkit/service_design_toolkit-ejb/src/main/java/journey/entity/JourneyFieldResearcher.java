@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import user.entity.FieldResearcher;
 
@@ -29,8 +30,17 @@ import user.entity.FieldResearcher;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "JourneyFieldResearcher.findAll", query = "SELECT j FROM JourneyFieldResearcher j"),
-    @NamedQuery(name = "JourneyFieldResearcher.findById", query = "SELECT j FROM JourneyFieldResearcher j WHERE j.id = :id")})
+    @NamedQuery(name = "JourneyFieldResearcher.findById", query = "SELECT j FROM JourneyFieldResearcher j WHERE j.id = :id"),
+    @NamedQuery(name = "JourneyFieldResearcher.findJourneyOfFieldResearcherByStatus", 
+            query = "SELECT j FROM JourneyFieldResearcher j inner join j.fieldResearcherId fr WHERE j.status = :status and fr.sdtUser.username = :username"),
+    @NamedQuery(name = "JourneyFieldResearcher.findJourneyByNameAndFieldResearcher", 
+            query = "SELECT j FROM JourneyFieldResearcher j inner join j.fieldResearcherId fr INNER JOIN j.journeyId jr WHERE jr.journeyName = :journeyName and fr.sdtUser.username = :username")})
+
 public class JourneyFieldResearcher implements Serializable {
+
+    @Size(max = 50)
+    @Column(name = "status")
+    private String status;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -99,6 +109,14 @@ public class JourneyFieldResearcher implements Serializable {
     @Override
     public String toString() {
         return "journey.entity.JourneyFieldResearcher[ id=" + id + " ]";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }

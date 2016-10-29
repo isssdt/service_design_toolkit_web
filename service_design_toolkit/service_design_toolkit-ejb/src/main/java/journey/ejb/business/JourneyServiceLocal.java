@@ -5,6 +5,7 @@
  */
 package journey.ejb.business;
 
+import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import javax.ejb.Local;
@@ -14,6 +15,7 @@ import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -28,20 +30,13 @@ public interface JourneyServiceLocal {
      * @param queryName
      * @return
      */
-    public JourneyListDTO getJourneyList(JourneyDTO content, String queryName);
+    public List<JourneyDTO> getAllJourney() throws AppException, CustomReasonPhraseException;
 
     /**
      *
      * @param journeyDTO
      */
-    public void createJourney(JourneyDTO journeyDTO);
-
-    /**
-     *
-     * @param journeyDTO
-     * @return
-     */
-    public JourneyDTO getTouchPointListOfJourney(JourneyDTO journeyDTO);
+    public Integer createJourney(JourneyDTO journeyDTO) throws AppException, CustomReasonPhraseException;
 
     /**
      *
@@ -63,11 +58,13 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-    public void saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO);
-
-    public String registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO);
+    public void registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws AppException, CustomReasonPhraseException;
 
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
     
     public TouchPointFieldResearcherDTO getTouchPointDetails(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
+    
+    public JourneyListDTO findJourneyListForRegister() throws AppException, CustomReasonPhraseException;
+    
+    public Integer updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }

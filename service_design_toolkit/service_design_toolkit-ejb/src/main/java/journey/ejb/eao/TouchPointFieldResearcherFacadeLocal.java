@@ -5,9 +5,9 @@
  */
 package journey.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
 import java.util.Map;
+import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.TouchpointFieldResearcher;
 
 /**
@@ -15,7 +15,9 @@ import journey.entity.TouchpointFieldResearcher;
  * @author samru
  */
 public interface TouchPointFieldResearcherFacadeLocal {
-     TouchpointFieldResearcher create(TouchpointFieldResearcher touchpointFieldResearcher);
+
+    TouchpointFieldResearcher create(TouchpointFieldResearcher touchpointFieldResearcher);
+
     void edit(TouchpointFieldResearcher touchpointFieldResearcher);
 
     void remove(TouchpointFieldResearcher TouchpointFieldResearcher);
@@ -23,16 +25,23 @@ public interface TouchPointFieldResearcherFacadeLocal {
     TouchpointFieldResearcher find(Object id);
 
     List<TouchpointFieldResearcher> findAll();
-    
+
     List<TouchpointFieldResearcher> findRange(int[] range);
 
-    int count();    
-    
+    int count();
+
     List<TouchpointFieldResearcher> findListByNativeQuery(String query, List<Object> params);
-    
+
     TouchpointFieldResearcher findSingleByNativeQuery(String query, List<Object> params);
+
+    List<TouchpointFieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);    
     
-    List<TouchpointFieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
+    /**
+     * get TouchPointFieldResearcher by Touch Point ID and Field Researcher Name
+     * @param touchPointFieldResearcherDTO
+     * @return 
+     */
+    TouchpointFieldResearcher findByTouchpointIdAndFieldResearcherName(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
     
-   
+    List<TouchpointFieldResearcher> findByStatusAndFieldResearcherName(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
 }

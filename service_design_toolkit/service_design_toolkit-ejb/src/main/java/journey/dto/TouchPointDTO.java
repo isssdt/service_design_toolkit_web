@@ -5,10 +5,15 @@
  */
 package journey.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  *
  * @author longnguyen
  */
+
+@JsonInclude(Include.NON_NULL)
 public class TouchPointDTO {
     
     private Integer id;

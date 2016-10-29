@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest.touchpoint;
+package rest.user;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -18,49 +18,49 @@ import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import journey.dto.TouchPointFieldResearcherDTO;
-import touchpoint.ejb.business.TouchPointServiceLocal;
+import user.dto.SdtUserDTO;
+import user.ejb.business.UserServiceLocal;
 
 /**
  * REST Web Service
  *
  * @author longnguyen
  */
-@Path("update_research_work")
+@Path("field_researcher_register")
 @RequestScoped
-public class UpdateResearchWork {
-    @EJB
-    TouchPointServiceLocal touchPointService;
+public class FieldResearcherRegister {
 
     @Context
     private UriInfo context;
+    
+    @EJB
+    private UserServiceLocal userService;
 
     /**
-     * Creates a new instance of UpdateResearchWork
+     * Creates a new instance of FieldResearcherRegister
      */
-    public UpdateResearchWork() {
+    public FieldResearcherRegister() {
     }
 
     /**
-     * Retrieves representation of an instance of rest.touchpoint.UpdateResearchWork
-     * @return an instance of journey.dto.TouchPointFieldResearcherDTO
+     * Retrieves representation of an instance of rest.user.FieldResearcherRegister
+     * @return an instance of user.dto.SdtUserDTO
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public TouchPointFieldResearcherDTO getJson() {
+    public SdtUserDTO getJson() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
 
     /**
-     * PUT method for updating or creating an instance of UpdateResearchWork
+     * PUT method for updating or creating an instance of FieldResearcherRegister
      * @param content representation for the resource
-     * @return 
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(TouchPointFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {
-        String message = touchPointService.saveResponse(content);
+    public Response putJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {
+        String message = userService.registerFieldResearcher(content);
         return Response.status(Response.Status.CREATED)// 201
 				.entity(message)
 				.build();

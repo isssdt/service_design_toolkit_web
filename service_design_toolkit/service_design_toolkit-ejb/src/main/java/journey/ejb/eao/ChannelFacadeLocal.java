@@ -5,7 +5,6 @@
  */
 package journey.ejb.eao;
 
-import common.dto.QueryParamValue;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;

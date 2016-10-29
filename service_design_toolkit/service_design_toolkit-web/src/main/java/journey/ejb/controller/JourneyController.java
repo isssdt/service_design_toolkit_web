@@ -5,6 +5,8 @@
  */
 package journey.ejb.controller;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -23,11 +25,8 @@ import journey.ejb.business.JourneyServiceLocal;
 import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import org.apache.commons.beanutils.BeanUtils;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import journey.ejb.model.TouchPointModel;
-import org.primefaces.model.map.Marker;
 
 
 
@@ -63,11 +62,7 @@ public class JourneyController implements Serializable {
     private ChannelListDTO channelListDTO = new ChannelListDTO();
     
     
-    public void createJourney() {
-        //if (touchPointListModel.getGeoModel().getMarkers().isEmpty()) {
-        //    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Marker"));
-        //    return;
-        //}
+    public void createJourney() throws AppException, CustomReasonPhraseException {        
         try {
             BeanUtils.copyProperties(journeyDTO, journeyModel.createCopy());
             journeyDTO.setIsActive('Y');
@@ -87,13 +82,7 @@ public class JourneyController implements Serializable {
                 touchPointDTOList.add(touchPointDTO);                
             }            
             
-//            for (Marker marker : touchPointListModel.getGeoModel().getMarkers()) {
-//        
-//                touchPointDTO.setLatitude(Double.toString(marker.getLatlng().getLat()));
-//                touchPointDTO.setLongitude(Double.toString(marker.getLatlng().getLng()));
-//                touchPointDTO.setTouchPointDesc(marker.getTitle());               
-//                touchPointDTOList.add(touchPointDTO);
-//            }
+            
             journeyDTO.setTouchPointDTOList(touchPointDTOList);
             touchPointListModel.getGeoModel().getMarkers().clear();
             journeyService.createJourney(journeyDTO);

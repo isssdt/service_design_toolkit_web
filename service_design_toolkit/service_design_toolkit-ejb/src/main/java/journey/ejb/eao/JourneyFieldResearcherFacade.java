@@ -6,9 +6,12 @@
 package journey.ejb.eao;
 
 import common.ejb.eao.AbstractFacade;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import journey.dto.JourneyFieldResearcherDTO;
 import journey.entity.JourneyFieldResearcher;
 
 /**
@@ -28,6 +31,22 @@ public class JourneyFieldResearcherFacade extends AbstractFacade<JourneyFieldRes
 
     public JourneyFieldResearcherFacade() {
         super(JourneyFieldResearcher.class);
+    }
+
+    @Override
+    public JourneyFieldResearcher findJourneyOfFieldResearcherByStatus(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        params.put("status", journeyFieldResearcherDTO.getStatus());
+        return findSingleByQueryName("JourneyFieldResearcher.findJourneyOfFieldResearcherByStatus", params);
+    }
+
+    @Override
+    public JourneyFieldResearcher findJourneyByNameAndFieldResearcher(JourneyFieldResearcherDTO journeyFieldResearcherDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        params.put("journeyName", journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
+        return findSingleByQueryName("JourneyFieldResearcher.findJourneyByNameAndFieldResearcher", params);
     }
     
 }

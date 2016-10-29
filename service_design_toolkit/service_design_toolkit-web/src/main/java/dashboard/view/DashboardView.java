@@ -5,12 +5,16 @@
  */
 package dashboard.view;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import dashboard.controller.DashboardController;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -32,7 +36,7 @@ public class DashboardView implements Serializable {
     @Inject
     private DashboardController dashboardController;
 
-    private Map<String, String> journeyNameMap;   
+    private Map<String, String> journeyNameMap;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private String journeyName;
     private MapModel geoModel;
@@ -45,22 +49,27 @@ public class DashboardView implements Serializable {
     }
 
     @PostConstruct
-    public void init() {        
+    public void init() {
         journeyNameMap = new HashMap<>();
-        List<JourneyDTO> journeyDTOList = dashboardController.getActiveJourneyList();
-        for (JourneyDTO journeyDTO : journeyDTOList) {
-            journeyNameMap.put(journeyDTO.getJourneyName(), journeyDTO.getJourneyName());
+        List<JourneyDTO> journeyDTOList;
+        try {
+            journeyDTOList = dashboardController.getActiveJourneyList();
+            for (JourneyDTO journeyDTO : journeyDTOList) {
+                journeyNameMap.put(journeyDTO.getJourneyName(), journeyDTO.getJourneyName());
+            }
+        } catch (AppException | CustomReasonPhraseException ex) {
+            Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
         }
         geoModel = new DefaultMapModel();
     }
 
-    public void onJourneyChange() {                                
+    public void onJourneyChange() {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(journeyName);
         fieldResearcherDTOList = dashboardController.getRegisteredFieldResearchersByJourneyName(journeyDTO);
 
         for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {
-            Marker marker = new Marker(new LatLng(Double.parseDouble(fieldResearcherDTO.getCurrentLatitude()), 
+            Marker marker = new Marker(new LatLng(Double.parseDouble(fieldResearcherDTO.getCurrentLatitude()),
                     Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())), fieldResearcherDTO.getSdtUserDTO().getUsername());
             getGeoModel().addOverlay(marker);
             setCenterGeoMap(fieldResearcherDTO.getCurrentLatitude() + "," + fieldResearcherDTO.getCurrentLongitude());
@@ -81,7 +90,7 @@ public class DashboardView implements Serializable {
 
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
-    }    
+    }
 
     public Map<String, String> getJourneyNameMap() {
         return journeyNameMap;

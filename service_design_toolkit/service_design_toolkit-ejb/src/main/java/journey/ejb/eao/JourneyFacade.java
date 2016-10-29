@@ -6,11 +6,16 @@
 package journey.ejb.eao;
 
 import common.ejb.eao.AbstractFacade;
+import java.sql.Date;
+import java.sql.SQLXML;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import journey.dto.JourneyDTO;
 import journey.entity.Journey;
 
 /**
@@ -33,11 +38,10 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
     }
 
     @Override
-    public Journey findJourneyByName(Object journeyName) {
-        Query query = em.createNamedQuery("Journey.findByJourneyName");
-        query.setParameter("journeyName", journeyName);
-        Journey journey = (Journey)query.getSingleResult();        
-        journey.getTouchPointList().size();
+    public Journey findJourneyByName(JourneyDTO journeyDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", journeyDTO.getJourneyName());        
+        Journey journey = findSingleByQueryName("Journey.findByJourneyName", params);        
         return journey;
     }
 
@@ -46,6 +50,14 @@ public class JourneyFacade extends AbstractFacade<Journey> implements JourneyFac
         Query query = em.createNamedQuery("Journey.findByIsActive");
         query.setParameter("isActive", isActive);
         return query.getResultList();       
+    }
+
+    @Override
+    public List<Journey> findJourneyListForRegister() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", new Date(new java.util.Date().getTime()));
+        params.put("endDate", new Date(new java.util.Date().getTime()));
+        return findListByQueryName("Journey.findJourneyListForRegister", params);
     }
     
 }

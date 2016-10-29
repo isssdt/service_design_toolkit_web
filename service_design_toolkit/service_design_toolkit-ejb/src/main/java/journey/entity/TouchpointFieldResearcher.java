@@ -33,8 +33,16 @@ import user.entity.FieldResearcher;
     @NamedQuery(name = "TouchpointFieldResearcher.findAll", query = "SELECT t FROM TouchpointFieldResearcher t"),
     @NamedQuery(name = "TouchpointFieldResearcher.findById", query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.id = :id"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByComments", query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.comments = :comments"),
-    @NamedQuery(name = "TouchpointFieldResearcher.findByReaction", query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.reaction = :reaction")})
+    @NamedQuery(name = "TouchpointFieldResearcher.findByReaction", query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.reaction = :reaction"),
+    @NamedQuery(name = "TouchpointFieldResearcher.findByTouchpointIdAndFieldResearcherName", 
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId = :touchpointId and t.fieldResearcherId.sdtUser.username = :username"),
+    @NamedQuery(name = "TouchpointFieldResearcher.findByStatusAndFieldResearcherName", 
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.status = :status and t.fieldResearcherId.sdtUser.username = :username")})
 public class TouchpointFieldResearcher implements Serializable {
+
+    @Size(max = 50)
+    @Column(name = "status")
+    private String status;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -137,6 +145,14 @@ public class TouchpointFieldResearcher implements Serializable {
     @Override
     public String toString() {
         return "journey.entity.TouchpointFieldResearcher[ id=" + id + " ]";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }

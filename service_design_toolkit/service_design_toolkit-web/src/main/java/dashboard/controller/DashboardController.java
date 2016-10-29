@@ -5,6 +5,8 @@
  */
 package dashboard.controller;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -31,14 +33,10 @@ public class DashboardController implements Serializable {
     public DashboardController() {
     }
     
-    public List<JourneyDTO> getActiveJourneyList() {
+    public List<JourneyDTO> getActiveJourneyList() throws AppException, CustomReasonPhraseException {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setIsActive('Y');        
-        JourneyListDTO journeyListDTO = journeyService.getJourneyList(journeyDTO, "Journey.findByIsActive");
-        if (null != journeyListDTO) {
-            return journeyListDTO.getJourneyDTOList();
-        }
-        return null;
+        return journeyService.getAllJourney();
     }
     
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO) {

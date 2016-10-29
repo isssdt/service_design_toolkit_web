@@ -5,6 +5,8 @@
  */
 package journey.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  *
  * @author longnguyen
  */
+
+@JsonInclude(Include.NON_NULL)
 public class JourneyListDTO {
     private List<JourneyDTO> journeyDTOList = new ArrayList<>();
 
