@@ -264,10 +264,7 @@ public class JourneyService implements JourneyServiceLocal {
         JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
         
         if (null == journeyFieldResearcher) {
-            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), Response.Status.NOT_FOUND.getStatusCode(), 
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_ERROR, 
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_NON_JOURNEY_IN_PROGRESS_DEV_INFO,
-                    ConstantValues.BLOG_POST_URL);
+            throw Utils.throwAppException("No IN PROGRESS Journey for this Field Researcher", getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
         }
         
         journeyFieldResearcher.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE);
