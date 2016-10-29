@@ -98,21 +98,29 @@ public class JourneyService implements JourneyServiceLocal {
         journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
         JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
 
-        if (null != journeyFieldResearcher) {
-            throw new AppException(Response.Status.CONFLICT.getStatusCode(), 409,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_ERROR,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_DEV_INFO, ConstantValues.BLOG_POST_URL);
+        if (null != journeyFieldResearcher) {  
+            String message = "This Field Researcher already registered with a Journey";
+            throw Utils.throwAppException(message, getClass().getName(), Response.Status.CONFLICT.getStatusCode());            
         }
 
         journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyByNameAndFieldResearcher(journeyFieldResearcherDTO);       
-        if (null != journeyFieldResearcher && ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE.equals(journeyFieldResearcher.getStatus())) {                        
-            String message = "This Journey has already DONE";          
-            throw Utils.throwAppException(message, JourneyService.class.getName(), Response.Status.CONFLICT.getStatusCode(), 
-                    Response.Status.CONFLICT.getStatusCode());
+        if (null != journeyFieldResearcher && ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE.equals(journeyFieldResearcher.getStatus())) {                                    
+            throw Utils.throwAppException("This Journey is DONE", JourneyService.class.getName(), Response.Status.CONFLICT.getStatusCode());
         }
 
-        SdtUser sdtUser = factory.getSdtUserFacade().findUserByUsername(journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO());
+        SdtUser sdtUser = factory.getSdtUserFacade().findUserByUsername(journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO());  
+        if (null == sdtUser) {
+            String message = "Username " + journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername() + " not found";
+            throw Utils.throwAppException(message, JourneyService.class.getName(), 
+                    Response.Status.NOT_FOUND.getStatusCode());
+        }
+        
         Journey journey = factory.getJourneyFacade().findJourneyByName(journeyFieldResearcherDTO.getJourneyDTO());
+        if (null == journey) {
+            String message = "Journey " + journeyFieldResearcherDTO.getJourneyDTO().getJourneyName() + " not found";
+            throw Utils.throwAppException(message, JourneyService.class.getName(), 
+                    Response.Status.NOT_FOUND.getStatusCode());
+        }
 
         journeyFieldResearcher = new JourneyFieldResearcher();
         journeyFieldResearcher.setJourneyId(journey);

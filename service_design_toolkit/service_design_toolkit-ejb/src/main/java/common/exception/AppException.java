@@ -54,10 +54,10 @@ public class AppException extends Exception {
         this.link = link;
     }
     
-    public AppException(int status, int code) {
+    public AppException(int status) {
         super(ConstantValues.APP_ERROR);
         this.status = status;
-        this.code = code;
+        this.code = status;
         this.developerMessage = ConstantValues.APP_DEV_INFO;
         this.link = ConstantValues.BLOG_POST_URL;
     }

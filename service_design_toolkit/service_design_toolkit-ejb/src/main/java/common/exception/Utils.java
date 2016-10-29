@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  */
 public class Utils {
 
-    public static AppException throwAppException(String message, String className, int status, int code) {        
-        AppException e = new AppException(status, code);
-        Logger.getLogger(className).log(Level.WARNING, message, e);
+    public static AppException throwAppException(String message, String className, int status) {        
+        AppException e = new AppException(status);
+        Logger.getLogger(className).log(Level.SEVERE, message);
         return e;
     }
 }
