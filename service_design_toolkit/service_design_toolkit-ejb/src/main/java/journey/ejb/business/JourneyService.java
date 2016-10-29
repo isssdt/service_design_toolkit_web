@@ -218,8 +218,8 @@ public class JourneyService implements JourneyServiceLocal {
         JourneyListDTO journeyListDTO = new JourneyListDTO();
         List<Journey> journeyList = factory.getJourneyFacade().findJourneyListForRegister();
         if (null == journeyList || journeyList.isEmpty()) {
-            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), 404, ConstantValues.JOURNEY_NO_REGISTER_ERROR,
-                    ConstantValues.JOURNEY_NO_REGISTER_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+            throw Utils.throwAppException("No Journey to register", getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
+            
         }
         List<JourneyDTO> journeyDTOList = new ArrayList<>();
         for (Journey journey : journeyList) {
