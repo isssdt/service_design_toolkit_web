@@ -97,14 +97,13 @@ public class TouchPointService implements TouchPointServiceLocal {
                 .findByTouchpointIdAndFieldResearcherName(touchpointFieldResearcherDTO);
         
         if (null == touchpointFieldResearcher) {
-            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), 404, ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_NON_EXISTS_ERROR, 
-                ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_NON_EXISTS_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+            String message = "There is no Touch Point " + touchpointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + 
+                    " for this Field Researcher " + touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername();
+            throw Utils.throwAppException(message, getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
         }
         
         if (ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE.equals(touchpointFieldResearcher.getStatus())) {
-            throw new AppException(Response.Status.CONFLICT.getStatusCode(), Response.Status.CONFLICT.getStatusCode(), 
-                    ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ALREADY_DONE_ERROR, 
-                    ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ALREADY_DONE_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+            throw Utils.throwAppException("This Touch Point is already DONE", getClass().getName(), Response.Status.CONFLICT.getStatusCode());
         }
         
         touchpointFieldResearcher.setRatingId(factory.getRatingFacade().findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
