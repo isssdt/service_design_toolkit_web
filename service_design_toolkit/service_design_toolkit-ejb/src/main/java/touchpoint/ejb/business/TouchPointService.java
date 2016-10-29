@@ -9,6 +9,7 @@ import common.constant.ConstantValues;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.exception.Utils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
 import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -37,17 +39,19 @@ public class TouchPointService implements TouchPointServiceLocal {
     EAOFactory factory;
 
     @Override
-    public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(FieldResearcherDTO fieldResearcherDTO)
+    public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO)
             throws AppException, CustomReasonPhraseException {
+        FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
+        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);        
+        
         JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();
         journeyFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
         journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+        
         JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().
                 findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
         if (null == journeyFieldResearcher) {
-            throw new AppException(Response.Status.NOT_FOUND.getStatusCode(), 409,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_NON_JOURNEY_IN_PROGRESS_ERROR,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_NON_JOURNEY_IN_PROGRESS_DEV_INFO, ConstantValues.BLOG_POST_URL);
+            throw Utils.throwAppException("No IN PROGRESS Journey for this Field Researcher", getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
         }
 
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();

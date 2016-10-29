@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Local;
 import journey.dto.TouchPointFieldResearcherDTO;
 import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -18,7 +19,7 @@ import user.dto.FieldResearcherDTO;
  */
 @Local
 public interface TouchPointServiceLocal {
-    public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(FieldResearcherDTO fieldResearcherDTO) 
+    public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO) 
             throws AppException, CustomReasonPhraseException;
     
     public String saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)

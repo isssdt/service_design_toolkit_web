@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import journey.dto.JourneyDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
-import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 
 /**
  * REST Web Service
@@ -52,9 +52,9 @@ public class GetTouchPointListOfRegisteredJourney {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getJson(FieldResearcherDTO fieldResearcherDTO) throws AppException, CustomReasonPhraseException {
+    public Response getJson(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
         return Response.status(200)
-				.entity(touchPointService.getTouchPointListOfRegisteredJourney(fieldResearcherDTO), new Annotation[0])
+				.entity(touchPointService.getTouchPointListOfRegisteredJourney(sdtUserDTO), new Annotation[0])
 				.header("Access-Control-Allow-Headers", "X-extra-header")
 				.allow("OPTIONS").build();        
     }
