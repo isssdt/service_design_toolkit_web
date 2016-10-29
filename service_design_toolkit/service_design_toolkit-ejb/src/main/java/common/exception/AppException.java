@@ -5,6 +5,8 @@
  */
 package common.exception;
 
+import common.constant.ConstantValues;
+
 /**
  *
  * @author longnguyen
@@ -50,6 +52,14 @@ public class AppException extends Exception {
         this.code = code;
         this.developerMessage = developerMessage;
         this.link = link;
+    }
+    
+    public AppException(int status, int code) {
+        super(ConstantValues.APP_ERROR);
+        this.status = status;
+        this.code = code;
+        this.developerMessage = ConstantValues.APP_DEV_INFO;
+        this.link = ConstantValues.BLOG_POST_URL;
     }
 
     public AppException() {

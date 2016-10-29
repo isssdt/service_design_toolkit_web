@@ -9,6 +9,7 @@ import common.constant.ConstantValues;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.exception.Utils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,11 +104,11 @@ public class JourneyService implements JourneyServiceLocal {
                     ConstantValues.JOURNEY_FIELD_RESEARCHER_EXISTS_JOURNEY_IN_PROGRESS_DEV_INFO, ConstantValues.BLOG_POST_URL);
         }
 
-        journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyByNameAndFieldResearcher(journeyFieldResearcherDTO);
-        if (ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE.equals(journeyFieldResearcher.getStatus())) {
-            throw new AppException(Response.Status.CONFLICT.getStatusCode(), 409,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_DONE_ALREADY_ERROR,
-                    ConstantValues.JOURNEY_FIELD_RESEARCHER_DONE_ALREADY_ERROR_DEV_INFO, ConstantValues.BLOG_POST_URL);
+        journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyByNameAndFieldResearcher(journeyFieldResearcherDTO);       
+        if (null != journeyFieldResearcher && ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE.equals(journeyFieldResearcher.getStatus())) {                        
+            String message = "This Journey has already DONE";          
+            throw Utils.throwAppException(message, JourneyService.class.getName(), Response.Status.CONFLICT.getStatusCode(), 
+                    Response.Status.CONFLICT.getStatusCode());
         }
 
         SdtUser sdtUser = factory.getSdtUserFacade().findUserByUsername(journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO());
