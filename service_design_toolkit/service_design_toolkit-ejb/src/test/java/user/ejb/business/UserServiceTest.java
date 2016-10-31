@@ -5,6 +5,8 @@
  */
 package user.ejb.business;
 
+import common.EJBTestInjector;
+import common.exception.CustomReasonPhraseException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.After;
@@ -14,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import user.dto.FieldResearcherDTO;
 import user.ejb.eao.FieldResearcherFacadeLocal;
 import user.ejb.eao.SdtUserFacadeLocal;
 import user.ejb.eao.UserRoleFacadeLocal;
@@ -48,6 +51,13 @@ public class UserServiceTest {
         this.userRoleFacade = Mockito.mock(UserRoleFacadeLocal.class);
         this.sdtUserFacade = Mockito.mock(SdtUserFacadeLocal.class);
         this.fieldResearcherFacade = Mockito.mock(FieldResearcherFacadeLocal.class);
+        
+        final EJBTestInjector injector = new EJBTestInjector();
+        injector.assign(FieldResearcherFacadeLocal.class, fieldResearcherFacade);
+        injector.assign(UserRoleFacadeLocal.class, userRoleFacade);
+        injector.assign(SdtUserFacadeLocal.class, sdtUserFacade);
+        
+        injector.inject(userService);
     }
     
     @After
@@ -55,14 +65,24 @@ public class UserServiceTest {
     }
     
     @Test
-    public void testRefreshCurrentLocation () {
+    public void testgetFieldResearcherByName () throws CustomReasonPhraseException {
+        FieldResearcher result = new FieldResearcher();
+        SdtUser sdtUser = new SdtUser();        
+        result.setSdtUser(sdtUser);
+        sdtUser.setUsername("un");
+        sdtUser.setFieldResearcher(result);
         
-    }
-    
-    @Test
-    public void testgetFieldResearcherByName () {
+        user.dto.FieldResearcherDTO fieldResearcherDTO = new user.dto.FieldResearcherDTO();
+        user.dto.SdtUserDTO sdtUserDTO = new user.dto.SdtUserDTO();
+        sdtUserDTO.setUsername(sdtUser.getUsername());
+        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
         
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
+        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
+        FieldResearcherDTO fieldResearcher = userService.getFieldResearcherByName(fieldResearcherDTO);
+        Assert.assertEquals("un", fieldResearcher.getSdtUserDTO().getUsername());
     }
-    
-    
+ 
 }
