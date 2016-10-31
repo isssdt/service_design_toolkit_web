@@ -7,13 +7,17 @@ package journey.ejb.business;
 
 import common.EJBTestInjector;
 import common.ejb.eao.EAOFactory;
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import java.util.ArrayList;
 import java.util.List;
 import journey.ejb.eao.ChannelFacadeLocal;
+import journey.ejb.eao.JourneyFacadeLocal;
 import journey.ejb.eao.RatingFacadeLocal;
 import journey.ejb.eao.TouchPointFacadeLocal;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import journey.entity.Channel;
+import journey.entity.Journey;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -31,6 +35,7 @@ public class JourneyServiceTest {
 
     JourneyService journeyService;
     EAOFactory factory;
+    JourneyFacadeLocal journeyFacade;
     ChannelFacadeLocal channelFacade;
     TouchPointFacadeLocal touchPointFacade;
     RatingFacadeLocal ratingFacade;
@@ -52,6 +57,7 @@ public class JourneyServiceTest {
     public void setUp() throws Exception {
         this.journeyService = new JourneyService();
         this.factory = new EAOFactory();
+        this.journeyFacade = Mockito.mock(JourneyFacadeLocal.class);
         this.channelFacade = Mockito.mock(ChannelFacadeLocal.class);
         this.touchPointFacade = Mockito.mock(TouchPointFacadeLocal.class);
         this.ratingFacade = Mockito.mock(RatingFacadeLocal.class);
@@ -60,6 +66,7 @@ public class JourneyServiceTest {
 
         // inject
         final EJBTestInjector injector = new EJBTestInjector();
+        injector.assign(JourneyFacadeLocal.class, journeyFacade);
         injector.assign(ChannelFacadeLocal.class, channelFacade);
         injector.assign(TouchPointFacadeLocal.class, touchPointFacade);
         injector.assign(RatingFacadeLocal.class, ratingFacade);
@@ -78,6 +85,23 @@ public class JourneyServiceTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
+    
+    @Test
+    public void testGetAllJourney () throws AppException, CustomReasonPhraseException {
+        
+        Journey journey1 = new Journey(1);
+        journey1.setJourneyName("journeyname");
+        Journey journey2 = new Journey(2);
+        
+        List<Journey> result = new ArrayList<>();
+        result.add(journey1);
+        result.add(journey2);
+        Mockito.when(journeyFacade.findAll()).thenReturn(result); 
+        Assert.assertEquals(2, journeyService.getAllJourney().size());
+        Assert.assertEquals("journeyname", journeyService.getAllJourney().get(0).getJourneyName());
+        
+    }
+    
     @Test
     public void testGetChannelList() {
         Channel channel1 = new Channel(1);
