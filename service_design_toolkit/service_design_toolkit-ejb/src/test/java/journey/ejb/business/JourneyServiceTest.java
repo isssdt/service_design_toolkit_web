@@ -11,6 +11,7 @@ import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import java.util.ArrayList;
 import java.util.List;
+import journey.dto.JourneyDTO;
 import journey.ejb.eao.ChannelFacadeLocal;
 import journey.ejb.eao.JourneyFacadeLocal;
 import journey.ejb.eao.RatingFacadeLocal;
@@ -85,6 +86,19 @@ public class JourneyServiceTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
+    
+    @Test
+    public void testGetJourneyByName () {
+        Journey journey = new Journey();
+        journey.setJourneyName("jn");
+        journey.setNoOfFieldResearcher(3);
+       
+        journey.dto.JourneyDTO journeyDTO = new journey.dto.JourneyDTO();
+        journeyDTO.setJourneyName(journey.getJourneyName());
+        
+        Mockito.when(journeyFacade.findJourneyByName(journeyDTO)).thenReturn(journey);
+        Assert.assertSame(3,journey.getNoOfFieldResearcher());
+    }
     
     @Test
     public void testGetAllJourney () throws AppException, CustomReasonPhraseException {
