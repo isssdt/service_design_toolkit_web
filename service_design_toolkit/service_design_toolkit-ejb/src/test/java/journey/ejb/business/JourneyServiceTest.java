@@ -91,13 +91,12 @@ public class JourneyServiceTest {
     public void testGetJourneyByName () {
         Journey journey = new Journey();
         journey.setJourneyName("jn");
-        journey.setNoOfFieldResearcher(3);
        
         journey.dto.JourneyDTO journeyDTO = new journey.dto.JourneyDTO();
         journeyDTO.setJourneyName(journey.getJourneyName());
         
         Mockito.when(journeyFacade.findJourneyByName(journeyDTO)).thenReturn(journey);
-        Assert.assertSame(3,journey.getNoOfFieldResearcher());
+        Assert.assertSame("jn",journey.getJourneyName());
     }
     
     @Test
