@@ -19,6 +19,7 @@ import journey.ejb.eao.TouchPointFacadeLocal;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import journey.entity.Channel;
 import journey.entity.Journey;
+import journey.entity.JourneyFieldResearcher;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -26,6 +27,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import user.dto.FieldResearcherDTO;
 import user.ejb.eao.SdtUserFacadeLocal;
 
 /**
@@ -88,6 +90,21 @@ public class JourneyServiceTest {
     //
     
     @Test
+    public void testGetRegisteredFieldResearchersByJourneyName () {
+        Journey journey = new Journey();
+        journey.setJourneyName("jn");
+        List<JourneyFieldResearcher> journeyFieldResearcherList = new ArrayList<>();
+        journey.setJourneyFieldResearcherList(journeyFieldResearcherList);
+        
+        JourneyDTO journeyDTO = new JourneyDTO();
+        journeyDTO.setJourneyName(journey.getJourneyName());
+        //List<FieldResearcherDTO> fieldResearcherDTOList = new ArrayList<>();
+        
+        Mockito.when(journeyFacade.findJourneyByName(journeyDTO)).thenReturn(journey);
+        Assert.assertEquals(journey.getJourneyFieldResearcherList(),journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO));
+    }
+    
+    @Test
     public void testGetJourneyByName () {
         Journey journey = new Journey();
         journey.setJourneyName("jn");
@@ -96,7 +113,7 @@ public class JourneyServiceTest {
         journeyDTO.setJourneyName(journey.getJourneyName());
         
         Mockito.when(journeyFacade.findJourneyByName(journeyDTO)).thenReturn(journey);
-        Assert.assertSame("jn",journey.getJourneyName());
+        Assert.assertSame("jn",journeyService.getJourneyByName(journeyDTO).getJourneyName());
     }
     
     @Test
