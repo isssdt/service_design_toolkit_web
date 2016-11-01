@@ -20,9 +20,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import journey.dto.ChannelDTO;
+import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
+import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
@@ -122,5 +124,31 @@ public class TouchPointService implements TouchPointServiceLocal {
         }        
 
         return new RESTReponse("A new research work has been created");
+    }
+
+    @Override
+    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO) {
+        Journey journey = factory.getJourneyFacade().findJourneyByName(journeyDTO);
+
+        List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+        for (TouchPoint touchPoint : journey.getTouchPointList()) {            
+            ChannelDTO channelDTO = new ChannelDTO();
+            try {
+                BeanUtils.copyProperties(channelDTO, touchPoint.getChannelId());
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            TouchPointDTO touchPointDTO = new TouchPointDTO();
+            try {
+                BeanUtils.copyProperties(touchPointDTO, touchPoint);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            touchPointDTO.setChannelDTO(channelDTO);           
+            touchPointDTOList.add(touchPointDTO);
+        }
+        
+        return touchPointDTOList;
     }
 }

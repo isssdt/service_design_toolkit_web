@@ -10,6 +10,8 @@ import common.exception.CustomReasonPhraseException;
 import common.rest.dto.RESTReponse;
 import java.util.List;
 import javax.ejb.Local;
+import journey.dto.JourneyDTO;
+import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import user.dto.SdtUserDTO;
 
@@ -24,4 +26,6 @@ public interface TouchPointServiceLocal {
     
     public RESTReponse saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)
             throws AppException, CustomReasonPhraseException;
+    
+    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO);             
 }
