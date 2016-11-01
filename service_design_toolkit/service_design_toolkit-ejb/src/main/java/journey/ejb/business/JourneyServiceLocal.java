@@ -67,5 +67,5 @@ public interface JourneyServiceLocal {
     
     public JourneyListDTO findJourneyListForRegister() throws AppException, CustomReasonPhraseException;
     
-    public Integer updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    public RESTReponse updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }

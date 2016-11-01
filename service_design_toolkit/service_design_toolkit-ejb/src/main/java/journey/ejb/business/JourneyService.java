@@ -258,7 +258,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public Integer updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+    public RESTReponse updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
         FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
         fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
         
@@ -274,6 +274,6 @@ public class JourneyService implements JourneyServiceLocal {
         journeyFieldResearcher.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_DONE);
         factory.getJourneyFieldResearcherFacade().edit(journeyFieldResearcher);
         
-        return journeyFieldResearcher.getId();
+        return new RESTReponse("Journey has been marked as Completed");
     }
 }

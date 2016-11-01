@@ -7,6 +7,7 @@ package rest.journey;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.rest.Utils;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -60,9 +61,6 @@ public class JourneyMarkComplete {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {
-        journeyService.updateStatusOfJourneyForFieldResearcher(content);
-        return Response.status(Response.Status.CREATED)// 201
-				.entity("Journey has been marked as Completed")
-				.build();
+        return Utils.buildResponse(Response.Status.CREATED, journeyService.updateStatusOfJourneyForFieldResearcher(content));        
     }
 }
