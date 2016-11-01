@@ -81,8 +81,7 @@ public class UserServiceTest {
         Map<String, Object> params = new HashMap<>();
         params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
         Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
-        FieldResearcherDTO fieldResearcher = userService.getFieldResearcherByName(fieldResearcherDTO);
-        Assert.assertEquals("un", fieldResearcher.getSdtUserDTO().getUsername());
+        Assert.assertEquals("un", userService.getFieldResearcherByName(fieldResearcherDTO).getSdtUserDTO().getUsername());
     }
  
 }
