@@ -5,7 +5,7 @@
  */
 package user.ejb.business;
 
-import common.dto.RESTReponse;
+import common.rest.dto.RESTReponse;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import javax.ejb.Local;

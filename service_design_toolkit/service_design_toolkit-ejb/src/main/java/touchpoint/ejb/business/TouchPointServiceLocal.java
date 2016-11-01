@@ -7,10 +7,10 @@ package touchpoint.ejb.business;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.rest.dto.RESTReponse;
 import java.util.List;
 import javax.ejb.Local;
 import journey.dto.TouchPointFieldResearcherDTO;
-import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 
 /**
@@ -22,6 +22,6 @@ public interface TouchPointServiceLocal {
     public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO) 
             throws AppException, CustomReasonPhraseException;
     
-    public String saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)
+    public RESTReponse saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)
             throws AppException, CustomReasonPhraseException;
 }

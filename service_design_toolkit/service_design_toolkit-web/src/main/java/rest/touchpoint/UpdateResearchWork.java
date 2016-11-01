@@ -7,6 +7,7 @@ package rest.touchpoint;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.rest.Utils;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -59,10 +60,7 @@ public class UpdateResearchWork {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(TouchPointFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {
-        String message = touchPointService.saveResponse(content);
-        return Response.status(Response.Status.CREATED)// 201
-				.entity(message)
-				.build();
+    public Response putJson(TouchPointFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {        
+        return Utils.buildResponse(Response.Status.CREATED, touchPointService.saveResponse(content));        
     }
 }

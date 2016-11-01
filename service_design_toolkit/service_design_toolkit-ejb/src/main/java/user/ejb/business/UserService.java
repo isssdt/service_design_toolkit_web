@@ -6,7 +6,7 @@
 package user.ejb.business;
 
 import common.constant.ConstantValues;
-import common.dto.RESTReponse;
+import common.rest.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;

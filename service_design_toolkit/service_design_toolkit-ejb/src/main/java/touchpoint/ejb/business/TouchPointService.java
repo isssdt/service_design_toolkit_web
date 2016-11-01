@@ -10,6 +10,7 @@ import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.exception.Utils;
+import common.rest.dto.RESTReponse;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class TouchPointService implements TouchPointServiceLocal {
     }
     
     @Override
-    public String saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws AppException {
+    public RESTReponse saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO) throws AppException {
         TouchpointFieldResearcher touchpointFieldResearcher = factory.getTouchPointFieldResearcherFacade()
                 .findByTouchpointIdAndFieldResearcherName(touchpointFieldResearcherDTO);
         
@@ -117,9 +118,9 @@ public class TouchPointService implements TouchPointServiceLocal {
         List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade()
                 .findByStatusAndFieldResearcherName(touchpointFieldResearcherDTO);
         if (null == touchpointFieldResearcherList || touchpointFieldResearcherList.isEmpty()) {
-            return "Please informed that you have completed work for all Touch Points";
+            return new RESTReponse("Please informed that you have completed work for all Touch Points");
         }        
 
-        return "A new research work has been created";
+        return new RESTReponse("A new research work has been created");
     }
 }
