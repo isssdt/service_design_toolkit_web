@@ -6,6 +6,7 @@
 package user.ejb.business;
 
 import common.constant.ConstantValues;
+import common.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -125,7 +126,7 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public String registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+    public RESTReponse registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
         SdtUser sdtUser = factory.getSdtUserFacade().findUserByUsername(sdtUserDTO);
         if (null == sdtUser) {
             sdtUser = new SdtUser();
@@ -146,10 +147,10 @@ public class UserService implements UserServiceLocal {
         journeyFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
         journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
         if (null != factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO)) {
-            return "This Field Researcher already registered with a Journey";
+            return new RESTReponse("This Field Researcher already registered with a Journey");
         }
         
-        return "This Field Researcher has not registered with any Journey";
+        return new RESTReponse("This Field Researcher has not registered with any Journey");
     }
 
 }

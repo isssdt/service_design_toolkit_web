@@ -7,6 +7,7 @@ package rest.user;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import java.lang.annotation.Annotation;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -59,10 +60,10 @@ public class FieldResearcherRegister {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {
-        String message = userService.registerFieldResearcher(content);
-        return Response.status(Response.Status.CREATED)// 201
-				.entity(message)
-				.build();
+    public Response putJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {        
+        return Response.status(Response.Status.CREATED)
+				.entity(userService.registerFieldResearcher(content), new Annotation[0])
+				.header("Access-Control-Allow-Headers", "X-extra-header")
+				.allow("OPTIONS").build();         
     }
 }

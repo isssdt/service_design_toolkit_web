@@ -5,6 +5,7 @@
  */
 package user.ejb.business;
 
+import common.dto.RESTReponse;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import javax.ejb.Local;
@@ -19,5 +20,5 @@ import user.dto.SdtUserDTO;
 public interface UserServiceLocal {
     public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
     public FieldResearcherDTO getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException;    
-    public String registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    public RESTReponse registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }
