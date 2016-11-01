@@ -6,6 +6,7 @@
 package journey.ejb.business;
 
 import common.constant.ConstantValues;
+import common.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -94,7 +95,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public void registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws AppException {
+    public RESTReponse registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws AppException {
         journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
         JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
 
@@ -141,6 +142,9 @@ public class JourneyService implements JourneyServiceLocal {
             touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
             factory.getTouchPointFieldResearcherFacade().create(touchpointFieldResearcher);
         }
+        
+        return new RESTReponse("Field Researcher " + journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername() 
+                + " has registered for Journey " + journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
     }
 
     @Override

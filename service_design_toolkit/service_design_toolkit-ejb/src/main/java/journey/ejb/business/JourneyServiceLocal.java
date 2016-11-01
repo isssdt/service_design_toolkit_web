@@ -5,6 +5,7 @@
  */
 package journey.ejb.business;
 
+import common.dto.RESTReponse;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import java.util.List;
@@ -58,7 +59,7 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-    public void registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws AppException, CustomReasonPhraseException;
+    public RESTReponse registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws AppException, CustomReasonPhraseException;
 
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
     

@@ -7,6 +7,7 @@ package rest.journey;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import java.lang.annotation.Annotation;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -59,12 +60,10 @@ public class RegisterFieldResearcherWithJourney {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putJson(JourneyFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {
-        journeyService.registerFieldResearcherWithJourney(content);
-        String message = "Field Researcher " + content.getFieldResearcherDTO().getSdtUserDTO().getUsername() + " has registered for Journey " 
-                + content.getJourneyDTO().getJourneyName();
-        return Response.status(Response.Status.CREATED)// 201
-				.entity(message)
-				.build();
+    public Response putJson(JourneyFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {        
+        return Response.status(Response.Status.CREATED)
+				.entity(journeyService.registerFieldResearcherWithJourney(content), new Annotation[0])
+				.header("Access-Control-Allow-Headers", "X-extra-header")
+				.allow("OPTIONS").build();          
     }
 }
