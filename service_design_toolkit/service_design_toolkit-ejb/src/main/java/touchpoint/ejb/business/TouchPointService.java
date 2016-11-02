@@ -5,6 +5,7 @@
  */
 package touchpoint.ejb.business;
 
+import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import common.constant.ConstantValues;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
@@ -42,7 +43,7 @@ public class TouchPointService implements TouchPointServiceLocal {
     EAOFactory factory;
 
     @Override
-    public List<TouchPointFieldResearcherDTO> getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO)
+    public TouchPointFieldResearcherListDTO getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO)
             throws AppException, CustomReasonPhraseException {
         FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
         fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);        
@@ -55,8 +56,8 @@ public class TouchPointService implements TouchPointServiceLocal {
                 findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
         if (null == journeyFieldResearcher) {
             throw Utils.throwAppException("No IN PROGRESS Journey for this Field Researcher", getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
-        }
-
+        }       
+        
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();
         for (TouchPoint touchPoint : journeyFieldResearcher.getJourneyId().getTouchPointList()) {
             TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();
@@ -91,7 +92,9 @@ public class TouchPointService implements TouchPointServiceLocal {
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
         
-        return touchPointFieldResearcherDTOList;
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = new TouchPointFieldResearcherListDTO();
+        touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(touchPointFieldResearcherDTOList);
+        return touchPointFieldResearcherListDTO;
     }
     
     @Override
