@@ -199,9 +199,20 @@
                 <p:commandButton value="SAVE" 
                                  id="save"
                                  icon="ui-icon-extlink" 
-                                 actionListener="#{journeyController.createJourney}">
+                                 actionListener="#{journeyCreateView.createJourney}"
+                                 ajax="true" 
+                                 onclick="PF('dlgSucc').show();">
+                    <h:commandButton value="OK" action="main-layout?faces-redirect=true" />
                 </p:commandButton>
-                
+                <p:dialog widgetVar="dlgSucc" 
+                          width="625" 
+                          height="400" 
+                          modal="true">
+                    <h:outputText value="This is a modal" />
+                    <a href ="http://localhost:9090/service_design_toolkit-web/">
+                        <h:commandButton value ="OK" />
+                    </a>
+                </p:dialog>
             </h:form>
         </h:body>
     </f:view>

@@ -62,7 +62,8 @@ public class JourneyController implements Serializable {
     private ChannelListDTO channelListDTO = new ChannelListDTO();
     
     
-    public void createJourney() throws AppException, CustomReasonPhraseException {        
+    public Integer createJourney() throws AppException, CustomReasonPhraseException {   
+        Integer journeyId = null;
         try {
             BeanUtils.copyProperties(journeyDTO, journeyModel.createCopy());
             journeyDTO.setIsActive('Y');
@@ -85,11 +86,11 @@ public class JourneyController implements Serializable {
             
             journeyDTO.setTouchPointDTOList(touchPointDTOList);
             touchPointListModel.getGeoModel().getMarkers().clear();
-            journeyService.createJourney(journeyDTO);
+            journeyId = journeyService.createJourney(journeyDTO);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Journey has been created!"));
+        return journeyId;
     }
     
     public List<ChannelDTO> getChannelList() {

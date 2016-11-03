@@ -5,7 +5,10 @@
  */
 package journey.ejb.view;
 
+import common.exception.AppException;
+import common.exception.CustomReasonPhraseException;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -13,6 +16,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -59,6 +64,7 @@ public class JourneyCreateView implements Serializable {
     private Date currentDate = new Date();
     private Map<String, String> channelmap; 
     private MapModel geoModel;
+    private String message;
     
     @PostConstruct
     public void init() {      
@@ -133,6 +139,14 @@ public class JourneyCreateView implements Serializable {
     public void setChannelmap(Map<String, String> channelmap) {
         this.channelmap = channelmap;
     }
+   
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
     
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
@@ -180,5 +194,29 @@ public class JourneyCreateView implements Serializable {
           
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", 
                 "Lat:" + touchPointModel.getTouchpointLatitude() + ", Lng:" + touchPointModel.getTouchpointLongitude()));
+    }
+    
+    public void createJourney(){
+            try {
+                Integer journeyId = journeyController.createJourney();
+                System.out.println("Journey ID: "+journeyId);
+                if(journeyId != null)
+                   message = "Journey has been created!";
+                else
+                   message = "Journey cannot be created!";
+                System.out.println("Message : "+message);
+            } catch (AppException | CustomReasonPhraseException ex) {
+                Logger.getLogger(JourneyCreateView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
+    }
+    
+    public void goHome() {
+         try {
+            FacesContext.getCurrentInstance().getExternalContext()
+                        .redirect("http://localhost:9090/service_design_toolkit-web/templates/common/content.xhtml");
+         } catch (IOException e) {
+             Logger.getLogger(JourneyCreateView.class.getName()).log(Level.SEVERE, null,e);
+         }  
     }
 }

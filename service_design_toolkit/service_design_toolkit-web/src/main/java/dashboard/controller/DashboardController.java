@@ -14,7 +14,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyListDTO;
+import journey.dto.TouchPointDTO;
 import journey.ejb.business.JourneyServiceLocal;
+import touchpoint.ejb.business.TouchPointServiceLocal;
 import user.dto.FieldResearcherDTO;
 
 /**
@@ -26,6 +28,8 @@ import user.dto.FieldResearcherDTO;
 public class DashboardController implements Serializable {
     @EJB
     private JourneyServiceLocal journeyService;
+    @EJB
+    private TouchPointServiceLocal touchPointService;
 
     /**
      * Creates a new instance of DashboardController
@@ -43,4 +47,7 @@ public class DashboardController implements Serializable {
         return journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
     }
     
+    public List<TouchPointDTO> getTouchPointList (JourneyDTO journeyDTO){
+        return touchPointService.getTouchPointListJourney(journeyDTO);
+    }
 }
