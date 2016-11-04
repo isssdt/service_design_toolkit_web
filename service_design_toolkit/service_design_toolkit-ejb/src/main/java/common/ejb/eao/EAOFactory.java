@@ -14,7 +14,9 @@ import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
 import journey.ejb.eao.RatingFacadeLocal;
 import journey.ejb.eao.TouchPointFacadeLocal;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
+import user.ejb.eao.FieldResearcherFacadeLocal;
 import user.ejb.eao.SdtUserFacadeLocal;
+import user.ejb.eao.UserRoleFacadeLocal;
 
 /**
  *
@@ -44,9 +46,23 @@ public class EAOFactory {
     
     @EJB
     ChannelFacadeLocal channelFacade;
+    
+    @EJB
+    private UserRoleFacadeLocal userRoleFacade;
+    
+    @EJB
+    private FieldResearcherFacadeLocal fieldResearcherFacade;
+
+    public FieldResearcherFacadeLocal getFieldResearcherFacade() {
+        return fieldResearcherFacade;
+    }
 
     public ChannelFacadeLocal getChannelFacade() {
         return channelFacade;
+    }
+
+    public UserRoleFacadeLocal getUserRoleFacade() {
+        return userRoleFacade;
     }
     
     public JourneyFieldResearcherFacadeLocal getJourneyFieldResearcherFacade() {

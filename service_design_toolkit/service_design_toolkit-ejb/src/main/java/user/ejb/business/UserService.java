@@ -136,9 +136,19 @@ public class UserService implements UserServiceLocal {
                 Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
                 throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
             }
-            sdtUser.setUserRoleId(userRoleFacade.findByRoleName(ConstantValues.FIELD_RESEARCHER_ROLE_NAME));
-            sdtUser.setIsActive('Y');
-            sdtUserFacade.create(sdtUser);
+            sdtUser.setUserRoleId(factory.getUserRoleFacade().findByRoleName(ConstantValues.FIELD_RESEARCHER_ROLE_NAME));
+            sdtUser.setIsActive('Y');            
+                        
+            factory.getSdtUserFacade().create(sdtUser);
+            
+            FieldResearcher fieldResearcher = new FieldResearcher(sdtUser.getId());
+            fieldResearcher.setCurrentLatitude("-1");
+            fieldResearcher.setCurrentLongitude("-1");
+            fieldResearcher.setLastActive(new Date());
+            fieldResearcher.setSdtUser(sdtUser);
+            
+            factory.getFieldResearcherFacade().create(fieldResearcher);
+            
         }
         
         JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();
