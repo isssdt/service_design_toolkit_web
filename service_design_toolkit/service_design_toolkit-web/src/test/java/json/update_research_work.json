@@ -2,10 +2,7 @@
     "fieldResearcherDTO": {
         "sdtUserDTO": {"username":"Prasan"}
     },
-    "touchpointDTO": {
-        "touchPointDesc":"Departments",
-        "id":"9"
-        },
+    "touchpointDTO": {"id":"15"},
     "comments":"I really love it",
     "reaction":"Sam work on it",
     "ratingDTO":{"value":"4"}
