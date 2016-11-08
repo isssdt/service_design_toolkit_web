@@ -17,6 +17,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import journey.ejb.business.JourneyServiceLocal;
@@ -47,11 +48,10 @@ public class JourneyMarkComplete {
      * Retrieves representation of an instance of rest.journey.JourneyMarkComplete
      * @return an instance of user.dto.SdtUserDTO
      */
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public SdtUserDTO getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public Response postJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {
+        return Utils.buildResponse(Response.Status.CREATED, journeyService.updateStatusOfJourneyForFieldResearcher(content));
     }
 
     /**
