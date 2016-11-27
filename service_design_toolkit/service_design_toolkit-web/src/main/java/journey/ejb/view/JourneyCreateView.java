@@ -214,7 +214,7 @@ public class JourneyCreateView implements Serializable {
     public void goHome() {
          try {
             FacesContext.getCurrentInstance().getExternalContext()
-                        .redirect("http://localhost:9090/service_design_toolkit-web/templates/common/content.xhtml");
+                        .redirect("/templates/common/content.xhtml");
          } catch (IOException e) {
              Logger.getLogger(JourneyCreateView.class.getName()).log(Level.SEVERE, null,e);
          }  
