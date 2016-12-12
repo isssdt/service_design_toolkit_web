@@ -29,6 +29,16 @@ import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import journey.ejb.model.TouchPointModel;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.model.diagram.Connection;
+import org.primefaces.model.diagram.DefaultDiagramModel;
+import org.primefaces.model.diagram.DiagramModel;
+import org.primefaces.model.diagram.Element;
+import org.primefaces.model.diagram.connector.FlowChartConnector;
+import org.primefaces.model.diagram.endpoint.BlankEndPoint;
+import org.primefaces.model.diagram.endpoint.EndPoint;
+import org.primefaces.model.diagram.endpoint.EndPointAnchor;
+import org.primefaces.model.diagram.overlay.ArrowOverlay;
+import org.primefaces.model.diagram.overlay.LabelOverlay;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
@@ -50,7 +60,8 @@ public class JourneyCreateView implements Serializable {
      */
     public JourneyCreateView() {
     }
-    
+   
+    private DefaultDiagramModel model;
     @Inject
     private TouchPointModel touchPointModel;
     @Inject
@@ -74,6 +85,18 @@ public class JourneyCreateView implements Serializable {
         for (ChannelDTO channelDTO : channelListDTO) {
             channelmap.put(channelDTO.getChannelName(), channelDTO.getChannelName());
         }
+        
+        model = new DefaultDiagramModel();
+        model.setMaxConnections(-1);
+         
+        FlowChartConnector connector = new FlowChartConnector();
+        connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
+        model.setDefaultConnector(connector);
+        
+         Element start = new Element("Fight for your dream", "20em", "6em");
+        start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+       
+        model.addElement(start);
     }
 
     public MapModel getGeoModel() {
@@ -150,8 +173,54 @@ public class JourneyCreateView implements Serializable {
     
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
+        
+        String X,Y,X1,Y1;
+        int a,b;
+        X= model.getElements().get(model.getElements().size()-1).getX();
+        Y= model.getElements().get(model.getElements().size()-1).getY();
+       
+        a = Integer.parseInt(X.split("em")[0])+20;
+        b = Integer.parseInt(Y.split("em")[0])+20;
+        X1=a+"em";
+        Y1=b+"em";
+        
+        System.out.println("x---y ----"+X1+Y1);
+        
+        Element touch = new Element(touchPointModel.createCopy().getTouchPointName(),X1,Y1);
+          
+        touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
+        touch.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+        model.addElement(touch);
+        
+     
+        int size =model.getElements().size();        
+        
+        if( size == 2){
+            
+        model.connect(createConnection(model.getElements().get(0).getEndPoints().get(0), touch.getEndPoints().get(0), null));
+        }
+        else{
+            
+       
+        model.connect(createConnection(model.getElements().get(size-2).getEndPoints().get(1), touch.getEndPoints().get(0), null));
+        }
         return touchPointListModel;
         }
+    
+    public DiagramModel getModel() {
+        return model;
+    }
+     
+    private Connection createConnection(EndPoint from, EndPoint to, String label) {
+        Connection conn = new Connection(from, to);
+        conn.getOverlays().add(new ArrowOverlay(20, 20, 1, 1));
+         
+        if(label != null) {
+            conn.getOverlays().add(new LabelOverlay(label, "flow-label", 0.5));
+        }
+         
+        return conn;
+    }
     
 //    public void onGeocode(GeocodeEvent event) {
 //        System.out.println("hi there");
