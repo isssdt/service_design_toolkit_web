@@ -8,34 +8,20 @@
         <h:head> 
            
             <style type="text/css">
-    .ui-diagram-element {   
-        width:14em; 
-        height:4em;     
-        line-height:4em;
+    .ui-diagram-element {
+        border:0.1em dotted #E5E4E2; 
+        background-color: #EFEEEC;
+        width:10em; 
+        height:8em;
         text-align: center;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-        border-radius: 4px;
-        border: 1px solid transparent;
-        background-color: #98AFC7;
-        color: #ffffff;
     }
  
-    .ui-diagram-success {
-        background-color: #9CB071;
-        color: #ffffff;
-        border-color: #7ab02c;
+    .ui-diagram-element:hover {
+        background-color: #C7C6C4;
     }
  
-    .ui-diagram-fail {
-        background-color: #C34A2C;
-        color: #ffffff;
-    }
- 
-    .flow-label {
-        font-size: 24px;
-        font-weight: bold;
-        color: #816A51;
-    }
+    
 </style>
             <script type="text/javascript">
                 var placeSearch, autocomplete;
@@ -230,9 +216,26 @@
                         <p:commandButton value ="OK" onclick="PF('dlg2').hide();"/>
                 </p:dialog>    
                 <!--<p:diagram value="#{diagramFlowChartView.model}" style="height:600px" styleClass="ui-widget-content" />-->
-                        <p:diagram id="dia" value="#{journeyCreateView.model}" style="height:600px" styleClass="ui-widget-content" >
-  
+                       <!-- <p:growl id="msgs" showDetail="true" />-->
+                        <p:diagram  id="dia" value="#{journeyCreateView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
+                           <f:facet name="element">
+                             <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
+                             <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
+                       </f:facet>
                         </p:diagram>
+                       <!-- <p:remoteCommand name="elementClicked"
+                actionListener="#{flowDiagramBean.onElementClicked}"/>
+            <script type="text/javascript">
+                        $(document).on('click',
+                                '.ui-diagram > .ui-diagram-element',
+                                function(info) {
+                                    elementClicked([ {
+                                        name : 'elementId',
+                                        value : info.target.id
+                                    } ]);
+                                });
+            </script>-->
+                       
                 <p:commandButton value="SAVE" 
                                  id="save"
                                  icon="ui-icon-extlink" 

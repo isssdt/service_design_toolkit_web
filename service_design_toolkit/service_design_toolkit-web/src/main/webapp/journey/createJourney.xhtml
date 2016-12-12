@@ -1,11 +1,12 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"      
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"      
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
     <f:view>
         <h:head>
+            <ui:include src="../templates/common/menu.xhtml"/>
         </h:head>
         <h:body>
             <h:form>
@@ -29,13 +30,13 @@
                         <p:calendar id="end_date" value="#{journeyModel.endDate}" required="true" 
                                 label="End Date" mindate="#{journeyCreateView.currentDate}"/>
                         
-                        <h:commandButton action="create?faces-redirect=true" value="NEXT"  
-                                       style="display:block;width:#{model.section * 50}px;height:20px;">                                    
+                        <h:commandButton action="create?faces-redirect=true" value="NEXT" 
+                                       style="display:block;width:50px; height:20px; align-self: center ">                                    
                             <f:param name="model" value="#{journeyModel}"/>   
                         </h:commandButton>
                     </h:panelGrid> 
                 </h:form>            
         </h:body>
     </f:view>
-</html>
-
+</ui:composition>
+    
