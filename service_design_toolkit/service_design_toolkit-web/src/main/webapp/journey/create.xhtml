@@ -29,7 +29,7 @@
                     // Create the autocomplete object, restricting the search to geographical
                     // location types.
                     autocomplete = new google.maps.places.Autocomplete(
-                            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+                            /** @type {!HTMLInputElement} */(document.getElementById('address1')),
                             {types: ['geocode']});                    
                 }                             
                 function addMakerByGeoCode() {
@@ -151,10 +151,7 @@
                                            value="TouchPoint Channel" />
                             <p:selectOneMenu id="touchPoint_channel"
                                              value="#{touchPointModel.touchPointChannel}" >
-<!--                                         <p:ajax listener="#{dashboardView.onJourneyChange}" 
-                                             <f:selectItem itemLabel="Select one" 
-                                              itemValue="" 
-                                              noSelectionOption="true" />-->                
+             
                                 <f:selectItems value="#{journeyCreateView.channelmap}"/>
                             </p:selectOneMenu>
                             
@@ -191,7 +188,7 @@
                             <p:commandButton value="OK" 
                                              icon="ui-icon-extlink" 
                                              id="popup" 
-                                             actionListener="#{journeyCreateView.pressOK}"
+                                             actionListener="#{touchPointController.addTouchPoint()}"
                                              update = "@form dia" 
                                              onclick="PF('dlg1').hide();" 
                                              ajax="true">
@@ -215,27 +212,12 @@
                         </p:gmap>    
                         <p:commandButton value ="OK" onclick="PF('dlg2').hide();"/>
                 </p:dialog>    
-                <!--<p:diagram value="#{diagramFlowChartView.model}" style="height:600px" styleClass="ui-widget-content" />-->
-                       <!-- <p:growl id="msgs" showDetail="true" />-->
-                        <p:diagram  id="dia" value="#{journeyCreateView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
+                <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
                            <f:facet name="element">
                              <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
                              <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
                        </f:facet>
-                        </p:diagram>
-                       <!-- <p:remoteCommand name="elementClicked"
-                actionListener="#{flowDiagramBean.onElementClicked}"/>
-            <script type="text/javascript">
-                        $(document).on('click',
-                                '.ui-diagram > .ui-diagram-element',
-                                function(info) {
-                                    elementClicked([ {
-                                        name : 'elementId',
-                                        value : info.target.id
-                                    } ]);
-                                });
-            </script>-->
-                       
+                        </p:diagram> 
                 <p:commandButton value="SAVE" 
                                  id="save"
                                  icon="ui-icon-extlink" 

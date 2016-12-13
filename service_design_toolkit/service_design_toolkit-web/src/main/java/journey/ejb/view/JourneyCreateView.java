@@ -29,16 +29,7 @@ import journey.ejb.model.JourneyModel;
 import journey.ejb.model.TouchPointListModel;
 import journey.ejb.model.TouchPointModel;
 import org.primefaces.event.map.GeocodeEvent;
-import org.primefaces.model.diagram.Connection;
-import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.DiagramModel;
-import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.connector.FlowChartConnector;
-import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import org.primefaces.model.diagram.overlay.ArrowOverlay;
-import org.primefaces.model.diagram.overlay.LabelOverlay;
+
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
@@ -61,7 +52,7 @@ public class JourneyCreateView implements Serializable {
     public JourneyCreateView() {
     }
    
-    private DefaultDiagramModel model;
+   
     @Inject
     private TouchPointModel touchPointModel;
     @Inject
@@ -86,17 +77,7 @@ public class JourneyCreateView implements Serializable {
             channelmap.put(channelDTO.getChannelName(), channelDTO.getChannelName());
         }
         
-        model = new DefaultDiagramModel();
-        model.setMaxConnections(-1);
-         
-        FlowChartConnector connector = new FlowChartConnector();
-        connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
-        model.setDefaultConnector(connector);
-        
-         Element start = new Element(new NetworkElement("Fight for your dream","byeee"), "6em", "2em");
-        start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
        
-        model.addElement(start);
     }
 
     public MapModel getGeoModel() {
@@ -174,65 +155,10 @@ public class JourneyCreateView implements Serializable {
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
         
-        String X,Y,X1 = null,Y1;
-        int a,b;
-        X= model.getElements().get(model.getElements().size()-1).getX();
-        Y= model.getElements().get(model.getElements().size()-1).getY();
-        System.out.println("x"+X);
-        System.out.println("Y"+Y);
-        a = Integer.parseInt(X.split("em")[0]);
-        b = Integer.parseInt(Y.split("em")[0]);
+      
+               return touchPointListModel;
+        }
 
-        if (a<40){
-            a = a+20;
-             }
-        else{
-            System.out.println("a>60");
-            a=6;
-            b = b+10;
-        }
-        
-       
-        X1=a+"em";
-        Y1=b+"em";
-       // Element touch = new Element(touchPointModel.createCopy().getTouchPointName(),X1,Y1);
-      // ScreenFlowItemObj screenFlowItemObj = new ScreenFlowItemObj();
-       //screenFlowItemObj.setActionElementLabelText("test");
-        Element touch = new Element(new NetworkElement(touchPointModel.createCopy().getTouchPointName(),touchPointModel.createCopy().getChannelDesc()),X1,Y1);
-        //Element touch = new Element(new NetworkElement("hello","byee"),X1,Y1);
-        touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
-        touch.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
-        model.addElement(touch);
-       // System.out.println("data"+touch.toString());
-     
-        int size =model.getElements().size();        
-        
-        if( size == 2){
-            
-        model.connect(createConnection(model.getElements().get(0).getEndPoints().get(0), touch.getEndPoints().get(0), null));
-        }
-        else{
-            
-       
-        model.connect(createConnection(model.getElements().get(size-2).getEndPoints().get(1), touch.getEndPoints().get(0), null));
-        }
-        return touchPointListModel;
-        }
-    
-    public DiagramModel getModel() {
-        return model;
-    }
-     
-    private Connection createConnection(EndPoint from, EndPoint to, String label) {
-        Connection conn = new Connection(from, to);
-        conn.getOverlays().add(new ArrowOverlay(20, 20, 1, 1));
-         
-        if(label != null) {
-            conn.getOverlays().add(new LabelOverlay(label, "flow-label", 0.5));
-        }
-         
-        return conn;
-    }
     
 //    public void onGeocode(GeocodeEvent event) {
 //        System.out.println("hi there");
@@ -300,74 +226,5 @@ public class JourneyCreateView implements Serializable {
              Logger.getLogger(JourneyCreateView.class.getName()).log(Level.SEVERE, null,e);
          }  
     }
-
-    /*    private  class Element1 implements Serializable{
-    private String touchPointName;
-    private String channelDesc;
-    
-    public String getTouchPointName() {
-    return touchPointName;
-    }
-    
-    public void setTouchPointName(String touchPointName) {
-    this.touchPointName = touchPointName;
-    }
-    
-    public String getChannelDesc() {
-    return channelDesc;
-    }
-    
-    public void setChannelDesc(String channelDesc) {
-    this.channelDesc = channelDesc;
-    }
-    
-    public Element1(String touchPointName, String channelDesc) {
-    this.touchPointName = touchPointName;
-    this.channelDesc = channelDesc;
-    }
-    @Override
-    public String toString() {
-    return touchPointName;
-    }*/
-        
-        /*public void onElementClicked(ActionEvent event) {
-        Element1 element1 = (Element1) event.getComponent().getAttributes().get("element");
-        }*/
-        
-    //}
-    public class NetworkElement implements Serializable {
-         
-        private String name;
-        private String image;
  
-        public NetworkElement() {
-        }
- 
-        public NetworkElement(String name, String image) {
-            this.name = name;
-            this.image = image;
-        }
- 
-        public String getName() {
-            return name;
-        }
- 
-        public void setName(String name) {
-            this.name = name;
-        }
- 
-        public String getImage() {
-            return image;
-        }
- 
-        public void setImage(String image) {
-            this.image = image;
-        }
- 
-        @Override
-        public String toString() {
-            return name;
-        }
-         
-    }
 }

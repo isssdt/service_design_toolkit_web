@@ -13,7 +13,7 @@
             <h:form>
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" style="width: 30%" value="#{dashboardView.journeyName}">
-                    <p:ajax listener="#{dashboardView.onJourneyChange}" update="geoGmap fs_list" oncomplete="PF('dlg1').show();PF('dlg2').show();" />
+                    <p:ajax listener="#{dashboardView.onJourneyChange}" update="geoGmap fs_list " oncomplete="PF('dlg1').show();PF('dlg2').show();" />
                     <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                     <f:selectItems value="#{dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
@@ -29,13 +29,13 @@
         </div>      
         <div class="col-md-6">
             <p:dialog widgetVar="dlg2" minimizable="true" maximizable="true" position="500,300" style="height: 100px; width: 100px;">
-                <p:diagram id="fs_list" value="#{diagramFlowChartView.model}" style="height:600px" styleClass="ui-widget-content" />
-                <!--<p:dataList value="#{dashboardView.fieldResearcherDTOList}" var="field_researcher" type="ordered" id="fs_list">
+             <!--   <p:diagram id="fs_list" value="#{diagramFlowChartView.model}" style="height:600px" styleClass="ui-widget-content" />-->
+                <p:dataList value="#{dashboardView.fieldResearcherDTOList}" var="field_researcher" type="ordered" id="fs_list">
                     <f:facet name="header">
                         Field Researcher
                     </f:facet>
                     #{field_researcher.sdtUserDTO.username}
-                </p:dataList>-->
+                </p:dataList>
             </p:dialog>
         </div>
     </div>
