@@ -12,6 +12,7 @@ import common.exception.CustomReasonPhraseException;
 import java.util.ArrayList;
 import java.util.List;
 import journey.dto.JourneyDTO;
+import journey.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.eao.ChannelFacadeLocal;
 import journey.ejb.eao.JourneyFacadeLocal;
 import journey.ejb.eao.RatingFacadeLocal;
@@ -20,6 +21,9 @@ import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import journey.entity.Channel;
 import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
+import journey.entity.Rating;
+import journey.entity.TouchPoint;
+import journey.entity.TouchpointFieldResearcher;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -27,8 +31,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import user.dto.FieldResearcherDTO;
 import user.ejb.eao.SdtUserFacadeLocal;
+import user.entity.FieldResearcher;
+import user.entity.SdtUser;
 
 /**
  *
@@ -90,18 +95,7 @@ public class JourneyServiceTest {
     //
     
     @Test
-    public void testGetRegisteredFieldResearchersByJourneyName () {
-        Journey journey = new Journey();
-        journey.setJourneyName("jn");
-        List<JourneyFieldResearcher> journeyFieldResearcherList = new ArrayList<>();
-        journey.setJourneyFieldResearcherList(journeyFieldResearcherList);
-        
-        JourneyDTO journeyDTO = new JourneyDTO();
-        journeyDTO.setJourneyName(journey.getJourneyName());
-        //List<FieldResearcherDTO> fieldResearcherDTOList = new ArrayList<>();
-        
-        Mockito.when(journeyFacade.findJourneyByName(journeyDTO)).thenReturn(journey);
-        Assert.assertEquals(journey.getJourneyFieldResearcherList(),journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO));
+    public void testGetRegisteredFieldResearchersByJourneyName () {        
     }
     
     @Test
@@ -147,45 +141,97 @@ public class JourneyServiceTest {
     }
 
     @Test
-    public void testSaveResponse() {
-//        TouchPointFieldResearcherDTO touchpointFieldResearcherDTO = new TouchPointFieldResearcherDTO();
-//
-//        TouchPointDTO touchPointDTO = new TouchPointDTO();
-//        touchPointDTO.setId(1);
-//        touchPointDTO.setTouchPointDesc("TP1");
-//        touchpointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
-//        TouchPoint touchPoint = new TouchPoint();
-//        touchPoint.setTouchPointDesc(touchPointDTO.getTouchPointDesc());
-//
-//        RatingDTO ratingDTO = new RatingDTO();
-//        ratingDTO.setValue("Rating");
-//        touchpointFieldResearcherDTO.setRatingDTO(ratingDTO);
-//        Rating rating = new Rating(1, ratingDTO.getValue());
-//
-//        SdtUserDTO sdtUserDTO = new SdtUserDTO();
-//        sdtUserDTO.setUsername("long");
-//        FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
-//        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
-//        touchpointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
-//        SdtUser sdtUser = new SdtUser(1, sdtUserDTO.getUsername());
-//
-//        FieldResearcher fieldResearcher = new FieldResearcher(1);
-//        sdtUser.setFieldResearcher(fieldResearcher);
-//        fieldResearcher.setSdtUser(sdtUser);
-//
-//        Mockito.when(touchPointFacade.find(touchpointFieldResearcherDTO.getTouchpointDTO().getId())).thenReturn(touchPoint);
-//        Mockito.when(ratingFacade.findRatingByValue(ratingDTO.getValue())).thenReturn(rating);
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("username", fieldResearcherDTO.getSdtUserDTO().getUsername());
-//        Mockito.when(sdtUserFacade.findSingleByQueryName("SdtUser.findByUsername", params)).thenReturn(sdtUser);
-//        Mockito.when(touchPointFieldResearcherFacade.create(new TouchpointFieldResearcher())).thenReturn(null);
-//
-//        TouchpointFieldResearcher touchpointFieldResearcher;
-//        touchpointFieldResearcher = journeyService.buildTouchpointFieldResearcher(touchpointFieldResearcherDTO);
-//        Assert.assertEquals("TP1", touchpointFieldResearcher.getTouchpointId().getTouchPointDesc());
-//        Assert.assertEquals("Rating", touchpointFieldResearcher.getRatingId().getValue());
-//        Assert.assertEquals("long", touchpointFieldResearcher.getFieldResearcherId().getSdtUser().getUsername());
-
+    public void testSaveResponse() {        
+    }
+    
+    /**
+     * Test the method getTouchPointFiedlResearcherListOfJourney of JourneyService class
+     */
+    @Test
+    public void testGetTouchPointFiedlResearcherListOfJourney() {
+        //create 2 Rating
+        Rating rating1 = new Rating(1);
+        rating1.setValue("1");
+        
+        Rating rating2 = new Rating(2);
+        rating2.setValue("2");
+        
+        //create 2 TouchPoint
+        TouchPoint touchPoint1 = new TouchPoint(1);
+        touchPoint1.setTouchPointDesc("1");
+        
+        TouchPoint touchPoint2 = new TouchPoint(2);
+        touchPoint2.setTouchPointDesc("2");
+        
+        //create 2 SdtUser
+        SdtUser sdtUser1 = new SdtUser(1);
+        sdtUser1.setUsername("1");
+        
+        SdtUser sdtUser2 = new SdtUser(2);
+        sdtUser2.setUsername("2");
+        
+        //create 2 FieldResearcher
+        FieldResearcher fieldResearcher1 = new FieldResearcher(1);
+        fieldResearcher1.setCurrentLatitude("1");
+        fieldResearcher1.setSdtUser(sdtUser1);     
+        
+        FieldResearcher fieldResearcher2 = new FieldResearcher(2);
+        fieldResearcher2.setCurrentLatitude("2");
+        fieldResearcher2.setSdtUser(sdtUser2);
+        
+        //create 2 TouchPointFieldResearcher
+        TouchpointFieldResearcher touchpointFieldResearcher1 = new TouchpointFieldResearcher(1);
+        touchpointFieldResearcher1.setComments("1");
+        touchpointFieldResearcher1.setFieldResearcherId(fieldResearcher1);
+        touchpointFieldResearcher1.setRatingId(rating1);
+        touchpointFieldResearcher1.setTouchpointId(touchPoint1);
+        
+        TouchpointFieldResearcher touchpointFieldResearcher2 = new TouchpointFieldResearcher(2);
+        touchpointFieldResearcher2.setComments("2");
+        touchpointFieldResearcher2.setFieldResearcherId(fieldResearcher2);
+        touchpointFieldResearcher2.setRatingId(rating2);
+        touchpointFieldResearcher2.setTouchpointId(touchPoint2);     
+        
+        //add those 2 TouchPointFieldResearcher to list
+        List<TouchpointFieldResearcher> touchpointFieldResearcherList = new ArrayList<>();
+        touchpointFieldResearcherList.add(touchpointFieldResearcher1);
+        touchpointFieldResearcherList.add(touchpointFieldResearcher2);
+        
+        //create a JourneyDTO
+        JourneyDTO journeyDTO = new JourneyDTO();
+        journeyDTO.setJourneyName("NUS Bus");
+        
+        //mocking the findByJourneyName of TouchPointFieldResearcherFacadeLocal
+        Mockito.when(touchPointFieldResearcherFacade.findByJourneyName(journeyDTO)).thenReturn(touchpointFieldResearcherList);
+        
+        //call getTouchPointFiedlResearcherListOfJourney method
+        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        
+        //size of TouchPointFieldResearcherDTOList should be equal to size of TouchPointFieldResearcherList
+        Assert.assertEquals(touchpointFieldResearcherList.size(), touchPointFieldResearcherDTOList.size());
+        
+        //get 2 DTO from TouchPointFieldResearcherDTOList
+        TouchPointFieldResearcherDTO touchPointFieldResearcherDTO1 = touchPointFieldResearcherDTOList.get(0);
+        TouchPointFieldResearcherDTO touchPointFieldResearcherDTO2 = touchPointFieldResearcherDTOList.get(1);
+        
+        //comment of those DTO should be equal to the one of entity
+        Assert.assertEquals(touchpointFieldResearcher1.getComments(), touchPointFieldResearcherDTO1.getComments());
+        Assert.assertEquals(touchpointFieldResearcher2.getComments(), touchPointFieldResearcherDTO2.getComments());
+        
+        //rating of those DTO should be equal to the one of entity
+        Assert.assertEquals(touchpointFieldResearcher1.getRatingId().getValue(), touchPointFieldResearcherDTO1.getRatingDTO().getValue());
+        Assert.assertEquals(touchpointFieldResearcher2.getRatingId().getValue(), touchPointFieldResearcherDTO2.getRatingDTO().getValue());
+        
+        //Touch Point description of those DTO should be equal to the one of entity
+        Assert.assertEquals(touchpointFieldResearcher1.getTouchpointId().getTouchPointDesc(), 
+                touchPointFieldResearcherDTO1.getTouchpointDTO().getTouchPointDesc());
+        Assert.assertEquals(touchpointFieldResearcher2.getTouchpointId().getTouchPointDesc(), 
+                touchPointFieldResearcherDTO2.getTouchpointDTO().getTouchPointDesc());
+        
+        //username of those DTO should be equal to the one of entity
+        Assert.assertEquals(touchpointFieldResearcher1.getFieldResearcherId().getSdtUser().getUsername(), 
+                touchPointFieldResearcherDTO1.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        Assert.assertEquals(touchpointFieldResearcher2.getFieldResearcherId().getSdtUser().getUsername(), 
+                touchPointFieldResearcherDTO2.getFieldResearcherDTO().getSdtUserDTO().getUsername());
     }
 }
