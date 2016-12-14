@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import journey.dto.JourneyDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
@@ -51,6 +52,13 @@ public class TouchPointFieldResearcherFacade  extends AbstractFacade<TouchpointF
         params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
         params.put("status", touchPointFieldResearcherDTO.getStatus());
         return findListByQueryName("TouchpointFieldResearcher.findByStatusAndFieldResearcherName", params);
+    }
+
+    @Override
+    public List<TouchpointFieldResearcher> findByJourneyName(JourneyDTO journeyDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", journeyDTO.getJourneyName());        
+        return findListByQueryName("TouchpointFieldResearcher.findByJourneyName", params);
     }
 
 

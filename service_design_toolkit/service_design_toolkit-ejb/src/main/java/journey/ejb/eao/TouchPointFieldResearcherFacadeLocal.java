@@ -7,6 +7,7 @@ package journey.ejb.eao;
 
 import java.util.List;
 import java.util.Map;
+import journey.dto.JourneyDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.TouchpointFieldResearcher;
 
@@ -44,4 +45,11 @@ public interface TouchPointFieldResearcherFacadeLocal {
     TouchpointFieldResearcher findByTouchpointIdAndFieldResearcherName(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
     
     List<TouchpointFieldResearcher> findByStatusAndFieldResearcherName(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
+    
+    /**
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey
+     * @param journeyDTO contains name of Journey to find list of TouchPointFieldResearcher
+     * @return list of TouchPointFieldResearcher of that Journey
+     */
+    List<TouchpointFieldResearcher> findByJourneyName(JourneyDTO journeyDTO);
 }

@@ -68,4 +68,11 @@ public interface JourneyServiceLocal {
     public JourneyListDTO findJourneyListForRegister() throws AppException, CustomReasonPhraseException;
     
     public RESTReponse updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    
+    /**
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey
+     * @param journeyDTO contains name of Journey to get list of all TouchPointFieldResearcher
+     * @return List<TouchPointFieldResearcherDTO> list of all TouchPointFieldResearcher of that Journey
+     */
+    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO);
 }

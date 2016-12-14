@@ -14,6 +14,7 @@ import common.exception.Utils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,6 +27,7 @@ import journey.dto.ChannelListDTO;
 import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
+import journey.dto.RatingDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.Channel;
@@ -275,5 +277,41 @@ public class JourneyService implements JourneyServiceLocal {
         factory.getJourneyFieldResearcherFacade().edit(journeyFieldResearcher);
         
         return new RESTReponse("Journey has been marked as Completed");
+    }
+
+    @Override
+    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO) {
+        if (null == journeyDTO || null == journeyDTO.getJourneyName() || journeyDTO.getJourneyName().isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade().findByJourneyName(journeyDTO);
+        
+        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();
+        Iterator<TouchpointFieldResearcher> iterator = touchpointFieldResearcherList.iterator();
+        while (iterator.hasNext()) {
+            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();            
+            
+            TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();            
+            TouchPointDTO touchPointDTO = new TouchPointDTO();
+            FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();            
+            SdtUserDTO sdtUserDTO = new SdtUserDTO();
+            RatingDTO ratingDTO = new RatingDTO();
+            
+            try {
+                BeanUtils.copyProperties(touchPointDTO, touchpointFieldResearcher.getTouchpointId());
+                BeanUtils.copyProperties(sdtUserDTO, touchpointFieldResearcher.getFieldResearcherId().getSdtUser());
+                BeanUtils.copyProperties(fieldResearcherDTO, touchpointFieldResearcher.getFieldResearcherId());
+                fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
+                BeanUtils.copyProperties(ratingDTO, touchpointFieldResearcher.getRatingId());
+                BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);                
+                touchPointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
+                touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
+                touchPointFieldResearcherDTO.setRatingDTO(ratingDTO);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
+        }
+        return touchPointFieldResearcherDTOList;
     }
 }
