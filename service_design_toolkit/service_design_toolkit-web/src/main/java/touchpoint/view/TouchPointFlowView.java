@@ -3,46 +3,53 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.ejb.view;
+package touchpoint.view;
 
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import journey.ejb.controller.TouchPointController;
-import journey.ejb.model.TouchPointModel;
-import org.primefaces.model.diagram.Connection;
 import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.DiagramModel;
 import org.primefaces.model.diagram.Element;
 import org.primefaces.model.diagram.connector.FlowChartConnector;
 import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
 import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import org.primefaces.model.diagram.overlay.ArrowOverlay;
-import org.primefaces.model.diagram.overlay.LabelOverlay;
 
 /**
  *
  * @author samru
  */
-
 @Named(value = "touchPointFlowView")
 @SessionScoped
-public class TouchPointFlowView implements Serializable  {
-    
-    
-    private static final long serialVersionUID = 1L;
-    
-    
-    private DefaultDiagramModel model;
-     @Inject
-    private TouchPointController touchPointController;
+public class TouchPointFlowView implements Serializable {
 
-    public DiagramModel getModel() {
-        return touchPointController.getModel();
+    private static final long serialVersionUID = 1L;
+
+    private DefaultDiagramModel model;
+
+    @PostConstruct
+    public void init() {
+
+        model = new DefaultDiagramModel();
+        model.setMaxConnections(-1);
+
+        FlowChartConnector connector = new FlowChartConnector();
+        connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
+        model.setDefaultConnector(connector);
+
+        Element start = new Element(new NetworkElement("Home", ""), "6em", "2em");
+        start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+
+        model.addElement(start);
+    }
+
+    public DefaultDiagramModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultDiagramModel model) {
+        this.model = model;
     }
 
 }
