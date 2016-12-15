@@ -60,6 +60,7 @@ public class FieldResearcherRegister {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response putJson(SdtUserDTO content) throws AppException, CustomReasonPhraseException {        
         return Response.status(Response.Status.CREATED)
 				.entity(userService.registerFieldResearcher(content), new Annotation[0])

@@ -329,9 +329,7 @@ public class JourneyService implements JourneyServiceLocal {
                 null == sdtUserDTO || null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty()) {            
             touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(new ArrayList<>());
             return touchPointFieldResearcherListDTO;
-        }        
-        System.out.println(journeyDTO.getJourneyName());
-        System.out.println(sdtUserDTO.getUsername());
+        }                
         
         List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade()
                                                                                     .findByJourneyNameAndUsername(journeyDTO, sdtUserDTO);
