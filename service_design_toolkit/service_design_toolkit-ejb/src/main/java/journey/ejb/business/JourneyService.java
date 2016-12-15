@@ -36,6 +36,7 @@ import journey.entity.JourneyFieldResearcher;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
+import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 import user.entity.FieldResearcher;
@@ -280,9 +281,12 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO) {
-        if (null == journeyDTO || null == journeyDTO.getJourneyName() || journeyDTO.getJourneyName().isEmpty()) {
-            return new ArrayList<>();
+    public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO) {
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = new TouchPointFieldResearcherListDTO();
+        
+        if (null == journeyDTO || null == journeyDTO.getJourneyName() || journeyDTO.getJourneyName().isEmpty()) {            
+            touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(new ArrayList<>());
+            return touchPointFieldResearcherListDTO;
         }
         List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade().findByJourneyName(journeyDTO);
         
@@ -312,17 +316,23 @@ public class JourneyService implements JourneyServiceLocal {
             }
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
-        return touchPointFieldResearcherDTOList;
+        
+        touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(touchPointFieldResearcherDTOList);
+        return touchPointFieldResearcherListDTO;
     }
 
     @Override
-    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO) {
-        if (null == journeyDTO || null == journeyDTO.getJourneyName() || journeyDTO.getJourneyName().isEmpty()) {
-            return new ArrayList<>();
-        }
-        if (null == sdtUserDTO || null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty()) {
-            return new ArrayList<>();
-        }
+    public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO) {
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = new TouchPointFieldResearcherListDTO();
+        
+        if (null == journeyDTO || null == journeyDTO.getJourneyName() || journeyDTO.getJourneyName().isEmpty() ||
+                null == sdtUserDTO || null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty()) {            
+            touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(new ArrayList<>());
+            return touchPointFieldResearcherListDTO;
+        }        
+        System.out.println(journeyDTO.getJourneyName());
+        System.out.println(sdtUserDTO.getUsername());
+        
         List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade()
                                                                                     .findByJourneyNameAndUsername(journeyDTO, sdtUserDTO);
         
@@ -349,6 +359,8 @@ public class JourneyService implements JourneyServiceLocal {
             }
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
-        return touchPointFieldResearcherDTOList;
+        
+        touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(touchPointFieldResearcherDTOList);
+        return touchPointFieldResearcherListDTO;
     }
 }

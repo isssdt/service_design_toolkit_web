@@ -15,6 +15,7 @@ import journey.dto.JourneyDTO;
 import journey.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
+import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 
@@ -74,7 +75,7 @@ public interface JourneyServiceLocal {
      * @param journeyDTO contains name of Journey to get list of all TouchPointFieldResearcher
      * @return list of all TouchPointFieldResearcher of that Journey
      */
-    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO);
+    public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO);
     
     /**
      * This method is used to get list of all TouchPointFieldResearcher of a Journey which is done by a SdtUser
@@ -82,5 +83,5 @@ public interface JourneyServiceLocal {
      * @param sdtUserDTO contains username of the user who worked on the Journey
      * @return list of all TouchPointFieldResearcher of the Journey that the user has worked on
      */
-    public List<TouchPointFieldResearcherDTO> getTouchPointFiedlResearcherListByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO);
+    public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO);
 }

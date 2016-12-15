@@ -41,7 +41,7 @@ import user.entity.FieldResearcher;
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyName", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyNameAndUsername", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username := username")})           
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username")})           
 public class TouchpointFieldResearcher implements Serializable {
 
     @Size(max = 50)

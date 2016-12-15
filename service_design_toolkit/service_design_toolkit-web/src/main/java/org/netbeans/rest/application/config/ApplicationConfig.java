@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(common.exception.CustomReasonPhraseExceptionMapper.class);
         resources.add(common.exception.GenericExceptionMapper.class);
         resources.add(rest.journey.GetJourneyList.class);
+        resources.add(rest.journey.GetResearchWorkListByJourneyNameAndUsername.class);
         resources.add(rest.journey.JourneyMarkComplete.class);
         resources.add(rest.journey.RegisterFieldResearcherWithJourney.class);
         resources.add(rest.touchpoint.GetTouchPointListOfRegisteredJourney.class);

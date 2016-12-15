@@ -24,6 +24,15 @@ public class TouchPointDTO {
     private String action;
     private String channelDescription;
     private ChannelDTO channelDTO;
+    private JourneyDTO journeyDTO;
+
+    public JourneyDTO getJourneyDTO() {
+        return journeyDTO;
+    }
+
+    public void setJourneyDTO(JourneyDTO journeyDTO) {
+        this.journeyDTO = journeyDTO;
+    }
 
     public Integer getId() {
         return id;

@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import user.dto.SdtUserDTO;
 import user.ejb.eao.SdtUserFacadeLocal;
 import user.entity.FieldResearcher;
@@ -205,7 +206,8 @@ public class JourneyServiceTest {
         Mockito.when(touchPointFieldResearcherFacade.findByJourneyName(journeyDTO)).thenReturn(touchpointFieldResearcherList);
         
         //call getTouchPointFiedlResearcherListOfJourney method
-        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = touchPointFieldResearcherListDTO.getTouchPointFieldResearcherDTOList();
         
         //size of TouchPointFieldResearcherDTOList should be equal to size of TouchPointFieldResearcherList
         Assert.assertEquals(touchpointFieldResearcherList.size(), touchPointFieldResearcherDTOList.size());
@@ -294,8 +296,9 @@ public class JourneyServiceTest {
         Mockito.when(touchPointFieldResearcherFacade.findByJourneyNameAndUsername(journeyDTO, sdtUserDTO)).thenReturn(touchpointFieldResearcherList);
         
         //call getTouchPointFiedlResearcherListOfJourney method
-        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = 
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = 
                 journeyService.getTouchPointFiedlResearcherListByJourneyNameAndUsername(journeyDTO, sdtUserDTO);
+        List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = touchPointFieldResearcherListDTO.getTouchPointFieldResearcherDTOList();
         
         //size of TouchPointFieldResearcherDTOList should be equal to size of TouchPointFieldResearcherList
         Assert.assertEquals(touchpointFieldResearcherList.size(), touchPointFieldResearcherDTOList.size());
