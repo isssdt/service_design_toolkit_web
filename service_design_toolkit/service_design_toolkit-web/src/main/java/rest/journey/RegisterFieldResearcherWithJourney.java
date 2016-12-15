@@ -60,6 +60,7 @@ public class RegisterFieldResearcherWithJourney {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response putJson(JourneyFieldResearcherDTO content) throws AppException, CustomReasonPhraseException {        
         return Response.status(Response.Status.CREATED)
 				.entity(journeyService.registerFieldResearcherWithJourney(content), new Annotation[0])
