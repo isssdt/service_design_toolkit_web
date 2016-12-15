@@ -10,6 +10,7 @@ import java.util.Map;
 import journey.dto.JourneyDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.TouchpointFieldResearcher;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -52,4 +53,12 @@ public interface TouchPointFieldResearcherFacadeLocal {
      * @return list of TouchPointFieldResearcher of that Journey
      */
     List<TouchpointFieldResearcher> findByJourneyName(JourneyDTO journeyDTO);
+    
+    /**
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey that has been done by a SdtUser
+     * @param journeyDTO contains name of Journey to find list of TouchPointFieldResearcher
+     * @param sdtUserDTO contains username of the user that has been worked on that Journey
+     * @return list of all TouchPointFieldResearcher of the Journey that the user has been worked on
+     */
+    List<TouchpointFieldResearcher> findByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO);
 }

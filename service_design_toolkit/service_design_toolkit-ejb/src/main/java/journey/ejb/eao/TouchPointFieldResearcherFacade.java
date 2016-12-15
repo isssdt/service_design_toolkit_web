@@ -16,6 +16,7 @@ import journey.dto.JourneyDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.entity.TouchPoint;
 import journey.entity.TouchpointFieldResearcher;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -59,6 +60,14 @@ public class TouchPointFieldResearcherFacade  extends AbstractFacade<TouchpointF
         Map<String, Object> params = new HashMap<>();
         params.put("journeyName", journeyDTO.getJourneyName());        
         return findListByQueryName("TouchpointFieldResearcher.findByJourneyName", params);
+    }
+
+    @Override
+    public List<TouchpointFieldResearcher> findByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", journeyDTO.getJourneyName());
+        params.put("username", sdtUserDTO.getUsername());
+        return findListByQueryName("TouchpointFieldResearcher.findByJourneyNameAndUsername", params);
     }
 
 
