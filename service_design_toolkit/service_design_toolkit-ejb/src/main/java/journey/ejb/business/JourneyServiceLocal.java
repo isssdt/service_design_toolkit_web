@@ -71,14 +71,15 @@ public interface JourneyServiceLocal {
     public RESTReponse updateStatusOfJourneyForFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
     
     /**
-     * This method is used to get list of all TouchPointFieldResearcher of a Journey
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey which has been rated already
      * @param journeyDTO contains name of Journey to get list of all TouchPointFieldResearcher
      * @return list of all TouchPointFieldResearcher of that Journey
      */
     public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListOfJourney(JourneyDTO journeyDTO);
     
     /**
-     * This method is used to get list of all TouchPointFieldResearcher of a Journey which is done by a SdtUser
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey which is done by a SdtUser, which means it has been
+     * rated already
      * @param journeyDTO contains name of Journey to get list of all TouchPointFieldResearcher
      * @param sdtUserDTO contains username of the user who worked on the Journey
      * @return list of all TouchPointFieldResearcher of the Journey that the user has worked on

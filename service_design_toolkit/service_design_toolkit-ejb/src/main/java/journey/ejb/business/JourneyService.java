@@ -293,7 +293,7 @@ public class JourneyService implements JourneyServiceLocal {
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();
         Iterator<TouchpointFieldResearcher> iterator = touchpointFieldResearcherList.iterator();
         while (iterator.hasNext()) {
-            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();
+            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();            
 
             TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();
             TouchPointDTO touchPointDTO = new TouchPointDTO();
@@ -305,10 +305,8 @@ public class JourneyService implements JourneyServiceLocal {
                 BeanUtils.copyProperties(touchPointDTO, touchpointFieldResearcher.getTouchpointId());
                 BeanUtils.copyProperties(sdtUserDTO, touchpointFieldResearcher.getFieldResearcherId().getSdtUser());
                 BeanUtils.copyProperties(fieldResearcherDTO, touchpointFieldResearcher.getFieldResearcherId());
-                fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
-                if (null != touchpointFieldResearcher.getRatingId()) {
-                    BeanUtils.copyProperties(ratingDTO, touchpointFieldResearcher.getRatingId());
-                }
+                fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);                
+                BeanUtils.copyProperties(ratingDTO, touchpointFieldResearcher.getRatingId());                
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
                 touchPointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
                 touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
@@ -339,7 +337,7 @@ public class JourneyService implements JourneyServiceLocal {
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();
         Iterator<TouchpointFieldResearcher> iterator = touchpointFieldResearcherList.iterator();
         while (iterator.hasNext()) {
-            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();
+            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();            
 
             TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();
             TouchPointDTO touchPointDTO = new TouchPointDTO();

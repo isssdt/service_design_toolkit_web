@@ -39,9 +39,9 @@ import user.entity.FieldResearcher;
     @NamedQuery(name = "TouchpointFieldResearcher.findByStatusAndFieldResearcherName", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.status = :status and t.fieldResearcherId.sdtUser.username = :username"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyName", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName"),
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyNameAndUsername", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username")})           
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username and t.ratingId IS NOT NULL")})           
 public class TouchpointFieldResearcher implements Serializable {
 
     @Size(max = 50)

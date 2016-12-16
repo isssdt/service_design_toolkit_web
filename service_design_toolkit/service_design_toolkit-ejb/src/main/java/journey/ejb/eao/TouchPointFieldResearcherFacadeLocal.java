@@ -39,7 +39,7 @@ public interface TouchPointFieldResearcherFacadeLocal {
     List<TouchpointFieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);    
     
     /**
-     * get TouchPointFieldResearcher by Touch Point ID and Field Researcher Name
+     * get TouchPointFieldResearcher by Touch Point ID and Field Researcher Name 
      * @param touchPointFieldResearcherDTO
      * @return 
      */
@@ -48,14 +48,14 @@ public interface TouchPointFieldResearcherFacadeLocal {
     List<TouchpointFieldResearcher> findByStatusAndFieldResearcherName(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO);
     
     /**
-     * This method is used to get list of all TouchPointFieldResearcher of a Journey
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey which has been rated already
      * @param journeyDTO contains name of Journey to find list of TouchPointFieldResearcher
      * @return list of TouchPointFieldResearcher of that Journey
      */
     List<TouchpointFieldResearcher> findByJourneyName(JourneyDTO journeyDTO);
     
     /**
-     * This method is used to get list of all TouchPointFieldResearcher of a Journey that has been done by a SdtUser
+     * This method is used to get list of all TouchPointFieldResearcher of a Journey that has been done by a SdtUser, which means it has been rated already
      * @param journeyDTO contains name of Journey to find list of TouchPointFieldResearcher
      * @param sdtUserDTO contains username of the user that has been worked on that Journey
      * @return list of all TouchPointFieldResearcher of the Journey that the user has been worked on
