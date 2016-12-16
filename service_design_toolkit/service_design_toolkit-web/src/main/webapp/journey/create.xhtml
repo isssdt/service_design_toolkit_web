@@ -26,7 +26,7 @@
             <script type="text/javascript">
                 var placeSearch, autocomplete;
                 function initAutocomplete() {
-                    // Create the autocomplete object, restricting the search to geographical
+                                       // Create the autocomplete object, restricting the search to geographical
                     // location types.
                     autocomplete = new google.maps.places.Autocomplete(
                             /** @type {!HTMLInputElement} */(document.getElementById('address1')),
@@ -48,6 +48,7 @@
                         PF('dlg').show();
                     }
                 }
+                
                 function markerAddComplete() {
                     var title = document.getElementById('title');
                     currentMarker.setTitle(title.value);
@@ -71,11 +72,12 @@
                 type="text/javascript" 
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places">  
             </script>
+            
         </h:head>
         <h:body>
             <h:form prependId="false">
 
-                <h3 style="margin-top:0">Create Journey</h3>
+                <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
                 <h:panelGrid columns="4" 
                              style="margin-bottom:10px" 
                              cellpadding="6" 
@@ -98,7 +100,7 @@
                     </p:inputText>
                     <p:message for="no_of_field_researcher" />                    
                     <br></br> 
-                    <p:outputLabel for="start_date" 
+                                  <p:outputLabel for="start_date" 
                                    value="Start Date" />                    
                     <p:calendar id="start_date" 
                                 value="#{journeyModel.startDate}" 
@@ -119,86 +121,109 @@
                     <br></br> 
                           
                     <!--<p:outputLabel for="address" value="Address" />
-                    <p:inputText id="address" onfocus=" ()"/>  -->                                                                              
+                    <p:inputText id="address" onfocus=" ()"/>  -->   
                     <p:commandButton value="Add TouchPoints" 
                                      icon="ui-icon-extlink"  
                                      onclick="PF('dlg1').show();">       
                         <!--<p:ajax event="dialogReturn" 
                                     listener="#" update="growl" />-->
                     </p:commandButton>
-                </h:panelGrid>  
-                <p:dialog header="Enter Details" 
-                          widgetVar="dlg1" 
-                          width="625" 
-                          height="400"
+                </h:panelGrid>
+                
+                <p:dialog header="Add Touch Point"
+                          widgetVar="dlg1"
+                          width="725" 
+                          height="300"
                           modal="true">
-                    <h:form>
-                        <h3 style="margin-top:0">Enter Touch point details</h3>   
-                        <h:panelGrid columns="2" 
-                                     style="margin-bottom:10px" 
-                                     cellpadding="6" 
-                                     id="grid">
-                            
-                            <p:outputLabel for="touchPoint_name" 
-                                           value="TouchPoint Name" />
+                    
+                    <h:panelGrid columns="4"
+                                 style="margin-bottom:10px" 
+                                 cellpadding="6"
+                                 id="grid">
+                        <p:outputLabel for="touchPoint_name" 
+                                           value="Name" />
                             <p:inputText id="touchPoint_name" 
                                          value="#{touchPointModel.touchPointName}" 
                                          required="true" 
                                          label="Name">                       
                             </p:inputText>
-                            
-                            <p:outputLabel for="touchPoint_channel" 
-                                           value="TouchPoint Channel" />
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="4"
+                                 style="margin-bottom:10px" 
+                                 cellpadding="6"
+                                 id="grid1">
+                        <p:outputLabel for="touchPoint_channel" 
+                                           value="Channel" />
                             <p:selectOneMenu id="touchPoint_channel"
                                              value="#{touchPointModel.touchPointChannel}" >
-             
                                 <f:selectItems value="#{journeyCreateView.channelmap}"/>
                             </p:selectOneMenu>
-                            
-                            <p:outputLabel for="channel_desc" value="Channel Decription" />
+                        
+                        <p:outputLabel for="channel_desc" value="Decription" />
                             <p:inputText id="channel_desc" 
                                          value="#{touchPointModel.channelDesc}" 
                                          required="true" 
                                          label="Name">                       
                             </p:inputText>
-                            
-                            <p:outputLabel for="touchPoint_Radius" 
-                                           value="TouchPoint Radius" />                    
-                            <p:inputText id="touchPoint_Radius" 
-                                         value="#{touchPointModel.touchpointRadius}" 
-                                         required="true" 
-                                         label="Radius">
-                            </p:inputText>
-                            
-                            <p:outputLabel for="touchPoint_Action" 
-                                           value="TouchPoint Action" />                    
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="4"
+                                 style="margin-bottom:10px" 
+                                 cellpadding="6"
+                                 id="grid2">
+                        <p:outputLabel for="touchPoint_Action" 
+                                           value="Action" />                    
                             <p:inputText id="touchPoint_Action" 
                                          value="#{touchPointModel.touchpointAction}" 
                                          required="true" 
                                          label="Action">
                             </p:inputText>
-                            
-                            <p:commandButton value="Add Location" 
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="4"
+                                 style="margin-bottom:10px" 
+                                 cellpadding="6"
+                                 id="grid3">
+                        <p:outputLabel for="console" value="" />
+                        <p:selectOneRadio id="console" value="#{radioView.console}">
+                            <f:selectItem itemLabel="Location Dependent" itemValue="Location Dependent" />
+                            <f:selectItem itemLabel="Non-Location Dependent" itemValue="Non-Location Dependent" />
+                        </p:selectOneRadio>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="3"
+                                 style="margin-bottom:10px" 
+                                 cellpadding="6"
+                                 id="grid3">
+                        <p:commandButton value="Specify Location" 
                                              icon="ui-icon-extlink" 
                                              id="mapbutton" 
                                              ajax="true" 
-                                             onclick="PF('dlg2').show();">                                        
-                            </p:commandButton>
-
-                            <p:commandButton value="OK" 
+                                             onclick="PF('dlg2').show();">
+                                                 
+                        </p:commandButton>
+                        
+                        <p:commandButton value="Clear" 
                                              icon="ui-icon-extlink" 
-                                             id="popup" 
+                                             id="clearbutton" 
+                                             ajax="true" 
+                                             onclick="PF('dlg1').show();">
+                                                 
+                        </p:commandButton>
+                        
+                        <p:commandButton value="Add" 
+                                             icon="ui-icon-extlink" 
+                                             id="popup"
                                              actionListener="#{touchPointController.addTouchPoint()}"
                                              update = "@form dia" 
                                              onclick="PF('dlg1').hide();" 
                                              ajax="true">
-                                
-                            </p:commandButton>
-                        </h:panelGrid> 
-                    </h:form>  
+                        </p:commandButton>
+                    </h:panelGrid>
                 </p:dialog>
                 
-                <p:dialog header="choose location"
+                <p:dialog header="Specify Location"
                           widgetVar="dlg2" 
                           width="625" 
                           height="400" 
@@ -226,8 +251,8 @@
                                  onclick="PF('dlgSucc').show();">
                     <h:commandButton value="OK" action="main-layout?faces-redirect=true" />
                 </p:commandButton>
-                 
-       
+                
+                
                 <p:dialog widgetVar="dlgSucc" 
                           width="625" 
                           height="400" 
@@ -241,4 +266,4 @@
         </h:body>
     </f:view>
 </html>
-
+                    
