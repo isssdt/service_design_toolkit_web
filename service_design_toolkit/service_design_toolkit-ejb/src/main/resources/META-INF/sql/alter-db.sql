@@ -10,8 +10,7 @@
 
 use service_design_toolkit;
 
-alter table journey_field_researcher add column status varchar(50);
+-- TASK 398
+ALTER TABLE journey ADD description varchar(500);
 
-alter table touchpoint_field_researcher add column status varchar(50);
 
-alter table touchpoint_field_researcher modify column `rating_id` int(11);

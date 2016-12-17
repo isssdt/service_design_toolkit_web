@@ -45,6 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
             query = "SELECT j FROM Journey j WHERE j.startDate <= :startDate and j.endDate >= :endDate and j.canBeRegistered = 'Y'")})
 public class Journey implements Serializable {
 
+    @Size(max = 500)
+    @Column(name = "description")
+    private String description;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_date")
@@ -197,5 +201,13 @@ public class Journey implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

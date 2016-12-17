@@ -27,7 +27,16 @@ public class JourneyDTO {
     private Date startDate;
     private Date endDate;
     private Character canBeRegistered;
+    private String description;
     private List<TouchPointDTO> touchPointDTOList = null;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Character getCanBeRegistered() {
         return canBeRegistered;
