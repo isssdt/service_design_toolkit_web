@@ -83,6 +83,17 @@ public class TouchPoint implements Serializable {
     @JsonBackReference
     private Journey journeyId;
 
+    public TouchPoint(String action, String channelDescription, Channel channelId, String touchPointDesc, String latitude, String longitude, String radius, Journey journeyId) {
+        this.action = action;
+        this.channelDescription = channelDescription;
+        this.channelId = channelId;        
+        this.touchPointDesc = touchPointDesc;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.radius = radius;
+        this.journeyId = journeyId;
+    }
+
     public TouchPoint() {
     }
 

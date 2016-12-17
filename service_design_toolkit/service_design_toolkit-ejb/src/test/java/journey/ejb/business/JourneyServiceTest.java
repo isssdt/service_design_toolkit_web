@@ -10,8 +10,11 @@ import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import journey.dto.ChannelDTO;
 import journey.dto.JourneyDTO;
+import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.eao.ChannelFacadeLocal;
 import journey.ejb.eao.JourneyFacadeLocal;
@@ -142,7 +145,28 @@ public class JourneyServiceTest {
     }
 
     @Test
-    public void testSaveResponse() {        
+    public void testCreateJourney() throws CustomReasonPhraseException {  
+        Date startDate = new Date();
+        Date endDate = new Date();
+        
+        //create JourneyDTO
+        JourneyDTO journeyDTO = new JourneyDTO("Journey Name", 10, 'Y', startDate, endDate, 'Y', "Description");       
+        
+        //create ChannelDTO
+        ChannelDTO channelDTO = new ChannelDTO("Channel"); 
+        
+        //create 1st TouchPointDTO                
+        TouchPointDTO touchPointDTO_1 = new TouchPointDTO(1, "1", "1", "1", "1", "1", "1", channelDTO, journeyDTO); 
+        
+        //create 2st TouchPointDTO                      
+        TouchPointDTO touchPointDTO_2 = new TouchPointDTO(2, "2", "2", "2", "2", "2", "2", channelDTO, journeyDTO);
+        
+        //add 2 TouchPointDTO to list
+        List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
+        touchPointDTOList.add(touchPointDTO_1);
+        touchPointDTOList.add(touchPointDTO_2);
+        
+        journeyDTO.setTouchPointDTOList(touchPointDTOList);       
     }
     
     /**

@@ -30,6 +30,19 @@ public class JourneyDTO {
     private String description;
     private List<TouchPointDTO> touchPointDTOList = null;
 
+    public JourneyDTO() {
+    }
+
+    public JourneyDTO(String journeyName, Integer noOfFieldResearcher, Character isActive, Date startDate, Date endDate, Character canBeRegistered, String description) {
+        this.journeyName = journeyName;
+        this.noOfFieldResearcher = noOfFieldResearcher;
+        this.isActive = isActive;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.canBeRegistered = canBeRegistered;
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }

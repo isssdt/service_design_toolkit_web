@@ -5,6 +5,7 @@
  */
 package journey.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 
 @JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TouchPointDTO {
     
     private Integer id;
@@ -25,6 +27,21 @@ public class TouchPointDTO {
     private String channelDescription;
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
+
+    public TouchPointDTO() {
+    }
+
+    public TouchPointDTO(Integer id, String touchPointDesc, String latitude, String longitude, String radius, String action, String channelDescription, ChannelDTO channelDTO, JourneyDTO journeyDTO) {
+        this.id = id;
+        this.touchPointDesc = touchPointDesc;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.radius = radius;
+        this.action = action;
+        this.channelDescription = channelDescription;
+        this.channelDTO = channelDTO;
+        this.journeyDTO = journeyDTO;
+    }
 
     public JourneyDTO getJourneyDTO() {
         return journeyDTO;

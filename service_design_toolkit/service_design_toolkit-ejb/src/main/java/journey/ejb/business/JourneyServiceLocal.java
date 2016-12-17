@@ -35,8 +35,11 @@ public interface JourneyServiceLocal {
     public List<JourneyDTO> getAllJourney() throws AppException, CustomReasonPhraseException;
 
     /**
-     *
-     * @param journeyDTO
+     * This method is used to create Journey with all of its Touch Point
+     * @param journeyDTO contains information about Journey and all of its Touch Point
+     * @return ID of the newly created Journey
+     * @throws common.exception.AppException for business exception
+     * @throws common.exception.CustomReasonPhraseException for system exception
      */
     public Integer createJourney(JourneyDTO journeyDTO) throws AppException, CustomReasonPhraseException;
 

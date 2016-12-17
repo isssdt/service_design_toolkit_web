@@ -89,6 +89,16 @@ public class Journey implements Serializable {
     @JsonManagedReference
     private List<TouchPoint> touchPointList;
 
+    public Journey(String description, Date endDate, Character canBeRegistered, int noOfFieldResearcher, Date startDate, String journeyName, Character isActive) {
+        this.description = description;
+        this.endDate = endDate;
+        this.canBeRegistered = canBeRegistered;
+        this.noOfFieldResearcher = noOfFieldResearcher;
+        this.startDate = startDate;        
+        this.journeyName = journeyName;
+        this.isActive = isActive;
+    }
+
     public Journey() {
     }
 
