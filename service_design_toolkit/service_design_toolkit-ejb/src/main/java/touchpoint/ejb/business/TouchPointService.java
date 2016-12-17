@@ -102,16 +102,20 @@ public class TouchPointService implements TouchPointServiceLocal {
         TouchpointFieldResearcher touchpointFieldResearcher = factory.getTouchPointFieldResearcherFacade()
                 .findByTouchpointIdAndFieldResearcherName(touchpointFieldResearcherDTO);
         
-        if (null == touchpointFieldResearcher) {
-            String message = "There is no Touch Point " + touchpointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + 
-                    " for this Field Researcher " + touchpointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername();
-            throw Utils.throwAppException(message, getClass().getName(), Response.Status.NOT_FOUND.getStatusCode());
+        //throws exception if there is no data in database for this Touch Point and Field Researcher
+        if (null == touchpointFieldResearcher) {            
+            throw Utils.throwAppException(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ERROR_NON_EXISTS, getClass().getName(), 
+                    Response.Status.NOT_FOUND.getStatusCode());
+        }       
+        
+        //throws exception if there is no rating for this Touch Point
+        if (null == touchpointFieldResearcherDTO.getRatingDTO() || null == touchpointFieldResearcherDTO.getRatingDTO().getValue() ||
+                touchpointFieldResearcherDTO.getRatingDTO().getValue().isEmpty()) {
+            throw Utils.throwAppException(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ERROR_NO_RATING, getClass().getName(), 
+                    Response.Status.NOT_ACCEPTABLE.getStatusCode());
         }
         
-        if (ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE.equals(touchpointFieldResearcher.getStatus())) {
-            throw Utils.throwAppException("This Touch Point is already DONE", getClass().getName(), Response.Status.CONFLICT.getStatusCode());
-        }
-        
+        //update rating, comment and reaction for this Touch Point
         touchpointFieldResearcher.setRatingId(factory.getRatingFacade().findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
@@ -119,14 +123,16 @@ public class TouchPointService implements TouchPointServiceLocal {
         
         factory.getTouchPointFieldResearcherFacade().edit(touchpointFieldResearcher);
         
+        //if all Touch Point of this Journey has been updated, inform that this Journey has been completed.
         touchpointFieldResearcherDTO.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
         List<TouchpointFieldResearcher> touchpointFieldResearcherList = factory.getTouchPointFieldResearcherFacade()
                 .findByStatusAndFieldResearcherName(touchpointFieldResearcherDTO);
         if (null == touchpointFieldResearcherList || touchpointFieldResearcherList.isEmpty()) {
-            return new RESTReponse("Please informed that you have completed work for all Touch Points");
+            return new RESTReponse(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_COMPLETE_JOURNEY);
         }        
 
-        return new RESTReponse("A new research work has been created");
+        //if not, inform that this Touch Point has been updated successfully
+        return new RESTReponse(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_UPDATE_SUCCESSFUL);
     }
 
     @Override

@@ -25,6 +25,14 @@ public interface TouchPointServiceLocal {
     public TouchPointFieldResearcherListDTO getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO) 
             throws AppException, CustomReasonPhraseException;
     
+    /**
+     * This method is used to create or update rating, comment and reaction for a Touch Point by
+     * a Field Researcher
+     * @param touchpointFieldResearcherDTO contains rating, comment, reaction, Touch Point ID and Field Researcher ID
+     * @return status saying that the creation or updating is successful or error message if fail.
+     * @throws AppException for business logic exception
+     * @throws CustomReasonPhraseException for system exception
+     */
     public RESTReponse saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)
             throws AppException, CustomReasonPhraseException;
     

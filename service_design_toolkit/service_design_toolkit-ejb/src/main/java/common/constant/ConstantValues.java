@@ -35,8 +35,13 @@ public class ConstantValues {
     
     public static final String TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE = "DONE";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS = "IN PROGRESS";
-    public static final String TOUCH_POINT_FIELD_RESEARCHER_NON_EXISTS_ERROR = "There is no Touch Point for this Field Researcher";
+    public static final String TOUCH_POINT_FIELD_RESEARCHER_ERROR_NON_EXISTS = "There is no Touch Point for this Field Researcher";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_NON_EXISTS_ERROR_DEV_INFO = "Please verify the username of Field Researcher and Touch Point ID";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_ALREADY_DONE_ERROR = "This Touch Point is already DONE";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_ALREADY_DONE_ERROR_DEV_INFO = "Please verify the username of Field Researcher and Touch Point ID";
+    
+    public static final String TOUCH_POINT_FIELD_RESEARCHER_ERROR_NO_RATING = "Rating has not been provided for this Touch Point";
+    
+    public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_COMPLETE_JOURNEY = "Please informed that you have completed work for all Touch Points";
+    public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_UPDATE_SUCCESSFUL = "A new research work has been created";
 }
