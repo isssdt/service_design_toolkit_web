@@ -106,17 +106,20 @@ public class TouchPointService implements TouchPointServiceLocal {
         if (null == touchpointFieldResearcher) {            
             throw Utils.throwAppException(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ERROR_NON_EXISTS, getClass().getName(), 
                     Response.Status.NOT_FOUND.getStatusCode());
-        }       
+        }               
         
-        //throws exception if there is no rating for this Touch Point
-        if (null == touchpointFieldResearcherDTO.getRatingDTO() || null == touchpointFieldResearcherDTO.getRatingDTO().getValue() ||
-                touchpointFieldResearcherDTO.getRatingDTO().getValue().isEmpty()) {
-            throw Utils.throwAppException(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ERROR_NO_RATING, getClass().getName(), 
-                    Response.Status.NOT_ACCEPTABLE.getStatusCode());
+        //update rating only when the status of this TouchPoint is IN_PROGRESS
+        if (ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS.equals(touchpointFieldResearcher.getStatus())) {
+            //throws exception if there is no rating for this Touch Point
+            if (null == touchpointFieldResearcherDTO.getRatingDTO() || null == touchpointFieldResearcherDTO.getRatingDTO().getValue() ||
+                    touchpointFieldResearcherDTO.getRatingDTO().getValue().isEmpty()) {
+                throw Utils.throwAppException(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_ERROR_NO_RATING, getClass().getName(), 
+                        Response.Status.NOT_ACCEPTABLE.getStatusCode());
+            }            
+            touchpointFieldResearcher.setRatingId(factory.getRatingFacade().findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
         }
         
-        //update rating, comment and reaction for this Touch Point
-        touchpointFieldResearcher.setRatingId(factory.getRatingFacade().findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
+        //update comment and reaction for this Touch Point        
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
         touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE);

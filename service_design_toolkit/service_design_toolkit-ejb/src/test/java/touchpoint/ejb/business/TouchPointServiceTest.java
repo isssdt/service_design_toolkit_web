@@ -142,5 +142,12 @@ public class TouchPointServiceTest {
         
         //check value of response
         assertEquals(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_COMPLETE_JOURNEY, reponse.getMessage());   
+        
+        //try to update rating of TouchPointFieldResearcher2
+        ratingDTO.setValue("2");        
+        touchPointService.saveResponse(touchPointFieldResearcherDTO);
+        
+        //check value of TouchPointFieldResearcher2
+        assertEquals("1", touchpointFieldResearcher1.getRatingId().getValue());
     }
 }
