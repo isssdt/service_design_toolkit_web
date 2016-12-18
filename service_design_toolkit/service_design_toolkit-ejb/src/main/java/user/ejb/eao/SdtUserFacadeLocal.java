@@ -5,7 +5,6 @@
  */
 package user.ejb.eao;
 
-import common.exception.CustomReasonPhraseException;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -37,6 +36,5 @@ public interface SdtUserFacadeLocal {
     
     SdtUser findUserByUsername(SdtUserDTO sdtUserDTO);
     
-    
-
+    List<SdtUser> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
 }

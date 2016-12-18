@@ -34,8 +34,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SdtUser.findAll", query = "SELECT s FROM SdtUser s"),
     @NamedQuery(name = "SdtUser.findById", query = "SELECT s FROM SdtUser s WHERE s.id = :id"),
     @NamedQuery(name = "SdtUser.findByUsername", query = "SELECT s FROM SdtUser s WHERE s.username = :username"),
-    @NamedQuery(name = "SdtUser.findByIsActive", query = "SELECT s FROM SdtUser s WHERE s.isActive = :isActive")})
+    @NamedQuery(name = "SdtUser.findByIsActive", query = "SELECT s FROM SdtUser s WHERE s.isActive = :isActive"),
+    @NamedQuery(name = "SdtUser.00001", query = "SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password")})
 public class SdtUser implements Serializable {
+
+    @Size(max = 30)
+    @Column(name = "password")
+    private String password;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +64,14 @@ public class SdtUser implements Serializable {
     private UserRole userRoleId;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "sdtUser")
     private FieldResearcher fieldResearcher;
+
+    public SdtUser(String password, String username, Character isActive, UserRole userRoleId, FieldResearcher fieldResearcher) {
+        this.password = password;
+        this.username = username;
+        this.isActive = isActive;
+        this.userRoleId = userRoleId;
+        this.fieldResearcher = fieldResearcher;
+    }
 
     public SdtUser() {
     }
@@ -141,6 +154,14 @@ public class SdtUser implements Serializable {
     public SdtUser(Integer id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

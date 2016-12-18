@@ -10,7 +10,7 @@
 
 use service_design_toolkit;
 
--- TASK 398
-ALTER TABLE journey ADD description varchar(500);
-
+-- TASK 418
+ALTER TABLE sdt_user drop column description;
+ALTER TABLE sdt_user ADD password varchar(30);
 

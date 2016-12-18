@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -163,4 +164,51 @@ public class UserService implements UserServiceLocal {
         return new RESTReponse("This Field Researcher has not registered with any Journey");
     }
 
+    @Override
+    public RESTReponse authenticate(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+        //if there is no username or password, return error
+        if (null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty() || null == sdtUserDTO.getPassword() 
+                || sdtUserDTO.getPassword().isEmpty()) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
+        }
+        
+        //get SdtUser base on username and password
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", sdtUserDTO.getUsername());
+        params.put("password", sdtUserDTO.getPassword());        
+        SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params);
+        
+        //can not get SdtUser, this means incorrect username or password
+        if (null == sdtUser) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
+        }
+        
+        //username and password are correct
+        return new RESTReponse(ConstantValues.SDT_USER_STATUS_AUTHENTICATED);
+    }
+
+    @Override
+    public RESTReponse resetPassword(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+        //if there is no username, return error
+        if (null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty()) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_NO_USERNAME);
+        }
+        
+        //get SdtUser base on username
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", sdtUserDTO.getUsername());
+        SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_FIND_BY_USERNAME, params);
+        
+        //can not get SdtUser, this means incorrect username
+        if (null == sdtUser) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME);
+        }     
+        
+        //reset password        
+        sdtUser.setPassword(UUID.randomUUID().toString().substring(0, 10));
+        factory.getSdtUserFacade().edit(sdtUser);
+        
+        //return new password
+        return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
+    }
 }

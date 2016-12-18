@@ -44,4 +44,39 @@ public class ConstantValues {
     
     public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_COMPLETE_JOURNEY = "Please informed that you have completed work for all Touch Points";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_UPDATE_SUCCESSFUL = "A new research work has been created";
+    
+    /**
+     * SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password
+     */    
+    public static final String SDT_USER_QUERY_AUTHENTICATE = "SdtUser.00001";
+    
+    /**
+     * SELECT s FROM SdtUser s WHERE s.username = :username
+     */    
+    public static final String SDT_USER_QUERY_FIND_BY_USERNAME = "SdtUser.findByUsername";   
+    
+    /**
+     * Username or password is not correct
+     */
+    public static final String SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD = "Username or password is not correct";
+    
+    /**
+     * Username is not correct
+     */
+    public static final String SDT_USER_ERROR_INCORRECT_USERNAME = "Username is not correct";
+    
+    /**
+     * No Username
+     */
+    public static final String SDT_USER_ERROR_NO_USERNAME = "No Username";
+    
+    /**
+     * Authenticated
+     */
+    public static final String SDT_USER_STATUS_AUTHENTICATED = "Authenticated";
+    
+    /**
+     * Password has been changed
+     */
+    public static final String SDT_USER_STATUS_PASSWORD_CHANGE = "Password has been changed";
 }

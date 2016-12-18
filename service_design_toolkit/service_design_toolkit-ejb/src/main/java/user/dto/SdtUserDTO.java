@@ -5,6 +5,7 @@
  */
 package user.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -14,11 +15,31 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 
 @JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SdtUserDTO {
 
     private String username;
     private Character isActive;
+    private String password;
     private FieldResearcherDTO fieldResearcherDTO;
+
+    public SdtUserDTO() {
+    }
+
+    public SdtUserDTO(String username, Character isActive, String password, FieldResearcherDTO fieldResearcherDTO) {
+        this.username = username;
+        this.isActive = isActive;
+        this.password = password;
+        this.fieldResearcherDTO = fieldResearcherDTO;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;

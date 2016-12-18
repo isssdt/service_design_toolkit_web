@@ -21,4 +21,22 @@ public interface UserServiceLocal {
     public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
     public FieldResearcherDTO getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException;    
     public RESTReponse registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    
+    /**
+     * This method is used to authenticate user using username and password
+     * @param sdtUserDTO contains username and password
+     * @return message indicate whether username and password are correct or not
+     * @throws common.exception.AppException for business exception
+     * @throws common.exception.CustomReasonPhraseException for system exception
+     */
+    public RESTReponse authenticate(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    
+    /**
+     * This method is used to reset a password for a username
+     * @param sdtUserDTO contains username that need to reset password
+     * @return message indicate whether password has been reset or not
+     * @throws common.exception.AppException for business exception
+     * @throws common.exception.CustomReasonPhraseException for system exception
+     */
+    public RESTReponse resetPassword(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }
