@@ -208,7 +208,39 @@ public class UserService implements UserServiceLocal {
         sdtUser.setPassword(UUID.randomUUID().toString().substring(0, 10));
         factory.getSdtUserFacade().edit(sdtUser);
         
-        //return new password
+        //return successful status
+        return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
+    }
+
+    @Override
+    public RESTReponse changePassword(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+        //if there is no username or password or old password, return error
+        if (null == sdtUserDTO.getUsername() || sdtUserDTO.getUsername().isEmpty() || null == sdtUserDTO.getPassword() 
+                || sdtUserDTO.getPassword().isEmpty() || null == sdtUserDTO.getOldPassword() || sdtUserDTO.getOldPassword().isEmpty()) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
+        }
+        
+        //if old password is the same as new password, return error
+        if (sdtUserDTO.getOldPassword().equals(sdtUserDTO.getPassword())) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_NEW_OLD_PASSWORD_SAME);
+        }
+        
+        //get SdtUser base on username and old password
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", sdtUserDTO.getUsername());
+        params.put("password", sdtUserDTO.getOldPassword());
+        SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params);
+        
+        //can not get SdtUser, this means incorrect username or old password
+        if (null == sdtUser) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
+        }     
+        
+        //change password
+        sdtUser.setPassword(sdtUserDTO.getPassword());
+        factory.getSdtUserFacade().edit(sdtUser);
+        
+        //return successful status
         return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
     }
 }

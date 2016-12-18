@@ -20,8 +20,11 @@ public class SdtUserDTO {
 
     private String username;
     private Character isActive;
-    private String password;
-    private FieldResearcherDTO fieldResearcherDTO;
+    private String password;   
+    private FieldResearcherDTO fieldResearcherDTO;    
+    
+    //use this for change password function
+    private String oldPassword;
 
     public SdtUserDTO() {
     }
@@ -31,6 +34,14 @@ public class SdtUserDTO {
         this.isActive = isActive;
         this.password = password;
         this.fieldResearcherDTO = fieldResearcherDTO;
+    }
+    
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 
     public String getPassword() {

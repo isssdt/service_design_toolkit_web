@@ -71,6 +71,11 @@ public class ConstantValues {
     public static final String SDT_USER_ERROR_NO_USERNAME = "No Username";
     
     /**
+     * New password must be different with old password
+     */
+    public static final String SDT_USER_ERROR_NEW_OLD_PASSWORD_SAME = "New password must be different with old password";
+    
+    /**
      * Authenticated
      */
     public static final String SDT_USER_STATUS_AUTHENTICATED = "Authenticated";

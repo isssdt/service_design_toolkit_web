@@ -39,4 +39,14 @@ public interface UserServiceLocal {
      * @throws common.exception.CustomReasonPhraseException for system exception
      */
     public RESTReponse resetPassword(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
+    
+    /**
+     * This method is used to change a password for a username
+     * @param sdtUserDTO contains username that need to change password, 
+     * old password and new password
+     * @return message indicate whether password has been changed or not
+     * @throws common.exception.AppException for business exception
+     * @throws common.exception.CustomReasonPhraseException for system exception
+     */
+    public RESTReponse changePassword(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }
