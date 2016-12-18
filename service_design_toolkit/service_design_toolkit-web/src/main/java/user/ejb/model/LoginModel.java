@@ -5,8 +5,11 @@
  */
 package user.ejb.model;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -15,21 +18,29 @@ import javax.enterprise.context.RequestScoped;
 @Named(value = "loginModel")
 @RequestScoped
 public class LoginModel {
+    private SdtUserDTO sdtUserDTO;
 
     /**
      * Creates a new instance of LoginModel
      */
     public LoginModel() {
+    }   
+    
+    @PostConstruct
+    public void init() {
+        
     }
     
-    private String username;
-
-    public String getUsername() {
-        return username;
+    @PreDestroy
+    public void destroy() {
+        
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public SdtUserDTO getSdtUserDTO() {
+        return sdtUserDTO;
     }
-    
+
+    public void setSdtUserDTO(SdtUserDTO sdtUserDTO) {
+        this.sdtUserDTO = sdtUserDTO;
+    }   
 }

@@ -84,4 +84,19 @@ public class ConstantValues {
      * Password has been changed
      */
     public static final String SDT_USER_STATUS_PASSWORD_CHANGE = "Password has been changed";
+    
+    /**
+     * Dashboard page
+     */
+    public static final String URI_DASHBORAD_PAGE = "dashboard.xhtml";
+    
+    /**
+     * Password change page
+     */
+    public static final String URI_PASSWORD_CHANGE_PAGE = "auth/passwordChange.xhtml";
+    
+    /**
+     * Password reset page
+     */
+    public static final String URI_PASSWORD_RESET_PAGE = "auth/passwordReset.xhtml";
 }
