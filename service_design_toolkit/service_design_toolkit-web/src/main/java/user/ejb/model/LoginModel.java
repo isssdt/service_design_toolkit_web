@@ -5,10 +5,11 @@
  */
 package user.ejb.model;
 
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import user.dto.SdtUserDTO;
 
 /**
@@ -17,8 +18,8 @@ import user.dto.SdtUserDTO;
  */
 @Named(value = "loginModel")
 @RequestScoped
-public class LoginModel {
-    private SdtUserDTO sdtUserDTO;
+public class LoginModel implements Serializable {
+    private SdtUserDTO sdtUserDTO;    
 
     /**
      * Creates a new instance of LoginModel
@@ -28,7 +29,7 @@ public class LoginModel {
     
     @PostConstruct
     public void init() {
-        
+        sdtUserDTO = new SdtUserDTO();
     }
     
     @PreDestroy
