@@ -39,13 +39,10 @@
                     </h:panelGrid>
               </div>
                <div align="center">
-                   <p:commandButton value="NEXT" style="font-family: Chalkboard"
-                                
-                                             icon="ui-icon-extlink" 
+                   <p:commandButton value="NEXT" style="font-family: Chalkboard"                              
                                              id="nextbutton" 
-                                             ajax="false" 
-                                             action="create?faces-redirect=true">
-                                                 
+                                             action="create?faces-redirect=true">      
+                       <f:param value="#{journeyModel}"/>
                    </p:commandButton>
                </div> 
            </h:form>

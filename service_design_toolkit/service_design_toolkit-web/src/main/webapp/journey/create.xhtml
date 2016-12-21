@@ -66,6 +66,19 @@
                     alert("Journey has been created");
                     location.reload();
                 }
+                function show_txt(){
+                    var sel = document.getElementById("touchPoint_channel");
+                    var selValue = sel.value;
+                    console.log(sel);
+                    if(selValue ==='website'){
+                        document.getElementById("cha_desc_pan").style.display="none";
+                        document.getElementById("mapbutton_pan").style.display="block";
+                    }
+                    else {
+                       document.getElementById("cha_desc_pan").style.display="block";
+                        document.getElementById("mapbutton_pan").style.display="none";
+                    }
+                }
             </script>   
            
             <script 
@@ -76,173 +89,97 @@
         </h:head>
         <h:body>
             <h:form prependId="false">
-
+                
                 <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
-                <h:panelGrid columns="4" 
-                             style="margin-bottom:10px" 
-                             cellpadding="6" 
-                             id="grid">
-                    <p:outputLabel for="journey_name" 
-                                   value="Journey Name" />
-                    <p:inputText id="journey_name" 
-                                 value="#{journeyModel.journeyName}" 
-                                 required="true" 
-                                 label="Journey Name"/> 
-                    <p:message for="journey_name"/> 
-                    <br></br>                      
-                    <p:outputLabel for="no_of_field_researcher" 
-                                   value="No of Field Researchers" />                    
-                    <p:inputText id="no_of_field_researcher" 
-                                 value="#{journeyModel.noOfFieldResearcher}" 
-                                 required="true" 
-                                 label="Number Of Field Researcher">
-                        <f:validateLongRange minimum="1" />
-                    </p:inputText>
-                    <p:message for="no_of_field_researcher" />                    
-                    <br></br> 
-                                  <p:outputLabel for="start_date" 
-                                   value="Start Date" />                    
-                    <p:calendar id="start_date" 
-                                value="#{journeyModel.startDate}" 
-                                required="true" 
-                                label="Start Date" 
-                                mindate="#{journeyCreateView.currentDate}"/>              
-                    <p:message for="start_date" />                    
+                
+                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+                    
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="journey_name" value="Journey Name" />
+                        <p:inputText id="journey_name" value="#{journeyModel.journeyName}" readonly="true">
+                        </p:inputText>
+                        <p:message for="journey_name" />
+                        <br></br>
+                        <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
+                        <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" readonly="true"
+                                     label="Number Of Field Researcher">
+                        </p:inputText>
+                        <p:message for="no_of_field_researcher" />
+                    </h:panelGrid>
+                    
+                    <br></br>
+                    
+                    <h:panelGrid columns="2" id="pan12">
+                        <p:outputLabel for="start_date" value="Start Date" />                    
+                        <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" readonlyInput="true"
+                                label="Start Date" />              
+                        <p:message for="start_date" />                    
+                        <br></br> 
+                        <p:outputLabel for="end_date" value="End Date" />                    
+                        <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
+                                readonlyInput="true"/>              
+                        <p:message for="end_date" />                    
+                    </h:panelGrid>
+                    
                     <br></br> 
                     
-                    <p:outputLabel for="end_date" 
-                                   value="End Date" />                    
-                    <p:calendar id="end_date" 
-                                value="#{journeyModel.endDate}" 
-                                required="true" 
-                                label="End Date" 
-                                mindate="#{journeyCreateView.currentDate}"/>              
-                    <p:message for="end_date" />                    
-                    <br></br> 
-                          
-                    <!--<p:outputLabel for="address" value="Address" />
-                    <p:inputText id="address" onfocus=" ()"/>  -->   
-                    <p:commandButton value="Add TouchPoints" 
-                                     icon="ui-icon-extlink"  
-                                     onclick="PF('dlg1').show();">       
-                        <!--<p:ajax event="dialogReturn" 
-                                    listener="#" update="growl" />-->
-                    </p:commandButton>
+                    <p:commandButton value="Add TouchPoints" onclick="PF('dlg1').show();"/>       
                 </h:panelGrid>
                 
-                <p:dialog header="Add Touch Point"
-                          widgetVar="dlg1"
-                          width="725" 
-                          height="300"
-                          modal="true">
-                    
-                    <h:panelGrid columns="4"
-                                 style="margin-bottom:10px" 
-                                 cellpadding="6"
-                                 id="grid">
-                        <p:outputLabel for="touchPoint_name" 
-                                           value="Name" />
-                            <p:inputText id="touchPoint_name" 
-                                         value="#{touchPointModel.touchPointName}" 
-                                         required="true" 
-                                         label="Name">                       
-                            </p:inputText>
+                <p:dialog id="dlg1" widgetVar="dlg1" header="Add Touch Point"  style = "width: 725px; height: 300px" >
+                    <h:form>
+                    <h:panelGrid id="grid" columns="4" style="margin-bottom:10px" cellpadding="6" >
+                        <p:outputLabel for="touchPoint_name" value="Name" />
+                        <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" 
+                                         label="Name"/>                       
                     </h:panelGrid>
-                    
-                    <h:panelGrid columns="4"
-                                 style="margin-bottom:10px" 
-                                 cellpadding="6"
-                                 id="grid1">
-                        <p:outputLabel for="touchPoint_channel" 
-                                           value="Channel" />
-                            <p:selectOneMenu id="touchPoint_channel"
-                                             value="#{touchPointModel.touchPointChannel}" >
-                                <f:selectItems value="#{journeyCreateView.channelmap}"/>
-                            </p:selectOneMenu>
                         
-                        <p:outputLabel for="channel_desc" value="Decription" />
-                            <p:inputText id="channel_desc" 
-                                         value="#{touchPointModel.channelDesc}" 
-                                         required="true" 
-                                         label="Name">                       
-                            </p:inputText>
+                    <h:panelGrid id="grid2" columns="4" style="margin-bottom:10px" cellpadding="6">
+                        <p:outputLabel for="touchPoint_Action" value="Action" />                    
+                        <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" required="true" 
+                                     label="Action">
+                        </p:inputText>
                     </h:panelGrid>
                     
-                    <h:panelGrid columns="4"
-                                 style="margin-bottom:10px" 
-                                 cellpadding="6"
-                                 id="grid2">
-                        <p:outputLabel for="touchPoint_Action" 
-                                           value="Action" />                    
-                            <p:inputText id="touchPoint_Action" 
-                                         value="#{touchPointModel.touchpointAction}" 
-                                         required="true" 
-                                         label="Action">
-                            </p:inputText>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid columns="4"
-                                 style="margin-bottom:10px" 
-                                 cellpadding="6"
-                                 id="grid3">
-                        <p:outputLabel for="console" value="" />
-                        <p:selectOneRadio id="console" value="#{radioView.console}">
-                            <f:selectItem itemLabel="Location Dependent" itemValue="Location Dependent" />
-                            <f:selectItem itemLabel="Non-Location Dependent" itemValue="Non-Location Dependent" />
-                        </p:selectOneRadio>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid columns="3"
-                                 style="margin-bottom:10px" 
-                                 cellpadding="6"
-                                 id="grid3">
-                        <p:commandButton value="Specify Location" 
-                                             icon="ui-icon-extlink" 
-                                             id="mapbutton" 
-                                             ajax="true" 
-                                             onclick="PF('dlg2').show();">
-                                                 
-                        </p:commandButton>
+                    <h:panelGrid id="grid1" columns="4" style="margin-bottom:10px" cellpadding="6">
+                        <p:outputLabel for="touchPoint_channel" value="Channel" />
+                        <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
+                            <p:ajax event="change" update="grid1,cha_desc_pan,grid4,mapbutton_pan"/>
+                            <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{journeyCreateView.channelmap}"/>
+                        </p:selectOneMenu>
                         
-                        <p:commandButton value="Clear" 
-                                             icon="ui-icon-extlink" 
-                                             id="clearbutton" 
-                                             ajax="true" 
-                                             onclick="PF('dlg1').show();">
-                                                 
-                        </p:commandButton>
-                        
-                        <p:commandButton value="Add" 
-                                             icon="ui-icon-extlink" 
-                                             id="popup"
-                                             actionListener="#{touchPointController.addTouchPoint()}"
-                                             update = "@form dia" 
-                                             onclick="PF('dlg1').hide();" 
-                                             ajax="true">
-                        </p:commandButton>
+                        <h:panelGroup id="cha_desc_pan">
+                            <p:inputText value="#{touchPointModel.channelDesc}" required="true" placeholder="enter description"
+                                         rendered="#{touchPointModel.touchPointChannel eq 'website'}">
+                            </p:inputText>
+                        </h:panelGroup>
                     </h:panelGrid>
+                    
+                    <h:panelGrid id="grid4" columns="3" style="margin-bottom:20px" >
+                            <h:panelGroup id = "mapbutton_pan">
+                                <p:commandButton value="Specify Location" action="map?faces-redirect=true"
+                                                 rendered="#{touchPointModel.touchPointChannel eq 'kiosk' or 
+                                                             touchPointModel.touchPointChannel eq 'person to person'}">
+                                    <f:param value="#{journeyModel;touchPointModel}"/>
+                                </p:commandButton>
+                                
+                                <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
+                                                 rendered="#{touchPointModel.touchPointChannel eq 'website'}"
+                                                 onclick="PF('dlg1').hide();">
+                                    <f:param value="#{journeyModel;touchPointModel}"/>
+                                </p:commandButton>
+                            </h:panelGroup>  
+                    </h:panelGrid>
+                    </h:form>
                 </p:dialog>
-                
-                <p:dialog header="Specify Location"
-                          widgetVar="dlg2" 
-                          width="625" 
-                          height="400" 
-                          modal="true">
-                        <p:outputLabel for="address" value="Address" />
-                        <p:inputText id="address" onfocus="initAutocomplete()"/>                                                                                
-                        <p:commandButton value="Add Touch Point" icon="ui-icon-search" onclick="addMakerByGeoCode()" type="button" />                    
-                        <p:gmap id="geoGmap" widgetVar="geoMap" center="#{journeyCreateView.centerGeoMap}" zoom="13" type="ROADMAP" 
-                            model="#{touchPointListModel.geoModel}" style="width:100%;height:400px" onPointClick="handlePointClick(event);">
-                        <p:ajax event="geocode" listener="#{journeyCreateView.onAddMakerByGeoCode}" update="@this" />
-                        </p:gmap>    
-                        <p:commandButton value ="OK" onclick="PF('dlg2').hide();"/>
-                </p:dialog>    
+               
                 <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
                            <f:facet name="element">
                              <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
                              <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
-                       </f:facet>
-                        </p:diagram> 
+                            </f:facet>
+                </p:diagram> 
                 <p:commandButton value="SAVE" 
                                  id="save"
                                  icon="ui-icon-extlink" 
