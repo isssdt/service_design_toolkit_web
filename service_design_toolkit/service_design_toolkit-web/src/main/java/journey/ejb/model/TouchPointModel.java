@@ -8,10 +8,8 @@ package journey.ejb.model;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 
 /**
  *

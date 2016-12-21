@@ -14,8 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
 import journey.dto.ChannelDTO;
@@ -72,14 +70,14 @@ public class JourneyController implements Serializable {
             for (int i=0; i < touchPointListModel.createCopy().getTouchPointListModel().size(); i++){
                 channelDTO=new ChannelDTO();
                 touchPointDTO = new TouchPointDTO();
-                touchPointDTO.setTouchPointDesc(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointName());
-                touchPointDTO.setChannelDescription(touchPointListModel.createCopy().getTouchPointListModel().get(i).getChannelDesc());                
-                touchPointDTO.setAction(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointAction());
-                touchPointDTO.setRadius(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointRadius().toString());                
-                channelDTO.setChannelName(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
+                touchPointDTO.setTouchPointDesc(touchPointListModel.getTouchPointListModel().get(i).getTouchPointName());
+                touchPointDTO.setChannelDescription(touchPointListModel.getTouchPointListModel().get(i).getChannelDesc());                   
+                touchPointDTO.setAction(touchPointListModel.getTouchPointListModel().get(i).getTouchpointAction());
+                touchPointDTO.setRadius(touchPointListModel.getTouchPointListModel().get(i).getTouchpointRadius().toString());                
+                channelDTO.setChannelName(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());
                 touchPointDTO.setChannelDTO(channelDTO);
-                touchPointDTO.setLatitude(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointLatitude().toString());
-                touchPointDTO.setLongitude(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointLongitude().toString());
+                touchPointDTO.setLatitude(touchPointListModel.getTouchPointListModel().get(i).getTouchpointLatitude().toString());
+                touchPointDTO.setLongitude(touchPointListModel.getTouchPointListModel().get(i).getTouchpointLongitude().toString());
                 touchPointDTOList.add(touchPointDTO);                
             }            
             

@@ -19,7 +19,7 @@ import user.dto.SdtUserDTO;
 @Named(value = "loginModel")
 @RequestScoped
 public class LoginModel implements Serializable {
-    private SdtUserDTO sdtUserDTO;    
+    private SdtUserDTO sdtUserDTO;      
 
     /**
      * Creates a new instance of LoginModel

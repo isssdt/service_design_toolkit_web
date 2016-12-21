@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 import user.ejb.business.UserServiceLocal;
 import user.ejb.model.LoginModel;
+import user.ejb.view.LoginView;
 
 /**
  *
@@ -31,6 +32,9 @@ public class LoginController {
 
     @Inject
     LoginModel loginModel;
+    
+    @Inject
+    LoginView loginView;
 
     @EJB
     UserServiceLocal userService;
@@ -51,18 +55,16 @@ public class LoginController {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage message = null;
-        boolean loggedIn = false;
+        FacesMessage message = null;        
         if (null != response && ConstantValues.SDT_USER_STATUS_AUTHENTICATED.equals(response.getMessage())) {
-            loggedIn = true;
+            loginView.setLoggedIn(true);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", loginModel.getSdtUserDTO().getUsername());
-        } else {
-            loggedIn = false;
+        } else {            
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
         
         FacesContext.getCurrentInstance().addMessage(null, message);
-        context.addCallbackParam("loggedIn", loggedIn);
+        context.addCallbackParam("loggedIn", loginView.getLoggedIn());
     }
 
     public void resetPassword() {
