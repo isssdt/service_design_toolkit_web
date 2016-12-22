@@ -5,15 +5,17 @@
  */
 package journey.ejb.controller;
 
+import common.constant.ConstantValues;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.utils.Utils;
+import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
 import journey.dto.ChannelDTO;
@@ -25,6 +27,7 @@ import journey.ejb.model.TouchPointListModel;
 import org.apache.commons.beanutils.BeanUtils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 
 
 
@@ -33,7 +36,7 @@ import java.util.List;
  * @author longnguyen
  */
 @Named(value = "journeyController")
-@RequestScoped
+@SessionScoped
 public class JourneyController implements Serializable {
 
     @EJB
@@ -104,5 +107,9 @@ public class JourneyController implements Serializable {
             return channelListDTO.getChannelDTOList();
         }
         return null;
+    }
+    
+    public void forwardToCreateJourneyPage() {
+        
     }
 }

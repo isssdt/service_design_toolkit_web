@@ -18,7 +18,7 @@
                 <p:commandButton value="Login" update="growl" actionListener="#{loginControl.authenticate}" 
                                  oncomplete="handleLoginRequest(xhr, status, args)"/>
             </f:facet>  
-        </h:panelGrid>
-        <h:outputScript name="js/login/login.js" />
+        </h:panelGrid>        
     </p:dialog>    
+    <h:outputScript name="js/login/login.js" />   
 </ui:composition>

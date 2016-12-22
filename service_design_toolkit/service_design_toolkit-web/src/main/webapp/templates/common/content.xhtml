@@ -1,42 +1,4 @@
 <ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
-    <script 
-        type="text/javascript" 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
-    </script>     
-    <div class="row">  
-        <div class="col-md-6" id="target">
-            <h:form>
-                <p:outputLabel for="journey_list" value="Journey" />
-                <p:selectOneMenu id="journey_list" style="width: 30%" value="#{dashboardView.journeyName}">
-                    <p:ajax listener="#{dashboardView.onJourneyChange}" update="geoGmap fs_list " oncomplete="PF('dlg1').show();PF('dlg2').show();" />
-                    <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
-                    <f:selectItems value="#{dashboardView.journeyNameMap}"/>
-                </p:selectOneMenu>
-            </h:form>
-        </div>
-    </div>
-    <div class="row"> 
-        <div class="col-md-6">
-            <p:dialog widgetVar="dlg1" minimizable="true" maximizable="true" position="20,300" style="height: 100px; width: 100px;">
-                <p:gmap id="geoGmap" widgetVar="geoMap" center="#{dashboardView.centerGeoMap}" zoom="13" type="ROADMAP" 
-                    model="#{dashboardView.geoModel}" style="width:100px; height:400px"/>                                
-            </p:dialog>     
-        </div>      
-        <div class="col-md-6">
-            <p:dialog widgetVar="dlg2" minimizable="true" maximizable="true" position="500,300" style="height: 100px; width: 100px;">
-             <!--   <p:diagram id="fs_list" value="#{diagramFlowChartView.model}" style="height:600px" styleClass="ui-widget-content" />-->
-                <p:dataList value="#{dashboardView.fieldResearcherDTOList}" var="field_researcher" type="ordered" id="fs_list">
-                    <f:facet name="header">
-                        Field Researcher
-                    </f:facet>
-                    #{field_researcher.sdtUserDTO.username}
-                </p:dataList>
-            </p:dialog>
-        </div>
-    </div>
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 </ui:composition>

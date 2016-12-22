@@ -1,38 +1,22 @@
 <ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="./">Service Design Toolkit</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-
-                <ul class="nav navbar-nav navbar-left"> 
-                    <h:form>
-                        <p:menubar>
-                            <p:submenu label="Journey">
-                                <p:menuitem value="Create" url="./journey/createJourney.xhtml" />
-                                <p:menuitem value="View" url="./journey/integrated.xhtml" />
-                            </p:submenu>
-                        </p:menubar>
-                    </h:form>                
-                </ul>
-                <h:form class="navbar-form navbar-right">                                      
-                    <p:commandButton value="Log in" onclick="PF('loginDialog').show();" class="btn btn-success"/>   
-                    <ui:include src="/auth/loginDialog.xhtml" />
-                </h:form>
-            </div>
-        </div>
-    </nav>    
+    xmlns:p="http://primefaces.org/ui"    
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">       
+    <h:form>
+        <p:menubar>
+            <p:submenu label="Journey">
+                <p:menuitem value="Create" url="./journey/createJourney.xhtml"/>
+                <p:menuitem value="View" url="./journey/integrated.xhtml" />
+            </p:submenu>
+            <p:submenu label="Account">
+                <p:menuitem value="Change Password" url="" />                
+            </p:submenu>
+            <f:facet name="options">
+                <p:commandButton value="Log in" onclick="PF('loginDialog').show();"/>   
+                <ui:include src="/auth/loginDialog.xhtml" />
+            </f:facet>
+        </p:menubar>      
+    </h:form>      
 </ui:composition>

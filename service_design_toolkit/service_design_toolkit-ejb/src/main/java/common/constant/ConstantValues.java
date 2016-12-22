@@ -88,7 +88,12 @@ public class ConstantValues {
     /**
      * Dashboard page
      */
-    public static final String URI_DASHBORAD_PAGE = "dashboard.xhtml";
+    public static final String URI_DASHBORAD_PAGE = "/dashboard/dashboard.xhtml";
+    
+    /**
+     * Create Journey page
+     */
+    public static final String URI_CREATE_JOURNEY_PAGE = "/journey/createJourney.xhtml";
     
     /**
      * Password change page

@@ -9,11 +9,14 @@ import common.constant.ConstantValues;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.rest.dto.RESTReponse;
+import common.utils.Utils;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -27,12 +30,12 @@ import user.ejb.view.LoginView;
  * @author longnguyen
  */
 @Named(value = "loginControl")
-@RequestScoped
-public class LoginController {
+@SessionScoped
+public class LoginController implements Serializable {
 
     @Inject
     LoginModel loginModel;
-    
+
     @Inject
     LoginView loginView;
 
@@ -55,16 +58,25 @@ public class LoginController {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage message = null;        
+        FacesMessage message = null;
         if (null != response && ConstantValues.SDT_USER_STATUS_AUTHENTICATED.equals(response.getMessage())) {
             loginView.setLoggedIn(true);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", loginModel.getSdtUserDTO().getUsername());
-        } else {            
+        } else {
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
-        
+
+        if (loginView.getLoggedIn()) {
+            try {
+                Utils.forwardToPage(ConstantValues.URI_DASHBORAD_PAGE);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loginView.getLoggedIn());
+
     }
 
     public void resetPassword() {
