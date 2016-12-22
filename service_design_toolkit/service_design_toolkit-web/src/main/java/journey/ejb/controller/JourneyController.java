@@ -73,11 +73,18 @@ public class JourneyController implements Serializable {
                 touchPointDTO.setTouchPointDesc(touchPointListModel.getTouchPointListModel().get(i).getTouchPointName());
                 touchPointDTO.setChannelDescription(touchPointListModel.getTouchPointListModel().get(i).getChannelDesc());                   
                 touchPointDTO.setAction(touchPointListModel.getTouchPointListModel().get(i).getTouchpointAction());
-                touchPointDTO.setRadius(touchPointListModel.getTouchPointListModel().get(i).getTouchpointRadius().toString());                
                 channelDTO.setChannelName(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());
                 touchPointDTO.setChannelDTO(channelDTO);
-                touchPointDTO.setLatitude(touchPointListModel.getTouchPointListModel().get(i).getTouchpointLatitude().toString());
-                touchPointDTO.setLongitude(touchPointListModel.getTouchPointListModel().get(i).getTouchpointLongitude().toString());
+              
+                 if (touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointRadius() != null){
+                    touchPointDTO.setRadius(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointRadius().toString());
+                    touchPointDTO.setLatitude(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointLatitude().toString());
+                    touchPointDTO.setLongitude(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointLongitude().toString());}
+                else {
+                    touchPointDTO.setRadius("NONE");
+                    touchPointDTO.setLatitude("NONE");
+                    touchPointDTO.setLongitude("NONE"); 
+                }
                 touchPointDTOList.add(touchPointDTO);                
             }            
             
