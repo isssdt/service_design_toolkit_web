@@ -64,7 +64,7 @@ public class TouchPointController implements Serializable {
     }
 
     public TouchPointListModel addTouchPoint() {
-        touchPointListModel.getTouchPointListModel().add(touchPointModel);       
+        touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());       
         addElement();        
         return touchPointListModel;
     }

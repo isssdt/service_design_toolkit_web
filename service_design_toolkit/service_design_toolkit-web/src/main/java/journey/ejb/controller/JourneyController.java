@@ -70,10 +70,10 @@ public class JourneyController implements Serializable {
             for (int i=0; i < touchPointListModel.createCopy().getTouchPointListModel().size(); i++){
                 channelDTO=new ChannelDTO();
                 touchPointDTO = new TouchPointDTO();
-                touchPointDTO.setTouchPointDesc(touchPointListModel.getTouchPointListModel().get(i).getTouchPointName());
-                touchPointDTO.setChannelDescription(touchPointListModel.getTouchPointListModel().get(i).getChannelDesc());                   
-                touchPointDTO.setAction(touchPointListModel.getTouchPointListModel().get(i).getTouchpointAction());
-                channelDTO.setChannelName(touchPointListModel.getTouchPointListModel().get(i).getTouchPointChannel());
+                touchPointDTO.setTouchPointDesc(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointName());
+                touchPointDTO.setChannelDescription(touchPointListModel.createCopy().getTouchPointListModel().get(i).getChannelDesc());                   
+                touchPointDTO.setAction(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointAction());
+                channelDTO.setChannelName(touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchPointChannel());
                 touchPointDTO.setChannelDTO(channelDTO);
               
                  if (touchPointListModel.createCopy().getTouchPointListModel().get(i).getTouchpointRadius() != null){
