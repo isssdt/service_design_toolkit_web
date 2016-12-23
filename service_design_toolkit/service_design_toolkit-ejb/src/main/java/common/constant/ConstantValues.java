@@ -88,20 +88,30 @@ public class ConstantValues {
     /**
      * Dashboard page
      */
-    public static final String URI_DASHBORAD_PAGE = "/dashboard/dashboard.xhtml";
+    public static final String URI_DASHBORAD_PAGE = "/dashboard/dashboard.xhtml?faces-redirect=true";
     
     /**
      * Create Journey page
      */
-    public static final String URI_CREATE_JOURNEY_PAGE = "/journey/createJourney.xhtml";
+    public static final String URI_CREATE_JOURNEY_PAGE = "/journey/createJourney.xhtml?faces-redirect=true";
+    
+    /**
+     * View Integration Journey Page
+     */
+    public static final String URI_INTEGRATED_JOURNEY_PAGE = "/journey/integrated.xhtml?faces-redirect=true";
     
     /**
      * Password change page
      */
-    public static final String URI_PASSWORD_CHANGE_PAGE = "auth/passwordChange.xhtml";
+    public static final String URI_PASSWORD_CHANGE_PAGE = "/auth/passwordChange.xhtml?faces-redirect=true";
     
     /**
-     * Password reset page
+     * Login page
      */
-    public static final String URI_PASSWORD_RESET_PAGE = "auth/passwordReset.xhtml";
+    public static final String URI_LOGIN_PAGE = "/auth/login.xhtml?faces-redirect=true";
+    
+    /**
+     * Index page
+     */
+    public static final String URI_INDEX_PAGE = "/index.xhtml?faces-redirect=true";
 }

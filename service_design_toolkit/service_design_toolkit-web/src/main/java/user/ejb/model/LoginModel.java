@@ -8,7 +8,7 @@ package user.ejb.model;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import user.dto.SdtUserDTO;
 
@@ -17,7 +17,7 @@ import user.dto.SdtUserDTO;
  * @author longnguyen
  */
 @Named(value = "loginModel")
-@RequestScoped
+@SessionScoped
 public class LoginModel implements Serializable {
     private SdtUserDTO sdtUserDTO;      
 

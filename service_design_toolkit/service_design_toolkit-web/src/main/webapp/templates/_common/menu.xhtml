@@ -7,15 +7,14 @@
     <h:form>
         <p:menubar>
             <p:submenu label="Journey">
-                <p:menuitem value="Create" url="./journey/createJourney.xhtml"/>
-                <p:menuitem value="View" url="./journey/integrated.xhtml" />
+                <p:menuitem value="Create" action="#{mainController.createJourneyPage()}" ajax="false" />
+                <p:menuitem value="View" action="#{mainController.integrationJourneyPage()}" ajax="false" />
             </p:submenu>
             <p:submenu label="Account">
                 <p:menuitem value="Change Password" url="" />                
             </p:submenu>
             <f:facet name="options">
-                <p:commandButton value="Log in" onclick="PF('loginDialog').show();"/>   
-                <ui:include src="/auth/loginDialog.xhtml" />
+                <p:commandButton value="Log out" action="#{authControl.logout()}" ajax="false"/>                
             </f:facet>
         </p:menubar>      
     </h:form>      

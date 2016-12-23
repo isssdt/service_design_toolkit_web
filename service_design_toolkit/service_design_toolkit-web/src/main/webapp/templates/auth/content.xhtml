@@ -1,0 +1,17 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html">    
+    <h:panelGrid columns="2" cellpadding="5">
+        <h:form>
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{loginModel.sdtUserDTO.username}" required="true" label="username" />
+
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="#{loginModel.sdtUserDTO.password}" required="true" label="password" />
+            
+            <p:commandButton value="Login" action="#{authControl.authenticate}" ajax="false" />            
+        </h:form>
+    </h:panelGrid>       
+</ui:composition>

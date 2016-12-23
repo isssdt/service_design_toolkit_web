@@ -6,37 +6,37 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <h:head> 
-           
+
             <style type="text/css">
-    .ui-diagram-element {
-        border:0.1em dotted #E5E4E2; 
-        background-color: #EFEEEC;
-        width:10em;
-        height:8em;
-        text-align: center;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-    }
- 
-    .ui-diagram-element:hover {
-        background-color: #C7C6C4;
-    }
- 
-    
-</style>
+                .ui-diagram-element {
+                    border:0.1em dotted #E5E4E2; 
+                    background-color: #EFEEEC;
+                    width:10em;
+                    height:8em;
+                    text-align: center;
+                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                }
+
+                .ui-diagram-element:hover {
+                    background-color: #C7C6C4;
+                }
+
+
+            </style>
             <script type="text/javascript">
                 var placeSearch, autocomplete;
                 function initAutocomplete() {
-                                       // Create the autocomplete object, restricting the search to geographical
+                    // Create the autocomplete object, restricting the search to geographical
                     // location types.
                     autocomplete = new google.maps.places.Autocomplete(
                             /** @type {!HTMLInputElement} */(document.getElementById('address1')),
-                            {types: ['geocode']});                    
-                }                             
+                            {types: ['geocode']});
+                }
                 function addMakerByGeoCode() {
-                    PF('geoMap').geocode(document.getElementById('address').value);              
+                    PF('geoMap').geocode(document.getElementById('address').value);
                 }
                 var currentMarker = null;
-                
+
                 function handlePointClick(event) {
                     if (currentMarker === null) {
                         document.getElementById('lat').value = event.latLng.lat();
@@ -48,7 +48,7 @@
                         PF('dlg').show();
                     }
                 }
-                
+
                 function markerAddComplete() {
                     var title = document.getElementById('title');
                     currentMarker.setTitle(title.value);
@@ -66,34 +66,33 @@
                     alert("Journey has been created");
                     location.reload();
                 }
-                function show_txt(){
+                function show_txt() {
                     var sel = document.getElementById("touchPoint_channel");
                     var selValue = sel.value;
                     console.log(sel);
-                    if(selValue ==='website'){
-                        document.getElementById("cha_desc_pan").style.display="none";
-                        document.getElementById("mapbutton_pan").style.display="block";
-                    }
-                    else {
-                       document.getElementById("cha_desc_pan").style.display="block";
-                        document.getElementById("mapbutton_pan").style.display="none";
+                    if (selValue === 'website') {
+                        document.getElementById("cha_desc_pan").style.display = "none";
+                        document.getElementById("mapbutton_pan").style.display = "block";
+                    } else {
+                        document.getElementById("cha_desc_pan").style.display = "block";
+                        document.getElementById("mapbutton_pan").style.display = "none";
                     }
                 }
             </script>   
-           
+
             <script 
                 type="text/javascript" 
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places">  
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places">
             </script>
-            
+
         </h:head>
         <h:body>
             <h:form prependId="false">
-                
+
                 <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
-                
+
                 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-                    
+
                     <h:panelGrid columns="2">
                         <p:outputLabel for="journey_name" value="Journey Name" />
                         <p:inputText id="journey_name" value="#{journeyModel.journeyName}" readonly="true">
@@ -106,64 +105,64 @@
                         </p:inputText>
                         <p:message for="no_of_field_researcher" />
                     </h:panelGrid>
-                    
+
                     <br></br>
-                    
+
                     <h:panelGrid columns="2" id="pan12">
                         <p:outputLabel for="start_date" value="Start Date" />                    
                         <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" readonlyInput="true"
-                                label="Start Date" />              
+                                    label="Start Date" />              
                         <p:message for="start_date" />                    
                         <br></br> 
                         <p:outputLabel for="end_date" value="End Date" />                    
                         <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
-                                readonlyInput="true"/>              
+                                    readonlyInput="true"/>              
                         <p:message for="end_date" />                    
                     </h:panelGrid>
-                    
+
                     <br></br> 
-                    
+
                     <p:commandButton value="Add TouchPoints" onclick="PF('dlg1').show();"/>       
                 </h:panelGrid>
-                
+
                 <p:dialog id="dlg1" widgetVar="dlg1" header="Add Touch Point"  style = "width: 725px; height: 300px" >
                     <h:form>
-                    <h:panelGrid id="grid" columns="4" style="margin-bottom:10px" cellpadding="6" >
-                        <p:outputLabel for="touchPoint_name" value="Name" />
-                        <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" 
+                        <h:panelGrid id="grid" columns="4" style="margin-bottom:10px" cellpadding="6" >
+                            <p:outputLabel for="touchPoint_name" value="Name" />
+                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" 
                                          label="Name"/>                       
-                    </h:panelGrid>
-                        
-                    <h:panelGrid id="grid2" columns="4" style="margin-bottom:10px" cellpadding="6">
-                        <p:outputLabel for="touchPoint_Action" value="Action" />                    
-                        <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" required="true" 
-                                     label="Action">
-                        </p:inputText>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid id="grid1" columns="4" style="margin-bottom:10px" cellpadding="6">
-                        <p:outputLabel for="touchPoint_channel" value="Channel" />
-                        <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
-                            <p:ajax event="change" update="grid1,cha_desc_pan,grid4,mapbutton_pan"/>
-                            <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{journeyCreateView.channelmap}"/>
-                        </p:selectOneMenu>
-                        
-                        <h:panelGroup id="cha_desc_pan">
-                            <p:inputText value="#{touchPointModel.channelDesc}" required="true" placeholder="enter description"
-                                         rendered="#{touchPointModel.touchPointChannel eq 'website'}">
+                        </h:panelGrid>
+
+                        <h:panelGrid id="grid2" columns="4" style="margin-bottom:10px" cellpadding="6">
+                            <p:outputLabel for="touchPoint_Action" value="Action" />                    
+                            <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" required="true" 
+                                         label="Action">
                             </p:inputText>
-                        </h:panelGroup>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid id="grid4" columns="3" style="margin-bottom:20px" >
+                        </h:panelGrid>
+
+                        <h:panelGrid id="grid1" columns="4" style="margin-bottom:10px" cellpadding="6">
+                            <p:outputLabel for="touchPoint_channel" value="Channel" />
+                            <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
+                                <p:ajax event="change" update="grid1,cha_desc_pan,grid4,mapbutton_pan"/>
+                                <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{journeyCreateView.channelmap}"/>
+                            </p:selectOneMenu>
+
+                            <h:panelGroup id="cha_desc_pan">
+                                <p:inputText value="#{touchPointModel.channelDesc}" required="true" placeholder="enter description"
+                                             rendered="#{touchPointModel.touchPointChannel eq 'website'}">
+                                </p:inputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+
+                        <h:panelGrid id="grid4" columns="3" style="margin-bottom:20px" >
                             <h:panelGroup id = "mapbutton_pan">
                                 <p:commandButton value="Specify Location" action="map?faces-redirect=true"
                                                  rendered="#{touchPointModel.touchPointChannel eq 'kiosk' or 
                                                              touchPointModel.touchPointChannel eq 'person to person'}">
                                     <f:param value="#{journeyModel;touchPointModel}"/>
                                 </p:commandButton>
-                                
+
                                 <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
                                                  rendered="#{touchPointModel.touchPointChannel eq 'website'}"
                                                  onclick="PF('dlg1').hide();"
@@ -171,16 +170,16 @@
                                     <f:param value="#{journeyModel;touchPointModel}"/>
                                 </p:commandButton>
                             </h:panelGroup>  
-                    </h:panelGrid>
+                        </h:panelGrid>
                     </h:form>
                 </p:dialog>
-               
+
                 <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
-                           <f:facet name="element">
-                             <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
-                             <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
-                             <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" />
-                            </f:facet>
+                    <f:facet name="element">
+                        <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
+                        <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
+                        <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" />
+                    </f:facet>
                 </p:diagram> 
                 <p:commandButton value="SAVE" 
                                  id="save"
@@ -190,19 +189,18 @@
                                  onclick="PF('dlgSucc').show();">
                     <h:commandButton value="OK" action="main-layout?faces-redirect=true" />
                 </p:commandButton>
-                
-                
+
+
                 <p:dialog widgetVar="dlgSucc" 
                           width="625" 
                           height="400" 
                           modal="true">
-                    <h:outputText value="This is a modal" />
-                    <a href ="http://localhost:9090/service_design_toolkit-web/">
-                        <h:commandButton value ="OK" />
-                    </a>
+                    <h:outputText value="A Journey has been created successfully!" />
+                    <h:form>
+                        <p:commandButton value ="OK" action="#{mainController.dashboardPage()}" ajax="false" />
+                    </h:form>
                 </p:dialog>
             </h:form>
         </h:body>
     </f:view>
 </html>
-                    
