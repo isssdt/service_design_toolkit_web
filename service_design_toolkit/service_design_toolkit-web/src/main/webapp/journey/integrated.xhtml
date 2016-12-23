@@ -14,7 +14,7 @@
             <h:form>
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" style="width: 30%" value="#{integratedView.journeyName}">
-                    <p:ajax listener="#{integratedController.onJourneyChange()}" update="chart"  oncomplete="PF('chart').show();"/>
+                    <p:ajax listener="#{integratedController.onJourneyChange()}" update="chart1"  oncomplete="PF('chart').show();"/>
                     <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                     <f:selectItems value="#{integratedController.journeyNameMap}"/>
                 </p:selectOneMenu>
@@ -22,9 +22,9 @@
             </h:form>
         </div>
     </div>
-        <p:panel widgetVar="chart">
-        <p:chart id ='chart' type="line" model="#{integratedView.lineModel1}" style="height:300px;"/>
-        </p:panel>
+        <p:dialog widgetVar="chart" minimizable="true" maximizable="true" width="625" height="400" >
+        <p:chart id ='chart1' type="line" model="#{integratedView.lineModel1}" style="height:300px;"/>
+        </p:dialog>
     </h:body>
 </html>
 
