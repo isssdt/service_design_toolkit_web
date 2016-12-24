@@ -154,8 +154,6 @@ public class JourneyCreateView implements Serializable {
     
     public TouchPointListModel pressOK() {
         touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
-        
-      
                return touchPointListModel;
         }
 
@@ -205,6 +203,7 @@ public class JourneyCreateView implements Serializable {
     
     public void createJourney(){
             try {
+                System.out.println("inside view");
                 Integer journeyId = journeyController.createJourney();
                 System.out.println("Journey ID: "+journeyId);
                 if(journeyId != null)
@@ -214,8 +213,7 @@ public class JourneyCreateView implements Serializable {
                 System.out.println("Message : "+message);
             } catch (AppException | CustomReasonPhraseException ex) {
                 Logger.getLogger(JourneyCreateView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    
+            } 
     }
     
     public void goHome() {

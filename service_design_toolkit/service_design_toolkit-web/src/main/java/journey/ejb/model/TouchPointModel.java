@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -97,8 +98,7 @@ public class TouchPointModel implements Serializable {
     public void setTouchpointRadius(Integer touchpointRadius) {
         this.touchpointRadius = touchpointRadius;
     }
-
- 
+    
     public TouchPointModel createCopy() {
         TouchPointModel model = new TouchPointModel();
             model.setTouchPointName(touchPointName);

@@ -8,6 +8,8 @@ package touchpoint.controller;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import journey.ejb.model.TouchPointListModel;
@@ -64,14 +66,19 @@ public class TouchPointController implements Serializable {
     }
 
     public TouchPointListModel addTouchPoint() {
-        touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());       
-        addElement();        
+        System.out.println(touchPointModel.getTouchpointLatitude());
+        System.out.println(touchPointModel.getTouchpointLongitude());
+        System.out.println(touchPointModel.getTouchpointRadius());
+        
+        touchPointListModel.getTouchPointListModel().add(touchPointModel.createCopy());
+        addElement();  
+
         return touchPointListModel;
     }
 
     public void addElement() {        
         String X, Y, X1 = null, Y1;
-        int a, b;
+        int a, b;   
         X = touchPointFlowView.getModel().getElements().get(touchPointFlowView.getModel().getElements().size() - 1).getX();
         Y = touchPointFlowView.getModel().getElements().get(touchPointFlowView.getModel().getElements().size() - 1).getY();
         System.out.println("x" + X);

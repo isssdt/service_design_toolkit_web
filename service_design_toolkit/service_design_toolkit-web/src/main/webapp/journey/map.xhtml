@@ -93,7 +93,13 @@
                         <p:inputText id="touchpointname" value="#{touchPointModel.touchPointName}" readonly="true">
                         </p:inputText>
                         <p:message for="touchpointname" /> 
-                        <br></br>                    
+                        <br></br>    
+                        <p:outputLabel for="description" value="Description" />                    
+                        <p:inputText id="description" value="#{touchPointModel.channelDesc}">
+                        </p:inputText>
+                        <p:message for="description" />
+                        
+                         
                     </h:panelGrid>
                     <br></br>
                     <h:panelGrid columns="4">
@@ -109,19 +115,20 @@
                     </h:panelGrid>
                 </h:panelGrid>
         </h:form>
-      <p:panel id ="pan1" widgetVar="pan1">
-            <p:inputText id="pac-input"/>
-            <p:inputText id="enter-radius" label="Enter Radius" onkeypress="addcircle()" value="#{touchPointModel.touchpointRadius}"/>
-           
-            <div id="map"></div>
-            <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}"></h:inputHidden>
-            <h:inputHidden id="lon" value="#{touchPointModel.touchpointLongitude}"></h:inputHidden>
-            <h:form>
-                <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
-                                 action="create?faces-redirect=true">
-                </p:commandButton>
-          </h:form>
+      <p:panel id ="pan1">
+          <p:inputText id="pac-input"/>           
+          <p:inputText id="radius" value="#{touchPointModel.touchpointRadius}" onkeypress="addcircle()" 
+                       placeholder="enter radius">
+          </p:inputText>
+          <div id="map"></div>                
       </p:panel>
+      <h:form>
+          <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}"></h:inputHidden>
+          <h:inputHidden id="lon" value="#{touchPointModel.touchpointLongitude}"></h:inputHidden>
+          <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
+                           action="create?faces-redirect=true">
+          </p:commandButton>
+      </h:form>
             
 
     <script>
@@ -132,7 +139,6 @@
     var marker=null;
     var place=null;
     var address=null;
-    var circle=null;
     var rad=null;
     function initMap() {
       map = new google.maps.Map(document.getElementById("map"), {
@@ -172,7 +178,7 @@
             scaledSize: new google.maps.Size(35, 35)
             }));
             marker.setPosition(place.geometry.location);
-            marker.setVisible(true);
+            marker.setVisible(true);            
       address = '';
             if (place.address_components) {
             address = [
@@ -183,13 +189,15 @@
             }
             infowindow.setContent('<div><strong>' + place.name + '</strong><br></br></div>' + address);
             infowindow.open(map, marker);
-            document.getElementsByName("lon").innerHTML = place.geometry.location.lng();
-            document.getElementById("lat").innerHTML = place.geometry.location.lat();
+            document.getElementById("j_idt35:lat").value= place.geometry.location.lat();
+            document.getElementById("j_idt35:lon").value= place.geometry.location.lng();
+            document.getElementById("j_idt5:description").value= address;
+            
         })
-    }
+    }   
     var draw_circle = null;
     function addcircle(){
-      rad = parseInt(document.getElementById('enter-radius').value);
+      rad = parseInt(document.getElementById("radius").value);
       if (draw_circle != null) {
         draw_circle.setMap(null);
     }
@@ -199,6 +207,8 @@
         fillColor: '#AA0000',
         });
         draw_circle.bindTo('center', marker, 'position');
+        console.log("rad" + rad);
+        document.getElementById("radius").value=rad;
     }
     </script>
     <script
