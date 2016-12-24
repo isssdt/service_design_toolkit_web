@@ -116,17 +116,19 @@
                 </h:panelGrid>
         </h:form>
       <p:panel id ="pan1">
-          <p:inputText id="pac-input"/>           
-          <p:inputText id="radius" value="#{touchPointModel.touchpointRadius}" onkeypress="addcircle()" 
-                       placeholder="enter radius">
+          <p:inputText id="pac-input"/>
+          <p:inputText id="radius" onchange="addcircle()" placeholder="enter radius">
           </p:inputText>
           <div id="map"></div>                
       </p:panel>
       <h:form>
           <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}"></h:inputHidden>
           <h:inputHidden id="lon" value="#{touchPointModel.touchpointLongitude}"></h:inputHidden>
+          <h:inputHidden id="radi" value="#{touchPointModel.touchpointRadius}"></h:inputHidden>
+          <h:inputHidden id="desc" value="#{touchPointModel.channelDesc}"></h:inputHidden>
           <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
                            action="create?faces-redirect=true">
+              <f:param value="#{journeyModel;touchPointModel}"/>
           </p:commandButton>
       </h:form>
             
@@ -192,6 +194,7 @@
             document.getElementById("j_idt35:lat").value= place.geometry.location.lat();
             document.getElementById("j_idt35:lon").value= place.geometry.location.lng();
             document.getElementById("j_idt5:description").value= address;
+            document.getElementById("j_idt35:desc").value= address;
             
         })
     }   
@@ -208,7 +211,8 @@
         });
         draw_circle.bindTo('center', marker, 'position');
         console.log("rad" + rad);
-        document.getElementById("radius").value=rad;
+        document.getElementById("j_idt35:radi").value= rad;
+        
     }
     </script>
     <script
