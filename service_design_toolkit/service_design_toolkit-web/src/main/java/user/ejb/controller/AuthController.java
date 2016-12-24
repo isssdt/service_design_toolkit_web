@@ -59,9 +59,9 @@ public class AuthController implements Serializable {
             session.setAttribute("username", loginModel.getSdtUserDTO().getUsername());         
             return ConstantValues.URI_DASHBORAD_PAGE;
         } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");  
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, null);  
             FacesContext.getCurrentInstance().addMessage(null, message);
-            return ConstantValues.URI_LOGIN_PAGE;
+            return "";
         }     
        
     }
