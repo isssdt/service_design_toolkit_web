@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboard.view;
+package dashboard.ejb.view;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
-import dashboard.controller.DashboardController;
+import dashboard.ejb.controller.DashboardController;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -20,7 +20,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
 import journey.dto.TouchPointDTO;
-import journey.ejb.model.TouchPointListModel;
+import org.primefaces.model.DashboardColumn;
+import org.primefaces.model.DashboardModel;
+import org.primefaces.model.DefaultDashboardColumn;
+import org.primefaces.model.DefaultDashboardModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -42,8 +45,9 @@ public class DashboardView implements Serializable {
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private List<TouchPointDTO> touchPointDTOList;
     private String journeyName;
-    private MapModel geoModel;
-    private String centerGeoMap = "1.3521, 103.8198";
+    private MapModel field_researcher_location_map;
+    private String centerGeoMap = "1.2971342, 103.7777567";
+    private DashboardModel dashboardModel;
     
     /**
      * Creates a new instance of DashboardView
@@ -52,18 +56,27 @@ public class DashboardView implements Serializable {
     }
 
     @PostConstruct
-    public void init() {
-        journeyNameMap = new HashMap<>();
-        List<JourneyDTO> journeyDTOList;
-        try {
-            journeyDTOList = dashboardController.getActiveJourneyList();
-            for (JourneyDTO journeyDTO : journeyDTOList) {
-                journeyNameMap.put(journeyDTO.getJourneyName(), journeyDTO.getJourneyName());
-            }
-        } catch (AppException | CustomReasonPhraseException ex) {
-            Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        geoModel = new DefaultMapModel();
+    public void init() {        
+        field_researcher_location_map = new DefaultMapModel();
+        
+        //initizalize dashboard
+        dashboardModel = new DefaultDashboardModel();
+        
+        DashboardColumn column1 = new DefaultDashboardColumn();
+        DashboardColumn column2 = new DefaultDashboardColumn();        
+         
+        column1.addWidget("field_researcher_location");        
+ 
+        dashboardModel.addColumn(column1);
+        dashboardModel.addColumn(column2);        
+    }
+
+    public DashboardModel getDashboardModel() {
+        return dashboardModel;
+    }
+
+    public void setDashboardModel(DashboardModel dashboardModel) {
+        this.dashboardModel = dashboardModel;
     }
 
     public DashboardController getDashboardController() {
@@ -106,12 +119,12 @@ public class DashboardView implements Serializable {
         this.journeyName = journeyName;
     }
 
-    public MapModel getGeoModel() {
-        return geoModel;
+    public MapModel getField_researcher_location_map() {
+        return field_researcher_location_map;
     }
 
-    public void setGeoModel(MapModel geoModel) {
-        this.geoModel = geoModel;
+    public void setField_researcher_location_map(MapModel field_researcher_location_map) {
+        this.field_researcher_location_map = field_researcher_location_map;
     }
 
     public String getCenterGeoMap() {
@@ -120,35 +133,5 @@ public class DashboardView implements Serializable {
 
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
-    }
-    //    public void onJourneyChange() {
-//        JourneyDTO journeyDTO = new JourneyDTO();
-//        journeyDTO.setJourneyName(journeyName);
-//        fieldResearcherDTOList = dashboardController.getRegisteredFieldResearchersByJourneyName(journeyDTO);
-//        
-//
-//        for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {
-//            Marker marker = new Marker(new LatLng(Double.parseDouble(fieldResearcherDTO.getCurrentLatitude()),
-//                    Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())), fieldResearcherDTO.getSdtUserDTO().getUsername());
-//            getGeoModel().addOverlay(marker);
-//            setCenterGeoMap(fieldResearcherDTO.getCurrentLatitude() + "," + fieldResearcherDTO.getCurrentLongitude());
-//        }
-//    
-    public void onJourneyChange() {
-        JourneyDTO journeyDTO = new JourneyDTO();
-        journeyDTO.setJourneyName(journeyName);
-        fieldResearcherDTOList = dashboardController.getRegisteredFieldResearchersByJourneyName(journeyDTO);
-        touchPointDTOList = dashboardController.getTouchPointList(journeyDTO);
-        
-        for (int i = 0; i < touchPointDTOList.size(); i++){
-            System.out.println(touchPointDTOList.get(i).getTouchPointDesc());
-        }
-        for (int i =0; i < touchPointDTOList.size(); i++){
-            Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTOList.get(i).getLatitude()),
-                    Double.parseDouble(touchPointDTOList.get(i).getLongitude())));
-            getGeoModel().addOverlay(marker);
-        }    
-    }
-    
-    
+    }    
 }

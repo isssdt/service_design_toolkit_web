@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboard.controller;
+package dashboard.ejb.controller;
 
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
-import dashboard.view.IntegratedView;
+import dashboard.ejb.view.IntegratedView;
 import java.io.Serializable;
 import java.util.HashMap;
 

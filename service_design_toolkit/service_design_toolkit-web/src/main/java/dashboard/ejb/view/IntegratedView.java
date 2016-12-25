@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboard.view;
+package dashboard.ejb.view;
 
 /**
  *
@@ -11,7 +11,7 @@ package dashboard.view;
  */
 
  
-import dashboard.controller.IntegratedController;
+import dashboard.ejb.controller.IntegratedController;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.HashMap;
