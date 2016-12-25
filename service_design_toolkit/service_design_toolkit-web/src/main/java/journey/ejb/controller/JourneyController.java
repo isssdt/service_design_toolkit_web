@@ -5,11 +5,8 @@
  */
 package journey.ejb.controller;
 
-import common.constant.ConstantValues;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
-import common.utils.Utils;
-import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;

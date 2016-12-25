@@ -205,10 +205,12 @@ public class UserService implements UserServiceLocal {
         }     
         
         //reset password        
-        sdtUser.setPassword(UUID.randomUUID().toString().substring(0, 10));
+        String generatedPassword = UUID.randomUUID().toString().substring(0, 10);
+        sdtUser.setPassword(generatedPassword);        
         factory.getSdtUserFacade().edit(sdtUser);
         
-        //return successful status
+        //return successful message and set the generated password to DTO
+        sdtUserDTO.setPassword(generatedPassword);
         return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
     }
 

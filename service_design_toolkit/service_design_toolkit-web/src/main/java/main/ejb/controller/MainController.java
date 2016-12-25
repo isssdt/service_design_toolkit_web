@@ -39,4 +39,8 @@ public class MainController implements Serializable {
     public String dashboardPage() {
         return ConstantValues.URI_DASHBORAD_PAGE;
     }
+    
+    public String changePasswordPage() {
+        return ConstantValues.URI_PASSWORD_CHANGE_PAGE;
+    }
 }

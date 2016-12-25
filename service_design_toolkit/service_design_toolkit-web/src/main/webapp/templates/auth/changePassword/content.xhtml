@@ -1,0 +1,18 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html">  
+    <h:form>
+        <p:messages id="messages" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="2" cellpadding="5">        
+            <h:outputLabel for="old_password" value="Old Password:" />
+            <p:password id="old_password" value="#{loginModel.sdtUserDTO.oldPassword}" required="true" label="Old Password" />
+            
+            <h:outputLabel for="new_password" value="New Password:" />
+            <p:password id="password" value="#{loginModel.sdtUserDTO.password}" required="true" label="New Password" />            
+
+            <p:commandButton value="Change Password" action="#{authControl.changePassword()}" ajax="false" /> 
+        </h:panelGrid>
+    </h:form>
+</ui:composition>

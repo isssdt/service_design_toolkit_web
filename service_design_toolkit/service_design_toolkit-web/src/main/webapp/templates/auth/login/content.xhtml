@@ -7,12 +7,13 @@
         <p:messages id="messages" autoUpdate="true" closable="true" />
         <h:panelGrid columns="2" cellpadding="5">        
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{loginModel.sdtUserDTO.username}" required="true" label="username" />
+            <p:inputText id="username" value="#{loginModel.sdtUserDTO.username}" required="true" label="Username" />
             
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{loginModel.sdtUserDTO.password}" required="true" label="password" />            
+            <p:password id="password" value="#{loginModel.sdtUserDTO.password}" label="Password" />            
 
-            <p:commandButton value="Login" action="#{authControl.authenticate}" ajax="false" />            
+            <p:commandButton value="Login" action="#{authControl.authenticate}" ajax="false" /> 
+            <p:commandButton value="Reset Password" action="#{authControl.resetPassword()}" ajax="false" /> 
 
         </h:panelGrid>
     </h:form>

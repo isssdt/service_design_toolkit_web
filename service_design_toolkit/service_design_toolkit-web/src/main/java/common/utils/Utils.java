@@ -5,7 +5,9 @@
  */
 package common.utils;
 
+import common.constant.ConstantValues;
 import java.io.IOException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,5 +48,10 @@ public class Utils {
             return (String) session.getAttribute("userid");
         else
             return null;
+      }
+      
+      public static void postMessage(FacesMessage.Severity severity, String summary, String detail, String clientID) {
+          FacesMessage message = new FacesMessage(severity, summary, detail);  
+          FacesContext.getCurrentInstance().addMessage(clientID, message);
       }
 }

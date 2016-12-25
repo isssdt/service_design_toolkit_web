@@ -43,51 +43,65 @@ public class AuthController implements Serializable {
     public AuthController() {
     }
 
-    public String authenticate() {        
+    public String authenticate() {
         RESTReponse response = null;
         try {
             response = userService.authenticate(loginModel.getSdtUserDTO());
-        } catch (AppException ex) {
+        } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CustomReasonPhraseException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-        }         
-        
+            Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
+        }
+
         if (null != response && ConstantValues.SDT_USER_STATUS_AUTHENTICATED.equals(response.getMessage())) {
             // get Http Session and store username
             HttpSession session = Utils.getSession();
-            session.setAttribute("username", loginModel.getSdtUserDTO().getUsername());         
+            session.setAttribute("username", loginModel.getSdtUserDTO().getUsername());
             return ConstantValues.URI_DASHBORAD_PAGE;
         } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, null);  
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
             return "";
-        }     
-       
+        }
+
     }
-    
+
     public String logout() {
         Utils.getSession().invalidate();
         return ConstantValues.URI_INDEX_PAGE;
     }
 
-    public void resetPassword() {
+    public String resetPassword() {
+        RESTReponse response = null;
         try {
-            userService.resetPassword(loginModel.getSdtUserDTO());
-        } catch (AppException ex) {
+            response = userService.resetPassword(loginModel.getSdtUserDTO());
+        } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CustomReasonPhraseException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
+            Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
         }
+        if (!ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE.equals(response.getMessage())) {
+            Utils.postMessage(FacesMessage.SEVERITY_WARN, response.getMessage(), null, null);
+            return "";
+        }
+        
+        Utils.postMessage(FacesMessage.SEVERITY_INFO, response.getMessage() + " : " + loginModel.getSdtUserDTO().getPassword(), null, null);
+        return "";
     }
 
-    public void changePassword() {
+    public String changePassword() {
+        RESTReponse response = null;
         try {
-            userService.changePassword(loginModel.getSdtUserDTO());
-        } catch (AppException ex) {
+            response = userService.changePassword(loginModel.getSdtUserDTO());
+        } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CustomReasonPhraseException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
+            Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
         }
+        
+        if (!ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE.equals(response.getMessage())) {
+            Utils.postMessage(FacesMessage.SEVERITY_WARN, response.getMessage(), null, null);            
+        }
+        else {
+            Utils.postMessage(FacesMessage.SEVERITY_INFO, response.getMessage(), null, null);
+        }       
+        return "";
     }
 }

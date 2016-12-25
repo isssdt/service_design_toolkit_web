@@ -103,7 +103,7 @@ public class ConstantValues {
     /**
      * Password change page
      */
-    public static final String URI_PASSWORD_CHANGE_PAGE = "/auth/passwordChange.xhtml?faces-redirect=true";
+    public static final String URI_PASSWORD_CHANGE_PAGE = "/auth/changePassword.xhtml?faces-redirect=true";
     
     /**
      * Login page
