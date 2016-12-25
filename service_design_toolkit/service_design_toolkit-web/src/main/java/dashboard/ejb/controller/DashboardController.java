@@ -8,9 +8,9 @@ package dashboard.ejb.controller;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.utils.Utils;
+import dashboard.ejb.model.DashboardModel;
 import dashboard.ejb.view.DashboardView;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
@@ -44,6 +45,13 @@ public class DashboardController implements Serializable {
 
     @Inject
     DashboardView dashboardView;
+    
+    @Inject
+    DashboardModel dashboardModel;
+    
+    private String journeyName;
+    
+    private Map<String, String> journeyNameMap;
 
     /**
      * Creates a new instance of DashboardController
@@ -53,7 +61,7 @@ public class DashboardController implements Serializable {
 
     @PostConstruct
     public void init() {
-        Map<String, String> journeyNameMap = new HashMap<>();
+        journeyNameMap = new HashMap<>();
         try {
             List<JourneyDTO> journeyDTOList = journeyService.getAllJourney();
             for (JourneyDTO journeyDTO : journeyDTOList) {
@@ -63,7 +71,31 @@ public class DashboardController implements Serializable {
             Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
             Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
         }
-        dashboardView.setJourneyNameMap(journeyNameMap);
+        
+    }
+
+    public Map<String, String> getJourneyNameMap() {
+        return journeyNameMap;
+    }
+
+    public void setJourneyNameMap(Map<String, String> journeyNameMap) {
+        this.journeyNameMap = journeyNameMap;
+    }
+
+    public String getJourneyName() {
+        return journeyName;
+    }
+
+    public void setJourneyName(String journeyName) {
+        this.journeyName = journeyName;
+    }
+
+    public DashboardModel getDashboardModel() {
+        return dashboardModel;
+    }
+
+    public void setDashboardModel(DashboardModel dashboardModel) {
+        this.dashboardModel = dashboardModel;
     }
 
     public DashboardView getDashboardView() {
@@ -88,10 +120,9 @@ public class DashboardController implements Serializable {
         return touchPointService.getTouchPointListJourney(journeyDTO);
     }
 
-    public void onJourneyChange() {
-        System.out.println(dashboardView.getJourneyName());
+    public void onJourneyChange() {        
         JourneyDTO journeyDTO = new JourneyDTO();        
-        journeyDTO.setJourneyName("NUS Hostels");        
+        journeyDTO.setJourneyName(getJourneyName());        
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
 
         for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {            

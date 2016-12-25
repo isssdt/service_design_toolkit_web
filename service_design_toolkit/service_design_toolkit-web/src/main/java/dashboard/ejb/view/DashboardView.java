@@ -5,29 +5,21 @@
  */
 package dashboard.ejb.view;
 
-import common.exception.AppException;
-import common.exception.CustomReasonPhraseException;
 import dashboard.ejb.controller.DashboardController;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import journey.dto.JourneyDTO;
 import journey.dto.TouchPointDTO;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
 import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
 import user.dto.FieldResearcherDTO;
 
 /**

@@ -12,10 +12,10 @@
     <h:form>
         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
             <p:outputLabel for="journey_list" value="Journey" />
-            <p:selectOneMenu id="journey_list" style="width: 30%" value="#{dashboardView.journeyName}">
+            <p:selectOneMenu id="journey_list" style="width: 30%" value="#{dashboardController.journeyName}" required="true">
                 <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map" />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
-                <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
+                <f:selectItems value="#{dashboardController.journeyNameMap}"/>
             </p:selectOneMenu>
         </h:panelGrid>
         <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
