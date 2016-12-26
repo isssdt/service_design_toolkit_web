@@ -35,11 +35,8 @@
                             }
                         </script>
                         <p:outputLabel />
-                        <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true" 
-                                     placeholder="Num Of Field Researcher" onblur="checkNumOfFieldResearcher">
-                            <f:validateLongRange minimum="1" />
-                        </p:inputText>
-                        
+                        <p:inputNumber id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true"
+                                       placeholder="Num Of Field Researcher" emptyValue="empty" onblur="checkNumOfFieldResearcher"></p:inputNumber>
                         <span id="checkNum" style="display:none; text-align:left"><font color="red">Number of field Researcher should be an integer greater than 0!</font></span>
                         <script>
                             function checkNumOfFieldResearcher() {
