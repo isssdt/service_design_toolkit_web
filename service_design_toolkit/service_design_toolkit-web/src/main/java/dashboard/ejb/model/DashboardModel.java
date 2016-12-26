@@ -6,15 +6,12 @@
 package dashboard.ejb.model;
 
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 
 /**
  *
  * @author Leon
  */
-@Named(value = "dashboardModel")
-@SessionScoped
+
 public class DashboardModel implements Serializable {
     private String journeyName;
 

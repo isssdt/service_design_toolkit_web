@@ -5,20 +5,19 @@
  */
 package dashboard.ejb.view;
 
-import dashboard.ejb.controller.DashboardController;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import journey.dto.TouchPointDTO;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import user.dto.FieldResearcherDTO;
@@ -27,44 +26,32 @@ import user.dto.FieldResearcherDTO;
  *
  * @author longnguyen
  */
-@Named(value = "dashboardView")
-@RequestScoped
 public class DashboardView implements Serializable {
-
-    @Inject
-    private DashboardController dashboardController;
 
     private Map<String, String> journeyNameMap;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private List<TouchPointDTO> touchPointDTOList;
-    private String journeyName;
     private MapModel field_researcher_location_map;
     private String centerGeoMap = "1.2971342, 103.7777567";
     private DashboardModel dashboardModel;
-    
-     private LineChartModel lineModel1;
-    
+    private LineChartModel lineModel;
+
     /**
      * Creates a new instance of DashboardView
      */
     public DashboardView() {
-    }
-
-    @PostConstruct
-    public void init() {        
         field_researcher_location_map = new DefaultMapModel();
-         lineModel1=new LineChartModel();
         //initizalize dashboard
         dashboardModel = new DefaultDashboardModel();
-        
+
         DashboardColumn column1 = new DefaultDashboardColumn();
-        DashboardColumn column2 = new DefaultDashboardColumn();        
-         
-        column1.addWidget("field_researcher_location");        
+        DashboardColumn column2 = new DefaultDashboardColumn();
+
+        column1.addWidget("field_researcher_location");
         column2.addWidget("integrated_view");
-        
+
         dashboardModel.addColumn(column1);
-        dashboardModel.addColumn(column2);        
+        dashboardModel.addColumn(column2);
     }
 
     public DashboardModel getDashboardModel() {
@@ -73,14 +60,6 @@ public class DashboardView implements Serializable {
 
     public void setDashboardModel(DashboardModel dashboardModel) {
         this.dashboardModel = dashboardModel;
-    }
-
-    public DashboardController getDashboardController() {
-        return dashboardController;
-    }
-
-    public void setDashboardController(DashboardController dashboardController) {
-        this.dashboardController = dashboardController;
     }
 
     public Map<String, String> getJourneyNameMap() {
@@ -107,14 +86,6 @@ public class DashboardView implements Serializable {
         this.touchPointDTOList = touchPointDTOList;
     }
 
-    public String getJourneyName() {
-        return journeyName;
-    }
-
-    public void setJourneyName(String journeyName) {
-        this.journeyName = journeyName;
-    }
-
     public MapModel getField_researcher_location_map() {
         return field_researcher_location_map;
     }
@@ -129,14 +100,13 @@ public class DashboardView implements Serializable {
 
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
-    } 
-
-    public LineChartModel getLineModel1() {
-        return lineModel1;
     }
 
-    public void setLineModel1(LineChartModel lineModel1) {
-        this.lineModel1 = lineModel1;
+    public LineChartModel getLineModel() {
+        return lineModel;
     }
-    
+
+    public void setLineModel(LineChartModel lineModel) {
+        this.lineModel = lineModel;
+    }
 }

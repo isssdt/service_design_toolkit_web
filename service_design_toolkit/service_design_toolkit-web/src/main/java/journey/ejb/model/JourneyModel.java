@@ -19,7 +19,6 @@ import journey.constraint.Journey;
  */
 @Named(value="journeyModel")
 @SessionScoped
-
 public class JourneyModel implements Serializable {
     
        private static final long serialVersionUID = 1L;
