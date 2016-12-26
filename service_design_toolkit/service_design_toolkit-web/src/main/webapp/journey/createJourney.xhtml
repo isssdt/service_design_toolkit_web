@@ -12,39 +12,85 @@
         
         <h:body>
             <div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">    
-                <img src="bluesky1.jpg" height="100%" width="100%"/>
+                <img src="" height="100%" width="100%"/>
             </div>
-
-            <h3 style="margin-top:0"><font face="Chalkboard" color="#1D5987" size="+3">Create Journey</font></h3>
-           <h:form>
+            <h:form>
               
-              <div id="CreateJourney" style="margin:0 auto; width:400px; height:400px; text-align:center; display:block; width:400px; height: 280px">
-                    <h:panelGrid columns="2" cellpadding="6" id="grid">
-                        <p:outputLabel for="journey_name" value="Journey Name"/>
-                        <p:inputText id="journey_name" value="#{journeyModel.journeyName}" required="true" label="Journey Name"/>                       
-               
-                        <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
+                <div id="CreateJourney" style="background-color:#F3F3F3; margin:0 auto; 
+                    text-align:center; display:block; width:550px; height: 300px">
+                  
+                    <h3 style="margin-top:100px; font-family: Lucida Grande"><font size="+3" color="#2C6A99">Create Journey</font></h3>
+                    <h:panelGrid style="margin:0 auto" columns="3" cellpadding="6" id="grid">
+                        <p:outputLabel />
+                        <p:inputText id="journey_name" value="#{journeyModel.journeyName}"  required="true" placeholder="Journey Name" onblur="checkJourneyName()"/>
+                        <span id="checkJourneyName" style="display:none; text-align:left"><font color="red">Journey Name can not be empty!</font></span>
+                        <script>
+                            function checkJourneyName() {
+                                var text = document.getElementById("journey_name").value;
+                                if (text === null) {
+                                    document.getElementById("checkJourneyName").style.display=block;
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        <p:outputLabel />
                         <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" required="true" 
-                            label="Number Of Field Researcher">
-                        <f:validateLongRange minimum="1" />
+                                     placeholder="Num Of Field Researcher" onblur="checkNumOfFieldResearcher">
+                            <f:validateLongRange minimum="1" />
                         </p:inputText>
-                    
-                        <p:outputLabel for="start_date" value="Start Date" />                    
-                        <p:calendar id="start_date" value="#{journeyModel.startDate}" required="true" 
-                                    label="Start Date" mindate="#{journeyCreateView.currentDate}"/> 
                         
-                        <p:outputLabel for="end_date" value="End Date" />                    
-                        <p:calendar id="end_date" value="#{journeyModel.endDate}" required="true" 
-                                label="End Date" mindate="#{journeyCreateView.currentDate}"/>
+                        <span id="checkNum" style="display:none; text-align:left"><font color="red">Number of field Researcher should be an integer greater than 0!</font></span>
+                        <script>
+                            function checkNumOfFieldResearcher() {
+                                var text = document.getElementById("no_of_field_researcher").value;
+                                if (text === null) {
+                                    document.getElementById("checkNum").style.display=block;
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        <p:outputLabel />
+                        <p:calendar id="start_date" value="#{journeyModel.startDate}" style="text-align:center" required="true" 
+                                    placeholder="Start Date" mindate="#{journeyCreateView.currentDate}" onblur="checkStartDate"/>
+                        <span id="checkStartDate" style="display:none; text-align:left"><font color="red">Start date can not be empty!</font></span>
+                        <script>
+                            function checkStartDate() {
+                                var text = document.getElementById("start_date").value;
+                                if (text === null) {
+                                    document.getElementById("checkStartDate").style.display=block;
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        <p:outputLabel />                  
+                        <p:calendar id="end_date" value="#{journeyModel.endDate}" style="text-align:center" required="true" 
+                                    placeholder="End Date" mindate="#{journeyCreateView.currentDate}" onblur="checkEndDate" />
+                        <span id="checkEndDate" style="display:none; text-align:left"><font color="red">End date can not be empty!</font></span>
+                        <script>
+                            function checkEndDate() {
+                                var text = document.getElementById("end_date").value;
+                                if (text === null) {
+                                    document.getElementById("checkEndDate").style.display=block;
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        <p:outputLabel /><p:outputLabel /><p:outputLabel />
                     </h:panelGrid>
-              </div>
-               <div align="center">
-                   <p:commandButton value="NEXT" style="font-family: Chalkboard"                              
+                    
+                    <div align="center">
+                        <p:commandButton value="NEXT" style="font-family: Lucida Grande"                              
                                              id="nextbutton" 
-                                             action="create?faces-redirect=true">      
-                       <f:param value="#{journeyModel}"/>
-                   </p:commandButton>
-               </div> 
+                                             action="create?faces-redirect=true">
+                            <f:param value="#{journeyModel}"/>
+                        </p:commandButton>
+                </div> 
+                </div>
+                
            </h:form>
         </h:body>
     </f:view>
