@@ -24,9 +24,15 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import journey.dto.JourneyDTO;
 import journey.dto.TouchPointDTO;
+import journey.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.business.JourneyServiceLocal;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
+import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import user.dto.FieldResearcherDTO;
 
@@ -122,7 +128,8 @@ public class DashboardController implements Serializable {
 
     public void onJourneyChange() {        
         JourneyDTO journeyDTO = new JourneyDTO();        
-        journeyDTO.setJourneyName(getJourneyName());        
+        journeyDTO.setJourneyName(getJourneyName());    
+        
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
 
         for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {            
@@ -130,5 +137,59 @@ public class DashboardController implements Serializable {
                     Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())));
             dashboardView.getField_researcher_location_map().addOverlay(marker);
         }
+        
+        
+        //integrate view
+        createLineModels(journeyDTO);
+
+        dashboardView.getLineModel1().setTitle("Integrated Map for "+journeyDTO.getJourneyName()+" journey");
+        dashboardView.getLineModel1().setLegendPosition("ne");
+        //integratedView.getLineModel1().setShowPointLabels(true);
+        dashboardView.getLineModel1().getAxes().put(AxisType.X, new CategoryAxis("Touch Point"));
+        Axis yAxis = dashboardView.getLineModel1().getAxis(AxisType.Y);
+        yAxis.setLabel("Rating");
+        yAxis.setMin(0);
+        yAxis.setMax(5);
+    }
+    
+     private void createLineModels(JourneyDTO journeyDTO) {
+        System.out.println("inside integrated craete line model");
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
+        
+        System.out.println("no of touch point filed researcher"+touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().size());
+        System.out.println("no of filed researcher"+fieldResearcherDTOList.size());
+        
+        for (FieldResearcherDTO f : fieldResearcherDTOList) {
+        ChartSeries tFRseries = new ChartSeries();
+        tFRseries.setLabel(f.getSdtUserDTO().getUsername());
+            for (TouchPointFieldResearcherDTO t : touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()) {
+                
+                if (f.getSdtUserDTO().getUsername().equals(t.getFieldResearcherDTO().getSdtUserDTO().getUsername()) && t.getStatus().equals("DONE")) {
+                    initFrSeries(tFRseries,t,journeyDTO);
+                   }
+
+            }
+             dashboardView.getLineModel1().addSeries(tFRseries);
+
+        }
+    }
+
+    private ChartSeries initFrSeries(ChartSeries tFRseries,TouchPointFieldResearcherDTO tPfr,JourneyDTO journeyDTO) {
+
+        System.out.println("initCategoryModel series"+tPfr.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+       if (null != tPfr.getRatingDTO().getValue() && !tPfr.getRatingDTO().getValue().isEmpty() && tPfr.getStatus().equals("DONE")) {
+            System.out.println("initFrSeries"+tPfr.getRatingDTO().getValue()+"user"+tPfr.getFieldResearcherDTO().getSdtUserDTO().getUsername()+tPfr.getStatus());
+           List<TouchPointDTO> touchPointList=touchPointService.getTouchPointListJourney(journeyDTO);
+            for(TouchPointDTO t:touchPointList){
+                if(t.getTouchPointDesc().equals(tPfr.getTouchpointDTO().getTouchPointDesc()))
+            tFRseries.set(t.getTouchPointDesc(), Integer.parseInt(tPfr.getRatingDTO().getValue()));
+            }
+        }
+        else { 
+     tFRseries.set(0, 0);
+}
+
+        return tFRseries;
     }
 }

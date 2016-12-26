@@ -18,6 +18,7 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import user.dto.FieldResearcherDTO;
@@ -41,6 +42,8 @@ public class DashboardView implements Serializable {
     private String centerGeoMap = "1.2971342, 103.7777567";
     private DashboardModel dashboardModel;
     
+     private LineChartModel lineModel1;
+    
     /**
      * Creates a new instance of DashboardView
      */
@@ -50,7 +53,7 @@ public class DashboardView implements Serializable {
     @PostConstruct
     public void init() {        
         field_researcher_location_map = new DefaultMapModel();
-        
+         lineModel1=new LineChartModel();
         //initizalize dashboard
         dashboardModel = new DefaultDashboardModel();
         
@@ -58,7 +61,8 @@ public class DashboardView implements Serializable {
         DashboardColumn column2 = new DefaultDashboardColumn();        
          
         column1.addWidget("field_researcher_location");        
- 
+        column2.addWidget("integrated_view");
+        
         dashboardModel.addColumn(column1);
         dashboardModel.addColumn(column2);        
     }
@@ -125,5 +129,14 @@ public class DashboardView implements Serializable {
 
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
-    }    
+    } 
+
+    public LineChartModel getLineModel1() {
+        return lineModel1;
+    }
+
+    public void setLineModel1(LineChartModel lineModel1) {
+        this.lineModel1 = lineModel1;
+    }
+    
 }
