@@ -114,4 +114,24 @@ public class ConstantValues {
      * Index page
      */
     public static final String URI_INDEX_PAGE = "/index.xhtml?faces-redirect=true";
+    
+    /**
+     * Name of the DUMMY integration chart model 
+     */
+    public static final String CHART_DUMMY_NAME = "DUMMY";
+    
+    /**
+     * X Axis of Integration Map
+     */
+    public static final String CHART_INTEGRATION_X_AXIS = "Touch Point";
+    
+    /**
+     * Y Axis of Integration Map
+     */
+    public static final String CHART_INTEGRATION_Y_AXIS = "Rating";
+    
+     /**
+     * Icon for marker of Field Researcher
+     */
+    public static final String MARKER_ICON_FIELD_RESEARCHER = "https://maps.google.com/mapfiles/kml/shapes/library_maps.png";
 }

@@ -5,6 +5,7 @@
  */
 package dashboard.ejb.controller;
 
+import common.constant.ConstantValues;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.utils.Utils;
@@ -14,6 +15,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -24,12 +26,9 @@ import journey.dto.JourneyDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.business.JourneyServiceLocal;
-import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
@@ -62,11 +61,12 @@ public class DashboardController implements Serializable {
     @PostConstruct
     public void init() {
         dashboardModel = new DashboardModel();
-        dashboardView = new DashboardView();        
-        dashboardView.setLineModel(initLinearModel());
+        dashboardView = new DashboardView();
+        initDummyChart();
+        
         HashMap<String, String> journeyNameMap = new HashMap<>();
         try {
-            List<JourneyDTO> journeyDTOList = journeyService.getAllJourney();            
+            List<JourneyDTO> journeyDTOList = journeyService.getAllJourney();
             for (JourneyDTO journeyDTO : journeyDTOList) {
                 journeyNameMap.put(journeyDTO.getJourneyName(), journeyDTO.getJourneyName());
             }
@@ -74,7 +74,7 @@ public class DashboardController implements Serializable {
             Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
             Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
         }
-        dashboardView.setJourneyNameMap(journeyNameMap);        
+        dashboardView.setJourneyNameMap(journeyNameMap);
     }
 
     public DashboardModel getDashboardModel() {
@@ -107,107 +107,74 @@ public class DashboardController implements Serializable {
         return touchPointService.getTouchPointListJourney(journeyDTO);
     }
 
-    public void onJourneyChange() {        
+    public void onJourneyChange() {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
 
         updateFieldResearcherLocationMap(journeyDTO);
         updateIntegrationMap(journeyDTO);
     }
-    
+
     private void updateFieldResearcherLocationMap(JourneyDTO journeyDTO) {
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
 
         dashboardView.getField_researcher_location_map().getMarkers().clear();
         for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {
             Marker marker = new Marker(new LatLng(Double.parseDouble(fieldResearcherDTO.getCurrentLatitude()),
-                    Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())));
+                    Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())), fieldResearcherDTO.getSdtUserDTO().getUsername(), null, 
+                    ConstantValues.MARKER_ICON_FIELD_RESEARCHER);
             dashboardView.getField_researcher_location_map().addOverlay(marker);
         }
     }
-    
+
     private void updateIntegrationMap(JourneyDTO journeyDTO) {
         //integrate view
-        LineChartModel model = new LineChartModel();
-        createLineModels(journeyDTO, model);
+        createLineModels(journeyDTO);
 
-        model.setTitle("Integrated Map for " + journeyDTO.getJourneyName() + " journey");
-        model.setLegendPosition("ne");
-        model.getAxes().put(AxisType.X, new CategoryAxis("Touch Point"));
-        Axis yAxis = model.getAxis(AxisType.Y);
-        yAxis.setLabel("Rating");
-        yAxis.setMin(0);
-        yAxis.setMax(5); 
-        yAxis.setTickInterval("1");
-     
-        dashboardView.setLineModel(model);
+        dashboardView.getIntegrationMapModel().setTitle(journeyDTO.getJourneyName());
+        dashboardView.getIntegrationMapModel().setLegendPosition("ne");
+        dashboardView.getIntegrationMapModel().getAxes().put(AxisType.X, new CategoryAxis(ConstantValues.CHART_INTEGRATION_X_AXIS));
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setLabel(ConstantValues.CHART_INTEGRATION_Y_AXIS);
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMin(0);
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMax(5);
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setTickInterval("1");        
     }
 
-    private void createLineModels(JourneyDTO journeyDTO, LineChartModel model) {        
-        System.out.println(journeyDTO.getJourneyName());
+    private void createLineModels(JourneyDTO journeyDTO) {
+        dashboardView.getIntegrationMapModel().clear();
         TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
-        System.out.println(touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().size());
-        List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);       
 
-        for (FieldResearcherDTO f : fieldResearcherDTOList) {
-            ChartSeries tFRseries = new ChartSeries();
-            tFRseries.setLabel(f.getSdtUserDTO().getUsername());
-            for (TouchPointFieldResearcherDTO t : touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()) {
-                if (f.getSdtUserDTO().getUsername().equals(t.getFieldResearcherDTO().getSdtUserDTO().getUsername()) && t.getStatus().equals("DONE")) {
-                    initFrSeries(tFRseries, t, journeyDTO);
-                }
+        //if there is no research work, initialize the empty graph
+        if (null == touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()
+                || touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().isEmpty()) {
+            initDummyChart();
+            return;
+        }
+        List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
+
+        Map<String, ChartSeries> chartSeriesForFieldResearcher = new HashMap<>();
+
+        for (TouchPointFieldResearcherDTO touchPointFieldResearcherDTO : touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()) {
+            ChartSeries chartSeries = chartSeriesForFieldResearcher.get(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+            if (null == chartSeries) {
+                chartSeries = new ChartSeries();
+                chartSeriesForFieldResearcher.put(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername(), chartSeries);
             }
-            model.addSeries(tFRseries);
-
+            chartSeries.setLabel(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+            chartSeries.set(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc(),
+                    Integer.parseInt(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
+        }
+        for (Map.Entry<String, ChartSeries> mapChartSeries : chartSeriesForFieldResearcher.entrySet()) {
+            dashboardView.getIntegrationMapModel().addSeries(mapChartSeries.getValue());
         }
     }
-    
-    
 
-    private ChartSeries initFrSeries(ChartSeries tFRseries, TouchPointFieldResearcherDTO tPfr, JourneyDTO journeyDTO) {
-
-        System.out.println("initCategoryModel series" + tPfr.getFieldResearcherDTO().getSdtUserDTO().getUsername());
-        if (null != tPfr.getRatingDTO().getValue() && !tPfr.getRatingDTO().getValue().isEmpty() && tPfr.getStatus().equals("DONE")) {
-            System.out.println("initFrSeries" + tPfr.getRatingDTO().getValue() + "user" + tPfr.getFieldResearcherDTO().getSdtUserDTO().getUsername() + tPfr.getStatus());
-            List<TouchPointDTO> touchPointList = touchPointService.getTouchPointListJourney(journeyDTO);
-            for (TouchPointDTO t : touchPointList) {
-                if (t.getTouchPointDesc().equals(tPfr.getTouchpointDTO().getTouchPointDesc())) {
-                    tFRseries.set(t.getTouchPointDesc(), Integer.parseInt(tPfr.getRatingDTO().getValue()));
-                }
-            }
-        } else {
-            tFRseries.set(0, 0);
-        }
-
-        return tFRseries;
+    //initialize dummy chart when there is no data
+    private void initDummyChart() {
+        ChartSeries chartSeries = new ChartSeries();
+        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
+        chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+        dashboardView.getIntegrationMapModel().addSeries(chartSeries);
     }
-    
-    //dummy method - need to be removed
-    private LineChartModel initLinearModel() {
-        LineChartModel model = new LineChartModel();
- 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
- 
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
- 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
- 
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
- 
-        model.addSeries(series1);
-        model.addSeries(series2);
-         
-        return model;
-    }
-     
+
 }

@@ -29,37 +29,24 @@ import user.dto.FieldResearcherDTO;
 public class DashboardView implements Serializable {
 
     private Map<String, String> journeyNameMap;
-    private List<FieldResearcherDTO> fieldResearcherDTOList;
-    private List<TouchPointDTO> touchPointDTOList;
     private MapModel field_researcher_location_map;
-    private String centerGeoMap = "1.2971342, 103.7777567";
-    private DashboardModel dashboardModel;
-    private LineChartModel lineModel;
+    private String centerGeoMap = "1.2971342, 103.7777567";   
+    private LineChartModel integrationMapModel;
 
     /**
      * Creates a new instance of DashboardView
      */
     public DashboardView() {
-        field_researcher_location_map = new DefaultMapModel();
-        //initizalize dashboard
-        dashboardModel = new DefaultDashboardModel();
-
-        DashboardColumn column1 = new DefaultDashboardColumn();
-        DashboardColumn column2 = new DefaultDashboardColumn();
-
-        column1.addWidget("field_researcher_location");
-        column2.addWidget("integrated_view");
-
-        dashboardModel.addColumn(column1);
-        dashboardModel.addColumn(column2);
+        field_researcher_location_map = new DefaultMapModel();   
+        integrationMapModel = new LineChartModel();
     }
 
-    public DashboardModel getDashboardModel() {
-        return dashboardModel;
+    public LineChartModel getIntegrationMapModel() {
+        return integrationMapModel;
     }
 
-    public void setDashboardModel(DashboardModel dashboardModel) {
-        this.dashboardModel = dashboardModel;
+    public void setIntegrationMapModel(LineChartModel integrationMapModel) {
+        this.integrationMapModel = integrationMapModel;
     }
 
     public Map<String, String> getJourneyNameMap() {
@@ -69,23 +56,7 @@ public class DashboardView implements Serializable {
     public void setJourneyNameMap(Map<String, String> journeyNameMap) {
         this.journeyNameMap = journeyNameMap;
     }
-
-    public List<FieldResearcherDTO> getFieldResearcherDTOList() {
-        return fieldResearcherDTOList;
-    }
-
-    public void setFieldResearcherDTOList(List<FieldResearcherDTO> fieldResearcherDTOList) {
-        this.fieldResearcherDTOList = fieldResearcherDTOList;
-    }
-
-    public List<TouchPointDTO> getTouchPointDTOList() {
-        return touchPointDTOList;
-    }
-
-    public void setTouchPointDTOList(List<TouchPointDTO> touchPointDTOList) {
-        this.touchPointDTOList = touchPointDTOList;
-    }
-
+    
     public MapModel getField_researcher_location_map() {
         return field_researcher_location_map;
     }
@@ -100,13 +71,5 @@ public class DashboardView implements Serializable {
 
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
-    }
-
-    public LineChartModel getLineModel() {
-        return lineModel;
-    }
-
-    public void setLineModel(LineChartModel lineModel) {
-        this.lineModel = lineModel;
     }
 }
