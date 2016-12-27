@@ -137,8 +137,9 @@ public class DashboardController implements Serializable {
         Axis yAxis = model.getAxis(AxisType.Y);
         yAxis.setLabel("Rating");
         yAxis.setMin(0);
-        yAxis.setMax(5);         
-        
+        yAxis.setMax(5); 
+        yAxis.setTickInterval("1");
+     
         dashboardView.setLineModel(model);
     }
 
