@@ -32,10 +32,6 @@ public class MainController implements Serializable {
         return ConstantValues.URI_CREATE_JOURNEY_PAGE;
     }
     
-    public String integrationJourneyPage() {
-        return ConstantValues.URI_INTEGRATED_JOURNEY_PAGE;
-    }
-    
     public String dashboardPage() {
         return ConstantValues.URI_DASHBORAD_PAGE;
     }
