@@ -79,7 +79,7 @@
             <h:form prependId="false">
 
                 <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
-
+               
                 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
 
                     <h:panelGrid columns="2">
@@ -115,59 +115,51 @@
                 </h:panelGrid>
 
                 <p:dialog id="dlg1" widgetVar="dlg1" header="Add Touch Point"  style = "width: 725px; height: 300px" >
-                    <h:form id="form1">
-                        <h:panelGrid id="grid" columns="4" style="margin-bottom:10px" cellpadding="6" >
-                            <p:outputLabel for="touchPoint_name" value="Name" />
+                    
+                    <h:panelGrid id="grid" columns="3" cellpadding="8">
+                            <p:outputLabel for="touchPoint_name" value="Name"/>
                             <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" 
-                                         label="Name" requiredMessage="Please enter name"/>   
+                                         requiredMessage="Please enter name"/>   
                             <p:message for="touchPoint_name" />
-                        <!--</h:panelGrid>
 
-                        <h:panelGrid id="grid2" columns="4" style="margin-bottom:10px" cellpadding="6">-->
-                            <p:outputLabel for="touchPoint_Action" value="Action" />                    
+                            <p:outputLabel for="touchPoint_Action" value="Action"/>                    
                             <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" required="true" 
-                                         label="Action" requiredMessage="Please enter Action">
+                                         requiredMessage="Please enter Action">
                             </p:inputText>
                             <p:message for="touchPoint_Action" />
                         </h:panelGrid>
-
-                        <h:panelGrid id="grid1" columns="4" style="margin-bottom:10px" cellpadding="6">
-                            <p:outputLabel for="touchPoint_channel" value="Channel" />
-                            <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}"
-                                             requiredMessage="Please select a Channel" >
-                                <p:ajax event="change" update="grid1,cha_desc_pan,grid4,mapbutton_pan"/>
-                                <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{journeyCreateView.channelmap}"/>
-                            </p:selectOneMenu>
-                            <p:message for="touchPoint_channel" />
-
-                            <h:panelGroup id="cha_desc_pan">
-                                <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" 
+                            <p:outputLabel />
+                            <h:panelGrid id="grid1" columns="2" cellpadding="8" styleClass="ui-panelgrid-blank">
+                                <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
+                                    <p:ajax event="change" update="cha_desc_pan,grid4,grid"/>
+                                    <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{journeyCreateView.channelmap}"/>
+                                </p:selectOneMenu>
+                                <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
+                                    <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" 
                                              required="true" placeholder="enter description"
                                              rendered="#{touchPointModel.touchPointChannel eq 'website'}" 
-                                             requiredMessage="Please enter URl"
-                                             >
-                                </p:inputText>
-                                <p:message for="cha_desc_inp" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-
+                                             requiredMessage="Please enter URl">
+                                    </p:inputText>
+                                    <p:message for="cha_desc_inp" />
+                                </h:panelGrid>
+                            </h:panelGrid>
+                              
                         <h:panelGrid id="grid4" columns="3" style="margin-bottom:20px" >
-                            <h:panelGroup id = "mapbutton_pan">
+
                                 <p:commandButton value="Specify Location" action="map?faces-redirect=true"
                                                  rendered="#{touchPointModel.touchPointChannel eq 'kiosk' or 
                                                              touchPointModel.touchPointChannel eq 'person to person'}"
                                                  update="grid">
-                                    <f:param value="#{journeyModel;touchPointModel}"/>
                                 </p:commandButton>
 
                                 <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
                                                  rendered="#{touchPointModel.touchPointChannel eq 'website'}"
-                                                 update="dia grid">
+                                                 update="grid,cha_desc_inp">
                                 </p:commandButton>
-                            </h:panelGroup>  
+  
                         </h:panelGrid>
-                    </h:form>
+                    
                 </p:dialog>
 
                 <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
@@ -194,6 +186,8 @@
                     <h:outputText value="A Journey has been created successfully!" />
                         <p:commandButton value ="OK" action="createJourney?faces-redirect=true"/>
                 </p:dialog>
+                    
+           
             </h:form>
         </h:body>
     </f:view>
