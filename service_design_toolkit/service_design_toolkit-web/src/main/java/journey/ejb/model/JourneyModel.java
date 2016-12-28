@@ -34,6 +34,9 @@ public class JourneyModel implements Serializable {
     private int noOfFieldResearcher;    
     private Date startDate;
     private Date endDate;
+    private String journeyDesc;
+
+    
 
     @PostConstruct
 	private void init() {
@@ -79,6 +82,13 @@ public class JourneyModel implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+    public void setJourneyDesc(String journeyDesc) {
+        this.journeyDesc = journeyDesc;
+    }
+
+    public String getJourneyDesc() {
+        return journeyDesc;
+    }
     
     public JourneyModel createCopy() {
         JourneyModel model = new JourneyModel();
@@ -86,6 +96,7 @@ public class JourneyModel implements Serializable {
             model.setJourneyName(journeyName);
             model.setNoOfFieldResearcher(noOfFieldResearcher);
             model.setStartDate(startDate);
+            model.setJourneyDesc(journeyDesc);
        return model;
     }    
 }
