@@ -38,7 +38,7 @@ public class TouchPointFlowView implements Serializable {
         connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
         model.setDefaultConnector(connector);
 
-        Element start = new Element(new NetworkElement("Home", ""), "6em", "2em");
+        Element start = new Element(new NetworkElement("Home", "",""), "6em", "2em");
         start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
 
         model.addElement(start);

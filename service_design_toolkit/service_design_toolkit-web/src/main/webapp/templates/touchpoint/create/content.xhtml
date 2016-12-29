@@ -164,8 +164,9 @@
                 <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
                     <f:facet name="element">
                         <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
-                        <h:outputText value="#{el.image}" style="display:block;margin-top:1em;"/>
-                        <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" />
+                        <h:outputText value="#{el.channelName}" style="display:block;margin-top:1em;"/>
+                        <h:outputText value="#{el.channelDesc}" style="display:block;margin-top:1em;"/>
+                        <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" rendered="#{el.channelName eq 'kiosk' or el.channelName eq 'person to person' }"/>
                     </f:facet>
                 </p:diagram> 
                 <h:form>

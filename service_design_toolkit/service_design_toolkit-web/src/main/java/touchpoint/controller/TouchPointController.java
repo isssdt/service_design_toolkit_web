@@ -92,7 +92,7 @@ public class TouchPointController implements Serializable {
         X1 = a + "em";
         Y1 = b + "em";
 
-        Element touch = new Element(new NetworkElement(touchPointModel.getTouchPointName(), touchPointModel.getChannelDesc()), X1, Y1);
+        Element touch = new Element(new NetworkElement(touchPointModel.getTouchPointName(),touchPointModel.getTouchPointChannel(), touchPointModel.getChannelDesc()), X1, Y1);
 
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
