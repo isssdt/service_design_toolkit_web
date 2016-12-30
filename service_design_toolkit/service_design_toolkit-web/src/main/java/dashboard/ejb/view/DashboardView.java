@@ -18,6 +18,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import user.dto.FieldResearcherDTO;
@@ -32,6 +33,7 @@ public class DashboardView implements Serializable {
     private MapModel field_researcher_location_map;
     private String centerGeoMap = "1.2971342, 103.7777567";   
     private LineChartModel integrationMapModel;
+    private  DefaultDiagramModel snakeModel;
 
     /**
      * Creates a new instance of DashboardView
@@ -72,4 +74,13 @@ public class DashboardView implements Serializable {
     public void setCenterGeoMap(String centerGeoMap) {
         this.centerGeoMap = centerGeoMap;
     }
+
+    public DefaultDiagramModel getSnakeModel() {
+        return snakeModel;
+    }
+
+    public void setSnakeModel(DefaultDiagramModel snakeModel) {
+        this.snakeModel = snakeModel;
+    }
+    
 }
