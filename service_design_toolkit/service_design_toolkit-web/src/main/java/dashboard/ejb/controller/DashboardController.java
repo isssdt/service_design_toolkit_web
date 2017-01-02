@@ -208,9 +208,12 @@ public class DashboardController implements Serializable {
     
     private void updateSnakeMap(JourneyDTO journeyDTO) {
             System.out.println("inside updateSnakeMap ");
-       //JourneyDTO journeyDetails = journeyService.getJourneyByName(journeyDTO);
+       
+       dashboardView.getSnakeModel().clear();
+       
       List<TouchPointDTO> touchPointList=getTouchPointList(journeyDTO);
-            System.out.println("touchpointlist size "+touchPointList.size()+"for journey"+journeyDTO.getJourneyName());
+     System.out.println("touchpointlist size "+touchPointList.size()+"for journey"+journeyDTO.getJourneyName());
+     initsnakeModel();
       for (TouchPointDTO touchPoint:touchPointList)
       {
           System.out.println("touchpoint"+touchPoint.getTouchPointDesc());
