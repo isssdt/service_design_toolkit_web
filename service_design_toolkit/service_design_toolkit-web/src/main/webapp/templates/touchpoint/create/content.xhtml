@@ -146,7 +146,7 @@
                                 <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
                                     <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" 
                                              required="true" placeholder="enter description"
-                                             rendered="#{touchPointModel.touchPointChannel eq 'website'}" 
+                                             rendered="#{touchPointModel.touchPointChannel eq 'Website'}" 
                                              requiredMessage="Please enter URl">
                                     </p:inputText>
                                     <p:message for="cha_desc_inp" />
@@ -156,14 +156,14 @@
                         <h:panelGrid id="savetp_addlocation" columns="3" style="margin-bottom:20px" >
 
                                 <p:commandButton value="Specify Location" 
-                                                 rendered="#{touchPointModel.touchPointChannel eq 'kiosk' or 
-                                                             touchPointModel.touchPointChannel eq 'person to person'}"
+                                                 rendered="#{touchPointModel.touchPointChannel eq 'Kiosk' or 
+                                                             touchPointModel.touchPointChannel eq 'Person To Person'}"
                                                  action="map?faces-redirect=true"
                                                  update="Name_action">
                                 </p:commandButton>
 
                                 <p:commandButton value="Save" ajax="true"
-                                                 rendered="#{touchPointModel.touchPointChannel eq 'website'}"
+                                                 rendered="#{touchPointModel.touchPointChannel eq 'Website'}"
                                                  actionListener="#{touchPointController.addTouchPoint()}"
                                                  update="Name_action, cha_desc_pan, dia"
                                                  oncomplete="handleDialogSubmit(args, addtpDialog)" >
