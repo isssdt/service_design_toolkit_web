@@ -63,7 +63,7 @@ public interface JourneyServiceLocal {
      */
     public ChannelListDTO getChannelList();
 
-    public RESTReponse registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws AppException, CustomReasonPhraseException;
+    public JourneyFieldResearcherDTO registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeySdtUserDTO) throws AppException, CustomReasonPhraseException;
 
     public List<FieldResearcherDTO> getRegisteredFieldResearchersByJourneyName(JourneyDTO journeyDTO);
     

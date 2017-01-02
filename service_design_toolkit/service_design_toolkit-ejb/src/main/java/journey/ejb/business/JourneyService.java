@@ -98,7 +98,7 @@ public class JourneyService implements JourneyServiceLocal {
     }
 
     @Override
-    public RESTReponse registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws AppException {
+    public JourneyFieldResearcherDTO registerFieldResearcherWithJourney(JourneyFieldResearcherDTO journeyFieldResearcherDTO) throws AppException {
         journeyFieldResearcherDTO.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
         JourneyFieldResearcher journeyFieldResearcher = factory.getJourneyFieldResearcherFacade().findJourneyOfFieldResearcherByStatus(journeyFieldResearcherDTO);
 
@@ -146,8 +146,7 @@ public class JourneyService implements JourneyServiceLocal {
             factory.getTouchPointFieldResearcherFacade().create(touchpointFieldResearcher);
         }
 
-        return new RESTReponse("Field Researcher " + journeyFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername()
-                + " has registered for Journey " + journeyFieldResearcherDTO.getJourneyDTO().getJourneyName());
+        return journeyFieldResearcherDTO;
     }
 
     @Override
