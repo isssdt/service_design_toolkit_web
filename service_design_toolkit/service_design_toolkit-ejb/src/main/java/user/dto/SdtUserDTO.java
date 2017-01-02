@@ -27,6 +27,7 @@ public class SdtUserDTO {
     private String oldPassword;
 
     public SdtUserDTO() {
+        
     }
 
     public SdtUserDTO(String username, Character isActive, String password, FieldResearcherDTO fieldResearcherDTO) {

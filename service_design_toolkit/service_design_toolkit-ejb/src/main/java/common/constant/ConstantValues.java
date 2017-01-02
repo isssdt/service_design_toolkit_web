@@ -51,6 +51,12 @@ public class ConstantValues {
     public static final String SDT_USER_QUERY_AUTHENTICATE = "SdtUser.00001";
     
     /**
+     * This query is used to select list of Touch Point of a Journey that a Field Researcher is working on
+     * parameter: username
+     */    
+    public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001";
+    
+    /**
      * SELECT s FROM SdtUser s WHERE s.username = :username
      */    
     public static final String SDT_USER_QUERY_FIND_BY_USERNAME = "SdtUser.findByUsername";   

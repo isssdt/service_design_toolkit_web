@@ -24,6 +24,10 @@ public class FieldResearcherDTO {
     private SdtUserDTO sdtUserDTO;
     private Integer id;
 
+    public FieldResearcherDTO() {
+        
+    }
+
     public Integer getId() {
         return id;
     }
