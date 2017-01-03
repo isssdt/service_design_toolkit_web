@@ -24,7 +24,9 @@
                         <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" 
                                      required="true" placeholder="Num Of Field Researcher" type="number"
                                      requiredMessage="Can not be 0/Empty" 
-                                     style="width:400px"/>
+                                     style="width:400px">
+                            <f:validateLongRange minimum="1" />
+                        </p:inputText>
                         <p:message for="no_of_field_researcher" />
 
                         <p:outputLabel />
