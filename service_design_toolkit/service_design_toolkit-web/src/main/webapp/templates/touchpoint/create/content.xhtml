@@ -3,107 +3,98 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <f:view>
-        <h:head> 
-
-            <style type="text/css">
-                .ui-diagram-element {
-                    border:0.1em dotted #E5E4E2; 
-                    background-color: #EFEEEC;
-                    width:10em;
-                    height:8em;
-                    text-align: center;
-                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+    <style type="text/css">
+            .ui-diagram-element {
+                border:0.1em dotted #E5E4E2; 
+                background-color: #EFEEEC;
+                width:10em;
+                height:8em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
                 }
 
-                .ui-diagram-element:hover {
-                    background-color: #C7C6C4;
+            .ui-diagram-element:hover {
+                background-color: #C7C6C4;
                 }
 
 
-            </style>
-            <script type="text/javascript">
-                var placeSearch, autocomplete;
-                function initAutocomplete() {
-                    // Create the autocomplete object, restricting the search to geographical
-                    // location types.
-                    autocomplete = new google.maps.places.Autocomplete(
-                            /** @type {!HTMLInputElement} */(document.getElementById('address1')),
-                            {types: ['geocode']});
-                }
-                function addMakerByGeoCode() {
-                    PF('geoMap').geocode(document.getElementById('address').value);
-                }
-                var currentMarker = null;
+    </style>
+    <script type="text/javascript">
+            var placeSearch, autocomplete;
+            function initAutocomplete() {
+                // Create the autocomplete object, restricting the search to geographical
+                // location types.
+                autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById('address1')),
+                    {types: ['geocode']});
+            }
+            function addMakerByGeoCode() {
+                PF('geoMap').geocode(document.getElementById('address').value);
+            }
+            var currentMarker = null;
 
-                function handlePointClick(event) {
-                    if (currentMarker === null) {
-                        document.getElementById('lat').value = event.latLng.lat();
-                        document.getElementById('lng').value = event.latLng.lng();
-                        currentMarker = new google.maps.Marker({
-                            position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
-                        });
-                        PF('geoMap').addOverlay(currentMarker);
-                        PF('dlg').show();
-                    }
+            function handlePointClick(event) {
+                if (currentMarker === null) {
+                    document.getElementById('lat').value = event.latLng.lat();
+                    document.getElementById('lng').value = event.latLng.lng();
+                    currentMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+                    });
+                    PF('geoMap').addOverlay(currentMarker);
+                    PF('dlg').show();
                 }
+            }
 
-                function markerAddComplete() {
-                    var title = document.getElementById('title');
-                    currentMarker.setTitle(title.value);
-                    title.value = "";
-                    currentMarker = null;
-                    PF('dlg').hide();
+            function markerAddComplete() {
+                var title = document.getElementById('title');
+                currentMarker.setTitle(title.value);
+                title.value = "";
+                currentMarker = null;
+                PF('dlg').hide();
+            }
+            function cancel() {
+                PF('dlg').hide();
+                currentMarker.setMap(null);
+                currentMarker = null;
+                return false;
+            }
+            function clearScreen() {
+                alert("Journey has been created");
+                location.reload();
+            }
+            function handleDialogSubmit(args, addtpDialog) {
+                if (args.validationFailed) {
+                    PF('addtpDialog').show();
+                } else {
+                    PF('addtpDialog').hide();
                 }
-                function cancel() {
-                    PF('dlg').hide();
-                    currentMarker.setMap(null);
-                    currentMarker = null;
-                    return false;
-                }
-                function clearScreen() {
-                    alert("Journey has been created");
-                    location.reload();
-                }
-                function handleDialogSubmit(args, addtpDialog) {
-                    if (args.validationFailed) {
-                        PF('addtpDialog').show();
-                    } else {
-                        PF('addtpDialog').hide();
-                    }
-    }
-                
-            </script>   
-
-            <script 
-                type="text/javascript" 
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places">
-            </script>
-
-        </h:head>
-        <h:body>
-            <h:form prependId="false">
-
-                <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
+            }
                
-                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-
-                    <h:panelGrid columns="2">
-                        <p:outputLabel for="journey_name" value="Journey Name" />
-                        <p:inputText id="journey_name" value="#{journeyModel.journeyName}" readonly="true">
-                        </p:inputText>
-                        <p:message for="journey_name" />
-                        <br></br>
-                        <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
-                        <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" readonly="true"
-                                     label="Number Of Field Researcher">
-                        </p:inputText>
-                        <p:message for="no_of_field_researcher" />
-                    </h:panelGrid>
-
-                    <br></br>
-
-                    <h:panelGrid columns="2" id="pan12">
+    </script>   
+    <script 
+            type="text/javascript" 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places">
+    </script>
+    <h:form prependId="false">
+        
+        <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
+        
+        <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+            <h:panelGrid columns="2">
+                <p:outputLabel for="journey_name" value="Journey Name" />
+                <p:inputText id="journey_name" value="#{journeyModel.journeyName}" readonly="true" />
+                <p:message for="journey_name" />
+                
+                <br></br>
+                        
+                <p:outputLabel for="no_of_field_researcher" value="No of Field Researchers" />                    
+                <p:inputText id="no_of_field_researcher" value="#{journeyModel.noOfFieldResearcher}" readonly="true"  />
+                <p:message for="no_of_field_researcher" />       
+            </h:panelGrid>
+            
+            <br></br>     
+            
+            <h:panelGrid columns="2" id="pan12">
                         <p:outputLabel for="start_date" value="Start Date" />                    
                         <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" readonlyInput="true"
                                     label="Start Date" />              
@@ -113,93 +104,78 @@
                         <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
                                     readonlyInput="true"/>              
                         <p:message for="end_date" />                    
-                    </h:panelGrid>
+            </h:panelGrid> 
+            
+            <br></br>  
+            
+            <p:commandButton value="Add Touch Point" onclick="PF('addtpDialog').show();"/>       
+        </h:panelGrid>
 
-                    <br></br> 
+        <p:dialog id="addtpDialog" widgetVar="addtpDialog" header="Add Touch Point" style = "width: 725px; height: 300px" >
+            <p:messages id="messages" autoUpdate="false" closable="true" />
+            <h:panelGrid id="Name_action" columns="3" cellpadding="8">
+                <p:outputLabel for="touchPoint_name" value="Name"/>
+                <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" 
+                        required="true" requiredMessage="Please enter name"/>  
+                <p:message for="touchPoint_name" />-->            
+                <p:outputLabel for="touchPoint_Action" value="Action"/>   
+                <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" 
+                             required="true" requiredMessage="Please enter Action" />
+                <p:message for="touchPoint_Action" />-->
+            </h:panelGrid>
 
-                    <p:commandButton value="Add Touch Point" onclick="PF('addtpDialog').show();"/>       
-                </h:panelGrid>
-
-                <p:dialog id="addtpDialog" widgetVar="addtpDialog" header="Add Touch Point"  
-                          style = "width: 725px; height: 300px" >
-                    
-                    <h:panelGrid id="Name_action" columns="3" cellpadding="8">
-                            <p:outputLabel for="touchPoint_name" value="Name"/>
-                            <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" required="true" 
-                                         requiredMessage="Please enter name"/>   
-                            <p:message for="touchPoint_name" />
-
-                            <p:outputLabel for="touchPoint_Action" value="Action"/>                    
-                            <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" required="true" 
-                                         requiredMessage="Please enter Action">
-                            </p:inputText>
-                            <p:message for="touchPoint_Action" />
-                        </h:panelGrid>
-                            <p:outputLabel />
-                            <h:panelGrid id="channel_selection_desc" columns="2" cellpadding="8" 
-                                         styleClass="ui-panelgrid-blank">
-                                <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
-                                    <p:ajax event="change" update="channel_selection_desc,savetp_addlocation"/>
-                                    <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{journeyCreateView.channelmap}"/>
-                                </p:selectOneMenu>
-                                <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
-                                    <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" 
-                                             required="true" placeholder="enter description"
-                                             rendered="#{touchPointModel.touchPointChannel eq 'Website'}" 
-                                             requiredMessage="Please enter URl">
-                                    </p:inputText>
-                                    <p:message for="cha_desc_inp" />
-                                </h:panelGrid>
-                            </h:panelGrid>
-                              
-                        <h:panelGrid id="savetp_addlocation" columns="3" style="margin-bottom:20px" >
-
-                                <p:commandButton value="Specify Location" 
-                                                 rendered="#{touchPointModel.touchPointChannel eq 'Kiosk' or 
-                                                             touchPointModel.touchPointChannel eq 'Person To Person'}"
-                                                 action="map?faces-redirect=true"
-                                                 update="Name_action">
-                                </p:commandButton>
-
-                                <p:commandButton value="Save" ajax="true"
-                                                 rendered="#{touchPointModel.touchPointChannel eq 'Website'}"
-                                                 actionListener="#{touchPointController.addTouchPoint()}"
-                                                 update="Name_action, cha_desc_pan, dia"
-                                                 oncomplete="handleDialogSubmit(args, addtpDialog)" >
-                                </p:commandButton>
-                        </h:panelGrid>
-                    
-                </p:dialog>
-
-                <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
-                    <f:facet name="element">
-                        <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
-                        <h:outputText value="#{el.channelName}" style="display:block;margin-top:1em;"/>
-                        <h:outputText value="#{el.channelDesc}" style="display:block;margin-top:1em;"/>
-                        <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" rendered="#{el.channelName eq 'Kiosk' or el.channelName eq 'Person To Person' }"/>
-                    </f:facet>
-                </p:diagram> 
-                <h:form>
-                    <p:commandButton value="SAVE" 
-                                 id="save"
-                                 icon="ui-icon-extlink" 
-                                 actionListener="#{journeyCreateView.createJourney()}"
-                                 ajax="true" 
-                                 onclick="PF('dlgSucc').show();" >
-                    </p:commandButton>
-                    </h:form>
-
-                <p:dialog widgetVar="dlgSucc" 
-                          width="625" 
-                          height="400" 
-                          modal="true">
-                    <h:outputText value="A Journey has been created successfully!" />
-                        <p:commandButton value ="OK" action="createJourney?faces-redirect=true"/>
-                </p:dialog>
-                    
-           
-            </h:form>
-        </h:body>
-    </f:view>
+            <h:panelGrid id="channel_selection_desc" columns="2" cellpadding="8" styleClass="ui-panelgrid-blank">
+                <p:selectOneMenu id="touchPoint_channel" value="#{touchPointModel.touchPointChannel}">
+                    <p:ajax event="change" update="channel_selection_desc,savetp_addlocation"/>
+                    <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{journeyCreateView.channelmap}"/>
+                </p:selectOneMenu>
+                <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
+                    <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" placeholder="enter description"
+                                rendered="#{touchPointModel.touchPointChannel eq 'Website'}" >
+                                <!--required="true"
+                                requiredMessage="Please enter URl">-->
+                    </p:inputText>
+                    <p:message for="cha_desc_inp" />
+                </h:panelGrid>                    
+            </h:panelGrid>                       
+                                
+            <h:panelGrid id="savetp_addlocation" columns="3" style="margin-bottom:20px" >               
+                <p:commandButton value="Specify Location" 
+                                 rendered="#{touchPointModel.touchPointChannel eq 'Kiosk' or 
+                                            touchPointModel.touchPointChannel eq 'Person To Person'}"
+                                 action="map?faces-redirect=true"
+                                 update="Name_action">
+                </p:commandButton>
+                <p:commandButton value="Save" 
+                                rendered="#{touchPointModel.touchPointChannel eq 'Website'}"
+                                actionListener="#{touchPointController.addTouchPoint()}"
+                                update="Name_action, cha_desc_pan, dia, save_journey_button_form:Save_journey_button_pan"
+                                oncomplete="handleDialogSubmit(args, addtpDialog)">                             
+                </p:commandButton>
+            </h:panelGrid>
+        </p:dialog>                        
+                        
+        <p:diagram  id="dia" value="#{touchPointFlowView.model}" style="height:600px" styleClass="ui-widget-content" var="el" >
+            <f:facet name="element">
+                <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{el.channelName}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{el.channelDesc}" style="display:block;margin-top:1em;"/>
+                <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" rendered="#{el.channelName eq 'Kiosk' or el.channelName eq 'Person To Person' }"/>
+            </f:facet>
+        </p:diagram>
+       
+        <p:dialog widgetVar="dlgSucc" width="625" height="400" modal="true">
+            <h:outputText value="A Journey has been created successfully!" />
+            <p:commandButton value ="OK" action="createJourney?faces-redirect=true"/>
+        </p:dialog>
+    </h:form>
+    <h:form id="save_journey_button_form">
+        <h:panelGrid id="Save_journey_button_pan">
+            <p:commandButton value="Save Journey" id="save" actionListener="#{journeyCreateView.createJourney()}"
+                         rendered="#{touchPointListModel.createCopy().no_of_touch_point > 0}"
+                         onclick="PF('dlgSucc').show();" >
+            </p:commandButton>
+        </h:panelGrid>
+    </h:form>
 </ui:composition>
