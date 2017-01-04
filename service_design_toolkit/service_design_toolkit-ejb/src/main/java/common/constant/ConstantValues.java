@@ -102,6 +102,12 @@ public class ConstantValues {
     public static final String URI_CREATE_JOURNEY_PAGE = "/journey/createJourney.xhtml?faces-redirect=true";
     
     /**
+     * Add Touch Point page
+     */
+    public static final String URI_ADD_TOUCH_POINT_PAGE = "/journey/addTouchPoint.xhtml?faces-redirect=true";
+    
+    
+    /**
      * View Integration Journey Page
      */
     public static final String URI_INTEGRATED_JOURNEY_PAGE = "/journey/integrated.xhtml?faces-redirect=true";
