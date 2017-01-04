@@ -127,7 +127,7 @@
           <h:inputHidden id="radi" value="#{touchPointModel.touchpointRadius}"></h:inputHidden>
           <h:inputHidden id="desc" value="#{touchPointModel.channelDesc}"></h:inputHidden>
           <p:commandButton value="Save" actionListener="#{touchPointController.addTouchPoint()}" 
-                           action="create?faces-redirect=true">
+                           action="addTouchPoint?faces-redirect=true">
               <f:param value="#{journeyModel;touchPointModel}"/>
           </p:commandButton>
       </h:form>
