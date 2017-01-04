@@ -117,11 +117,11 @@
                 <p:outputLabel for="touchPoint_name" value="Name"/>
                 <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" 
                         required="true" requiredMessage="Please enter name"/>  
-                <p:message for="touchPoint_name" />-->            
+                <p:message for="touchPoint_name" />   
                 <p:outputLabel for="touchPoint_Action" value="Action"/>   
                 <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" 
                              required="true" requiredMessage="Please enter Action" />
-                <p:message for="touchPoint_Action" />-->
+                <p:message for="touchPoint_Action" />
             </h:panelGrid>
 
             <h:panelGrid id="channel_selection_desc" columns="2" cellpadding="8" styleClass="ui-panelgrid-blank">
@@ -132,9 +132,9 @@
                 </p:selectOneMenu>
                 <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
                     <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" placeholder="enter description"
-                                rendered="#{touchPointModel.touchPointChannel eq 'Website'}" >
-                                <!--required="true"
-                                requiredMessage="Please enter URl">-->
+                                rendered="#{touchPointModel.touchPointChannel eq 'Website'}" 
+                                required="true"
+                                requiredMessage="Please enter URl">
                     </p:inputText>
                     <p:message for="cha_desc_inp" />
                 </h:panelGrid>                    
