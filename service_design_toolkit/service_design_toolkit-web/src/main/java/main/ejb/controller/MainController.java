@@ -39,4 +39,8 @@ public class MainController implements Serializable {
     public String changePasswordPage() {
         return ConstantValues.URI_PASSWORD_CHANGE_PAGE;
     }
+    
+    public String addTouchPointPage() {
+        return ConstantValues.URI_ADD_TOUCH_POINT_PAGE;
+    }
 }

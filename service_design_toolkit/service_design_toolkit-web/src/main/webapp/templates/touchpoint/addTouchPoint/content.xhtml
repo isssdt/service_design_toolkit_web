@@ -95,15 +95,18 @@
             <br></br>     
             
             <h:panelGrid columns="2" id="pan12">
-                        <p:outputLabel for="start_date" value="Start Date" />                    
-                        <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" readonlyInput="true"
-                                    label="Start Date" />              
-                        <p:message for="start_date" />                    
-                        <br></br> 
-                        <p:outputLabel for="end_date" value="End Date" />                    
-                        <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
-                                    readonlyInput="true"/>              
-                        <p:message for="end_date" />                    
+                <p:outputLabel for="start_date" value="Start Date" />                    
+                <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" 
+                            readonlyInput="true" label="Start Date" />              
+                <p:message for="start_date" />    
+                
+                <br></br> 
+                        
+                <p:outputLabel for="end_date" value="End Date" />                    
+                <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
+                            readonlyInput="true"/>              
+                <p:message for="end_date" />   
+                
             </h:panelGrid> 
             
             <br></br>  
@@ -112,12 +115,15 @@
         </h:panelGrid>
 
         <p:dialog id="addtpDialog" widgetVar="addtpDialog" header="Add Touch Point" style = "width: 725px; height: 300px" >
+            
             <p:messages id="messages" autoUpdate="false" closable="true" />
+            
             <h:panelGrid id="Name_action" columns="3" cellpadding="8">
                 <p:outputLabel for="touchPoint_name" value="Name"/>
                 <p:inputText id="touchPoint_name" value="#{touchPointModel.touchPointName}" 
                         required="true" requiredMessage="Please enter name"/>  
                 <p:message for="touchPoint_name" />   
+                
                 <p:outputLabel for="touchPoint_Action" value="Action"/>   
                 <p:inputText id="touchPoint_Action" value="#{touchPointModel.touchpointAction}" 
                              required="true" requiredMessage="Please enter Action" />
@@ -130,14 +136,13 @@
                     <f:selectItem itemLabel="Select Channel" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{journeyCreateView.channelmap}"/>
                 </p:selectOneMenu>
+                
                 <h:panelGrid id="cha_desc_pan" columns="2" cellpadding="8">
                     <p:inputText id="cha_desc_inp" value="#{touchPointModel.channelDesc}" placeholder="enter description"
                                 rendered="#{touchPointModel.touchPointChannel eq 'Website'}" 
-                                required="true"
-                                requiredMessage="Please enter URl">
-                    </p:inputText>
+                                required="true" requiredMessage="Please enter URl"/>
                     <p:message for="cha_desc_inp" />
-                </h:panelGrid>                    
+                </h:panelGrid>        
             </h:panelGrid>                       
                                 
             <h:panelGrid id="savetp_addlocation" columns="3" style="margin-bottom:20px" >               
@@ -145,14 +150,13 @@
                                  rendered="#{touchPointModel.touchPointChannel eq 'Kiosk' or 
                                             touchPointModel.touchPointChannel eq 'Person To Person'}"
                                  action="map?faces-redirect=true"
-                                 update="Name_action">
-                </p:commandButton>
+                                 update="Name_action" />
+                
                 <p:commandButton value="Save" 
-                                rendered="#{touchPointModel.touchPointChannel eq 'Website'}"
-                                actionListener="#{touchPointController.addTouchPoint()}"
-                                update="Name_action, cha_desc_pan, dia, save_journey_button_form:Save_journey_button_pan"
-                                oncomplete="handleDialogSubmit(args, addtpDialog)">                             
-                </p:commandButton>
+                                 rendered="#{touchPointModel.touchPointChannel eq 'Website'}"
+                                 actionListener="#{touchPointController.addTouchPoint()}"
+                                 update="Name_action, cha_desc_pan, dia, save_journey_button_form:Save_journey_button_pan"
+                                 oncomplete="handleDialogSubmit(args, addtpDialog)" />                             
             </h:panelGrid>
         </p:dialog>                        
                         
@@ -167,7 +171,7 @@
        
         <p:dialog widgetVar="dlgSucc" width="625" height="400" modal="true">
             <h:outputText value="A Journey has been created successfully!" />
-            <p:commandButton value ="OK" action="createJourney?faces-redirect=true"/>
+            <p:commandButton value ="OK" action="#{mainController.createJourneyPage()}"/>
         </p:dialog>
     </h:form>
     <h:form id="save_journey_button_form">
