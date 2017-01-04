@@ -67,7 +67,7 @@ public class TouchPointListModel implements Serializable {
     }
 
     public Integer getNo_of_touch_point() {
-        return no_of_touch_point;
+        return touchPointListModel.size();
     }
 
     public void setNo_of_touch_point(Integer no_of_touch_point) {
