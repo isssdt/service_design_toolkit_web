@@ -14,52 +14,52 @@
         width: 790px;
       }
       
-.controls {
-  margin-top: 10px;
-  border: 1px solid transparent;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  height: 32px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 300px;
-}
+    #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
 
-#pac-input:focus {
-  border-color: #4d90fe;
-}
+    #pac-input:focus {
+        border-color: #4d90fe;
+      }
 
-.pac-container {
-  font-family: Roboto;
-}
+    .pac-container {
+        font-family: Roboto;
+      }
 
-#type-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  padding: 5px 11px 0px 11px;
-}
+    #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
 
-#type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
+    #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
 
     </style>
         <h:form>
             <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
-                    <h:panelGrid columns="4">
+                <h:panelGrid columns="4">
                         <p:outputLabel for="journey_name" value="Journey Name" />
                         <p:inputText id="journey_name" value="#{journeyModel.journeyName}" readonly="true">
                         </p:inputText>
@@ -70,9 +70,9 @@
                                      label="Number Of Field Researcher">
                         </p:inputText>
                         <p:message for="no_of_field_researcher" />
-                    </h:panelGrid>   
-                    <br></br> 
-                    <h:panelGrid columns="4">
+                </h:panelGrid>   
+                <br></br> 
+                <h:panelGrid columns="4">
                         <p:outputLabel for="start_date" value="Start Date" />                    
                         <p:calendar id="start_date" value="#{journeyModel.startDate}" readonly="true" showOn="none" readonlyInput="true"
                                 label="Start Date" />              
@@ -82,9 +82,9 @@
                         <p:calendar id="end_date" value="#{journeyModel.endDate}" label="End Date" showOn="none"
                                 readonlyInput="true"/>              
                         <p:message for="end_date" />                   
-                    </h:panelGrid>
-                    <br></br>
-                    <h:panelGrid columns="2">
+                </h:panelGrid>
+                <br></br>
+                <h:panelGrid columns="2">
                         <p:outputLabel for="touchpointname" value="Touch Point Name" />                    
                         <p:inputText id="touchpointname" value="#{touchPointModel.touchPointName}" readonly="true">
                         </p:inputText>
@@ -93,12 +93,10 @@
                         <p:outputLabel for="description" value="Description" />                    
                         <p:inputText id="description" value="#{touchPointModel.channelDesc}">
                         </p:inputText>
-                        <p:message for="description" />
-                        
-                         
-                    </h:panelGrid>
-                    <br></br>
-                    <h:panelGrid columns="4">
+                        <p:message for="description" />       
+                </h:panelGrid>
+                <br></br>
+                <h:panelGrid columns="4">
                         <p:outputLabel for="action" value="Action" />                    
                         <p:inputText id="action" value="#{touchPointModel.touchpointAction}" readonly="true">
                         </p:inputText>
@@ -108,25 +106,23 @@
                         <p:inputText id="channel" value="#{touchPointModel.touchPointChannel}" readonly="true">
                         </p:inputText>
                         <p:message for="channel" />                    
-                    </h:panelGrid>
                 </h:panelGrid>
+            </h:panelGrid>
         </h:form>
-      <p:panel id ="pan1">
+    <p:panel id ="pan1">
           <p:inputText id="pac-input"/>
           <p:inputText id="radius" onchange="addcircle()" placeholder="enter radius">
           </p:inputText>
           <div id="map"></div>                
-      </p:panel>
-      <h:form>
-          <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}"></h:inputHidden>
-          <h:inputHidden id="lon" value="#{touchPointModel.touchpointLongitude}"></h:inputHidden>
-          <h:inputHidden id="radi" value="#{touchPointModel.touchpointRadius}"></h:inputHidden>
-          <h:inputHidden id="desc" value="#{touchPointModel.channelDesc}"></h:inputHidden>
-          <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
-                           action="create?faces-redirect=true">
-              <f:param value="#{journeyModel;touchPointModel}"/>
-          </p:commandButton>
-      </h:form>
+    </p:panel>
+    <h:form>
+        <h:inputHidden id="lat" value="#{touchPointModel.touchpointLatitude}"></h:inputHidden>
+        <h:inputHidden id="lon" value="#{touchPointModel.touchpointLongitude}"></h:inputHidden>
+        <h:inputHidden id="radi" value="#{touchPointModel.touchpointRadius}"></h:inputHidden>
+        <h:inputHidden id="desc" value="#{touchPointModel.channelDesc}"></h:inputHidden>
+        <p:commandButton value="Save Touchpoint" actionListener="#{touchPointController.addTouchPoint()}" 
+                         action="#{mainController.addTouchPointPage()}" />
+    </h:form>
             
     <script>
     var map=null;
@@ -211,6 +207,6 @@
     }
     </script>
     <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places&amp;callback=initMap"
-        ></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=places&amp;callback=initMap"
+    ></script>
 </ui:composition>

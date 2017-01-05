@@ -43,4 +43,8 @@ public class MainController implements Serializable {
     public String addTouchPointPage() {
         return ConstantValues.URI_ADD_TOUCH_POINT_PAGE;
     }
+    
+    public String mapPage() {
+        return ConstantValues.URI_MAP_PAGE;
+    }
 }

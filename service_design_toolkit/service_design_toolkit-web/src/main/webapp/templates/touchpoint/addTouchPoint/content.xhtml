@@ -77,8 +77,6 @@
     </script>
     <h:form prependId="false">
         
-        <h3 style="margin-top:0"><font face="Chalkboard" color="#2E6E9E">Create Journey</font></h3>
-        
         <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
             <h:panelGrid columns="2">
                 <p:outputLabel for="journey_name" value="Journey Name" />
@@ -149,7 +147,7 @@
                 <p:commandButton value="Specify Location" 
                                  rendered="#{touchPointModel.touchPointChannel eq 'Kiosk' or 
                                             touchPointModel.touchPointChannel eq 'Person To Person'}"
-                                 action="map?faces-redirect=true"
+                                 action="#{mainController.mapPage()}"
                                  update="Name_action" />
                 
                 <p:commandButton value="Save" 

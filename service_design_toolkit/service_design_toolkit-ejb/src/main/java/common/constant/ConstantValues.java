@@ -106,6 +106,10 @@ public class ConstantValues {
      */
     public static final String URI_ADD_TOUCH_POINT_PAGE = "/journey/addTouchPoint.xhtml?faces-redirect=true";
     
+    /**
+     * Specify location on map page
+     */
+    public static final String URI_MAP_PAGE = "/journey/map.xhtml?faces-redirect=true";
     
     /**
      * View Integration Journey Page
