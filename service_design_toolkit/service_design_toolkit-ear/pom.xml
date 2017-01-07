@@ -49,6 +49,7 @@
                     <execution>
                         <phase>install</phase>
                         <goals>
+                            <goal>undeploy</goal>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
