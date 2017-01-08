@@ -6,10 +6,9 @@
 package touchpoint.action;
 
 import common.ScreenTitles;
+import common.action.AbstractAction;
 import common.controller.AbstractController;
-import java.util.Observable;
-import java.util.Observer;
-import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 import org.primefaces.context.RequestContext;
 import touchpoint.ejb.view.CreateView;
 
@@ -17,16 +16,15 @@ import touchpoint.ejb.view.CreateView;
  *
  * @author longnguyen
  */
-public class ActionSaveTouchPoint implements Observer {
+public class ActionSaveTouchPoint extends AbstractAction {
+    @Override
+    protected boolean checkSource(FacesEvent event) {
+        return ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
+    }
 
     @Override
-    public void update(Observable o, Object arg) {
-        ActionEvent actionEvent = (ActionEvent)arg;
-        if (!ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID.equals(actionEvent.getComponent().getId())) {
-            return;
-        }
-        AbstractController controller = (AbstractController)o;
+    public void actionHandler(AbstractController controller, FacesEvent event) {        
         CreateView createView = (CreateView)controller.getView();
         RequestContext.getCurrentInstance().closeDialog(createView.getTouchPointDTO());
-    }    
+    }
 }

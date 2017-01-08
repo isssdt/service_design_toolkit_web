@@ -44,9 +44,10 @@
 
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID}" 
-                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="true">
+                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" 
+                             ajax="true">
                 <p:ajax id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_AJAX_ID}" 
-                        event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" />
+                        event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" update="journeyvisualization" />
             </p:commandButton>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
@@ -54,14 +55,14 @@
             </p:commandButton>
         </h:panelGrid>                     
 
-        <p:diagram  id="dia" value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" style="height:600px" 
-                    styleClass="ui-widget-content" var="journeyVisualization" >
+        <p:diagram id="journeyvisualization" value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" style="height:600px" 
+                    styleClass="ui-widget-content" var="touchpoint" >
             <f:facet name="element">
-                <h:outputText value="#{journeyVisualization.name}" style="display:block;margin-top:1em;"/>
-                <h:outputText value="#{journeyVisualization.channelName}" style="display:block;margin-top:1em;"/>
-                <h:outputText value="#{journeyVisualization.channelDesc}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{touchpoint.name}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{touchpoint.channelName}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{touchpoint.channelDesc}" style="display:block;margin-top:1em;"/>
                 <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" 
-                                 rendered="#{journeyVisualization.channelName eq 'Kiosk' or journeyVisualization.channelName eq 'Person To Person' }"/>
+                                 rendered="#{touchpoint.channelName eq 'Kiosk' or touchpoint.channelName eq 'Person To Person' }"/>
             </f:facet>
         </p:diagram>        
     </h:form>    

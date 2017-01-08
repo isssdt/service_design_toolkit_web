@@ -31,7 +31,7 @@ public class ActionAddTouchPoint extends AbstractAction {
 
     @Override
     protected boolean checkSource(FacesEvent event) {
-        return ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_AJAX_ID.equals(event.getComponent().getId());
+        return (event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
     }
 
     @Override

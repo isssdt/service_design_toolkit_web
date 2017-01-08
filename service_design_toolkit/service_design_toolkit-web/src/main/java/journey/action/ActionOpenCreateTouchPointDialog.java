@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.event.FacesEvent;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +24,7 @@ import org.primefaces.context.RequestContext;
 public class ActionOpenCreateTouchPointDialog extends AbstractAction {
     @Override
     protected boolean checkSource(FacesEvent event) {
-        return ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
+        return !(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
     }
 
     @Override
