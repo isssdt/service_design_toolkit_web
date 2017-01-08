@@ -21,9 +21,7 @@ public abstract class AbstractAction implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {        
-        FacesEvent event = (FacesEvent)arg;
-        System.out.println(event.getComponent().getId());
-        System.out.println(event.getPhaseId().getName());
+        FacesEvent event = (FacesEvent)arg;        
         if (!checkSource(event)) {            
             return;
         }
