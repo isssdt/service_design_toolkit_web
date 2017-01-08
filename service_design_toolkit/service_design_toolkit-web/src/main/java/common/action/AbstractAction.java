@@ -17,7 +17,7 @@ import javax.faces.event.FacesEvent;
 public abstract class AbstractAction implements Observer {
     protected abstract boolean checkSource(FacesEvent event);
     
-    public abstract void actionHandler(AbstractController controller, FacesEvent event);
+    protected abstract void actionHandler(AbstractController controller, FacesEvent event);
 
     @Override
     public void update(Observable o, Object arg) {        
