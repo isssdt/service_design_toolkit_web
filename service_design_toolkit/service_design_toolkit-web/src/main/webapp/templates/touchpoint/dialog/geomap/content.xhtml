@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"            
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">   
+    <h:outputScript library="js" name="touchpoint/geomap.js" target="head" />    
+    <h:form prependId="false">                
+        <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
+        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="6">                    
+            <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" 
+                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS}" />
+            <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" onfocus="initAutocomplete()" 
+                         style="width: 600px" required="true" 
+                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE}"/>
+            <p:message for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" /> 
+            <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" 
+                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" />
+            <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" 
+                         value="#{touchpoint_ejb_view_CreateView.touchPointDTO.radius}" style="width:100px">    
+                <f:validateLongRange minimum="1" />
+            </p:inputText>
+            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}" style="font-family: Lucida Grande"  
+                             id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID}"
+                             actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" ajax="true">
+            </p:commandButton>
+        </h:panelGrid>                      
+        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="font-family: Lucida Grande"  
+                         id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID}"
+                         actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" ajax="false">
+        </p:commandButton>
+    </h:form>
+</ui:composition>
+

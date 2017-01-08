@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import journey.constraint.Journey;
+import journey.constraint.JourneyConstraint;
 
 /**
  *
@@ -28,7 +28,7 @@ public class JourneyModel implements Serializable {
      */
     public JourneyModel() {
     }
-    @Journey(message = "This journey name already exists!")
+    @JourneyConstraint(message = "This journey name already exists!")
     
     private String journeyName;
     private int noOfFieldResearcher;    

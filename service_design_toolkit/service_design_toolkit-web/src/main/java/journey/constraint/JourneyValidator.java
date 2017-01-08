@@ -16,13 +16,13 @@ import journey.ejb.business.JourneyServiceLocal;
  * @author longnguyen
  */
 
-public class JourneyValidator implements ConstraintValidator<Journey, String> {
+public class JourneyValidator implements ConstraintValidator<JourneyConstraint, String> {
 
     @EJB
     JourneyServiceLocal journeyService;
 
     @Override
-    public void initialize(Journey constraintAnnotation) {
+    public void initialize(JourneyConstraint constraintAnnotation) {
         
     }
     

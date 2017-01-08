@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"      
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">           
+    <h:form prependId="false">
+        <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
+        <p:growl id="growl" showDetail="true" sticky="true" /> 
+        <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">
+            <h:panelGrid columns="2">
+                <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
+                               value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME}" />
+                <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
+                             value="#{journey_ejb_view_addTouchPointView.journeyDTO.journeyName}" readonly="true" />                
+
+                <br></br>
+
+                <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
+                               value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER}" />                    
+                <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
+                             value="#{journey_ejb_view_addTouchPointView.journeyDTO.noOfFieldResearcher}" readonly="true"  />                     
+            </h:panelGrid>
+
+            <br></br>     
+
+            <h:panelGrid columns="2" id="pan12">
+                <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}" 
+                               value="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE}" />                    
+                <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}" 
+                            value="#{journey_ejb_view_addTouchPointView.journeyDTO.startDate}" readonly="true" showOn="none" 
+                            readonlyInput="true" label="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE}" />                                
+
+                <br></br> 
+
+                <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}" 
+                               value="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE}" />                    
+                <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}" 
+                            value="#{journey_ejb_view_addTouchPointView.journeyDTO.endDate}" 
+                            label="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE}" showOn="none"
+                            readonlyInput="true"/>                             
+            </h:panelGrid> 
+
+            <br></br>  
+
+            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD}" 
+                             id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID}" 
+                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="true">
+                <p:ajax id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_AJAX_ID}" 
+                        event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" />
+            </p:commandButton>
+            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
+                             id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
+                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="false">                
+            </p:commandButton>
+        </h:panelGrid>                     
+
+        <p:diagram  id="dia" value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" style="height:600px" 
+                    styleClass="ui-widget-content" var="journeyVisualization" >
+            <f:facet name="element">
+                <h:outputText value="#{journeyVisualization.name}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{journeyVisualization.channelName}" style="display:block;margin-top:1em;"/>
+                <h:outputText value="#{journeyVisualization.channelDesc}" style="display:block;margin-top:1em;"/>
+                <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" 
+                                 rendered="#{journeyVisualization.channelName eq 'Kiosk' or journeyVisualization.channelName eq 'Person To Person' }"/>
+            </f:facet>
+        </p:diagram>        
+    </h:form>    
+</ui:composition>
