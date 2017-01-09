@@ -18,20 +18,41 @@
                     border-radius: 4px;
                     color: #ffffff;
                 }
-                    
-        
-
+                
+                
+                
+                
                 .ui-diagram-element:hover {
                     background-color: #C7C6C4;
+                }
+                
+                .ui-dashboard-layout {
+                    width: 100%; 
+                    height: 400px; 
+                    text-align: center;
+                }
+                
+                .ui-panelgrid-layout {
+                    margin-bottom:10px;
+                }
+                
+                .ui-diagram-layout {
+                    width:100%; 
+                    height:350px;
+                }
+                
+                .ui-facet-element {
+                    display:block;
+                    margin-top:1em;
                 }
 
 
             </style>  
 
     <h:form>
-        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
+        <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
             <p:outputLabel for="journey_list" value="Journey" />
-            <p:selectOneMenu id="journey_list" style="width: 30%" value="#{dashboardController.dashboardModel.journeyName}">
+            <p:selectOneMenu id="journey_list" width="30%" value="#{dashboardController.dashboardModel.journeyName}">
                 <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map, integration_map ,dia " />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
@@ -40,28 +61,28 @@
         
         <div class="ui-g">
             <div class="ui-g-6">
-                <p:panel header="Field Researcher Location" style="width: 100%; height: 400px; text-align: center">
+                <p:panel header="Field Researcher Location" styleClass="ui-dashboard-layout" >
                     <p:gmap id="field_researcher_location_map" widgetVar="field_researcher_location_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                        model="#{dashboardController.dashboardView.field_researcher_location_map}" style="width:100%; height:350px"/>
+                        model="#{dashboardController.dashboardView.field_researcher_location_map}" styleClass="ui-diagram-layout"/>
                 </p:panel>
             </div>
            
             <div class="ui-g-6">
-                <p:panel header="Integration Map" style="width: 100%; height: 400px; text-align: center">
+                <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
                     <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
-                          style="width:100%; height:350px" />
+                          styleClass="ui-diagram-layout" />
                     <p:resizable for="integration_map" />
                 </p:panel>
             </div>
         </div>
         
-        <p:panel  id="snake_view" header="Cutomer Journey Map" style="width: 100%; height: 400px">
-            <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="height: 350px" styleClass="ui-widget-content" var="el" >
+        <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
+            <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
                 <f:facet name="element">
-                    <h:outputText value="#{el.name}" style="display:block;margin-top:1em;"/>
-                    <h:outputText value="#{el.channelName}" style="display:block;margin-top:1em;"/>
-                    <h:outputText value="#{el.channelDesc}" style="display:block;margin-top:1em;"/>
+                    <h:outputText value="#{el.name}" styleClass="ui-facet-element"/>
+                    <h:outputText value="#{el.channelName}" styleClass="ui-facet-element"/>
+                    <h:outputText value="#{el.channelDesc}" styleClass="ui-facet-element"/>
                     <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" rendered="#{el.channelName eq 'Kiosk'  or el.channelName eq 'Person To Person' }"/>
                 </f:facet>
             </p:diagram> 
