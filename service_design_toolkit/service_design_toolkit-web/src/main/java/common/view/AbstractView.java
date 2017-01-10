@@ -9,6 +9,7 @@ import common.controller.AbstractController;
 import common.ejb.business.ServiceFactory;
 import javax.faces.event.ActionEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.map.GeocodeEvent;
 
 /**
  *
@@ -36,6 +37,10 @@ public abstract class AbstractView {
     }
     
     public void onDialogReturnListener(SelectEvent event) {
+        controller.actionListener(event);
+    }
+    
+    public void onGeoCode(GeocodeEvent event) {
         controller.actionListener(event);
     }
 }

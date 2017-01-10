@@ -52,7 +52,7 @@
     <h:form>
         <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
             <p:outputLabel for="journey_list" value="Journey" />
-            <p:selectOneMenu id="journey_list" width="30%" value="#{dashboardController.dashboardModel.journeyName}">
+            <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
                 <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map, integration_map ,dia " />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
