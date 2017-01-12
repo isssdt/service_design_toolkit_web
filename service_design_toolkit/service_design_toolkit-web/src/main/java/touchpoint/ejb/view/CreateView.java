@@ -5,12 +5,16 @@
  */
 package touchpoint.ejb.view;
 
+import common.MasterData;
 import common.ejb.business.ServiceFactory;
 import common.view.AbstractView;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import journey.dto.ChannelDTO;
 import journey.dto.TouchPointDTO;
 import touchpoint.controller.TouchPointController;
 
@@ -25,6 +29,8 @@ public class CreateView extends AbstractView implements Serializable {
     ServiceFactory serviceFactory;
     
     private TouchPointDTO touchPointDTO;
+    
+    private Map<String, String> channelDropDown;
 
     /**
      * Creates a new instance of CreateView
@@ -40,6 +46,14 @@ public class CreateView extends AbstractView implements Serializable {
         this.touchPointDTO = touchPointDTO;
     }
 
+    public Map<String, String> getChannelDropDown() {
+        return channelDropDown;
+    }
+
+    public void setChannelDropDown(Map<String, String> channelDropDown) {
+        this.channelDropDown = channelDropDown;
+    }
+
     @Override
     public void initController() {
         controller = new TouchPointController(this);
@@ -47,7 +61,13 @@ public class CreateView extends AbstractView implements Serializable {
 
     @Override
     public void initData() {
-        touchPointDTO = new TouchPointDTO();        
+        touchPointDTO = new TouchPointDTO(); 
+        touchPointDTO.setChannelDTO(new ChannelDTO());
+        
+        channelDropDown = new HashMap<>();
+        channelDropDown.put(MasterData.CHANNEL_FACE_TO_FACE, MasterData.CHANNEL_FACE_TO_FACE);
+        channelDropDown.put(MasterData.CHANNEL_KIOSK, MasterData.CHANNEL_KIOSK);
+        channelDropDown.put(MasterData.CHANNEL_WEBSITE, MasterData.CHANNEL_WEBSITE);
     }    
 
     @Override

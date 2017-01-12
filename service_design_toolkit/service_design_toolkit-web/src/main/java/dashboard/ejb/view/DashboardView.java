@@ -6,22 +6,11 @@
 package dashboard.ejb.view;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
-import journey.dto.TouchPointDTO;
-import org.primefaces.model.DashboardColumn;
-import org.primefaces.model.DashboardModel;
-import org.primefaces.model.DefaultDashboardColumn;
-import org.primefaces.model.DefaultDashboardModel;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
-import user.dto.FieldResearcherDTO;
 
 /**
  *

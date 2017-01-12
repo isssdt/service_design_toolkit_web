@@ -5,6 +5,7 @@
  */
 package journey.ejb.business;
 
+import common.ejb.business.BusinessService;
 import common.rest.dto.RESTReponse;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -24,7 +25,7 @@ import user.dto.SdtUserDTO;
  * @author longnguyen
  */
 @Local
-public interface JourneyServiceLocal {
+public interface JourneyServiceLocal extends BusinessService{
 
     /**
      *

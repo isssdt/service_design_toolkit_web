@@ -7,8 +7,7 @@ package touchpoint.controller;
 
 import common.controller.AbstractController;
 import common.view.AbstractView;
-import touchpoint.action.ActionSaveTouchPoint;
-import touchpoint.action.ActionSpecifyLocationOfTouchPoint;
+import javax.faces.event.FacesEvent;
 
 /**
  *
@@ -18,11 +17,9 @@ public class TouchPointController extends AbstractController {
 
     public TouchPointController(AbstractView view) {
         super(view);
-    }
+    }      
 
     @Override
-    protected void addObservers() {
-        addObserver(new ActionSaveTouchPoint());
-        addObserver(new ActionSpecifyLocationOfTouchPoint());
-    }    
+    protected void initActionHandler(FacesEvent event) {        
+    }
 }

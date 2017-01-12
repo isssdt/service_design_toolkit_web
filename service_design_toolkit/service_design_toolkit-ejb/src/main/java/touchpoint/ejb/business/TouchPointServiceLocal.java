@@ -5,6 +5,7 @@
  */
 package touchpoint.ejb.business;
 
+import common.ejb.business.BusinessService;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -21,7 +22,7 @@ import user.dto.SdtUserDTO;
  * @author longnguyen
  */
 @Local
-public interface TouchPointServiceLocal {
+public interface TouchPointServiceLocal extends BusinessService {
     public TouchPointFieldResearcherListDTO getTouchPointListOfRegisteredJourney(SdtUserDTO sdtUserDTO) 
             throws AppException, CustomReasonPhraseException;
     

@@ -1,15 +1,13 @@
 package journey.action;
 
 
-import common.ScreenTitles;
-import common.action.AbstractAction;
+import common.action.ActionHandler;
 import common.constant.ConstantValues;
-import common.controller.AbstractController;
+import common.view.AbstractView;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.event.FacesEvent;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,14 +19,9 @@ import org.primefaces.event.SelectEvent;
  *
  * @author longnguyen
  */
-public class ActionOpenCreateTouchPointDialog extends AbstractAction {
+public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD implements ActionHandler {
     @Override
-    protected boolean checkSource(FacesEvent event) {
-        return !(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
-    }
-
-    @Override
-    public void actionHandler(AbstractController controller, FacesEvent event) {
+    public void execute(AbstractView view, FacesEvent event) {
         Map<String,Object> options = new HashMap<>();
         options.put("draggable", false);
         options.put("modal", true);

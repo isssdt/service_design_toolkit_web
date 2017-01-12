@@ -19,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
 import journey.dto.JourneyDTO;
+import journey.ejb.business.JourneyServiceLocal;
 import journey.ejb.view.AddTouchPointView;
 
 /**
@@ -36,7 +37,8 @@ public class ActionSaveJourney extends AbstractAction {
     public void actionHandler(AbstractController controller, FacesEvent event) {
         AddTouchPointView addTouchPointView = (AddTouchPointView)controller.getView();
         try {
-            addTouchPointView.getServices().getJourneyService().createJourney(addTouchPointView.getJourneyDTO());
+            JourneyServiceLocal journeyService = (JourneyServiceLocal)addTouchPointView.getServices().getBusinessService(JourneyServiceLocal.class.toString());
+            journeyService.createJourney(addTouchPointView.getJourneyDTO());
         } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(ActionSaveJourney.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,14 +5,16 @@
  */
 package journey.action;
 
+import common.MasterData;
 import common.ScreenTitles;
-import common.action.AbstractAction;
-import common.controller.AbstractController;
+import common.action.ActionHandler;
+import common.utils.Utils;
+import common.view.AbstractView;
 import java.util.ArrayList;
 import javax.faces.event.FacesEvent;
 import journey.dto.TouchPointDTO;
 import journey.ejb.view.AddTouchPointView;
-import org.primefaces.event.SelectEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.diagram.Connection;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.diagram.Element;
@@ -27,29 +29,11 @@ import touchpoint.view.NetworkElement;
  *
  * @author longnguyen
  */
-public class ActionAddTouchPoint extends AbstractAction {
+public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
 
-    @Override
-    protected boolean checkSource(FacesEvent event) {
-        return (event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId());
-    }
-
-    @Override
-    public void actionHandler(AbstractController controller, FacesEvent event) {                
-        AddTouchPointView addTouchPointView = (AddTouchPointView)controller.getView();
-        SelectEvent selectEvent = (SelectEvent)event;
-        TouchPointDTO touchPointDTO = (TouchPointDTO)selectEvent.getObject();
-        
-        addElement(addTouchPointView.getJourneyVisualization(), touchPointDTO);
-        if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {
-            addTouchPointView.getJourneyDTO().setTouchPointDTOList(new ArrayList<>());           
-        }
-        addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
-    }
-
-    public void addElement(DefaultDiagramModel journeyVisualization, TouchPointDTO touchPointDTO) {        
+    public void addElement(DefaultDiagramModel journeyVisualization, TouchPointDTO touchPointDTO) {
         String X, Y, X1 = null, Y1;
-        int a, b;   
+        int a, b;
         X = journeyVisualization.getElements().get(journeyVisualization.getElements().size() - 1).getX();
         Y = journeyVisualization.getElements().get(journeyVisualization.getElements().size() - 1).getY();
         System.out.println("x" + X);
@@ -68,7 +52,7 @@ public class ActionAddTouchPoint extends AbstractAction {
         X1 = a + "em";
         Y1 = b + "em";
 
-        Element touch = new Element(new NetworkElement(touchPointDTO.getTouchPointDesc(), touchPointDTO.getChannelDTO().getChannelName(), 
+        Element touch = new Element(new NetworkElement(touchPointDTO.getTouchPointDesc(), touchPointDTO.getChannelDTO().getChannelName(),
                 touchPointDTO.getChannelDescription()), X1, Y1);
 
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
@@ -78,10 +62,10 @@ public class ActionAddTouchPoint extends AbstractAction {
         int size = journeyVisualization.getElements().size();
 
         if (size == 2) {
-            journeyVisualization.connect(createConnection(journeyVisualization.getElements().get(0).getEndPoints().get(0), 
+            journeyVisualization.connect(createConnection(journeyVisualization.getElements().get(0).getEndPoints().get(0),
                     touch.getEndPoints().get(0), null));
         } else {
-            journeyVisualization.connect(createConnection(journeyVisualization.getElements().get(size - 2).getEndPoints().get(1), 
+            journeyVisualization.connect(createConnection(journeyVisualization.getElements().get(size - 2).getEndPoints().get(1),
                     touch.getEndPoints().get(0), null));
         }
 
@@ -96,5 +80,24 @@ public class ActionAddTouchPoint extends AbstractAction {
         }
 
         return conn;
+    }
+
+    @Override
+    public void execute(AbstractView view, FacesEvent event) {
+        AddTouchPointView addTouchPointView = (AddTouchPointView) view;
+        TouchPointDTO touchPointDTO = (TouchPointDTO) Utils.getAttributeOfSession(TouchPointDTO.class.toString());
+        RequestContext context = RequestContext.getCurrentInstance();
+
+        if (MasterData.CHANNEL_WEBSITE.equals(touchPointDTO.getChannelDTO().getChannelName())) {
+            addElement(addTouchPointView.getJourneyVisualization(), touchPointDTO);
+            if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {
+                addTouchPointView.getJourneyDTO().setTouchPointDTOList(new ArrayList<>());
+            }
+            addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
+            context.update(ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID);
+        }
+        else {
+            context.execute(ScreenTitles.SCREEN_COMPONENT_JS_FUNCTION_OPEN_TOUCH_POINT_LOCATION_DIALOG);
+        }
     }
 }

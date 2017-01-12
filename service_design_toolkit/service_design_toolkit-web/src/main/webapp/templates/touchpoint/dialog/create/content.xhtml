@@ -1,31 +1,37 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"            
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
     <h:form>
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
-        <h:panelGrid columns="3" cellpadding="8">
-            <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_ID}" 
-                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME}"/>
+        <h:panelGrid columns="2" cellpadding="8">            
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_ID}" 
+                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.touchPointDesc}" 
                          required="true" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_MESSAGE}"/>  
             <p:message for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_ID}" />   
-
-            <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
-                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION}"/>   
+             
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
+                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.action}" 
                          required="true" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_MESSAGE}" />
-            <p:message for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" />
+            <p:message for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" />            
+            <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_ID}" 
+                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName}">
+                <p:ajax event="change"/>
+                <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL}" 
+                              itemValue="" noSelectionOption="true" />                         
+                <f:selectItems value="#{touchpoint_ejb_view_CreateView.channelDropDown}"/>
+            </p:selectOneMenu>
         </h:panelGrid>
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}" 
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD}" 
                          actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" 
                          ajax="false" />
-        <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID}" 
+        <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID}"                          
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION}" 
                          actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" 
                          ajax="false" />

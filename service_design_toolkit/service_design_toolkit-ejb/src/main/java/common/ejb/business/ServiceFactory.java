@@ -28,15 +28,18 @@ public class ServiceFactory {
     @EJB
     UserServiceLocal userService;
 
-    public JourneyServiceLocal getJourneyService() {
-        return journeyService;
+    public BusinessService getBusinessService(String className) {
+        if (className.equals(JourneyServiceLocal.class.toString())) {
+            return journeyService;
+        }
+        if (className.equals(TouchPointServiceLocal.class.toString())) {
+            return touchPointService;
+        }
+        if (className.equals(UserServiceLocal.class.toString())) {
+            return userService;
+        }
+        return null;
     }
 
-    public TouchPointServiceLocal getTouchPointService() {
-        return touchPointService;
-    }
-
-    public UserServiceLocal getUserService() {
-        return userService;
-    }
+    
 }
