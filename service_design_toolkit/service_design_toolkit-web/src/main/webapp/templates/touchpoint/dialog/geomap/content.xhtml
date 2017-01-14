@@ -3,7 +3,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">   
-    <h:outputScript library="js" name="touchpoint/geomap.js" target="body" />    
+    <h:outputScript library="js" name="touchpoint/geomap.js" target="head" />        
     <h:form prependId="false">                
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.ConstantValues" var="ConstantValues"/>
@@ -25,7 +25,8 @@
                              onclick="locateTouchPoint()">
             </p:commandButton>
         </h:panelGrid>        
-        <p:gmap id="geomap" widgetVar="geomap" 
+        <p:gmap id="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
+                widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
                 center="#{touchpoint_ejb_view_GeoMapView.centerGeoMap}" zoom="#{ConstantValues.CONSTANT_GEO_MAP_ZOOM_LEVEL}" 
                 type="#{ConstantValues.CONSTANT_GEO_MAP_TYPE_ROADMAP}" model="#{touchpoint_ejb_view_GeoMapView.touchPointLocationModel}" 
                 style="width:100%;height:400px">

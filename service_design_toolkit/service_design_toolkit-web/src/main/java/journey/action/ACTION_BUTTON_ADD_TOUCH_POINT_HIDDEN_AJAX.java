@@ -15,6 +15,7 @@ import javax.faces.event.FacesEvent;
 import journey.dto.TouchPointDTO;
 import journey.ejb.view.AddTouchPointView;
 import org.primefaces.event.SelectEvent;
+import touchpoint.dto.TouchPointListDTO;
 
 /**
  *
@@ -28,9 +29,10 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX implements ActionHandler 
         SelectEvent selectEvent = (SelectEvent)event;
         TouchPointDTO touchPointDTO = (TouchPointDTO) selectEvent.getObject();     
         if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {
-            addTouchPointView.getJourneyDTO().setTouchPointDTOList(new ArrayList<>());
+            addTouchPointView.getJourneyDTO().setTouchPointListDTO(new TouchPointListDTO());
+            addTouchPointView.getJourneyDTO().getTouchPointListDTO().setTouchPointDTOList(new ArrayList<>());
         }
-        addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
+        addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList().add(touchPointDTO);
         Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
                     .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());
         Utils.removeAttributeOfSession(touchPointDTO);

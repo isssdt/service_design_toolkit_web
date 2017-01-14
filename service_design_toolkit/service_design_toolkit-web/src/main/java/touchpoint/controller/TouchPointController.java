@@ -26,8 +26,7 @@ public class TouchPointController extends AbstractController {
     }      
 
     @Override
-    protected ActionHandler initActionHandler(FacesEvent event) { 
-        System.out.println(event.getComponent().getId());
+    protected ActionHandler initActionHandler(FacesEvent event) {         
         if (ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_TOUCH_POINT_LOCATION_SET();
         }

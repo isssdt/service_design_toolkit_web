@@ -23,16 +23,17 @@ public class ACTION_GMAP_TOUCH_POINT_LOCATION_AJAX implements ActionHandler {
 
     @Override
     public void execute(AbstractView view, FacesEvent event) {
-        GeoMapView geoMapView = (GeoMapView)view;
+        GeoMapView geoMapView = (GeoMapView)view;        
         List<GeocodeResult> geocodeResultList = ((GeocodeEvent)event).getResults();
          
         if (geocodeResultList != null && !geocodeResultList.isEmpty()) {
             LatLng center = geocodeResultList.get(0).getLatLng();
-            geoMapView.setCenterGeoMap(center.getLat() + "," + center.getLng());            
-             
-            for (GeocodeResult geocodeResult : geocodeResultList) {                
-                geoMapView.getTouchPointLocationModel().addOverlay(new Marker(geocodeResult.getLatLng(), geocodeResult.getAddress()));
-            }
+            geoMapView.setCenterGeoMap(center.getLat() + "," + center.getLng());                                                
+            geoMapView.getTouchPointLocationModel().addOverlay(new Marker(center, geocodeResultList.get(0).getAddress()));                
+            
+            geoMapView.getTouchPointDTO().setLatitude(String.valueOf(center.getLat()));
+            geoMapView.getTouchPointDTO().setLongitude(String.valueOf(center.getLng()));
+            geoMapView.getTouchPointDTO().setChannelDescription(geocodeResultList.get(0).getAddress());
         }
     }
     

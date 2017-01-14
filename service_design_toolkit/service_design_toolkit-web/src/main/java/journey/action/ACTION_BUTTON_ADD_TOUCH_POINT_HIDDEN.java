@@ -25,7 +25,7 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN implements ActionHandler {
         options.put("modal", true);        
         options.put("resizable", false);
         options.put("contentWidth", 1000);
-        options.put("contentHeight", 500);
+        options.put("contentHeight", 600);
         RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_LOCATION_TOUCH_POINT_LOCATION, options, null);
     }
     

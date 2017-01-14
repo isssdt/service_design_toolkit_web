@@ -37,9 +37,8 @@
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
                              actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="false">                
             </p:commandButton>
-            <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
-                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" 
-                             ajax="true" rendered="false">
+            <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
+                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" style="display: none;">
                 <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
                         update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
             </p:commandButton>            

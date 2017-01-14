@@ -18,6 +18,7 @@ import journey.dto.TouchPointDTO;
 import journey.ejb.view.AddTouchPointView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import touchpoint.dto.TouchPointListDTO;
 
 /**
  *
@@ -26,20 +27,25 @@ import org.primefaces.event.SelectEvent;
 public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
 
     @Override
-    public void execute(AbstractView view, FacesEvent event) {
+    public void execute(AbstractView view, FacesEvent event) {        
         AddTouchPointView addTouchPointView = (AddTouchPointView) view; 
         SelectEvent selectEvent = (SelectEvent)event;
         TouchPointDTO touchPointDTO = (TouchPointDTO) selectEvent.getObject();
         RequestContext context = RequestContext.getCurrentInstance();
-
+        
         if (MasterData.CHANNEL_WEBSITE.equals(touchPointDTO.getChannelDTO().getChannelName())) {            
-            if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {
-                addTouchPointView.getJourneyDTO().setTouchPointDTOList(new ArrayList<>());
+            if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {    
+                addTouchPointView.getJourneyDTO().setTouchPointListDTO(new TouchPointListDTO());
+                addTouchPointView.getJourneyDTO().getTouchPointListDTO().setTouchPointDTOList(new ArrayList<>());
             }
-            addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
-            Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
-                    .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());
-            Utils.removeAttributeOfSession(touchPointDTO);
+            touchPointDTO.setLatitude("NONE");
+            touchPointDTO.setLongitude("NONE");
+            touchPointDTO.setRadius("NONE");
+            addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList().add(touchPointDTO);            
+            Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).
+                    getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
+                    .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());            
+            Utils.removeAttributeOfSession(touchPointDTO);            
             context.update(ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID);
         }
         else {

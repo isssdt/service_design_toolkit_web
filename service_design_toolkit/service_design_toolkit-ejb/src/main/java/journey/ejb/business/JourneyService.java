@@ -63,7 +63,7 @@ public class JourneyService implements JourneyServiceLocal {
             throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
         }
         List<TouchPoint> touchPointList = new ArrayList<>();
-        for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointDTOList()) {
+        for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {
             TouchPoint touchPoint = new TouchPoint();
             Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
             try {

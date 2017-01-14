@@ -5,6 +5,6 @@
  */
 
 
-function openTouchPointLocationDialog() {
-    document.getElementById("SCREEN_COMPONENT_FORM_ID:SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID").click();
+function openTouchPointLocationDialog() {    
+    document.getElementById('SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID').click();
 } 

@@ -5,7 +5,6 @@ function initAutocomplete() {
             {types: ['geocode']});
 }
 
-function locateTouchPoint() {
-    alert('locateTouchPoint');
-    PF('geomap').geocode(document.getElementById('address').value);
+function locateTouchPoint() {    
+    PF('SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID').geocode(document.getElementById('address').value);
 }

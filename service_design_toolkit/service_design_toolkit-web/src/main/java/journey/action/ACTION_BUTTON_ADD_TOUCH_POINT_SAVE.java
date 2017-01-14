@@ -31,6 +31,8 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_SAVE implements ActionHandler {
     public void execute(AbstractView view, FacesEvent event) {
         AddTouchPointView addTouchPointView = (AddTouchPointView)view;
         JourneyServiceLocal journeyService = (JourneyServiceLocal)addTouchPointView.getServices().getBusinessService(JourneyServiceLocal.class.toString());
+        addTouchPointView.getJourneyDTO().setCanBeRegistered('Y');
+        addTouchPointView.getJourneyDTO().setIsActive('Y');
         try {            
             journeyService.createJourney(addTouchPointView.getJourneyDTO());
         } catch (AppException | CustomReasonPhraseException ex) {
