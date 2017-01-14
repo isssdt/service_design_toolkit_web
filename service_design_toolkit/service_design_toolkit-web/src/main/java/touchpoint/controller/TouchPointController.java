@@ -5,6 +5,7 @@
  */
 package touchpoint.controller;
 
+import common.action.ActionHandler;
 import common.controller.AbstractController;
 import common.view.AbstractView;
 import javax.faces.event.FacesEvent;
@@ -20,6 +21,7 @@ public class TouchPointController extends AbstractController {
     }      
 
     @Override
-    protected void initActionHandler(FacesEvent event) {        
+    protected ActionHandler initActionHandler(FacesEvent event) {        
+        return null;
     }
 }

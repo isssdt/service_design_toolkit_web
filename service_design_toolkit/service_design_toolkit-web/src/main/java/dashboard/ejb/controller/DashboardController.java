@@ -42,7 +42,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
-import touchpoint.view.NetworkElement;
+import common.visualization.NetworkElement;
 import user.dto.FieldResearcherDTO;
 
 /**

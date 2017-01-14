@@ -5,6 +5,8 @@
  */
 package common.utils;
 
+import common.visualization.JourneyVisualizationFactory;
+import common.visualization.VisualizationAbstractFactory;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -85,5 +87,12 @@ public class Utils {
     public static void removeAttributeOfSession(String name) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         session.removeAttribute(name);
+    }
+    
+    public static VisualizationAbstractFactory getFactory(String factory) {
+        if (JourneyVisualizationFactory.class.toString().equals(factory)) {
+            return new JourneyVisualizationFactory();
+        }
+        return null;
     }
 }

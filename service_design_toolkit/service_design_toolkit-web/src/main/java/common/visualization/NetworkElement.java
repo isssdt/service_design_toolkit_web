@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package touchpoint.view;
+package common.visualization;
 
 import java.io.Serializable;
 
@@ -50,12 +50,17 @@ public class NetworkElement implements Serializable {
         this.name = name;
         this.channelName = channelName;
         this.channelDesc = channelDesc;
-    }
-
-   
+    }   
 
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        NetworkElement element = (NetworkElement)obj;
+        return this.channelDesc.equals(element.getChannelDesc()) && this.channelName.equals(element.getChannelName()) 
+                && this.name.equals(element.getName());
     }
 }

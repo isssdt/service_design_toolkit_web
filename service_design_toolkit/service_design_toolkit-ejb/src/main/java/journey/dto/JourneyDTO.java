@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Date;
 import java.util.List;
+import touchpoint.dto.TouchPointListDTO;
 
 /**
  *
@@ -28,6 +29,7 @@ public class JourneyDTO {
     private Date endDate;
     private Character canBeRegistered;
     private String description;
+    private TouchPointListDTO touchPointListDTO;
     private List<TouchPointDTO> touchPointDTOList = null;
 
     public JourneyDTO() {
@@ -42,6 +44,16 @@ public class JourneyDTO {
         this.canBeRegistered = canBeRegistered;
         this.description = description;
     }
+
+    public TouchPointListDTO getTouchPointListDTO() {
+        return touchPointListDTO;
+    }
+
+    public void setTouchPointListDTO(TouchPointListDTO touchPointListDTO) {
+        this.touchPointListDTO = touchPointListDTO;
+    }
+    
+    
 
     public String getDescription() {
         return description;

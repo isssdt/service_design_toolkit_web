@@ -16,25 +16,23 @@ import javax.faces.event.FacesEvent;
  */
 public abstract class AbstractController extends Observable {
 
-    private final AbstractView view;
-    protected ActionHandler actionHandler;
+    private final AbstractView view;    
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AbstractController(AbstractView view) {
         this.view = view;
     }
 
-    protected abstract void initActionHandler(FacesEvent event);
+    protected abstract ActionHandler initActionHandler(FacesEvent event);
 
     public AbstractView getView() {
         return view;
     }
 
     public void actionListener(FacesEvent event) {
-        initActionHandler(event);
+        ActionHandler actionHandler = initActionHandler(event);
         if (null != actionHandler) {
-            actionHandler.execute(view, event);
-            actionHandler = null;
+            actionHandler.execute(view, event);            
         }
     }
 }

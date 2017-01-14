@@ -6,12 +6,14 @@
 package journey.controller;
 
 import common.ScreenTitles;
+import common.action.ActionHandler;
 import common.controller.AbstractController;
 import common.view.AbstractView;
 import javax.faces.event.FacesEvent;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_ADD;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN;
+import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -25,15 +27,19 @@ public class JourneyController extends AbstractController {
     }    
 
     @Override
-    protected void initActionHandler(FacesEvent event) {
+    protected ActionHandler initActionHandler(FacesEvent event) {
         if (!(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId())) {
-            actionHandler = new ACTION_BUTTON_ADD_TOUCH_POINT_ADD();
+            return new ACTION_BUTTON_ADD_TOUCH_POINT_ADD();
         }
         if ((event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID.equals(event.getComponent().getId())) {
-            actionHandler = new ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX();
+            return new ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX();
         }
         if (!(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID.equals(event.getComponent().getId())) {
-            actionHandler = new ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN();
+             return new ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN();
         }
+        if ((event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID.equals(event.getComponent().getId())) {
+             return new ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX();
+        }
+        return null;
     }
 }
