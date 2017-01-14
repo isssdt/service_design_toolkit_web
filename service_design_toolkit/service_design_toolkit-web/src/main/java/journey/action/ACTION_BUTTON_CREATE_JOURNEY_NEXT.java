@@ -5,11 +5,10 @@
  */
 package journey.action;
 
-import common.ScreenTitles;
-import common.action.AbstractAction;
+import common.action.ActionHandler;
 import common.constant.ConstantValues;
-import common.controller.AbstractController;
 import common.utils.Utils;
+import common.view.AbstractView;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,22 +21,17 @@ import journey.ejb.view.CreateView;
  *
  * @author longnguyen
  */
-public class ActionForwardToAddTouchPointPage extends AbstractAction {
+public class ACTION_BUTTON_CREATE_JOURNEY_NEXT implements ActionHandler {
     @Override
-    protected boolean checkSource(FacesEvent event) {
-        return ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_NEXT_ID.equals(event.getComponent().getId()); 
-    }
-
-    @Override
-    public void actionHandler(AbstractController controller, FacesEvent event) {
-        CreateView createView = (CreateView)controller.getView();
+    public void execute(AbstractView view, FacesEvent event) {
+        CreateView createView = (CreateView)view;
         JourneyDTO journeyDTO = createView.getJourneyDTO();        
         journeyDTO.setJourneyName(createView.getJourneyName());
-        Utils.setAttributeOfSession(JourneyDTO.class.toString(), journeyDTO);
+        Utils.setAttributeOfSession(journeyDTO);
         try {
             Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_ADD_TOUCH_POINT_PAGE);
         } catch (IOException ex) {
-            Logger.getLogger(ActionForwardToAddTouchPointPage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ACTION_BUTTON_CREATE_JOURNEY_NEXT.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

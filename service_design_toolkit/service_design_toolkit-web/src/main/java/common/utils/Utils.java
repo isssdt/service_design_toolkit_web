@@ -74,19 +74,19 @@ public class Utils {
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
-    public static void setAttributeOfSession(String name, Object value) {
+    public static void setAttributeOfSession(Object value) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        session.setAttribute(name, value);
+        session.setAttribute(value.getClass().toString(), value);
     }
 
-    public static Object getAttributeOfSession(String name) {
+    public static Object getAttributeOfSession(Object value) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return session.getAttribute(name);
+        return session.getAttribute(value.getClass().toString());
     }
     
-    public static void removeAttributeOfSession(String name) {
+    public static void removeAttributeOfSession(Object value) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        session.removeAttribute(name);
+        session.removeAttribute(value.getClass().toString());
     }
     
     public static VisualizationAbstractFactory getFactory(String factory) {

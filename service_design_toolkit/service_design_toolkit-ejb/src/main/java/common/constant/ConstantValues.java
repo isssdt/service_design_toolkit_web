@@ -154,4 +154,10 @@ public class ConstantValues {
     public static final String DIALOG_LOCATION_CREATE_TOUCH_POINT = "/touchpoint/dialog/create";
     
     public static final String DIALOG_LOCATION_TOUCH_POINT_LOCATION = "/touchpoint/dialog/geomap";
+
+    public static final String CONSTANT_GEO_MAP_ZOOM_LEVEL = "13"; 
+    
+    public static final String CONSTANT_GEO_MAP_TYPE_ROADMAP = "ROADMAP"; 
+    
+    public static final String CONSTANT_GEO_MAP_CENTER = "1.2971342, 103.7777567"; 
 }

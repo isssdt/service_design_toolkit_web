@@ -5,10 +5,9 @@
  */
 package touchpoint.action;
 
-import common.ScreenTitles;
-import common.action.AbstractAction;
+import common.action.ActionHandler;
 import common.constant.ConstantValues;
-import common.controller.AbstractController;
+import common.view.AbstractView;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.event.FacesEvent;
@@ -18,14 +17,9 @@ import org.primefaces.context.RequestContext;
  *
  * @author longnguyen
  */
-public class ActionSpecifyLocationOfTouchPoint extends AbstractAction {
+public class ACTION_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION implements ActionHandler {
     @Override
-    protected boolean checkSource(FacesEvent event) {
-        return ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID.equals(event.getComponent().getId());
-    }
-
-    @Override
-    public void actionHandler(AbstractController controller, FacesEvent event) {
+    public void execute(AbstractView view, FacesEvent event) {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);        
         options.put("resizable", false);

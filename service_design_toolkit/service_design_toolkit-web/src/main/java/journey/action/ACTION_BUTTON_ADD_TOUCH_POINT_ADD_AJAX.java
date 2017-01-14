@@ -17,6 +17,7 @@ import javax.faces.event.FacesEvent;
 import journey.dto.TouchPointDTO;
 import journey.ejb.view.AddTouchPointView;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -26,8 +27,9 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
 
     @Override
     public void execute(AbstractView view, FacesEvent event) {
-        AddTouchPointView addTouchPointView = (AddTouchPointView) view;
-        TouchPointDTO touchPointDTO = (TouchPointDTO) Utils.getAttributeOfSession(TouchPointDTO.class.toString());
+        AddTouchPointView addTouchPointView = (AddTouchPointView) view; 
+        SelectEvent selectEvent = (SelectEvent)event;
+        TouchPointDTO touchPointDTO = (TouchPointDTO) selectEvent.getObject();
         RequestContext context = RequestContext.getCurrentInstance();
 
         if (MasterData.CHANNEL_WEBSITE.equals(touchPointDTO.getChannelDTO().getChannelName())) {            
@@ -37,9 +39,11 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
             addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
             Utils.getFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
                     .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());
+            Utils.removeAttributeOfSession(touchPointDTO);
             context.update(ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID);
         }
         else {
+            Utils.setAttributeOfSession(touchPointDTO);
             context.execute(ScreenTitles.SCREEN_COMPONENT_JS_FUNCTION_OPEN_TOUCH_POINT_LOCATION_DIALOG);
         }
     }
