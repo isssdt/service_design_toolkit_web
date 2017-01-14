@@ -79,17 +79,17 @@ public class Utils {
         session.setAttribute(value.getClass().toString(), value);
     }
 
-    public static Object getAttributeOfSession(Object value) {
+    public static Object getAttributeOfSession(String name) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return session.getAttribute(value.getClass().toString());
+        return session.getAttribute(name);
     }
     
     public static void removeAttributeOfSession(Object value) {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        session.removeAttribute(value.getClass().toString());
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);        
+        session.removeAttribute( value.getClass().toString());
     }
     
-    public static VisualizationAbstractFactory getFactory(String factory) {
+    public static VisualizationAbstractFactory getVisualizationFactory(String factory) {
         if (JourneyVisualizationFactory.class.toString().equals(factory)) {
             return new JourneyVisualizationFactory();
         }

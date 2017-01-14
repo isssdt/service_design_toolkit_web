@@ -23,16 +23,14 @@
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID}" 
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDescription}" 
-                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} ne #{MasterData.CHANNEL_FACE_TO_FACE} and
-                                    #{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} ne #{MasterData.CHANNEL_KIOSK}"
+                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_FACE_TO_FACE and
+                                        touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_KIOSK}"
                          required="true" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE}" />
             <p:message for="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID}" /> 
             <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_ID}" 
                              value="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName}">
-                <p:ajax event="change" update="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}, 
-                        #{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID},
-                        #{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID}"/>
+                <p:ajax event="change" update="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}" />
                 <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL}" 
                               itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{touchpoint_ejb_view_CreateView.channelDropDown}"/>
@@ -41,14 +39,15 @@
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}" 
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD}" 
                          actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" 
-                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} ne #{MasterData.CHANNEL_FACE_TO_FACE} and
-                                    #{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} ne #{MasterData.CHANNEL_KIOSK}"
+                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_FACE_TO_FACE and
+                                        touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_KIOSK}"
                          ajax="false" />
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID}"                          
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION}" 
                          actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" 
-                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} eq #{MasterData.CHANNEL_FACE_TO_FACE} or
-                                    #{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName} eq #{MasterData.CHANNEL_KIOSK}"
+                         rendered="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_FACE_TO_FACE or
+                                    touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_KIOSK}"
                          ajax="false" />
     </h:form>
 </ui:composition>
+

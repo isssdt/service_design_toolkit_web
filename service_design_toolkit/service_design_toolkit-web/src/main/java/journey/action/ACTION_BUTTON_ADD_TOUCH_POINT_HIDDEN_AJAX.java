@@ -31,7 +31,7 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX implements ActionHandler 
             addTouchPointView.getJourneyDTO().setTouchPointDTOList(new ArrayList<>());
         }
         addTouchPointView.getJourneyDTO().getTouchPointDTOList().add(touchPointDTO);
-        Utils.getFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
+        Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
                     .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());
         Utils.removeAttributeOfSession(touchPointDTO);
     }

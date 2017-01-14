@@ -9,6 +9,7 @@ import common.constant.ConstantValues;
 import common.ejb.business.ServiceFactory;
 import common.utils.Utils;
 import common.view.AbstractView;
+import java.io.Serializable;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import journey.dto.TouchPointDTO;
@@ -22,7 +23,7 @@ import touchpoint.controller.TouchPointController;
  */
 @Named(value = "touchpoint_ejb_view_GeoMapView")
 @ViewScoped
-public class GeoMapView extends AbstractView {
+public class GeoMapView extends AbstractView implements Serializable {
     private TouchPointDTO touchPointDTO;
     private String centerGeoMap;
     private MapModel touchPointLocationModel;
@@ -41,7 +42,7 @@ public class GeoMapView extends AbstractView {
 
     @Override
     public void initData() {
-        touchPointDTO = (TouchPointDTO)Utils.getAttributeOfSession(touchPointDTO);
+        touchPointDTO = (TouchPointDTO)Utils.getAttributeOfSession(TouchPointDTO.class.toString());
         centerGeoMap = ConstantValues.CONSTANT_GEO_MAP_CENTER;
         touchPointLocationModel = new DefaultMapModel();
     }

@@ -8,6 +8,8 @@ package journey.ejb.view;
 import common.ejb.business.ServiceFactory;
 import common.utils.Utils;
 import common.view.AbstractView;
+import common.visualization.JourneyVisualizationFactory;
+import common.visualization.JourneyVisualizationSnakeMap;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -65,19 +67,11 @@ public class AddTouchPointView extends AbstractView implements Serializable {
 
     @Override
     public void initData() {
-        journeyDTO = (JourneyDTO)Utils.getAttributeOfSession(JourneyDTO.class.toString());
-        
+        journeyDTO = (JourneyDTO)Utils.getAttributeOfSession(JourneyDTO.class.toString());        
         journeyVisualization = new DefaultDiagramModel();
-        journeyVisualization.setMaxConnections(-1);
-
-        FlowChartConnector connector = new FlowChartConnector();
-        connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
-        journeyVisualization.setDefaultConnector(connector);
-
-        Element start = new Element(new NetworkElement("Home", "",""), "6em", "2em");
-        start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
-
-        journeyVisualization.addElement(start);
+        
+        Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
+                .visualize(journeyDTO, journeyVisualization);          
     }    
 
     @Override
