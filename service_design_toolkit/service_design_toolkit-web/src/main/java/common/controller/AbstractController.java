@@ -29,7 +29,7 @@ public abstract class AbstractController extends Observable {
         return view;
     }
 
-    public void actionListener(FacesEvent event) {        
+    public void actionListener(FacesEvent event) {            
         ActionHandler actionHandler = initActionHandler(event);
         if (null != actionHandler) {
             actionHandler.execute(view, event);            

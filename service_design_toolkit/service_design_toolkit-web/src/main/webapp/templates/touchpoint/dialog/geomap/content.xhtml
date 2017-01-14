@@ -17,7 +17,7 @@
             <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" 
                            value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" />
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" 
-                         value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.radius}" style="width:100px">    
+                         value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.radius}" style="width:100px" required="false">    
                 <f:validateLongRange minimum="1" />
             </p:inputText>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}" style="font-family: Lucida Grande"  
