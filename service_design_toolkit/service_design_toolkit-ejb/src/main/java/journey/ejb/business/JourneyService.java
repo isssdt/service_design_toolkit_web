@@ -400,16 +400,14 @@ public class JourneyService implements JourneyServiceLocal {
     
     private void addJourneyFieldResearcherToJourney(JourneyDTO journeyDTO, List<JourneyFieldResearcher> journeyFieldResearcherList) {
         for (JourneyFieldResearcher journeyFieldResearcher : journeyFieldResearcherList) {
-            JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();
-            journeyFieldResearcherDTO.setJourneyDTO(new JourneyDTO());
+            JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();            
             try {
-                BeanUtils.copyProperties(journeyFieldResearcherDTO, journeyFieldResearcher);               
-                BeanUtils.copyProperties(journeyFieldResearcherDTO.getJourneyDTO(), journeyFieldResearcher.getJourneyId());
+                BeanUtils.copyProperties(journeyFieldResearcherDTO, journeyFieldResearcher);                               
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }            
             
-            if (journeyDTO.equals(journeyFieldResearcherDTO.getJourneyDTO())) {
+            if (journeyDTO.getJourneyName().equals(journeyFieldResearcher.getJourneyId().getJourneyName())) {
                 if (null == journeyDTO.getJourneyFieldResearcherListDTO()) {
                     journeyDTO.setJourneyFieldResearcherListDTO(new JourneyFieldResearcherListDTO());
                     journeyDTO.getJourneyFieldResearcherListDTO().setJourneyFieldResearcherDTOList(new ArrayList<>());                    
