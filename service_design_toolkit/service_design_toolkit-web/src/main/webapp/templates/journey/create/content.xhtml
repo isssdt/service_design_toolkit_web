@@ -5,45 +5,88 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui">    
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles" /> 
+    <style type="text/css">
+                .ui-name-field {
+                    width: 280px;
+                }
+                
+                .ui-no-field {
+                    width: 50px;
+                }
+                </style>
     <h:form prependId="false">                         
+        <h3 style="margin-top:10px; font-family: Lucida Grande"><font size="+3" color="#2C6A99">Create Journey</font></h3>
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />            
-        <h:panelGrid columns="2" cellpadding="3" >                
-            <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
+        <div class="ui-g">
+            <div class="ui-g-6">
+                <h:panelGrid columns="2" cellpadding="3" >
+                    <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}"
+                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME}" />
+                    <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
                          value="#{journey_ejb_view_CreateView.journeyName}" required="true" 
-                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME}"                                                       
-                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_MESSAGE}"/>
-            <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
+                         placeholder="Journey Name"                                                       
+                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_MESSAGE}"
+                         styleClass="ui-name-field"/>
+                    
+                    <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}"
+                           value="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE}" />
+                    
+                    <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}" 
+                        value="#{journey_ejb_view_CreateView.journeyDTO.startDate}" required="true" 
+                        placeholder="DD/MM/YYYY"
+                        pattern="dd/MM/yyyy"
+                        mindate="#{journey_ejb_view_CreateView.currentDate}"
+                        requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_MESSAGE}">
+                        <p:ajax event="dateSelect" update="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}"/>
+                    </p:calendar>
+                </h:panelGrid>
+            </div>
+            
+            <div class="ui-g-6">
+                <h:panelGrid columns="2" cellpadding="3" >
+                    
+                    <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}"
+                           value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER}" />
+                    
+                    <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
                          value="#{journey_ejb_view_CreateView.journeyDTO.noOfFieldResearcher}" 
                          required="true" 
+                         maxlength="3"
+                         styleClass="ui-no-field"
                          converterMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_CONVERTER_MESSAGE}"
-                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER}" 
+                         placeholder="" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_MESSAGE}"
                          validatorMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE}">
-                <f:validateLongRange minimum="1"/>
-            </p:inputText>       
-            <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}" 
-                        value="#{journey_ejb_view_CreateView.journeyDTO.startDate}" required="true" 
-                        placeholder="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE}" 
-                        mindate="#{journey_ejb_view_CreateView.currentDate}"
-                        requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_MESSAGE}">                             
-                <p:ajax event="dateSelect" update="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}"/>
-            </p:calendar>
-            <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}" 
+                        <f:validateLongRange minimum="1"/>
+                    </p:inputText>
+                    
+                    <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}"
+                           value="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE}" />
+                    
+                    <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}" 
                         value="#{journey_ejb_view_CreateView.journeyDTO.endDate}" required="true" 
-                        placeholder="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE}" 
+                        placeholder="DD/MM/YYYY" 
+                        pattern="dd/MM/yyyy"
                         mindate="#{journey_ejb_view_CreateView.journeyDTO.startDate}"
                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_MESSAGE}">
-            </p:calendar>
-        </h:panelGrid>
-        <h:panelGrid>
-            <p:inputTextarea value="#{journey_ejb_view_CreateView.journeyDTO.description}" rows="8" cols="50" style="width: 100%" autoResize="false" 
-                             placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_AREA_CREATE_JOURNEY_DESCRIPTION}"/>
-        </h:panelGrid>
-        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_NEXT}" style="font-family: Lucida Grande"  
+                    </p:calendar>
+                </h:panelGrid>
+            </div>
+            
+            <div class="ui-g-11">
+                <p:inputTextarea value="#{journey_ejb_view_CreateView.journeyDTO.description}" rows="8" cols="50" style="width: 100%" autoResize="false" 
+                             placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_AREA_CREATE_JOURNEY_DESCRIPTION} (No More Than 150 characters)"
+                             maxlength="150"/>
+            </div>
+            <div class="ui-g-5"/>
+            <div class="ui-g-2">
+                <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_NEXT}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_NEXT_ID}"
                          actionListener="#{journey_ejb_view_CreateView.actionListener}" ajax="false">
-        </p:commandButton>
+                </p:commandButton>
+            </div>
+            
+        </div>
 
     </h:form>       
 </ui:composition>
-
