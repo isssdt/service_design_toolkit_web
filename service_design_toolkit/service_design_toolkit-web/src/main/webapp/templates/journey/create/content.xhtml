@@ -4,9 +4,8 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui">    
-    <h:form prependId="false">       
-        <p:importConstants type="common.ScreenTitles" var="ScreenTitles" />   
-        <p:growl id="growl" for="#{ScreenTitles.SCREEN_COMPONENT_GROWL_CREATE_JOURNEY_FOR}" showDetail="false" sticky="true" />  
+    <p:importConstants type="common.ScreenTitles" var="ScreenTitles" /> 
+    <h:form prependId="false">                         
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />            
         <h:panelGrid columns="2" cellpadding="3" >                
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
@@ -16,13 +15,12 @@
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
                          value="#{journey_ejb_view_CreateView.journeyDTO.noOfFieldResearcher}" 
                          required="true" 
+                         converterMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_CONVERTER_MESSAGE}"
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER}" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_MESSAGE}"
                          validatorMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE}">
                 <f:validateLongRange minimum="1"/>
-            </p:inputText>
-        </h:panelGrid>
-        <h:panelGrid columns="2" cellpadding="3" >  
+            </p:inputText>       
             <p:calendar id="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID}" 
                         value="#{journey_ejb_view_CreateView.journeyDTO.startDate}" required="true" 
                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE}" 

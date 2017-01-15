@@ -5,6 +5,7 @@
  */
 package journey.action;
 
+import common.ScreenTitles;
 import common.action.ActionHandler;
 import common.constant.ConstantValues;
 import common.exception.AppException;
@@ -30,6 +31,15 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_SAVE implements ActionHandler {
     @Override
     public void execute(AbstractView view, FacesEvent event) {
         AddTouchPointView addTouchPointView = (AddTouchPointView)view;
+        
+        if (null == addTouchPointView.getJourneyDTO().getTouchPointListDTO() || 
+                null == addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList() ||
+                addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList().isEmpty()) {
+            Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_ERROR, 
+                    ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_MESSAGE, null, null, false);
+            return;
+        }
+        
         JourneyServiceLocal journeyService = (JourneyServiceLocal)addTouchPointView.getServices().getBusinessService(JourneyServiceLocal.class.toString());
         addTouchPointView.getJourneyDTO().setCanBeRegistered('Y');
         addTouchPointView.getJourneyDTO().setIsActive('Y');
@@ -39,7 +49,8 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_SAVE implements ActionHandler {
             Logger.getLogger(ACTION_BUTTON_ADD_TOUCH_POINT_SAVE.class.getName()).log(Level.SEVERE, null, ex);
         }
         Utils.removeAttributeOfSession(addTouchPointView.getJourneyDTO());
-        Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "Information", "A Journey has been created", null, true);
+        Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "A Journey has been created", null, 
+                null, true);
         try {
             Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
         } catch (IOException ex) {
