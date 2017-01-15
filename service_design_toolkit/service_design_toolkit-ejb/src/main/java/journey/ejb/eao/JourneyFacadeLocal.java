@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -16,7 +17,7 @@ import journey.entity.Journey;
  * @author longnguyen
  */
 @Local
-public interface JourneyFacadeLocal {
+public interface JourneyFacadeLocal extends EAOFacade {
 
     Journey create(Journey journey);
 

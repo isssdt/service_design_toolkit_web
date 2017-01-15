@@ -5,13 +5,19 @@
  */
 package journey.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.io.Serializable;
 import user.dto.FieldResearcherDTO;
 
 /**
  *
  * @author longnguyen
  */
-public class JourneyFieldResearcherDTO {
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class JourneyFieldResearcherDTO implements Serializable {
     private JourneyDTO journeyDTO;
     private FieldResearcherDTO fieldResearcherDTO;
     private String status;

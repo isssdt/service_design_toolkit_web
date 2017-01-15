@@ -8,6 +8,7 @@ package user.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -17,15 +18,24 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
-public class FieldResearcherDTO {
+public class FieldResearcherDTO implements Serializable {
     private String currentLatitude;
     private String currentLongitude;
     private Date lastActive;
     private SdtUserDTO sdtUserDTO;
     private Integer id;
+    private JourneyFieldResearcherListDTO journeyFieldResearcherListDTO;
 
     public FieldResearcherDTO() {
         
+    }
+
+    public JourneyFieldResearcherListDTO getJourneyFieldResearcherListDTO() {
+        return journeyFieldResearcherListDTO;
+    }
+
+    public void setJourneyFieldResearcherListDTO(JourneyFieldResearcherListDTO journeyFieldResearcherListDTO) {
+        this.journeyFieldResearcherListDTO = journeyFieldResearcherListDTO;
     }
 
     public Integer getId() {

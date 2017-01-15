@@ -89,4 +89,6 @@ public interface JourneyServiceLocal extends BusinessService{
      * @return list of all TouchPointFieldResearcher of the Journey that the user has worked on
      */
     public TouchPointFieldResearcherListDTO getTouchPointFiedlResearcherListByJourneyNameAndUsername(JourneyDTO journeyDTO, SdtUserDTO sdtUserDTO);
+    
+    public JourneyListDTO findJourneyListForRegister(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
 }

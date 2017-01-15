@@ -6,6 +6,7 @@
 package journey.ejb.business;
 
 import common.constant.ConstantValues;
+import common.ejb.eao.EAOFacade;
 import common.rest.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
@@ -13,6 +14,7 @@ import common.exception.CustomReasonPhraseException;
 import common.exception.Utils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +32,8 @@ import journey.dto.JourneyListDTO;
 import journey.dto.RatingDTO;
 import journey.dto.TouchPointDTO;
 import journey.dto.TouchPointFieldResearcherDTO;
+import journey.ejb.eao.JourneyFacadeLocal;
+import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
 import journey.entity.Channel;
 import journey.entity.Journey;
 import journey.entity.JourneyFieldResearcher;
@@ -38,6 +42,7 @@ import journey.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import user.dto.FieldResearcherDTO;
+import user.dto.JourneyFieldResearcherListDTO;
 import user.dto.SdtUserDTO;
 import user.entity.FieldResearcher;
 import user.entity.SdtUser;
@@ -359,5 +364,59 @@ public class JourneyService implements JourneyServiceLocal {
 
         touchPointFieldResearcherListDTO.setTouchPointFieldResearcherDTOList(touchPointFieldResearcherDTOList);
         return touchPointFieldResearcherListDTO;
+    }
+
+    @Override
+    public JourneyListDTO findJourneyListForRegister(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
+        JourneyFacadeLocal journeyFacade = (JourneyFacadeLocal)factory.getFacade(JourneyFacadeLocal.class.toString());        
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", new Date());
+        params.put("endDate", new Date());
+        List<Journey> journeyList = journeyFacade.findListByQueryName(ConstantValues.QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED, params);
+        
+        JourneyFieldResearcherFacadeLocal journeyFieldResearcherFacade = (JourneyFieldResearcherFacadeLocal)factory
+                .getFacade(JourneyFieldResearcherFacadeLocal.class.toString());
+        params.clear();
+        params.put("username", sdtUserDTO.getUsername());
+        List<JourneyFieldResearcher> journeyFieldResearcherList = journeyFieldResearcherFacade.findListByQueryName(
+                ConstantValues.QUERY_JOURNEY_FIELD_RESEARCHER_FIND_JOURNEY_THAT_FIELD_RESEARCHER_REGISTERED, params);
+        
+        JourneyListDTO journeyListDTO = new JourneyListDTO();
+        journeyListDTO.setJourneyDTOList(new ArrayList<>());
+        for (Journey journey : journeyList) {
+            JourneyDTO journeyDTO = new JourneyDTO();
+            try {
+                BeanUtils.copyProperties(journeyDTO, journey);
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            addJourneyFieldResearcherToJourney(journeyDTO, journeyFieldResearcherList);
+            journeyListDTO.getJourneyDTOList().add(journeyDTO);
+        }
+        
+        return journeyListDTO;
+    }
+    
+    
+    private void addJourneyFieldResearcherToJourney(JourneyDTO journeyDTO, List<JourneyFieldResearcher> journeyFieldResearcherList) {
+        for (JourneyFieldResearcher journeyFieldResearcher : journeyFieldResearcherList) {
+            JourneyFieldResearcherDTO journeyFieldResearcherDTO = new JourneyFieldResearcherDTO();
+            journeyFieldResearcherDTO.setJourneyDTO(new JourneyDTO());
+            try {
+                BeanUtils.copyProperties(journeyFieldResearcherDTO, journeyFieldResearcher);               
+                BeanUtils.copyProperties(journeyFieldResearcherDTO.getJourneyDTO(), journeyFieldResearcher.getJourneyId());
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+            
+            if (journeyDTO.equals(journeyFieldResearcherDTO.getJourneyDTO())) {
+                if (null == journeyDTO.getJourneyFieldResearcherListDTO()) {
+                    journeyDTO.setJourneyFieldResearcherListDTO(new JourneyFieldResearcherListDTO());
+                    journeyDTO.getJourneyFieldResearcherListDTO().setJourneyFieldResearcherDTOList(new ArrayList<>());                    
+                }
+                journeyDTO.getJourneyFieldResearcherListDTO().getJourneyFieldResearcherDTOList().add(journeyFieldResearcherDTO);
+                break;
+            }
+        }
     }
 }

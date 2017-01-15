@@ -8,9 +8,11 @@ package journey.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import touchpoint.dto.TouchPointListDTO;
+import user.dto.JourneyFieldResearcherListDTO;
 
 /**
  *
@@ -19,7 +21,7 @@ import touchpoint.dto.TouchPointListDTO;
 
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JourneyDTO {
+public class JourneyDTO implements Serializable {
 
     
     private String journeyName;
@@ -31,6 +33,7 @@ public class JourneyDTO {
     private String description;
     private TouchPointListDTO touchPointListDTO;
     private List<TouchPointDTO> touchPointDTOList = null;
+    private JourneyFieldResearcherListDTO journeyFieldResearcherListDTO;
 
     public JourneyDTO() {
     }
@@ -43,6 +46,14 @@ public class JourneyDTO {
         this.endDate = endDate;
         this.canBeRegistered = canBeRegistered;
         this.description = description;
+    }
+
+    public JourneyFieldResearcherListDTO getJourneyFieldResearcherListDTO() {
+        return journeyFieldResearcherListDTO;
+    }
+
+    public void setJourneyFieldResearcherListDTO(JourneyFieldResearcherListDTO journeyFieldResearcherListDTO) {
+        this.journeyFieldResearcherListDTO = journeyFieldResearcherListDTO;
     }
 
     public TouchPointListDTO getTouchPointListDTO() {
@@ -117,5 +128,10 @@ public class JourneyDTO {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return journeyName.equals(((JourneyDTO)obj).getJourneyName());
     }
 }

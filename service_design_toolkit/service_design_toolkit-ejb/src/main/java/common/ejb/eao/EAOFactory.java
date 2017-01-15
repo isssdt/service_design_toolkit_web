@@ -88,4 +88,14 @@ public class EAOFactory {
     public JourneyFacadeLocal getJourneyFacade() {
         return journeyFacade;
     }
+    
+    public EAOFacade getFacade(String facade) {
+        if (JourneyFacadeLocal.class.toString().equals(facade)) {
+            return journeyFacade;
+        }
+        if (JourneyFieldResearcherFacadeLocal.class.toString().equals(facade)) {
+            return journeyFieldResearcherFacade;
+        }
+        return null;
+    }
 }

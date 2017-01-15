@@ -45,40 +45,32 @@ public class ConstantValues {
     public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_COMPLETE_JOURNEY = "Please informed that you have completed work for all Touch Points";
     public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_UPDATE_SUCCESSFUL = "A new research work has been created";
     
-    /**
-     * SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password
-     */    
-    public static final String SDT_USER_QUERY_AUTHENTICATE = "SdtUser.00001";
     
+    //SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password        
+    public static final String SDT_USER_QUERY_AUTHENTICATE = "SdtUser.00001";    
+    //SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username 
+    //and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J 
+    //WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')          
+    public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001";   
+    //SELECT s FROM SdtUser s WHERE s.username = :username     
+    public static final String SDT_USER_QUERY_FIND_BY_USERNAME = "SdtUser.findByUsername";
     /**
-     * This query is used to select list of Touch Point of a Journey that a Field Researcher is working on
-     * parameter: username
-     */    
-    public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001";
-    
-    /**
-     * SELECT s FROM SdtUser s WHERE s.username = :username
-     */    
-    public static final String SDT_USER_QUERY_FIND_BY_USERNAME = "SdtUser.findByUsername";   
-    
-    /**
-     * Username or password is not correct
+     * SELECT j FROM JourneyFieldResearcher j WHERE j.fieldResearcherId.sdtUser.username = :username
      */
-    public static final String SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD = "Username or password is not correct";
-    
+    public static final String QUERY_JOURNEY_FIELD_RESEARCHER_FIND_JOURNEY_THAT_FIELD_RESEARCHER_REGISTERED = "JourneyFieldResearcher.0001";
     /**
-     * Username is not correct
+     * SELECT j FROM Journey j WHERE j.startDate <= :startDate and j.endDate >= :endDate and j.canBeRegistered = 'Y'
      */
-    public static final String SDT_USER_ERROR_INCORRECT_USERNAME = "Username is not correct";
+    public static final String QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED = "Journey.findJourneyListForRegister";
     
-    /**
-     * No Username
-     */
-    public static final String SDT_USER_ERROR_NO_USERNAME = "No Username";
     
-    /**
-     * New password must be different with old password
-     */
+    //Username or password is not correct    
+    public static final String SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD = "Username or password is not correct";    
+    //Username is not correct    
+    public static final String SDT_USER_ERROR_INCORRECT_USERNAME = "Username is not correct";    
+    //No Username     
+    public static final String SDT_USER_ERROR_NO_USERNAME = "No Username";        
+    //New password must be different with old password    
     public static final String SDT_USER_ERROR_NEW_OLD_PASSWORD_SAME = "New password must be different with old password";
     
     /**

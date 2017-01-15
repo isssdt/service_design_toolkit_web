@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -16,7 +17,7 @@ import journey.entity.JourneyFieldResearcher;
  * @author longnguyen
  */
 @Local
-public interface JourneyFieldResearcherFacadeLocal {
+public interface JourneyFieldResearcherFacadeLocal extends EAOFacade {
 
     JourneyFieldResearcher create(JourneyFieldResearcher journeyFieldResearcher);
 
@@ -33,6 +34,8 @@ public interface JourneyFieldResearcherFacadeLocal {
     int count();   
     
     JourneyFieldResearcher findSingleByQueryName(String queryName, Map<String, Object> params);
+    
+    List<JourneyFieldResearcher> findListByQueryName(String queryName, Map<String, Object> params);
     
     JourneyFieldResearcher findJourneyOfFieldResearcherByStatus(JourneyFieldResearcherDTO journeyFieldResearcherDTO);
     

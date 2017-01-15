@@ -34,7 +34,9 @@ import user.entity.FieldResearcher;
     @NamedQuery(name = "JourneyFieldResearcher.findJourneyOfFieldResearcherByStatus", 
             query = "SELECT j FROM JourneyFieldResearcher j inner join j.fieldResearcherId fr WHERE j.status = :status and fr.sdtUser.username = :username"),
     @NamedQuery(name = "JourneyFieldResearcher.findJourneyByNameAndFieldResearcher", 
-            query = "SELECT j FROM JourneyFieldResearcher j inner join j.fieldResearcherId fr INNER JOIN j.journeyId jr WHERE jr.journeyName = :journeyName and fr.sdtUser.username = :username")})
+            query = "SELECT j FROM JourneyFieldResearcher j inner join j.fieldResearcherId fr INNER JOIN j.journeyId jr WHERE jr.journeyName = :journeyName and fr.sdtUser.username = :username"),
+    @NamedQuery(name = "JourneyFieldResearcher.0001", 
+            query = "SELECT j FROM JourneyFieldResearcher j WHERE j.fieldResearcherId.sdtUser.username = :username")})
 
 public class JourneyFieldResearcher implements Serializable {
 

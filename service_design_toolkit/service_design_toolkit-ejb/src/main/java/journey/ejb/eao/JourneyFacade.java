@@ -7,7 +7,6 @@ package journey.ejb.eao;
 
 import common.ejb.eao.AbstractFacade;
 import java.sql.Date;
-import java.sql.SQLXML;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -17,10 +17,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import journey.dto.JourneyDTO;
 import journey.ejb.business.JourneyServiceLocal;
+import user.dto.SdtUserDTO;
 
 /**
  * REST Web Service
@@ -63,9 +65,13 @@ public class GetJourneyList {
      * @param journeyDTO
      * @return 
      */
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void putJson(JourneyDTO journeyDTO) {        
+    public Response postJson(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {        
+        return Response.status(200)
+				.entity(journeyService.findJourneyListForRegister(sdtUserDTO), new Annotation[0])
+				.header("Access-Control-Allow-Headers", "X-extra-header")
+				.allow("OPTIONS").build();   
     }
 }
