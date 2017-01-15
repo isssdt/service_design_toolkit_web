@@ -65,15 +65,17 @@ public class ScreenTitles {
     //Touch Point Location Dialog
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS = "Address";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID = "address";
-    public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE = "Oops! This address can not be found.";
+    public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE = "Please provide address for this Touch Point";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS = "Radius";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID = "SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_MESSAGE = "Please provide radius for this Touch Point.";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET = "Set Location of this Touch Point";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID = "SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID";
+    public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_MESSAGE = "Location of this Touch Point has not been set yet. Please make sure that you can see the marker on map.";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE = "Locate";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID = "SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID";
     public static final String SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID = "SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID";
+    public static final String SCREEN_COMPONENT_JS_FUNCTION_LOCATE_TOUCH_POINT = "locateTouchPoint()";
     
     //Global
     public static final String SCREEN_COMPONENT_MESSAGES_ID = "SCREEN_COMPONENT_MESSAGES_ID";

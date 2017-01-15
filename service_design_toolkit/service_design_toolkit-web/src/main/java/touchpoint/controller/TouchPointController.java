@@ -12,6 +12,7 @@ import common.view.AbstractView;
 import javax.faces.event.FacesEvent;
 import touchpoint.action.ACTION_BUTTON_CREATE_TOUCH_POINT_ADD;
 import touchpoint.action.ACTION_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION;
+import touchpoint.action.ACTION_BUTTON_TOUCH_POINT_LOCATION_LOCATE;
 import touchpoint.action.ACTION_BUTTON_TOUCH_POINT_LOCATION_SET;
 import touchpoint.action.ACTION_GMAP_TOUCH_POINT_LOCATION_AJAX;
 
@@ -38,6 +39,9 @@ public class TouchPointController extends AbstractController {
         }
         if (ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION();
+        }
+        if (ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID.equals(event.getComponent().getId())) {
+            return new ACTION_BUTTON_TOUCH_POINT_LOCATION_LOCATE();
         }
         return null;
     }
