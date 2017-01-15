@@ -5,8 +5,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">           
     <h:outputScript library="js" name="journey/addtouchpoint.js" target="body" />
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
-    <h:form prependId="false" id="#{ScreenTitles.SCREEN_COMPONENT_FORM_ID}">        
-        <p:growl id="growl" showDetail="true" sticky="true" /> 
+    <h:form prependId="false" id="#{ScreenTitles.SCREEN_COMPONENT_FORM_ID}">                
         <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">            
             <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
                            value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME}" />

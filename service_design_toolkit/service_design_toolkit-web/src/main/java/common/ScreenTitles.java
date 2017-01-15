@@ -20,6 +20,7 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER = "No. of Field Researcher";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID = "SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_MESSAGE = "Please provide No. of Field Researcher for this Journey";
+    public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE = "Please provide a number which is greater than 1 for No. of Field Researcher";
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE = "Start Date";
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID = "SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID";
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_MESSAGE = "Please provide start date for this Journey";
@@ -28,6 +29,7 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_MESSAGE = "Please provide end date for this Journey";
     public static final String SCREEN_COMPONENT_TEXT_AREA_CREATE_JOURNEY_DESCRIPTION = "Description";
     public static final String SCREEN_COMPONENT_TEXT_AREA_CREATE_JOURNEY_DESCRIPTION_ID = "SCREEN_COMPONENT_TEXT_AREA_CREATE_JOURNEY_DESCRIPTION_ID";    
+    public static final String SCREEN_COMPONENT_GROWL_CREATE_JOURNEY_FOR = "SCREEN_COMPONENT_GROWL_CREATE_JOURNEY_FOR";
 
     //Add Touch Point Screen
     public static final String SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD = "Add Touch Point";
@@ -57,17 +59,20 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION = "Please enter URL";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID = "SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE = "Please provide URL of Website";
-    public static final String SCREEN_COMPONENT_MESSAGES_ID = "SCREEN_COMPONENT_MESSAGES_ID";
 
     //Touch Point Location Dialog
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS = "Address";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID = "address";
-    public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE = "Please provide location of this Touch Point";
+    public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE = "Oops! This address can not be found.";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS = "Radius";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID = "SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID";
+    public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_MESSAGE = "Please provide radius for this Touch Point.";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET = "Set Location of this Touch Point";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID = "SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE = "Locate";
     public static final String SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID = "SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID";
     public static final String SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID = "SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID";
+    
+    //Global
+    public static final String SCREEN_COMPONENT_MESSAGES_ID = "SCREEN_COMPONENT_MESSAGES_ID";
 }
