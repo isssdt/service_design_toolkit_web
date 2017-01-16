@@ -7,6 +7,7 @@ package dashboard.ejb.view;
 
 import java.io.Serializable;
 import java.util.Map;
+import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.map.DefaultMapModel;
@@ -21,7 +22,7 @@ public class DashboardView implements Serializable {
     private Map<String, String> journeyNameMap;
     private MapModel field_researcher_location_map;
     private String centerGeoMap = "1.2971342, 103.7777567";   
-    private LineChartModel integrationMapModel;
+    private CartesianChartModel integrationMapModel;
     private  DefaultDiagramModel snakeModel;
 
     /**
@@ -32,11 +33,11 @@ public class DashboardView implements Serializable {
         integrationMapModel = new LineChartModel();
     }
 
-    public LineChartModel getIntegrationMapModel() {
+    public CartesianChartModel getIntegrationMapModel() {
         return integrationMapModel;
     }
 
-    public void setIntegrationMapModel(LineChartModel integrationMapModel) {
+    public void setIntegrationMapModel(CartesianChartModel integrationMapModel) {
         this.integrationMapModel = integrationMapModel;
     }
 

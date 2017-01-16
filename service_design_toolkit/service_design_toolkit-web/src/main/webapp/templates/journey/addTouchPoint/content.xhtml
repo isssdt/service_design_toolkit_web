@@ -50,9 +50,9 @@
             <f:facet name="element">
                 <h:outputText value="#{touchpoint.name}" style="display:block;margin-top:1em;"/>
                 <h:outputText value="#{touchpoint.channelName}" style="display:block;margin-top:1em;"/>
-                <h:outputText value="#{touchpoint.channelDesc}" style="display:block;margin-top:1em;"/>
-                <h:graphicImage  name="img/maps_icon.jpg" width="20%" height="20%" 
-                                 rendered="#{touchpoint.channelName eq 'Kiosk' or touchpoint.channelName eq 'Person To Person' }"/>
+                <h:outputText value="#{touchpoint.channelDesc}" style="display:block;margin-top:1em;" />
+                <p:graphicImage  name="img/marker.png" width="20%" height="20%" 
+                                 rendered="#{touchpoint.channelName eq 'Kiosk' or touchpoint.channelName eq 'Face To Face' }"/>
             </f:facet>
         </p:diagram>        
     </h:form>    

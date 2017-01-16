@@ -148,7 +148,10 @@ public class DashboardController implements Serializable {
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setLabel(ConstantValues.CHART_INTEGRATION_Y_AXIS);
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMin(0);
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMax(5);
-        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setTickInterval("1");        
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setTickInterval("1");  
+        dashboardView.getIntegrationMapModel().setShowDatatip(false);
+        dashboardView.getIntegrationMapModel().setMouseoverHighlight(true);
+        dashboardView.getIntegrationMapModel().setShowPointLabels(false);
     }
     
     
@@ -199,6 +202,8 @@ public class DashboardController implements Serializable {
 
         Element start = new Element(new NetworkElement("Home", "",""), "6em", "2em");
         start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+        start.setDraggable(false);
+        start.setStyleClass("ui-start-element");
 
         model.addElement(start);
         dashboardView.setSnakeModel(model);
@@ -244,7 +249,7 @@ public class DashboardController implements Serializable {
         Y1 = b + "em";
 
         Element touch = new Element(new NetworkElement(touchPoint.getTouchPointDesc(),touchPoint.getChannelDTO().getChannelName(), touchPoint.getChannelDescription()), X1, Y1);
-
+        touch.setDraggable(false);
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
         dashboardView.getSnakeModel().addElement(touch);

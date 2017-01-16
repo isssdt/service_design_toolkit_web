@@ -46,6 +46,7 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
 
         Element start = new Element(new NetworkElement("Home", "",""), "6em", "2em");
         start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+        start.setDraggable(false);
 
         journeyVisualization.addElement(start);       
     }
@@ -70,6 +71,7 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
 
         Element touch = new Element(new NetworkElement(touchPointDTO.getTouchPointDesc(), touchPointDTO.getChannelDTO().getChannelName(),
                 touchPointDTO.getChannelDescription()), X1, Y1);
+        touch.setDraggable(false);
         
         if (journeyVisualization.getElements().contains(touch)) {
             return;
