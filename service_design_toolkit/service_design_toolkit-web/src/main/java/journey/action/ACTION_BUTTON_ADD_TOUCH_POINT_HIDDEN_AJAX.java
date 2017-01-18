@@ -28,7 +28,7 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX implements ActionHandler 
         AddTouchPointView addTouchPointView = (AddTouchPointView) view;
         SelectEvent selectEvent = (SelectEvent)event;
         TouchPointDTO touchPointDTO = (TouchPointDTO) selectEvent.getObject();     
-        if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {
+        if (null == addTouchPointView.getJourneyDTO().getTouchPointListDTO()) {
             addTouchPointView.getJourneyDTO().setTouchPointListDTO(new TouchPointListDTO());
             addTouchPointView.getJourneyDTO().getTouchPointListDTO().setTouchPointDTOList(new ArrayList<>());
         }

@@ -34,14 +34,14 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
         RequestContext context = RequestContext.getCurrentInstance();
         
         if (MasterData.CHANNEL_WEBSITE.equals(touchPointDTO.getChannelDTO().getChannelName())) {            
-            if (null == addTouchPointView.getJourneyDTO().getTouchPointDTOList()) {    
+            if (null == addTouchPointView.getJourneyDTO().getTouchPointListDTO()) {    
                 addTouchPointView.getJourneyDTO().setTouchPointListDTO(new TouchPointListDTO());
                 addTouchPointView.getJourneyDTO().getTouchPointListDTO().setTouchPointDTOList(new ArrayList<>());
             }
             touchPointDTO.setLatitude("NONE");
             touchPointDTO.setLongitude("NONE");
             touchPointDTO.setRadius("NONE");
-            addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList().add(touchPointDTO);            
+            addTouchPointView.getJourneyDTO().getTouchPointListDTO().getTouchPointDTOList().add(touchPointDTO);               
             Utils.getVisualizationFactory(JourneyVisualizationFactory.class.toString()).
                     getJourneyVisualization(JourneyVisualizationSnakeMap.class.toString())
                     .visualize(addTouchPointView.getJourneyDTO(), addTouchPointView.getJourneyVisualization());            
@@ -51,6 +51,6 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX implements ActionHandler {
         else {
             Utils.setAttributeOfSession(touchPointDTO);
             context.execute(ScreenTitles.SCREEN_COMPONENT_JS_FUNCTION_OPEN_TOUCH_POINT_LOCATION_DIALOG);
-        }
+        }       
     }
 }

@@ -5,7 +5,6 @@
  */
 package common.visualization;
 
-import java.util.List;
 import journey.dto.JourneyDTO;
 import touchpoint.dto.TouchPointDTO;
 import org.primefaces.model.diagram.Connection;
@@ -25,13 +24,13 @@ import org.primefaces.model.diagram.overlay.LabelOverlay;
 public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrategy {
 
     @Override
-    public void visualize(JourneyDTO journeyDTO, Object visualizationModel) {  
+    public void visualize(JourneyDTO journeyDTO, Object visualizationModel) {          
         DefaultDiagramModel journeyVisualization = (DefaultDiagramModel)visualizationModel;
         if (null == journeyDTO || null == journeyDTO.getTouchPointListDTO() || null == journeyDTO.getTouchPointListDTO().getTouchPointDTOList() 
                 || journeyDTO.getTouchPointListDTO().getTouchPointDTOList().isEmpty()) {
             initNonTouchPointJourney(journeyVisualization);
             return;
-        }
+        }        
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {       
             addElement(journeyVisualization, touchPointDTO);
         }
@@ -60,8 +59,7 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
 
         if (a < 40) {
             a = a + 20;
-        } else {
-            System.out.println("a>60");
+        } else {            
             a = 6;
             b = b + 10;
         }
@@ -73,7 +71,7 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
                 touchPointDTO.getChannelDescription()), X1, Y1);
         touch.setDraggable(false);
         
-        if (journeyVisualization.getElements().contains(touch)) {
+        if (checkElementExist(journeyVisualization, touch)) {
             return;
         }
 
@@ -102,6 +100,15 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
         }
 
         return conn;
+    }
+    
+    private boolean checkElementExist(DefaultDiagramModel journeyVisualization, Element touchPoint) {
+        for (Element element : journeyVisualization.getElements()) {
+            if (element.getData().equals(touchPoint.getData())) {
+                return true;
+            }
+        }
+        return false;
     }
     
 }

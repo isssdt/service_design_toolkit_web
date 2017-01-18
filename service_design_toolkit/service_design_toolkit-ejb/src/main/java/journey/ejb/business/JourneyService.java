@@ -6,7 +6,6 @@
 package journey.ejb.business;
 
 import common.constant.ConstantValues;
-import common.ejb.eao.EAOFacade;
 import common.rest.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
@@ -59,6 +58,7 @@ public class JourneyService implements JourneyServiceLocal {
 
     @Override
     public Integer createJourney(JourneyDTO journeyDTO) throws CustomReasonPhraseException {
+        System.out.println(journeyDTO.getTouchPointListDTO().getTouchPointDTOList().size());
 
         Journey journey = new Journey();
         try {
@@ -79,7 +79,7 @@ public class JourneyService implements JourneyServiceLocal {
             }
 
             touchPoint.setChannelId(channel);
-            touchPoint.setJourneyId(journey);
+            touchPoint.setJourneyId(journey);            
             touchPointList.add(touchPoint);
         }
         journey.setTouchPointList(touchPointList);
