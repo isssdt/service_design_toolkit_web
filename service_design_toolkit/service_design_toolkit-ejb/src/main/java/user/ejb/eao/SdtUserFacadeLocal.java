@@ -5,6 +5,7 @@
  */
 package user.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -16,7 +17,7 @@ import user.entity.SdtUser;
  * @author longnguyen
  */
 @Local
-public interface SdtUserFacadeLocal {
+public interface SdtUserFacadeLocal extends EAOFacade {
 
     SdtUser create(SdtUser sdtUser);
 

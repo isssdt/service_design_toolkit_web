@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package common;
+package common.constant;
 
 /**
  *
@@ -14,4 +14,9 @@ public class MasterData {
     public static final String CHANNEL_FACE_TO_FACE = "Face To Face";
     public static final String CHANNEL_WEBSITE = "Website";
     public static final String CHANNEL_KIOSK = "Kiosk";
+    
+    //User Role
+    public static final String USER_ROLE_FIELD_RESEARCHER = "Field Researcher";
+    public static final String USER_ROLE_RESEARCH_OWNER = "Research Owner";
+    
 }

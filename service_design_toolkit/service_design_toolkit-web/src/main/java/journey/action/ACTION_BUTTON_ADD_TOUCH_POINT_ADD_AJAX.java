@@ -5,7 +5,7 @@
  */
 package journey.action;
 
-import common.MasterData;
+import common.constant.MasterData;
 import common.ScreenTitles;
 import common.action.ActionHandler;
 import common.utils.Utils;

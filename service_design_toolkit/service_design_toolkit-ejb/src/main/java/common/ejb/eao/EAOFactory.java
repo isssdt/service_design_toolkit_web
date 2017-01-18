@@ -96,6 +96,12 @@ public class EAOFactory {
         if (JourneyFieldResearcherFacadeLocal.class.toString().equals(facade)) {
             return journeyFieldResearcherFacade;
         }
+        if (SdtUserFacadeLocal.class.toString().equals(facade)) {
+            return sdtUserFacade;
+        }
+        if (UserRoleFacadeLocal.class.toString().equals(facade)) {
+            return userRoleFacade;
+        }
         return null;
     }
 }

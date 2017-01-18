@@ -5,6 +5,7 @@
  */
 package user.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -15,7 +16,7 @@ import user.entity.UserRole;
  * @author longnguyen
  */
 @Local
-public interface UserRoleFacadeLocal {
+public interface UserRoleFacadeLocal extends EAOFacade {
 
     UserRole create(UserRole userRole);
 

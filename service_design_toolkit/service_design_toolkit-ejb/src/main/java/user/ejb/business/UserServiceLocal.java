@@ -19,7 +19,7 @@ import user.dto.SdtUserDTO;
  */
 @Local
 public interface UserServiceLocal extends BusinessService {
-    public void refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
+    public RESTReponse refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO);
     public FieldResearcherDTO getFieldResearcherByName(user.dto.FieldResearcherDTO fieldResearcherDTO) throws CustomReasonPhraseException;    
     public RESTReponse registerFieldResearcher(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException;
     

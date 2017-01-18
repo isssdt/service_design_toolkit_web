@@ -18,9 +18,10 @@ import org.apache.commons.beanutils.BeanUtils;
  * @author Leon
  */
 public class UtilConverter {
+
     public static List<String> traverseDTOList = new ArrayList<>();
-    
-    public static void deepCopy(Object entityObj, Object dtoObj) {        
+
+    public static void deepCopy(Object entityObj, Object dtoObj) {
         if (UtilConverter.traverseDTOList.indexOf(dtoObj.getClass().toString()) != -1) {
             return;
         }
@@ -31,17 +32,17 @@ public class UtilConverter {
         }
         for (Method dtoMethod : dtoObj.getClass().getMethods()) {
             if (dtoMethod.getName().startsWith("get") && dtoMethod.getName().endsWith("DTO")) {
-                String entityMethod = dtoMethod.getName().substring(0, dtoMethod.getName().length() - 3);                
+                String entityMethod = dtoMethod.getName().substring(0, dtoMethod.getName().length() - 3);
                 if (!checkMethodExist(entityMethod, entityObj)) {
                     entityMethod = entityMethod + "Id";
                     if (!checkMethodExist(entityMethod, entityObj)) {
                         return;
                     }
-                }                
+                }
                 System.out.println(dtoMethod.getName() + "|" + entityMethod);
                 UtilConverter.traverseDTOList.add(dtoMethod.getReturnType().toString());
-                try {                   
-                    try {       
+                try {
+                    try {
                         Object newDTO = dtoMethod.getReturnType().getConstructor();
                         deepCopy(entityObj.getClass().getMethod(entityMethod).invoke(entityObj), newDTO);
                         Method setDTO = dtoObj.getClass().getMethod("s" + dtoMethod.getName().substring(1));
@@ -56,9 +57,9 @@ public class UtilConverter {
         }
         UtilConverter.traverseDTOList.clear();
     }
-    
+
     public static boolean checkMethodExist(String methodName, Object object) {
-        for (Method method: object.getClass().getMethods()) {
+        for (Method method : object.getClass().getMethods()) {
             if (methodName.equals(method.getName())) {
                 return true;
             }

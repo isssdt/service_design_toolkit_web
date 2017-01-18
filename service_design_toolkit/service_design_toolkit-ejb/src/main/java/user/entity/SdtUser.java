@@ -73,7 +73,7 @@ public class SdtUser implements Serializable {
         this.fieldResearcher = fieldResearcher;
     }
 
-    public SdtUser() {
+    public SdtUser() {        
     }
 
     public SdtUser(Integer id) {

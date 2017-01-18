@@ -5,7 +5,7 @@
  */
 package touchpoint.ejb.view;
 
-import common.MasterData;
+import common.constant.MasterData;
 import common.ejb.business.ServiceFactory;
 import common.view.AbstractView;
 import java.io.Serializable;

@@ -46,13 +46,23 @@ public class ConstantValues {
     public static final String TOUCH_POINT_FIELD_RESEARCHER_RESPONSE_UPDATE_SUCCESSFUL = "A new research work has been created";
     
     
-    //SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password        
+    /**
+     * SELECT s FROM SdtUser s WHERE s.username = :username and s.password = :password  
+     */
     public static final String SDT_USER_QUERY_AUTHENTICATE = "SdtUser.00001";    
-    //SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username 
-    //and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J 
-    //WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')          
+    /**
+     * SELECT s FROM SdtUser s WHERE s.username = :username
+     */
+    public static final String QUERY_SDT_USER_FIND_USER_BY_USERNAME = "SdtUser.findByUsername";
+    /**
+     * SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username 
+     * and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J 
+     * WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS') 
+     */
     public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001";   
-    //SELECT s FROM SdtUser s WHERE s.username = :username     
+    /**
+     * SELECT s FROM SdtUser s WHERE s.username = :username 
+     */
     public static final String SDT_USER_QUERY_FIND_BY_USERNAME = "SdtUser.findByUsername";
     /**
      * SELECT j FROM JourneyFieldResearcher j WHERE j.fieldResearcherId.sdtUser.username = :username
@@ -61,7 +71,11 @@ public class ConstantValues {
     /**
      * SELECT j FROM Journey j WHERE j.startDate <= :startDate and j.endDate >= :endDate and j.canBeRegistered = 'Y'
      */
-    public static final String QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED = "Journey.findJourneyListForRegister";
+    public static final String QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED = "Journey.findJourneyListForRegister";  
+    /**
+     * SELECT u FROM UserRole u WHERE u.roleName = :roleName
+     */
+    public static final String QUERY_USER_ROLE_FIND_ROLE_BY_NAME = "UserRole.findByRoleName";  
     
     
     //Username or password is not correct    
