@@ -8,7 +8,7 @@ package journey.ejb.eao;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
-import journey.entity.Rating;
+import common.entity.Rating;
 
 /**
  *

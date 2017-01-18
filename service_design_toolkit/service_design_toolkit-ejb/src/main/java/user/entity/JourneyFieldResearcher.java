@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.entity;
+package user.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import journey.entity.Journey;
 import user.entity.FieldResearcher;
 
 /**

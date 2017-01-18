@@ -13,9 +13,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import journey.dto.JourneyDTO;
-import journey.dto.TouchPointFieldResearcherDTO;
-import journey.entity.TouchPoint;
-import journey.entity.TouchpointFieldResearcher;
+import user.dto.TouchPointFieldResearcherDTO;
+import touchpoint.entity.TouchPoint;
+import user.entity.TouchpointFieldResearcher;
 import user.dto.SdtUserDTO;
 
 /**

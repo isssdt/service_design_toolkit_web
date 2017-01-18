@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.dto;
+package touchpoint.dto;
 
+import common.dto.ChannelDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
+import journey.dto.JourneyDTO;
 
 /**
  *
@@ -26,6 +28,9 @@ public class TouchPointDTO implements Serializable {
     private String radius;
     private String action;
     private String channelDescription;
+    private String durationDay;    
+    private String durationHour;    
+    private String durationMinute;
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
 
@@ -43,6 +48,30 @@ public class TouchPointDTO implements Serializable {
         this.channelDescription = channelDescription;
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
+    }
+
+    public String getDurationDay() {
+        return durationDay;
+    }
+
+    public void setDurationDay(String durationDay) {
+        this.durationDay = durationDay;
+    }
+
+    public String getDurationHour() {
+        return durationHour;
+    }
+
+    public void setDurationHour(String durationHour) {
+        this.durationHour = durationHour;
+    }
+
+    public String getDurationMinute() {
+        return durationMinute;
+    }
+
+    public void setDurationMinute(String durationMinute) {
+        this.durationMinute = durationMinute;
     }
 
     public JourneyDTO getJourneyDTO() {

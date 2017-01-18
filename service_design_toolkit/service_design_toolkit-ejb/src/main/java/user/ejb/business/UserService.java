@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import journey.dto.JourneyFieldResearcherDTO;
+import user.dto.JourneyFieldResearcherDTO;
 import org.apache.commons.beanutils.BeanUtils;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;

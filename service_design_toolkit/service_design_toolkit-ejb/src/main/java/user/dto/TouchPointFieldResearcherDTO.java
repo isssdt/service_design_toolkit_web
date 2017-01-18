@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.dto;
+package user.dto;
 
+import touchpoint.dto.TouchPointDTO;
+import common.dto.RatingDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import user.dto.FieldResearcherDTO;

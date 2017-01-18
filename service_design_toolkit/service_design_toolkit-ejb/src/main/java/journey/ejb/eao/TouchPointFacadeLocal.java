@@ -7,7 +7,7 @@ package journey.ejb.eao;
 
 import java.util.List;
 import java.util.Map;
-import journey.entity.TouchPoint;
+import touchpoint.entity.TouchPoint;
 
 /**
  *

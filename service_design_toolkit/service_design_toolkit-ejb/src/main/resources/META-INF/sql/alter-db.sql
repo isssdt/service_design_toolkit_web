@@ -10,7 +10,9 @@
 
 use service_design_toolkit;
 
--- TASK 418
-ALTER TABLE sdt_user drop column description;
-ALTER TABLE sdt_user ADD password varchar(30);
+ALTER TABLE touch_point ADD duration_day varchar(4);
+ALTER TABLE touch_point ADD duration_hour varchar(2);
+ALTER TABLE touch_point ADD duration_minute varchar(2);
+
+ALTER TABLE journey ADD is_sequence char(1);
 

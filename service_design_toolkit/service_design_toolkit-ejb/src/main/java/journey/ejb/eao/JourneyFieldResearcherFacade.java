@@ -11,8 +11,8 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import journey.dto.JourneyFieldResearcherDTO;
-import journey.entity.JourneyFieldResearcher;
+import user.dto.JourneyFieldResearcherDTO;
+import user.entity.JourneyFieldResearcher;
 
 /**
  *

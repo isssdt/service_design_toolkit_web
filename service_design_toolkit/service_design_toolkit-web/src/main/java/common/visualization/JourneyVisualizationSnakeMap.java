@@ -7,7 +7,7 @@ package common.visualization;
 
 import java.util.List;
 import journey.dto.JourneyDTO;
-import journey.dto.TouchPointDTO;
+import touchpoint.dto.TouchPointDTO;
 import org.primefaces.model.diagram.Connection;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.diagram.Element;

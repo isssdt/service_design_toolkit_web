@@ -5,6 +5,7 @@
  */
 package journey.dto;
 
+import touchpoint.dto.TouchPointDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -31,6 +32,7 @@ public class JourneyDTO implements Serializable {
     private Date endDate;
     private Character canBeRegistered;
     private String description;
+    private Character isSequence;
     private TouchPointListDTO touchPointListDTO;
     private List<TouchPointDTO> touchPointDTOList = null;
     private JourneyFieldResearcherListDTO journeyFieldResearcherListDTO;
@@ -48,6 +50,14 @@ public class JourneyDTO implements Serializable {
         this.description = description;
     }
 
+    public Character getIsSequence() {
+        return isSequence;
+    }
+
+    public void setIsSequence(Character isSequence) {
+        this.isSequence = isSequence;
+    }
+
     public JourneyFieldResearcherListDTO getJourneyFieldResearcherListDTO() {
         return journeyFieldResearcherListDTO;
     }
@@ -62,9 +72,7 @@ public class JourneyDTO implements Serializable {
 
     public void setTouchPointListDTO(TouchPointListDTO touchPointListDTO) {
         this.touchPointListDTO = touchPointListDTO;
-    }
-    
-    
+    }   
 
     public String getDescription() {
         return description;

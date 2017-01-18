@@ -18,7 +18,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import journey.dto.TouchPointFieldResearcherDTO;
+import user.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.business.JourneyServiceLocal;
 
 /**

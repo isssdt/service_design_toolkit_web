@@ -9,8 +9,8 @@ import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
-import journey.dto.JourneyFieldResearcherDTO;
-import journey.entity.JourneyFieldResearcher;
+import user.dto.JourneyFieldResearcherDTO;
+import user.entity.JourneyFieldResearcher;
 
 /**
  *

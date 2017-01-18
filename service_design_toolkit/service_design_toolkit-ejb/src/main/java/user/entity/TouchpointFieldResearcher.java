@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package journey.entity;
+package user.entity;
 
+import common.entity.Rating;
+import touchpoint.entity.TouchPoint;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;

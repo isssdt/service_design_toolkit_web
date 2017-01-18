@@ -12,7 +12,7 @@ import common.view.AbstractView;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import journey.dto.TouchPointDTO;
+import touchpoint.dto.TouchPointDTO;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import touchpoint.controller.TouchPointController;

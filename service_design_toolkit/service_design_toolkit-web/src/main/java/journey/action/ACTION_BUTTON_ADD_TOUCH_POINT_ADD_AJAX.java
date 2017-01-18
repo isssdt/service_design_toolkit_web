@@ -14,7 +14,7 @@ import common.visualization.JourneyVisualizationFactory;
 import common.visualization.JourneyVisualizationSnakeMap;
 import java.util.ArrayList;
 import javax.faces.event.FacesEvent;
-import journey.dto.TouchPointDTO;
+import touchpoint.dto.TouchPointDTO;
 import journey.ejb.view.AddTouchPointView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;

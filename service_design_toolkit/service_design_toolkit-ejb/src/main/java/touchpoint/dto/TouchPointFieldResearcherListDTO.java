@@ -6,7 +6,7 @@
 package touchpoint.dto;
 
 import java.util.List;
-import journey.dto.TouchPointFieldResearcherDTO;
+import user.dto.TouchPointFieldResearcherDTO;
 
 /**
  *

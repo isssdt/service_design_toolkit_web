@@ -8,8 +8,8 @@ package journey.ejb.eao;
 import java.util.List;
 import java.util.Map;
 import journey.dto.JourneyDTO;
-import journey.dto.TouchPointFieldResearcherDTO;
-import journey.entity.TouchpointFieldResearcher;
+import user.dto.TouchPointFieldResearcherDTO;
+import user.entity.TouchpointFieldResearcher;
 import user.dto.SdtUserDTO;
 
 /**

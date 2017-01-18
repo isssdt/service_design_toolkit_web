@@ -14,8 +14,8 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import journey.dto.ChannelDTO;
-import journey.dto.TouchPointDTO;
+import common.dto.ChannelDTO;
+import touchpoint.dto.TouchPointDTO;
 import touchpoint.controller.TouchPointController;
 
 /**

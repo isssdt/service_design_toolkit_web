@@ -5,6 +5,8 @@
  */
 package journey.entity;
 
+import user.entity.JourneyFieldResearcher;
+import touchpoint.entity.TouchPoint;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
@@ -44,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findJourneyListForRegister", 
             query = "SELECT j FROM Journey j WHERE j.startDate <= :startDate and j.endDate >= :endDate and j.canBeRegistered = 'Y'")})
 public class Journey implements Serializable {
+
+    @Column(name = "is_sequence")
+    private Character isSequence;
 
     @Size(max = 500)
     @Column(name = "description")
@@ -219,5 +224,13 @@ public class Journey implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Character getIsSequence() {
+        return isSequence;
+    }
+
+    public void setIsSequence(Character isSequence) {
+        this.isSequence = isSequence;
     }
 }
