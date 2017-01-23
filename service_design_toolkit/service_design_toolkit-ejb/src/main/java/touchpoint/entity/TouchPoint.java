@@ -26,6 +26,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import common.entity.Channel;
+import common.entity.MasterData;
+import java.math.BigDecimal;
 import journey.entity.Journey;
 import user.entity.TouchpointFieldResearcher;
 
@@ -45,15 +47,13 @@ import user.entity.TouchpointFieldResearcher;
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
 
-    @Size(max = 4)
-    @Column(name = "duration_day")
-    private String durationDay;
-    @Size(max = 2)
-    @Column(name = "duration_hour")
-    private String durationHour;
-    @Size(max = 2)
-    @Column(name = "duration_minute")
-    private String durationMinute;
+    @JoinColumn(name = "duration_unit", referencedColumnName = "id")
+    @ManyToOne
+    private MasterData durationUnit;
+
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "duration")
+    private BigDecimal duration;    
 
     @Size(max = 200)
     @Column(name = "action")
@@ -226,30 +226,22 @@ public class TouchPoint implements Serializable {
 
     public void setChannelId(Channel channelId) {
         this.channelId = channelId;
+    }    
+
+    public BigDecimal getDuration() {
+        return duration;
     }
 
-    public String getDurationDay() {
-        return durationDay;
+    public void setDuration(BigDecimal duration) {
+        this.duration = duration;
     }
 
-    public void setDurationDay(String durationDay) {
-        this.durationDay = durationDay;
+    public MasterData getDurationUnit() {
+        return durationUnit;
     }
 
-    public String getDurationHour() {
-        return durationHour;
-    }
-
-    public void setDurationHour(String durationHour) {
-        this.durationHour = durationHour;
-    }
-
-    public String getDurationMinute() {
-        return durationMinute;
-    }
-
-    public void setDurationMinute(String durationMinute) {
-        this.durationMinute = durationMinute;
+    public void setDurationUnit(MasterData durationUnit) {
+        this.durationUnit = durationUnit;
     }
     
 }

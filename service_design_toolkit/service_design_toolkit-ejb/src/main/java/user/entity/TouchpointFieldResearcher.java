@@ -8,6 +8,7 @@ package user.entity;
 import common.entity.Rating;
 import touchpoint.entity.TouchPoint;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +23,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import user.entity.FieldResearcher;
 
 /**
  *
@@ -47,6 +47,10 @@ import user.entity.FieldResearcher;
     @NamedQuery(name = "TouchpointFieldResearcher.00001", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')")})           
 public class TouchpointFieldResearcher implements Serializable {
+
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "duration")
+    private BigDecimal duration;
 
     @Size(max = 50)
     @Column(name = "status")
@@ -161,6 +165,14 @@ public class TouchpointFieldResearcher implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public BigDecimal getDuration() {
+        return duration;
+    }
+
+    public void setDuration(BigDecimal duration) {
+        this.duration = duration;
     }
     
 }
