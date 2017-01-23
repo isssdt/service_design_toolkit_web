@@ -43,6 +43,7 @@ import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import common.visualization.NetworkElement;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 import user.dto.FieldResearcherDTO;
 
 /**
@@ -74,6 +75,7 @@ public class DashboardController implements Serializable {
         dashboardView = new DashboardView();
         initDummyChart();
         initsnakeModel();
+        initDummyTimeGapDia();
         HashMap<String, String> journeyNameMap = new HashMap<>();
         try {
             List<JourneyDTO> journeyDTOList = journeyService.getAllJourney();
@@ -192,6 +194,14 @@ public class DashboardController implements Serializable {
         chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
         dashboardView.getIntegrationMapModel().addSeries(chartSeries);
     }
+    
+    private void initDummyTimeGapDia() {
+        ChartSeries chartSeries = new ChartSeries();
+        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
+        chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+        dashboardView.getTimeGapDiagram().addSeries(chartSeries);
+    }
+    
     private void initsnakeModel() {
        DefaultDiagramModel model = new DefaultDiagramModel();
         model.setMaxConnections(-1);

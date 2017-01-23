@@ -8,6 +8,7 @@ package dashboard.ejb.view;
 import java.io.Serializable;
 import java.util.Map;
 import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.map.DefaultMapModel;
@@ -24,6 +25,7 @@ public class DashboardView implements Serializable {
     private String centerGeoMap = "1.2971342, 103.7777567";   
     private CartesianChartModel integrationMapModel;
     private  DefaultDiagramModel snakeModel;
+    private HorizontalBarChartModel timeGapDiagram;
 
     /**
      * Creates a new instance of DashboardView
@@ -31,6 +33,7 @@ public class DashboardView implements Serializable {
     public DashboardView() {
         field_researcher_location_map = new DefaultMapModel();   
         integrationMapModel = new LineChartModel();
+        timeGapDiagram = new HorizontalBarChartModel();
     }
 
     public CartesianChartModel getIntegrationMapModel() {
@@ -71,6 +74,14 @@ public class DashboardView implements Serializable {
 
     public void setSnakeModel(DefaultDiagramModel snakeModel) {
         this.snakeModel = snakeModel;
+    }
+    
+    public void setTimeGapDiagram(HorizontalBarChartModel timeGapDiagram) {
+    this.timeGapDiagram = timeGapDiagram;
+    }
+
+    public HorizontalBarChartModel getTimeGapDiagram() {
+        return timeGapDiagram;
     }
     
 }
