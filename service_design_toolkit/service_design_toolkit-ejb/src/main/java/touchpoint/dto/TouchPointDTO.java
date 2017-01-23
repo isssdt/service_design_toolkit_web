@@ -28,9 +28,9 @@ public class TouchPointDTO implements Serializable {
     private String radius;
     private String action;
     private String channelDescription;
-    private String durationDay;    
-    private String durationHour;    
-    private String durationMinute;
+    private String duration;    
+    private String durationUunit;    
+
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
 
@@ -50,30 +50,22 @@ public class TouchPointDTO implements Serializable {
         this.journeyDTO = journeyDTO;
     }
 
-    public String getDurationDay() {
-        return durationDay;
+    
+    public String getDuration() {
+        return duration;
     }
 
-    public void setDurationDay(String durationDay) {
-        this.durationDay = durationDay;
+    public String getDurationUunit() {
+        return durationUunit;
     }
 
-    public String getDurationHour() {
-        return durationHour;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public void setDurationHour(String durationHour) {
-        this.durationHour = durationHour;
+    public void setDurationUunit(String durationUunit) {
+        this.durationUunit = durationUunit;
     }
-
-    public String getDurationMinute() {
-        return durationMinute;
-    }
-
-    public void setDurationMinute(String durationMinute) {
-        this.durationMinute = durationMinute;
-    }
-
     public JourneyDTO getJourneyDTO() {
         return journeyDTO;
     }
