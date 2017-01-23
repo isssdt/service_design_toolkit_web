@@ -9,7 +9,7 @@ import touchpoint.dto.TouchPointDTO;
 import common.dto.RatingDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import user.dto.FieldResearcherDTO;
+import java.math.BigDecimal;
 
 /**
  *
@@ -24,6 +24,15 @@ public class TouchPointFieldResearcherDTO {
     private String reaction;
     private RatingDTO ratingDTO;
     private String status;
+    private BigDecimal duration;
+
+    public BigDecimal getDuration() {
+        return duration;
+    }
+
+    public void setDuration(BigDecimal duration) {
+        this.duration = duration;
+    }
 
     public FieldResearcherDTO getFieldResearcherDTO() {
         return fieldResearcherDTO;

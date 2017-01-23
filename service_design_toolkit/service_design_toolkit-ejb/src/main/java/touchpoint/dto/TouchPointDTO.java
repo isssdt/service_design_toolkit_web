@@ -9,7 +9,9 @@ import common.dto.ChannelDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import common.dto.MasterDataDTO;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import journey.dto.JourneyDTO;
 
 /**
@@ -28,8 +30,8 @@ public class TouchPointDTO implements Serializable {
     private String radius;
     private String action;
     private String channelDescription;
-    private String duration;    
-    private String durationUunit;    
+    private BigDecimal duration;    
+    private MasterDataDTO durationUnit;    
 
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
@@ -48,24 +50,24 @@ public class TouchPointDTO implements Serializable {
         this.channelDescription = channelDescription;
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
-    }
+    }    
 
-    
-    public String getDuration() {
+    public BigDecimal getDuration() {
         return duration;
     }
 
-    public String getDurationUunit() {
-        return durationUunit;
-    }
-
-    public void setDuration(String duration) {
+    public void setDuration(BigDecimal duration) {
         this.duration = duration;
     }
 
-    public void setDurationUunit(String durationUunit) {
-        this.durationUunit = durationUunit;
+    public MasterDataDTO getDurationUnit() {
+        return durationUnit;
     }
+
+    public void setDurationUnit(MasterDataDTO durationUnit) {
+        this.durationUnit = durationUnit;
+    }
+    
     public JourneyDTO getJourneyDTO() {
         return journeyDTO;
     }
