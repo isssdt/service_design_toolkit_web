@@ -61,12 +61,12 @@
         <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
             <p:outputLabel for="journey_list" value="Journey" />
             <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map, integration_map ,dia " />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map, integration_map ,dia, field_researcher_list " />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
             </p:selectOneMenu>
         </h:panelGrid>
-        <p:panelGrid columns="2" layout="grid">
+        <p:panelGrid columns="3" layout="grid">
             <p:panel header="Field Researcher Location" styleClass="ui-dashboard-layout" >
                     <p:gmap id="field_researcher_location_map" widgetVar="field_researcher_location_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
@@ -77,6 +77,15 @@
                     <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
                               styleClass="ui-diagram-layout" responsive="true"/>
                     <p:resizable for="integration_map" />
+            </p:panel>
+            
+            <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >
+                <p:dataList  widgetVar="field_researcher_list" id="field_researcher_list" value="#{dashboardController.dashboardView.fieldResearcherDTOList}" var="fieldResearcher" type="ordered" itemType="none" rows="10">
+                    <f:facet name="head">
+                        head
+                    </f:facet>
+                    #{fieldResearcher.sdtUserDTO.username}
+                </p:dataList>
             </p:panel>
 
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">

@@ -6,6 +6,7 @@
 package dashboard.ejb.view;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
@@ -13,6 +14,7 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
+import user.dto.FieldResearcherDTO;
 
 /**
  *
@@ -26,6 +28,7 @@ public class DashboardView implements Serializable {
     private CartesianChartModel integrationMapModel;
     private  DefaultDiagramModel snakeModel;
     private HorizontalBarChartModel timeGapDiagram;
+    private List<FieldResearcherDTO> fieldResearcherDTOList;
 
     /**
      * Creates a new instance of DashboardView
@@ -82,6 +85,14 @@ public class DashboardView implements Serializable {
 
     public HorizontalBarChartModel getTimeGapDiagram() {
         return timeGapDiagram;
+    }
+    
+    public List<FieldResearcherDTO> getFieldResearcherDTOList() {
+        return fieldResearcherDTOList;
+    }
+    
+    public void setFieldResearcherDTOList(List<FieldResearcherDTO> fieldResearcherDTOList) {
+        this.fieldResearcherDTOList = fieldResearcherDTOList;
     }
     
 }

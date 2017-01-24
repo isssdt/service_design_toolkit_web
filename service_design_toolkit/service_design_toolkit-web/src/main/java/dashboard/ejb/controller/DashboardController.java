@@ -123,9 +123,22 @@ public class DashboardController implements Serializable {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
 
+        updateFeildResearcherList(journeyDTO);
         updateFieldResearcherLocationMap(journeyDTO);
         updateIntegrationMap(journeyDTO);
-         updateSnakeMap(journeyDTO);
+        updateSnakeMap(journeyDTO);
+        
+    }
+    
+    private void updateFeildResearcherList(JourneyDTO journeyDTO) {
+        List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
+        
+        //dashboardView.setFieldResearcherDTOList(null);
+        dashboardView.setFieldResearcherDTOList(fieldResearcherDTOList);
+//        for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {
+//            dashboardView.getFieldResearcherDTOList().add(fieldResearcherDTO);
+//        }
+        
     }
 
     private void updateFieldResearcherLocationMap(JourneyDTO journeyDTO) {
