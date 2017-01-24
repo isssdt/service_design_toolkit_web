@@ -31,6 +31,8 @@ public class CreateView extends AbstractView implements Serializable {
     private TouchPointDTO touchPointDTO;
     
     private Map<String, String> channelDropDown;
+    
+    private Map<String, String> durationDropDown;
 
     /**
      * Creates a new instance of CreateView
@@ -53,6 +55,14 @@ public class CreateView extends AbstractView implements Serializable {
     public void setChannelDropDown(Map<String, String> channelDropDown) {
         this.channelDropDown = channelDropDown;
     }
+    
+    public void setDurationDropDown(Map<String, String> durationDropDown) {
+        this.durationDropDown = durationDropDown;
+    }
+
+    public Map<String, String> getDurationDropDown() {
+        return durationDropDown;
+    }
 
     @Override
     public void initController() {
@@ -68,6 +78,11 @@ public class CreateView extends AbstractView implements Serializable {
         channelDropDown.put(MasterData.CHANNEL_FACE_TO_FACE, MasterData.CHANNEL_FACE_TO_FACE);
         channelDropDown.put(MasterData.CHANNEL_KIOSK, MasterData.CHANNEL_KIOSK);
         channelDropDown.put(MasterData.CHANNEL_WEBSITE, MasterData.CHANNEL_WEBSITE);
+        
+        durationDropDown = new HashMap<>();
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_DAYS, MasterData.TOUCH_POINT_DURATION_DAYS);
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_HOURS, MasterData.TOUCH_POINT_DURATION_HOURS);
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_MINS, MasterData.TOUCH_POINT_DURATION_MINS);
     }    
 
     @Override

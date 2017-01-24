@@ -7,17 +7,19 @@
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.MasterData" var="MasterData"/>     
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />
-        <h:panelGrid columns="2" cellpadding="8">            
+        <h:panelGrid columns="1" cellpadding="8">            
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_ID}" 
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.touchPointDesc}" 
                          required="true" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_MESSAGE}"/>                             
-            <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
+            <p:inputTextarea id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.action}" 
-                         required="true" 
-                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_MESSAGE}" />                                        
+                         required="true" cols ="35" rows="5"
+                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_MESSAGE}" />
+        </h:panelGrid>
+        <h:panelGrid columns="2" cellpadding="8">    
             <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_ID}" 
                              value="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName}" required="true"
                              requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_MESSAGE}">
@@ -34,6 +36,16 @@
                          disabled="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_WEBSITE}"
                          required="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_WEBSITE}" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE}" /> 
+            <p:inputNumber id="duration" placeholder="enter duration"
+                         value="#{touchpoint_ejb_view_CreateView.touchPointDTO.duration}" >
+                         <f:validateLongRange minimum="1"/>
+            </p:inputNumber>
+            <p:selectOneMenu id="durationUnit" 
+                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.durationUnit.dataValue}" >
+                <f:selectItem itemLabel="" itemValue="" noSelectionOption="false" />                         
+                <f:selectItems value="#{touchpoint_ejb_view_CreateView.durationDropDown}"/>
+            </p:selectOneMenu>
+                
         </h:panelGrid>
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}" 
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD}" 
