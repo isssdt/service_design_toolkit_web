@@ -61,16 +61,16 @@
         <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
             <p:outputLabel for="journey_list" value="Journey" />
             <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="field_researcher_location_map, integration_map ,dia, field_researcher_list " />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list " />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
             </p:selectOneMenu>
         </h:panelGrid>
         <p:panelGrid columns="3" layout="grid">
-            <p:panel header="Field Researcher Location" styleClass="ui-dashboard-layout" >
-                    <p:gmap id="field_researcher_location_map" widgetVar="field_researcher_location_map" 
+            <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
+                    <p:gmap id="combine_map" widgetVar="field_researcher_location_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                        model="#{dashboardController.dashboardView.field_researcher_location_map}" styleClass="ui-diagram-layout"/>
+                        model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
             </p:panel>
 
             <p:panel header="Integration Map" styleClass="ui-dashboard-layout">

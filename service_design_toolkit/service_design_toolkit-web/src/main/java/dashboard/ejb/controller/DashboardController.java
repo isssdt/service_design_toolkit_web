@@ -43,7 +43,6 @@ import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import common.visualization.NetworkElement;
-import org.primefaces.model.chart.HorizontalBarChartModel;
 import user.dto.FieldResearcherDTO;
 
 /**
@@ -123,11 +122,17 @@ public class DashboardController implements Serializable {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
 
-        updateFeildResearcherList(journeyDTO);
-        updateFieldResearcherLocationMap(journeyDTO);
+        //updateFieldResearcherLocationMap(journeyDTO);
         updateIntegrationMap(journeyDTO);
         updateSnakeMap(journeyDTO);
-        
+        updateFeildResearcherList(journeyDTO);
+        updateCombineMap(journeyDTO);
+        //updateTouchPointLocationMap(journeyDTO);
+    }
+    
+    private void updateCombineMap(JourneyDTO journeyDTO) {
+        updateFieldResearcherLocationMap(journeyDTO);
+        updateTouchPointLocationMap(journeyDTO);
     }
     
     private void updateFeildResearcherList(JourneyDTO journeyDTO) {
@@ -144,7 +149,19 @@ public class DashboardController implements Serializable {
             Marker marker = new Marker(new LatLng(Double.parseDouble(fieldResearcherDTO.getCurrentLatitude()),
                     Double.parseDouble(fieldResearcherDTO.getCurrentLongitude())), fieldResearcherDTO.getSdtUserDTO().getUsername(), null, 
                     ConstantValues.MARKER_ICON_FIELD_RESEARCHER);
-            dashboardView.getField_researcher_location_map().addOverlay(marker);
+            dashboardView.getCombine_map().addOverlay(marker);
+        }
+    }
+    
+    private void updateTouchPointLocationMap(JourneyDTO journeyDTO) {
+        List<TouchPointDTO> touchPointDTOList = touchPointService.getTouchPointListJourney(journeyDTO);
+        
+        dashboardView.getTouch_point_location_map().getMarkers().clear();
+        for (TouchPointDTO touchPointDTO : touchPointDTOList) {
+            Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                    Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
+                    ConstantValues.MARKER_ICON_TOUCH_POINT);
+            dashboardView.getCombine_map().addOverlay(marker);
         }
     }
 

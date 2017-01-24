@@ -24,6 +24,8 @@ public class DashboardView implements Serializable {
 
     private Map<String, String> journeyNameMap;
     private MapModel field_researcher_location_map;
+    private MapModel touch_point_location_map;
+    private MapModel combine_map;
     private String centerGeoMap = "1.2971342, 103.7777567";   
     private CartesianChartModel integrationMapModel;
     private  DefaultDiagramModel snakeModel;
@@ -34,9 +36,19 @@ public class DashboardView implements Serializable {
      * Creates a new instance of DashboardView
      */
     public DashboardView() {
-        field_researcher_location_map = new DefaultMapModel();   
+        field_researcher_location_map = new DefaultMapModel();
+        touch_point_location_map = new DefaultMapModel();
+        combine_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         timeGapDiagram = new HorizontalBarChartModel();
+    }
+
+    public MapModel getTouch_point_location_map() {
+        return touch_point_location_map;
+    }
+
+    public void setTouch_point_location_map(MapModel touch_point_location_map) {
+        this.touch_point_location_map = touch_point_location_map;
     }
 
     public CartesianChartModel getIntegrationMapModel() {
@@ -93,6 +105,14 @@ public class DashboardView implements Serializable {
     
     public void setFieldResearcherDTOList(List<FieldResearcherDTO> fieldResearcherDTOList) {
         this.fieldResearcherDTOList = fieldResearcherDTOList;
+    }
+    
+    public MapModel getCombine_map() {
+        return combine_map;
+    }
+
+    public void setCombine_map(MapModel combine_map) {
+        this.combine_map = combine_map;
     }
     
 }
