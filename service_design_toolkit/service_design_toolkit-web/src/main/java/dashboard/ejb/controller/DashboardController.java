@@ -133,12 +133,7 @@ public class DashboardController implements Serializable {
     private void updateFeildResearcherList(JourneyDTO journeyDTO) {
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
         
-        //dashboardView.setFieldResearcherDTOList(null);
         dashboardView.setFieldResearcherDTOList(fieldResearcherDTOList);
-//        for (FieldResearcherDTO fieldResearcherDTO : fieldResearcherDTOList) {
-//            dashboardView.getFieldResearcherDTOList().add(fieldResearcherDTO);
-//        }
-        
     }
 
     private void updateFieldResearcherLocationMap(JourneyDTO journeyDTO) {
