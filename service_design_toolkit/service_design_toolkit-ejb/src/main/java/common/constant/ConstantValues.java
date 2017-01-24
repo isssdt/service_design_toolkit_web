@@ -155,7 +155,9 @@ public class ConstantValues {
      /**
      * Icon for marker of Field Researcher
      */
-    public static final String MARKER_ICON_FIELD_RESEARCHER = "https://maps.google.com/mapfiles/kml/shapes/library_maps.png";   
+    public static final String MARKER_ICON_FIELD_RESEARCHER = "https://maps.google.com/mapfiles/kml/shapes/library_maps.png";
+    
+    public static final String MARKER_ICON_TOUCH_POINT = "http://www.google.com/mapfiles/marker.png";
     
     public static final String DIALOG_LOCATION_CREATE_TOUCH_POINT = "/touchpoint/dialog/create";
     
