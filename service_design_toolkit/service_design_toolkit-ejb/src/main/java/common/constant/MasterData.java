@@ -19,4 +19,9 @@ public class MasterData {
     public static final String USER_ROLE_FIELD_RESEARCHER = "Field Researcher";
     public static final String USER_ROLE_RESEARCH_OWNER = "Research Owner";
     
+    //Duration Unit
+    public static final String TOUCH_POINT_DURATION_DAYS = "days";
+    public static final String TOUCH_POINT_DURATION_HOURS = "hours";
+    public static final String TOUCH_POINT_DURATION_MINS = "mins";
+    
 }

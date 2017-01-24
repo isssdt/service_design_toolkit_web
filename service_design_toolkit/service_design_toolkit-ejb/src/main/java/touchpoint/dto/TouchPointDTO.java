@@ -38,9 +38,11 @@ public class TouchPointDTO implements Serializable {
 
     public TouchPointDTO() {
         channelDTO = new ChannelDTO();
+        durationUnit = new MasterDataDTO();
     }
 
-    public TouchPointDTO(Integer id, String touchPointDesc, String latitude, String longitude, String radius, String action, String channelDescription, ChannelDTO channelDTO, JourneyDTO journeyDTO) {
+    public TouchPointDTO(Integer id, String touchPointDesc, String latitude, String longitude, String radius, 
+            String action, String channelDescription, ChannelDTO channelDTO, JourneyDTO journeyDTO) {
         this.id = id;
         this.touchPointDesc = touchPointDesc;
         this.latitude = latitude;
