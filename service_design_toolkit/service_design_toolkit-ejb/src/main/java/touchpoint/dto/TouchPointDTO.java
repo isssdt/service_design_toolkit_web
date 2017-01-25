@@ -31,10 +31,12 @@ public class TouchPointDTO implements Serializable {
     private String action;
     private String channelDescription;
     private BigDecimal duration;    
-    private MasterDataDTO durationUnit;    
-
+    private MasterDataDTO durationUnit;  
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
+    private Integer no_like;
+    private Integer no_dislike;
+    private Integer no_neutral;
 
     public TouchPointDTO() {
         channelDTO = new ChannelDTO();
@@ -53,6 +55,30 @@ public class TouchPointDTO implements Serializable {
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
     }    
+
+    public Integer getNo_like() {
+        return no_like;
+    }
+
+    public void setNo_like(Integer no_like) {
+        this.no_like = no_like;
+    }
+
+    public Integer getNo_dislike() {
+        return no_dislike;
+    }
+
+    public void setNo_dislike(Integer no_dislike) {
+        this.no_dislike = no_dislike;
+    }
+
+    public Integer getNo_neutral() {
+        return no_neutral;
+    }
+
+    public void setNo_neutral(Integer no_neutral) {
+        this.no_neutral = no_neutral;
+    }
 
     public BigDecimal getDuration() {
         return duration;

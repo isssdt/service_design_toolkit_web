@@ -146,6 +146,13 @@ public class TouchPointService implements TouchPointServiceLocal {
                 Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
             }
             touchPointDTO.setChannelDTO(channelDTO);
+            
+            //TODO: NEED TO GET VALUE FROM DB, NOW JUST ASSIGN SOME DUMMY VALUES
+            touchPointDTO.setNo_dislike(4);
+            touchPointDTO.setNo_like(5);
+            touchPointDTO.setNo_neutral(6);
+            //END
+            
             touchPointDTOList.add(touchPointDTO);
         }
 
