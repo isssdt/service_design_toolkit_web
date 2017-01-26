@@ -43,7 +43,7 @@
                 <f:validateLongRange minimum="1"/>
             </p:inputNumber>
             <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_ID}" 
-                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.durationUnit.dataValue}" 
+                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.masterDataDTO.dataValue}" 
                              required="true" 
                              requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_MESSAGE}">
                 <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT}" 

@@ -31,7 +31,7 @@ public class TouchPointDTO implements Serializable {
     private String action;
     private String channelDescription;
     private BigDecimal duration;    
-    private MasterDataDTO durationUnit;  
+    private MasterDataDTO masterDataDTO;  
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
     private Integer no_like;
@@ -39,8 +39,7 @@ public class TouchPointDTO implements Serializable {
     private Integer no_neutral;
 
     public TouchPointDTO() {
-        channelDTO = new ChannelDTO();
-        durationUnit = new MasterDataDTO();
+              
     }
 
     public TouchPointDTO(Integer id, String touchPointDesc, String latitude, String longitude, String radius, 
@@ -55,6 +54,14 @@ public class TouchPointDTO implements Serializable {
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
     }    
+
+    public MasterDataDTO getMasterDataDTO() {
+        return masterDataDTO;
+    }
+
+    public void setMasterDataDTO(MasterDataDTO masterDataDTO) {
+        this.masterDataDTO = masterDataDTO;
+    }
 
     public Integer getNo_like() {
         return no_like;
@@ -86,14 +93,6 @@ public class TouchPointDTO implements Serializable {
 
     public void setDuration(BigDecimal duration) {
         this.duration = duration;
-    }
-
-    public MasterDataDTO getDurationUnit() {
-        return durationUnit;
-    }
-
-    public void setDurationUnit(MasterDataDTO durationUnit) {
-        this.durationUnit = durationUnit;
     }
     
     public JourneyDTO getJourneyDTO() {

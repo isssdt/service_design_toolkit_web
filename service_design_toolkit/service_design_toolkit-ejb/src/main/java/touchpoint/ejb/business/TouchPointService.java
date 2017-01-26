@@ -110,6 +110,7 @@ public class TouchPointService implements TouchPointServiceLocal {
         //update comment and reaction for this Touch Point        
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
+        touchpointFieldResearcher.setDuration(touchpointFieldResearcherDTO.getDuration());
         touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE);
 
         factory.getTouchPointFieldResearcherFacade().edit(touchpointFieldResearcher);

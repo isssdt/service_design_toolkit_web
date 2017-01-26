@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import common.dto.ChannelDTO;
+import common.dto.MasterDataDTO;
 import touchpoint.dto.TouchPointDTO;
 import touchpoint.controller.TouchPointController;
 
@@ -73,6 +74,7 @@ public class CreateView extends AbstractView implements Serializable {
     public void initData() {
         touchPointDTO = new TouchPointDTO(); 
         touchPointDTO.setChannelDTO(new ChannelDTO());
+        touchPointDTO.setMasterDataDTO(new MasterDataDTO());
         
         channelDropDown = new HashMap<>();
         channelDropDown.put(MasterData.CHANNEL_FACE_TO_FACE, MasterData.CHANNEL_FACE_TO_FACE);

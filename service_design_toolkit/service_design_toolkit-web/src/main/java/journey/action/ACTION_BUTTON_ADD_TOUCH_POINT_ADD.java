@@ -23,8 +23,9 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD implements ActionHandler {
     @Override
     public void execute(AbstractView view, FacesEvent event) {
         Map<String,Object> options = new HashMap<>();
-        options.put("draggable", false);
+        options.put("draggable", true);
         options.put("modal", true);
+        options.put("resizable", false);
         RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_LOCATION_CREATE_TOUCH_POINT, options, null);
     }
 }

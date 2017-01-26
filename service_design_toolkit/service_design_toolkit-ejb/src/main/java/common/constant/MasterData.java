@@ -20,8 +20,8 @@ public class MasterData {
     public static final String USER_ROLE_RESEARCH_OWNER = "Research Owner";
     
     //Duration Unit
-    public static final String TOUCH_POINT_DURATION_DAYS = "days";
-    public static final String TOUCH_POINT_DURATION_HOURS = "hours";
-    public static final String TOUCH_POINT_DURATION_MINS = "mins";
+    public static final String TOUCH_POINT_DURATION_DAYS = "Day";
+    public static final String TOUCH_POINT_DURATION_HOURS = "Hour";
+    public static final String TOUCH_POINT_DURATION_MINS = "Minute";
     
 }
