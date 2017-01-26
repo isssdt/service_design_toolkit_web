@@ -36,14 +36,18 @@
                          disabled="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_WEBSITE}"
                          required="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_WEBSITE}" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE}" /> 
-            <p:inputNumber id="duration" placeholder="enter duration"
-                         value="#{touchpoint_ejb_view_CreateView.touchPointDTO.duration}" >
-                         <f:validateLongRange minimum="1"/>
+            <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_ID}" 
+                           placeholder="enter duration" required="true"
+                           requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_MESSAGE}"
+                           value="#{touchpoint_ejb_view_CreateView.touchPointDTO.duration}" >
+                <f:validateLongRange minimum="1"/>
             </p:inputNumber>
-            <p:selectOneMenu id="durationUnit" 
-                             
-                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.durationUnit.dataValue}" >
-                <f:selectItem itemLabel="" itemValue="" noSelectionOption="false" />                         
+            <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_ID}" 
+                             value="#{touchpoint_ejb_view_CreateView.touchPointDTO.durationUnit.dataValue}" 
+                             required="true" 
+                             requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_MESSAGE}">
+                <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT}" 
+                              itemValue="" noSelectionOption="false" />                         
                 <f:selectItems value="#{touchpoint_ejb_view_CreateView.durationDropDown}"/>
             </p:selectOneMenu>
                 

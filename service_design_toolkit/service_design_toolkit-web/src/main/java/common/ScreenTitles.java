@@ -64,6 +64,12 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION = "Please enter URL";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID = "SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_ID";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE = "Please provide URL of Website";
+    public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_ID = "Duration_Unit";
+    public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_MESSAGE = "Please provide Duration Unit";
+    public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT = "Days/Hours/Mins";
+    public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_ID = "Duration";
+    public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_MESSAGE = "Specify expected Duration";
+    
 
     //Touch Point Location Dialog
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS = "Address";

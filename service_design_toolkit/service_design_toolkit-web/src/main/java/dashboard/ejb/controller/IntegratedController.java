@@ -125,7 +125,6 @@ public class IntegratedController implements Serializable {
 
             }
              integratedView.getLineModel1().addSeries(tFRseries);
-
         }
     }
 

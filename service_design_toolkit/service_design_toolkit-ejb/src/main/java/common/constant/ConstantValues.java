@@ -152,6 +152,17 @@ public class ConstantValues {
      */
     public static final String CHART_INTEGRATION_Y_AXIS = "Rating";
     
+    /**
+     * X Axis of Time Gap Diagram
+     */
+    public static final String CHART_TIME_GAP_X_AXIS = "Touch Point";
+    
+    /**
+     * Y Axis of Time Gap Diagram
+     */
+    public static final String CHART_TIME_GAP_Y_AXIS = "Field Researcher time";
+    
+    
      /**
      * Icon for marker of Field Researcher
      */
