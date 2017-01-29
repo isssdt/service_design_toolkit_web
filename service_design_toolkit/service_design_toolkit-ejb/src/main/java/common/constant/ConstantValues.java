@@ -59,7 +59,11 @@ public class ConstantValues {
      * and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J 
      * WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS') 
      */
-    public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001";   
+    public static final String QUERY_GET_TOUCH_POINT_LIST_OF_REGISTERED_JOURNEY_OF_FIELD_RESEARCHER = "TouchpointFieldResearcher.00001"; 
+    /**
+     * SELECT COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id = 3
+     */
+    public static final String QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY = "TouchpointFieldResearcher.00002"; 
     /**
      * SELECT s FROM SdtUser s WHERE s.username = :username 
      */

@@ -29,7 +29,6 @@ import journey.dto.JourneyDTO;
 import user.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import common.dto.RatingDTO;
-import common.ejb.eao.MasterDataFacadeLocal;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.eao.JourneyFacadeLocal;

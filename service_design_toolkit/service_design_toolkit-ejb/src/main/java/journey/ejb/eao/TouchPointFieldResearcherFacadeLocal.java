@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import journey.dto.JourneyDTO;
@@ -16,7 +17,7 @@ import user.dto.SdtUserDTO;
  *
  * @author samru
  */
-public interface TouchPointFieldResearcherFacadeLocal {
+public interface TouchPointFieldResearcherFacadeLocal extends EAOFacade {
 
     TouchpointFieldResearcher create(TouchpointFieldResearcher touchpointFieldResearcher);
 

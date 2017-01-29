@@ -108,6 +108,9 @@ public class EAOFactory {
         if (MasterDataFacadeLocal.class.toString().equals(facade)) {
             return masterDataFacade;
         }
+        if (TouchPointFieldResearcherFacadeLocal.class.toString().equals(facade)) {
+            return touchPointFieldResearcherFacade;
+        }
         return null;
     }
 }

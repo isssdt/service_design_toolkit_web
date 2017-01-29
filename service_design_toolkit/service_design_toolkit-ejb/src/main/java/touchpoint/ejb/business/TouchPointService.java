@@ -25,6 +25,7 @@ import javax.ws.rs.core.Response;
 import common.dto.ChannelDTO;
 import journey.dto.JourneyDTO;
 import common.dto.RatingDTO;
+import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
 import journey.entity.Journey;
@@ -150,9 +151,15 @@ public class TouchPointService implements TouchPointServiceLocal {
             
             //TODO: NEED TO GET VALUE FROM DB, NOW JUST ASSIGN SOME DUMMY VALUES
             touchPointDTO.setNo_dislike(4);
-            touchPointDTO.setNo_like(5);
-            touchPointDTO.setNo_neutral(6);
+            touchPointDTO.setNo_like(5);            
             //END
+            
+            TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade = (TouchPointFieldResearcherFacadeLocal)
+                    factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
+            Map<String, Object> params = new HashMap<>();
+            params.put("journeyName", journeyDTO.getJourneyName());
+            touchPointDTO.setNo_neutral(touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));            
             
             touchPointDTOList.add(touchPointDTO);
         }
