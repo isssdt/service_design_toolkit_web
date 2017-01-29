@@ -147,19 +147,18 @@ public class TouchPointService implements TouchPointServiceLocal {
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            touchPointDTO.setChannelDTO(channelDTO);
-            
-            //TODO: NEED TO GET VALUE FROM DB, NOW JUST ASSIGN SOME DUMMY VALUES
-            touchPointDTO.setNo_dislike(4);
-            touchPointDTO.setNo_like(5);            
-            //END
+            touchPointDTO.setChannelDTO(channelDTO);            
             
             TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade = (TouchPointFieldResearcherFacadeLocal)
                     factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
             Map<String, Object> params = new HashMap<>();
             params.put("journeyName", journeyDTO.getJourneyName());
             touchPointDTO.setNo_neutral(touchPointFieldResearcherFacade.countByQueryName(
-                    ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));            
+                    ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));
+            touchPointDTO.setNo_dislike(touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));            
+            touchPointDTO.setNo_like(touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_LIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));          
             
             touchPointDTOList.add(touchPointDTO);
         }

@@ -64,6 +64,16 @@ public class ConstantValues {
      * SELECT COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id = 3
      */
     public static final String QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY = "TouchpointFieldResearcher.00002"; 
+
+    /**
+     * SELECT COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id in (1,2)
+     */
+    public static final String QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY = "TouchpointFieldResearcher.00003"; 
+
+    /**
+     * SELECT COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id in (4,5)
+     */
+    public static final String QUERY_GET_COUNT_LIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY = "TouchpointFieldResearcher.00004"; 
     /**
      * SELECT s FROM SdtUser s WHERE s.username = :username 
      */

@@ -158,6 +158,9 @@ public class DashboardController implements Serializable {
         
         dashboardView.getTouch_point_location_map().getMarkers().clear();
         for (TouchPointDTO touchPointDTO : touchPointDTOList) {
+            if ("NONE".equals(touchPointDTO.getLatitude())) {
+                continue;
+            }
             Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
                     ConstantValues.MARKER_ICON_TOUCH_POINT);
