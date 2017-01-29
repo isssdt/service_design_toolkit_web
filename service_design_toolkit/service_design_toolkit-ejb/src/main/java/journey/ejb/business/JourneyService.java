@@ -72,12 +72,7 @@ public class JourneyService implements JourneyServiceLocal {
         List<TouchPoint> touchPointList = new ArrayList<>();
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {
             TouchPoint touchPoint = new TouchPoint();
-            Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
-            
-            Map<String, Object> params = new HashMap<>();
-            params.put("dataValue", touchPointDTO.getMasterDataDTO().getDataValue());
-            MasterDataFacadeLocal masterDataFacade = (MasterDataFacadeLocal)factory.getFacade(MasterDataFacadeLocal.class.toString());
-            touchPoint.setDurationUnit(masterDataFacade.findSingleByQueryName(ConstantValues.QUERY_MASTER_DATA_FIND_BY_DATA_VALUE, params));
+            Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());            
             
             try {
                 BeanUtils.copyProperties(touchPoint, touchPointDTO);
@@ -86,6 +81,7 @@ public class JourneyService implements JourneyServiceLocal {
                 throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
             }
 
+            touchPoint.setDurationUnit(new MasterData(touchPointDTO.getMasterDataDTO().getId()));
             touchPoint.setChannelId(channel);
             touchPoint.setJourneyId(journey);            
             touchPointList.add(touchPoint);

@@ -82,9 +82,9 @@ public class CreateView extends AbstractView implements Serializable {
         channelDropDown.put(MasterData.CHANNEL_WEBSITE, MasterData.CHANNEL_WEBSITE);
         
         durationDropDown = new HashMap<>();
-        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_DAYS, MasterData.TOUCH_POINT_DURATION_DAYS);
-        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_HOURS, MasterData.TOUCH_POINT_DURATION_HOURS);
-        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_MINS, MasterData.TOUCH_POINT_DURATION_MINS);
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_DAYS, MasterData.TOUCH_POINT_DURATION_DAYS_ID);
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_HOURS, MasterData.TOUCH_POINT_DURATION_HOURS_ID);
+        durationDropDown.put(MasterData.TOUCH_POINT_DURATION_MINS, MasterData.TOUCH_POINT_DURATION_MINS_ID);
     }    
 
     @Override

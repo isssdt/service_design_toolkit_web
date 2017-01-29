@@ -44,6 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyNameAndUsername", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username and t.ratingId IS NOT NULL"),
+    @NamedQuery(name = "TouchpointFieldResearcher.00002", 
+            query = "SELECT COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id = 3"),
     @NamedQuery(name = "TouchpointFieldResearcher.00001", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')")})           
 public class TouchpointFieldResearcher implements Serializable {
