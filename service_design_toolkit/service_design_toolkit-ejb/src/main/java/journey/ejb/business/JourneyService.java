@@ -29,11 +29,13 @@ import journey.dto.JourneyDTO;
 import user.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
 import common.dto.RatingDTO;
+import common.ejb.eao.MasterDataFacadeLocal;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
 import journey.ejb.eao.JourneyFacadeLocal;
 import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
 import common.entity.Channel;
+import common.entity.MasterData;
 import journey.entity.Journey;
 import user.entity.JourneyFieldResearcher;
 import touchpoint.entity.TouchPoint;
@@ -71,6 +73,12 @@ public class JourneyService implements JourneyServiceLocal {
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {
             TouchPoint touchPoint = new TouchPoint();
             Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());
+            
+            Map<String, Object> params = new HashMap<>();
+            params.put("dataValue", touchPointDTO.getMasterDataDTO().getDataValue());
+            MasterDataFacadeLocal masterDataFacade = (MasterDataFacadeLocal)factory.getFacade(MasterDataFacadeLocal.class.toString());
+            touchPoint.setDurationUnit(masterDataFacade.findSingleByQueryName(ConstantValues.QUERY_MASTER_DATA_FIND_BY_DATA_VALUE, params));
+            
             try {
                 BeanUtils.copyProperties(touchPoint, touchPointDTO);
             } catch (IllegalAccessException | InvocationTargetException ex) {

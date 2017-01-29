@@ -52,6 +52,9 @@ public class EAOFactory {
     
     @EJB
     private FieldResearcherFacadeLocal fieldResearcherFacade;
+    
+    @EJB
+    MasterDataFacadeLocal masterDataFacade;
 
     public FieldResearcherFacadeLocal getFieldResearcherFacade() {
         return fieldResearcherFacade;
@@ -101,6 +104,9 @@ public class EAOFactory {
         }
         if (UserRoleFacadeLocal.class.toString().equals(facade)) {
             return userRoleFacade;
+        }
+        if (MasterDataFacadeLocal.class.toString().equals(facade)) {
+            return masterDataFacade;
         }
         return null;
     }

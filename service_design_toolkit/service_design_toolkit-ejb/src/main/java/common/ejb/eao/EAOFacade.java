@@ -9,6 +9,5 @@ package common.ejb.eao;
  *
  * @author longnguyen
  */
-public interface EAOFacade {
-    
+public interface EAOFacade {    
 }

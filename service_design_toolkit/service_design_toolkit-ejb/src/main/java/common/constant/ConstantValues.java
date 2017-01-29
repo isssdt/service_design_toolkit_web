@@ -75,7 +75,11 @@ public class ConstantValues {
     /**
      * SELECT u FROM UserRole u WHERE u.roleName = :roleName
      */
-    public static final String QUERY_USER_ROLE_FIND_ROLE_BY_NAME = "UserRole.findByRoleName";  
+    public static final String QUERY_USER_ROLE_FIND_ROLE_BY_NAME = "UserRole.findByRoleName";    
+    /**
+     * SELECT m FROM MasterData m WHERE m.dataValue = :dataValue
+     */
+    public static final String QUERY_MASTER_DATA_FIND_BY_DATA_VALUE = "MasterData.findByDataValue";
     
     
     //Username or password is not correct    
