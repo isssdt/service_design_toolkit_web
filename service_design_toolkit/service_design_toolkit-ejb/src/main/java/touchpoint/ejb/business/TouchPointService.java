@@ -132,6 +132,17 @@ public class TouchPointService implements TouchPointServiceLocal {
     public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO) {
         Journey journey = factory.getJourneyFacade().findJourneyByName(journeyDTO);
 
+        TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade = (TouchPointFieldResearcherFacadeLocal) 
+                factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", journeyDTO.getJourneyName());
+        List<Object[]> touchPointNeutralRatingList = touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
+        List<Object[]> touchPointLikeRatingList = touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_LIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
+        List<Object[]> touchPointDislikeRatingList = touchPointFieldResearcherFacade.countByQueryName(
+                    ConstantValues.QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
+
         List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
         for (TouchPoint touchPoint : journey.getTouchPointList()) {
             ChannelDTO channelDTO = new ChannelDTO();
@@ -147,22 +158,31 @@ public class TouchPointService implements TouchPointServiceLocal {
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            touchPointDTO.setChannelDTO(channelDTO);            
-            
-            TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade = (TouchPointFieldResearcherFacadeLocal)
-                    factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
-            Map<String, Object> params = new HashMap<>();
-            params.put("journeyName", journeyDTO.getJourneyName());
-            touchPointDTO.setNo_neutral(touchPointFieldResearcherFacade.countByQueryName(
-                    ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));
-            touchPointDTO.setNo_dislike(touchPointFieldResearcherFacade.countByQueryName(
-                    ConstantValues.QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));            
-            touchPointDTO.setNo_like(touchPointFieldResearcherFacade.countByQueryName(
-                    ConstantValues.QUERY_GET_COUNT_LIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params));          
+            touchPointDTO.setChannelDTO(channelDTO);
+            setNeutralLikeDislike(touchPointDTO, touchPointNeutralRatingList, touchPointLikeRatingList, touchPointDislikeRatingList);            
             
             touchPointDTOList.add(touchPointDTO);
         }
 
         return touchPointDTOList;
+    }
+    
+    private void setNeutralLikeDislike(TouchPointDTO touchPointDTO, List<Object[]> touchPointNeutralRatingList, List<Object[]> touchPointLikeRatingList, 
+            List<Object[]> touchPointDislikeRatingList) {
+        for (Object[] neutralRating : touchPointNeutralRatingList) {
+            if (touchPointDTO.getId().equals(neutralRating[0])) {
+                touchPointDTO.setNo_neutral(((Long)neutralRating[1]).intValue());
+            }
+        }
+        for (Object[] likeRating : touchPointLikeRatingList) {
+            if (touchPointDTO.getId().equals(likeRating[0])) {
+                touchPointDTO.setNo_like(((Long)likeRating[1]).intValue());
+            }
+        }
+        for (Object[] dislikeRating : touchPointDislikeRatingList) {
+            if (touchPointDTO.getId().equals(dislikeRating[0])) {
+                touchPointDTO.setNo_dislike(((Long)dislikeRating[1]).intValue());
+            }
+        }
     }
 }

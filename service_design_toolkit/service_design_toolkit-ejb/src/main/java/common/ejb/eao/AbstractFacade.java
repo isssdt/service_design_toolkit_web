@@ -71,12 +71,12 @@ public abstract class AbstractFacade<T> {
         }
     }
     
-    public int countByQueryName(String queryName, Map<String, Object> queryParamValues) {
+    public List<Object[]> countByQueryName(String queryName, Map<String, Object> queryParamValues) {
         Query query = getEntityManager().createNamedQuery(queryName);
         for (Map.Entry<String, Object> param : queryParamValues.entrySet()) {
             query.setParameter(param.getKey(), param.getValue());
         }        
-        return ((Long)query.getSingleResult()).intValue();
+        return query.getResultList();
     }
 
     public List<T> findListByNativeQuery(String query, List<Object> params) {

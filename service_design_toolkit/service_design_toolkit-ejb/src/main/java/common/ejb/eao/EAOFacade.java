@@ -5,6 +5,7 @@
  */
 package common.ejb.eao;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,5 +13,5 @@ import java.util.Map;
  * @author longnguyen
  */
 public interface EAOFacade {
-    int countByQueryName(String queryName, Map<String, Object> queryParamValues);
+    List<Object[]> countByQueryName(String queryName, Map<String, Object> queryParamValues);
 }
