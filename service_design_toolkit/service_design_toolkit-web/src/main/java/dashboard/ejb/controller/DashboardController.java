@@ -141,6 +141,7 @@ public class DashboardController implements Serializable {
     }
     
     private void updateCombineMap(JourneyDTO journeyDTO) {
+        dashboardView.getCombine_map().getMarkers().clear();
         updateFieldResearcherLocationMap(journeyDTO);
         updateTouchPointLocationMap(journeyDTO);
     }
