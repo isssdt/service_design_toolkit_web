@@ -18,6 +18,15 @@ public class DashboardModel implements Serializable {
     /**
      * Creates a new instance of DashboardModel
      */
+      private String fieldResearcherName;
+
+    public String getFieldResearcherName() {
+        return fieldResearcherName;
+    }
+
+    public void setFieldResearcherName(String fieldResearcherName) {
+        this.fieldResearcherName = fieldResearcherName;
+    }
     public DashboardModel() {
     }
 

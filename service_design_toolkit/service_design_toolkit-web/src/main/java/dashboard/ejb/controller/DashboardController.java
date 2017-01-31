@@ -43,7 +43,9 @@ import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import common.visualization.NetworkElement;
+import org.primefaces.model.map.Polyline;
 import user.dto.FieldResearcherDTO;
+import user.dto.SdtUserDTO;
 
 /**
  *
@@ -75,6 +77,7 @@ public class DashboardController implements Serializable {
         initDummyChart();
         initsnakeModel();
         initDummyTimeGapDia();
+        initPolylines();
         HashMap<String, String> journeyNameMap = new HashMap<>();
         try {
             List<JourneyDTO> journeyDTOList = journeyService.getAllJourney();
@@ -128,6 +131,13 @@ public class DashboardController implements Serializable {
         updateFeildResearcherList(journeyDTO);
         updateCombineMap(journeyDTO);
         //updateTouchPointLocationMap(journeyDTO);
+         HashMap<String, String> frNameMap = new HashMap<>();
+         List<FieldResearcherDTO> frDTOList = dashboardView.getFieldResearcherDTOList();
+         for (FieldResearcherDTO frDTO : frDTOList) {
+             frNameMap.put(frDTO.getSdtUserDTO().getUsername(),frDTO.getSdtUserDTO().getUsername());
+         }
+        System.out.println("size"+frNameMap.size());
+        dashboardView.setFrMap(frNameMap);
     }
     
     private void updateCombineMap(JourneyDTO journeyDTO) {
@@ -320,5 +330,85 @@ public class DashboardController implements Serializable {
 
         return conn;
     }
+      
+       public  void  onFRChange()
+      {
+          JourneyDTO journeyDTO = new JourneyDTO();
+        journeyDTO.setJourneyName(dashboardModel.getJourneyName());
+           FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
+           SdtUserDTO sdtUserDTO =new SdtUserDTO();
+           sdtUserDTO.setUsername(dashboardModel.getFieldResearcherName());
+        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
+          System.out.println("journey"+journeyDTO.getJourneyName());
+          updatePolylines( journeyDTO,fieldResearcherDTO);
+      }
+
+    private void initPolylines() {
+       
+  
+          
+        //Shared coordinates
+        LatLng coord1 = new LatLng(36.879466, 30.667648);
+        LatLng coord2 = new LatLng(36.883707, 30.689216);
+        LatLng coord3 = new LatLng(36.879703, 30.706707);
+        LatLng coord4 = new LatLng(36.885233, 30.702323);
+      
+        //Polyline
+        Polyline polyline = new Polyline();
+        polyline.getPaths().add(coord1);
+        polyline.getPaths().add(coord2);
+        polyline.getPaths().add(coord3);
+        polyline.getPaths().add(coord4);
+          
+        polyline.setStrokeWeight(10);
+        polyline.setStrokeColor("#FF9900");
+        polyline.setStrokeOpacity(0.7);
+          
+        dashboardView.getPolylineModel().addOverlay(polyline);
+
+    }
+    
+     private void updatePolylines(JourneyDTO journeyDTO ,FieldResearcherDTO fieldResearcherDTO) {
+       
+         System.out.println("updatePolylines");
+          //journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+          Polyline polyline = new Polyline();
+          System.out.println("size"+getTouchPointList(journeyDTO).size());
+          for(TouchPointDTO touchPointDTO:getTouchPointList(journeyDTO)){
+        //Shared coordinates
+              System.out.println("location "+touchPointDTO.getLatitude()+touchPointDTO.getLongitude());
+        LatLng coord = new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),Double.parseDouble(touchPointDTO.getLongitude()));
+       
+          
+        //Polyline
+        
+        polyline.getPaths().add(coord);
+        
+          
+        polyline.setStrokeWeight(10);
+        polyline.setStrokeColor("#FF9900");
+        polyline.setStrokeOpacity(0.7);
+     
+          }
+          LatLng coord1 = new LatLng(36.879466, 30.667648);
+        LatLng coord2 = new LatLng(36.883707, 30.689216);
+        LatLng coord3 = new LatLng(36.879703, 30.706707);
+        LatLng coord4 = new LatLng(36.885233, 30.702323);
+      
+        //Polyline
+        Polyline polyline1 = new Polyline();
+        polyline1.getPaths().add(coord1);
+        polyline1.getPaths().add(coord2);
+        polyline1.getPaths().add(coord3);
+        polyline1.getPaths().add(coord4);
+          
+        polyline1.setStrokeWeight(10);
+        polyline1.setStrokeColor("#FD9900");
+        polyline1.setStrokeOpacity(0.7);
+           dashboardView.getPolylineModel().addOverlay(polyline);
+           dashboardView.getPolylineModel().addOverlay(polyline1);
+
+    }
+    
 
 }

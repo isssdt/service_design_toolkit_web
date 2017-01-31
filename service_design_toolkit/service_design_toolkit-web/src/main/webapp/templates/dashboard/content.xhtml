@@ -59,12 +59,21 @@
 
     <h:form>
         <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
-            <p:outputLabel for="journey_list" value="Journey" />
+            <p:panel> <p:outputLabel for="journey_list" value="Journey" />
             <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list " />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list,fr " />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
             </p:selectOneMenu>
+                </p:panel>
+            <p:panel id ="fr" widgetVar="fr">
+            <p:outputLabel for="fr_list" value="FieldResearcher" />
+            <p:selectOneMenu id="fr_list" value="#{dashboardController.dashboardModel.fieldResearcherName}">
+                <p:ajax listener="#{dashboardController.onFRChange()}" update="gmap "/>
+                <f:selectItem itemLabel="Select Field Researcher" itemValue="" noSelectionOption="true" />                         
+                <f:selectItems value="#{dashboardController.dashboardView.frMap}"/>
+            </p:selectOneMenu>
+            </p:panel>
         </h:panelGrid>
         <p:panelGrid columns="3" layout="grid">
             <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
@@ -107,5 +116,15 @@
                          styleClass="ui-diagram-layout" responsive="true"/>      
             </p:panel>
         </p:panelGrid>
+        <p:panelGrid columns="1" layout="grid">
+                <p:panel widgetVar="fr1" id="fr1">
+                    <h:inputText value="hello" />
+                     <p:growl id="growl" life="3000" />
+ 
+    <p:gmap id="gmap" center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{dashboardController.dashboardView.polylineModel}">
+        
+    </p:gmap>          
+                </p:panel>
+            </p:panelGrid>
     </h:form>  
 </ui:composition>

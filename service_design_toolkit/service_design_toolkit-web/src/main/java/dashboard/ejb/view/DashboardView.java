@@ -31,6 +31,8 @@ public class DashboardView implements Serializable {
     private  DefaultDiagramModel snakeModel;
     private HorizontalBarChartModel timeGapDiagram;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
+     private Map<String, String> frMap;
+     private MapModel polylineModel;
 
     /**
      * Creates a new instance of DashboardView
@@ -41,6 +43,7 @@ public class DashboardView implements Serializable {
         combine_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         timeGapDiagram = new HorizontalBarChartModel();
+        polylineModel = new DefaultMapModel();
     }
 
     public MapModel getTouch_point_location_map() {
@@ -114,5 +117,22 @@ public class DashboardView implements Serializable {
     public void setCombine_map(MapModel combine_map) {
         this.combine_map = combine_map;
     }
+    
+    public Map<String, String> getFrMap() {
+        return frMap;
+    }
+
+    public void setFrMap(Map<String, String> frMap) {
+        this.frMap = frMap;
+    }
+
+    public MapModel getPolylineModel() {
+        return polylineModel;
+    }
+
+    public void setPolylineModel(MapModel polylineModel) {
+        this.polylineModel = polylineModel;
+    }
+    
     
 }
