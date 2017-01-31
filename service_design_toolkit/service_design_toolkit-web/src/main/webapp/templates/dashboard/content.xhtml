@@ -91,10 +91,13 @@
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
                 <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
                 <f:facet name="element">
-                    <h:outputText value="#{el.name}" styleClass="ui-facet-element"/>
-                    <h:outputText value="#{el.channelName}" styleClass="ui-facet-element"/>
-                    <h:outputText value="#{el.channelDesc}" styleClass="ui-facet-element"/>
-                    <h:graphicImage  name="img/marker.png" width="20%" height="20%" rendered="#{el.channelName eq 'Kiosk'  or el.channelName eq 'Face To Face' }"/>
+                   <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
+                  <h:outputText value="#{el.channelDTO.channelName}" styleClass="ui-facet-element"/>
+                    <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
+                    <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
+                    <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
+                    <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
+                    <h:graphicImage  name="img/marker.png" width="20%" height="20%" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }"/>
                 </f:facet>
                 </p:diagram> 
             </p:panel>

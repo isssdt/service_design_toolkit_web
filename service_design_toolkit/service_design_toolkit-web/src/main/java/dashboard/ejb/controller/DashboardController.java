@@ -238,7 +238,13 @@ public class DashboardController implements Serializable {
         connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
         model.setDefaultConnector(connector);
 
-        Element start = new Element(new NetworkElement("Home", "",""), "6em", "2em");
+        
+        Element start;
+        TouchPointDTO startTouch=new TouchPointDTO();
+        startTouch.setTouchPointDesc("start");
+        start = new Element(startTouch, "6em", "2em");
+        
+       
         start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
         start.setDraggable(false);
         start.setStyleClass("ui-start-element");
@@ -286,7 +292,8 @@ public class DashboardController implements Serializable {
         X1 = a + "em";
         Y1 = b + "em";
 
-        Element touch = new Element(new NetworkElement(touchPoint.getTouchPointDesc(),touchPoint.getChannelDTO().getChannelName(), touchPoint.getChannelDescription()), X1, Y1);
+        Element touch = new Element(touchPoint, X1, Y1);
+        //Element touch = new Element(new NetworkElement(touchPoint.getTouchPointDesc(),touchPoint.getChannelDTO().getChannelName(), touchPoint.getChannelDescription()), X1, Y1);
         touch.setDraggable(false);
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.LEFT));
         touch.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
