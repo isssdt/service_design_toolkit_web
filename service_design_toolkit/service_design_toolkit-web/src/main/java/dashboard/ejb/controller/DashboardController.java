@@ -141,7 +141,6 @@ public class DashboardController implements Serializable {
     }
     
     private void updateCombineMap(JourneyDTO journeyDTO) {
-        dashboardView.getCombine_map().getMarkers().clear();
         updateFieldResearcherLocationMap(journeyDTO);
         updateTouchPointLocationMap(journeyDTO);
     }
@@ -153,7 +152,6 @@ public class DashboardController implements Serializable {
     }
 
     private void updateFieldResearcherLocationMap(JourneyDTO journeyDTO) {
-        //dashboardView.getField_researcher_location_map().getMarkers().clear();
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
 
         dashboardView.getField_researcher_location_map().getMarkers().clear();
@@ -166,7 +164,6 @@ public class DashboardController implements Serializable {
     }
     
     private void updateTouchPointLocationMap(JourneyDTO journeyDTO) {
-        //dashboardView.getTouch_point_location_map().getMarkers().clear();
         List<TouchPointDTO> touchPointDTOList = touchPointService.getTouchPointListJourney(journeyDTO);
         
         dashboardView.getTouch_point_location_map().getMarkers().clear();
