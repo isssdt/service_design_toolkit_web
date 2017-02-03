@@ -102,13 +102,46 @@
                 <f:facet name="element">
                    <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
                   <h:outputText value="#{el.channelDTO.channelName}" styleClass="ui-facet-element"/>
-                    <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
-                    <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
+                  
+                  <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
+                  <h:commandLink onclick="myRemote([{name:'token',value:'#{el.touchPointDesc}'},{name:'token1',value:'#{el.latitude}'},{name:'token2',value:'#{el.longitude}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                        <i class="fa fa-map-marker" aria-hidden="true" ></i>
+                        <f:ajax ></f:ajax>
+                  </h:commandLink>
+                  <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
                     <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
-                    <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
-                    <h:graphicImage  name="img/marker.png" width="20%" height="20%" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }"/>
+                  <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
+<!--                  <p:commandLink onclick="PF('confirmation').show();" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <f:attribute id="touch" value="#{e1}"></f:attribute>
+                  </p:commandLink> 
+                  <p:dialog widgetVar="confirmation" >
+                      <h:outputText value="#{el.touchPointDesc}"></h:outputText>
+                  </p:dialog>-->
+                  
+                  
+
+                
                 </f:facet>
+                    
                 </p:diagram> 
+                <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" 
+                 update="dialog" oncomplete="PF('dlg').show();"  />
+                
+<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
+     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
+     <h:outputText value="---"/>
+     <h:outputText value="#{dashboardController.touchPointDesc}" />
+   
+
+                    <p:gmap id="click_map" widgetVar="click_map" 
+                        center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
+                        model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
+            
+    
+</p:dialog>
+
+               
             </p:panel>
             
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
@@ -121,7 +154,7 @@
                     <h:inputText value="hello" />
                      <p:growl id="growl" life="3000" />
  
-    <p:gmap id="gmap" center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{dashboardController.dashboardView.polylineModel}">
+    <p:gmap id="gmap" center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="hybrid" style="width:100%;height:400px" model="#{dashboardController.dashboardView.polylineModel}">
         
     </p:gmap>          
                 </p:panel>

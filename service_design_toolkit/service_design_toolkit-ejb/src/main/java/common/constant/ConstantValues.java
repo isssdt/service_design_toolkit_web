@@ -188,6 +188,8 @@ public class ConstantValues {
     
     public static final String MARKER_ICON_TOUCH_POINT = "http://www.google.com/mapfiles/marker.png";
     
+    public static final String MARKER_ICON_TOUCH_POINT_CURRENT =  "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
+    
     public static final String DIALOG_LOCATION_CREATE_TOUCH_POINT = "/touchpoint/dialog/create";
     
     public static final String DIALOG_LOCATION_TOUCH_POINT_LOCATION = "/touchpoint/dialog/geomap";

@@ -43,6 +43,9 @@ import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import common.visualization.NetworkElement;
+import java.util.ArrayList;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.map.Polyline;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
@@ -63,13 +66,60 @@ public class DashboardController implements Serializable {
     DashboardView dashboardView;
 
     DashboardModel dashboardModel;
+    String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     /**
      * Creates a new instance of DashboardController
      */
     public DashboardController() {
     }
+ private String touchPointDesc;
+    private String latitude;
+    private String longitude;
+    private String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+
+    public String getTouchPointDesc() {
+        return touchPointDesc;
+    }
+
+    public void setTouchPointDesc(String touchPointDesc) {
+        this.touchPointDesc = touchPointDesc;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+    
+    
     @PostConstruct
     public void init() {
         dashboardModel = new DashboardModel();
@@ -410,6 +460,44 @@ public class DashboardController implements Serializable {
            dashboardView.getPolylineModel().addOverlay(polyline1);
 
     }
-    
+      public void showDialog() {
+          String token = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token");
+          setTouchPointDesc(token);
+          String token1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token1");
+          setLatitude(token1);
+          String token2 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token2");
+          setLongitude(token2);
+         System.out.println("dash"+dashboardModel.getJourneyName());
+          
+          String jName=dashboardModel.getJourneyName();
+          
+          if(jName!=null){
+         JourneyDTO journeyDTO = new JourneyDTO();
+        journeyDTO.setJourneyName(jName);
+          
+       
+        List<TouchPointDTO> touchPointDTOList = touchPointService.getTouchPointListJourney(journeyDTO);
+          System.out.println("size "+touchPointDTOList.size()+dashboardModel.getJourneyName());
+          dashboardView.getCombine_map().getMarkers().clear();
+        
+        for (TouchPointDTO touchPointDTO : touchPointDTOList) {
+           
+            if(touchPointDTO.getTouchPointDesc().equals(getTouchPointDesc())){
+            Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                    Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
+                 ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
+            dashboardView.getCombine_map().addOverlay(marker);
+            }else{
+                Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                    Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
+                    ConstantValues.MARKER_ICON_TOUCH_POINT);
+            dashboardView.getCombine_map().addOverlay(marker);
+                
+            }
+      }
+          }
+          
+        
+}
 
 }

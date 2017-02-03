@@ -14,11 +14,40 @@ import java.io.Serializable;
 
 public class DashboardModel implements Serializable {
     private String journeyName;
+    
+    private String touchPointDesc;
+    
+    private String latitude;
+    private String longitude;
 
     /**
      * Creates a new instance of DashboardModel
      */
       private String fieldResearcherName;
+
+    public String getTouchPointDesc() {
+        return touchPointDesc;
+    }
+
+    public void setTouchPointDesc(String touchPointDesc) {
+        this.touchPointDesc = touchPointDesc;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     public String getFieldResearcherName() {
         return fieldResearcherName;
