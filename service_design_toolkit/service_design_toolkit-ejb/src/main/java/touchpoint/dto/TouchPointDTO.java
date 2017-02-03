@@ -30,7 +30,7 @@ public class TouchPointDTO implements Serializable {
     private String radius;
     private String action;
     private String channelDescription;
-    private BigDecimal duration;    
+    private Integer duration;    
     private MasterDataDTO masterDataDTO;  
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
@@ -54,6 +54,14 @@ public class TouchPointDTO implements Serializable {
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
     }    
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public MasterDataDTO getMasterDataDTO() {
         return masterDataDTO;
@@ -85,15 +93,7 @@ public class TouchPointDTO implements Serializable {
 
     public void setNo_neutral(Integer no_neutral) {
         this.no_neutral = no_neutral;
-    }
-
-    public BigDecimal getDuration() {
-        return duration;
-    }
-
-    public void setDuration(BigDecimal duration) {
-        this.duration = duration;
-    }
+    }    
     
     public JourneyDTO getJourneyDTO() {
         return journeyDTO;

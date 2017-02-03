@@ -5,11 +5,11 @@
  */
 package user.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import touchpoint.dto.TouchPointDTO;
 import common.dto.RatingDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.math.BigDecimal;
 
 /**
  *
@@ -17,6 +17,7 @@ import java.math.BigDecimal;
  */
 
 @JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TouchPointFieldResearcherDTO {
     private FieldResearcherDTO fieldResearcherDTO;
     private TouchPointDTO touchpointDTO;
@@ -24,13 +25,13 @@ public class TouchPointFieldResearcherDTO {
     private String reaction;
     private RatingDTO ratingDTO;
     private String status;
-    private BigDecimal duration;
+    private Integer duration;
 
-    public BigDecimal getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(BigDecimal duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

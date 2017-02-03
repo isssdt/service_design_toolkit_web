@@ -56,7 +56,7 @@ public class TouchpointFieldResearcher implements Serializable {
 
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "duration")
-    private BigDecimal duration;
+    private Integer duration;
 
     @Size(max = 50)
     @Column(name = "status")
@@ -173,11 +173,11 @@ public class TouchpointFieldResearcher implements Serializable {
         this.status = status;
     }
 
-    public BigDecimal getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(BigDecimal duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
     

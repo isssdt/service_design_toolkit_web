@@ -47,13 +47,13 @@ import user.entity.TouchpointFieldResearcher;
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
 
+    @Column(name = "duration")
+    private Integer duration;
+
     @JoinColumn(name = "duration_unit", referencedColumnName = "id")
     @ManyToOne
     private MasterData durationUnit;
 
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "duration")
-    private BigDecimal duration;    
 
     @Size(max = 200)
     @Column(name = "action")
@@ -228,13 +228,6 @@ public class TouchPoint implements Serializable {
         this.channelId = channelId;
     }    
 
-    public BigDecimal getDuration() {
-        return duration;
-    }
-
-    public void setDuration(BigDecimal duration) {
-        this.duration = duration;
-    }
 
     public MasterData getDurationUnit() {
         return durationUnit;
@@ -242,6 +235,14 @@ public class TouchPoint implements Serializable {
 
     public void setDurationUnit(MasterData durationUnit) {
         this.durationUnit = durationUnit;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
     
 }
