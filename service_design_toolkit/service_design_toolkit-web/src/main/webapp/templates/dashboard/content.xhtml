@@ -69,7 +69,7 @@
             <p:panel id ="fr" widgetVar="fr">
             <p:outputLabel for="fr_list" value="FieldResearcher" />
             <p:selectOneMenu id="fr_list" value="#{dashboardController.dashboardModel.fieldResearcherName}">
-                <p:ajax listener="#{dashboardController.onFRChange()}" update="gmap "/>
+                <p:ajax listener="#{dashboardController.onFRChange()}" />
                 <f:selectItem itemLabel="Select Field Researcher" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.frMap}"/>
             </p:selectOneMenu>
@@ -128,36 +128,31 @@
                 <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" 
                  update="dialog" oncomplete="PF('dlg').show();"  />
                 
-<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
-     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
-     <h:outputText value="---"/>
-     <h:outputText value="#{dashboardController.touchPointDesc}" />
-   
-
-                    <p:gmap id="click_map" widgetVar="click_map" 
-                        center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                        model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
-            
-    
-</p:dialog>
+            <p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
+                <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
+                <h:outputText value="---"/>
+                <h:outputText value="#{dashboardController.touchPointDesc}" />
+                <p:gmap id="click_map" widgetVar="click_map" 
+                                   center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
+                                   model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
+           </p:dialog>
 
                
             </p:panel>
             
-            <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
+        <!--    <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
                 <p:chart widgetVar="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
                          styleClass="ui-diagram-layout" responsive="true"/>      
-            </p:panel>
+            </p:panel>-->
         </p:panelGrid>
-        <p:panelGrid columns="1" layout="grid">
+        <!--<p:panelGrid columns="1" layout="grid">
                 <p:panel widgetVar="fr1" id="fr1">
                     <h:inputText value="hello" />
                      <p:growl id="growl" life="3000" />
  
     <p:gmap id="gmap" center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="hybrid" style="width:100%;height:400px" model="#{dashboardController.dashboardView.polylineModel}">
         
-    </p:gmap>          
-                </p:panel>
-            </p:panelGrid>
+    </p:gmap>       
+            </p:panelGrid>-->
     </h:form>  
 </ui:composition>
