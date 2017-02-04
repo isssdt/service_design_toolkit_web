@@ -88,9 +88,10 @@
                 <p:resizable for="integration_map" />
             </p:panel>
             <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >
-                <p:dataList  widgetVar="field_researcher_list" id="field_researcher_list" value="#{dashboardController.dashboardView.fieldResearcherDTOList}" var="fieldResearcher" type="ordered" itemType="none" rows="10">
-                    <f:facet name="head">
-                        head
+                <p:dataList  widgetVar="field_researcher_list" id="field_researcher_list" value="#{dashboardController.dashboardView.fieldResearcherDTOList}" 
+                             var="fieldResearcher" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                    <f:facet name="header">
+                        #{dashboardController.dashboardModel.journeyName}
                     </f:facet>
                     #{fieldResearcher.sdtUserDTO.username}
                 </p:dataList>
