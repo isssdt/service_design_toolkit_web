@@ -14,7 +14,15 @@ import java.io.Serializable;
 
 public class DashboardModel implements Serializable {
     private String journeyName;
-    
+    private String fRName;
+
+    public void setfRName(String fRName) {
+        this.fRName = fRName;
+    }
+
+    public String getfRName() {
+        return fRName;
+    }
     private String touchPointDesc;
     
     private String latitude;

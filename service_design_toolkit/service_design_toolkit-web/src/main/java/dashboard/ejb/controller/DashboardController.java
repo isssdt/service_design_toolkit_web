@@ -124,7 +124,8 @@ public class DashboardController implements Serializable {
     public void init() {
         dashboardModel = new DashboardModel();
         dashboardView = new DashboardView();
-        initDummyChart();
+        initDummyIntMapChart();
+        initDummyIndExpMapChart();
         initsnakeModel();
         initDummyTimeGapDia();
         initPolylines();
@@ -188,6 +189,26 @@ public class DashboardController implements Serializable {
          }
         System.out.println("size"+frNameMap.size());
         dashboardView.setFrMap(frNameMap);
+    }
+    
+    public void onFieldResearcherChange() {
+        JourneyDTO journeyDTO = new JourneyDTO();
+        journeyDTO.setJourneyName(dashboardModel.getJourneyName());        
+        dashboardView.getIndExpMapModel().clear();
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        ChartSeries csind = null;
+        for (TouchPointFieldResearcherDTO touchPointFieldResearcherDTO : touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()) {
+            if ((dashboardModel.getFieldResearcherName()).equals(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername())){
+                csind = new ChartSeries();
+                System.out.println("inside here" +touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+                csind.setLabel(dashboardModel.getFieldResearcherName());
+                csind.set(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc(),
+                    Integer.parseInt(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
+            }
+        }
+        System.out.println(csind.getLabel());
+        System.out.println(csind.getData());
+        dashboardView.getIndExpMapModel().addSeries(csind);
     }
     
     private void updateCombineMap(JourneyDTO journeyDTO) {
@@ -254,7 +275,7 @@ public class DashboardController implements Serializable {
         //if there is no research work, initialize the empty graph
         if (null == touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()
                 || touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().isEmpty()) {
-            initDummyChart();
+            initDummyIntMapChart();
             return;
         }
         List<FieldResearcherDTO> fieldResearcherDTOList = journeyService.getRegisteredFieldResearchersByJourneyName(journeyDTO);
@@ -277,11 +298,18 @@ public class DashboardController implements Serializable {
     }
 
     //initialize dummy chart when there is no data
-    private void initDummyChart() {
+    private void initDummyIntMapChart() {
         ChartSeries chartSeries = new ChartSeries();
         chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
         chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
         dashboardView.getIntegrationMapModel().addSeries(chartSeries);
+    }
+    
+    private void initDummyIndExpMapChart() {
+        ChartSeries chartSeries = new ChartSeries();
+        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
+        chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+        dashboardView.getIndExpMapModel().addSeries(chartSeries);
     }
     
     private void initDummyTimeGapDia() {
