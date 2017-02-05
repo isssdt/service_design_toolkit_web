@@ -205,10 +205,10 @@ public class DashboardController implements Serializable {
                 csind.set(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc(),
                     Integer.parseInt(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
             }
+            System.out.println(csind.getLabel());
+            System.out.println(csind.getData());
+            dashboardView.getIndExpMapModel().addSeries(csind);
         }
-        System.out.println(csind.getLabel());
-        System.out.println(csind.getData());
-        dashboardView.getIndExpMapModel().addSeries(csind);
     }
     
     private void updateCombineMap(JourneyDTO journeyDTO) {
