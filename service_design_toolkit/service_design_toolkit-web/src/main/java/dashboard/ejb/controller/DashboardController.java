@@ -175,8 +175,8 @@ public class DashboardController implements Serializable {
     public void onJourneyChange() {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
-
-        //updateFieldResearcherLocationMap(journeyDTO);
+        dashboardView.getIndExpMapModel().clear();
+        
         updateIntegrationMap(journeyDTO);
         updateSnakeMap(journeyDTO);
         updateFeildResearcherList(journeyDTO);
@@ -193,21 +193,57 @@ public class DashboardController implements Serializable {
     
     public void onFieldResearcherChange() {
         JourneyDTO journeyDTO = new JourneyDTO();
-        journeyDTO.setJourneyName(dashboardModel.getJourneyName());        
+        SdtUserDTO sdtUserDTO = new SdtUserDTO();
+        FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
+        
+        journeyDTO.setJourneyName(dashboardModel.getJourneyName());
+        sdtUserDTO.setUsername(dashboardModel.getFieldResearcherName()); 
+        fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
+        
+        updateIndExpMapModel(journeyDTO, fieldResearcherDTO);
+    }
+    
+    public void updateIndExpMapModel(JourneyDTO journeyDTO, FieldResearcherDTO fieldResearcherDTO){
+        createIndExpMapModelLines(journeyDTO, fieldResearcherDTO);
+        dashboardView.getIndExpMapModel().setTitle(fieldResearcherDTO.getSdtUserDTO().getUsername());
+        dashboardView.getIndExpMapModel().setLegendPosition("ne");
+        dashboardView.getIndExpMapModel().getAxes().put(AxisType.X, new CategoryAxis(ConstantValues.CHART_INTEGRATION_X_AXIS));
+        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setLabel(ConstantValues.CHART_INTEGRATION_Y_AXIS);
+        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setMin(0);
+        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setMax(5);
+        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setTickInterval("1"); 
+        dashboardView.getIndExpMapModel().setShowDatatip(false);
+        dashboardView.getIndExpMapModel().setMouseoverHighlight(true);
+        dashboardView.getIndExpMapModel().setShowPointLabels(false);
+    
+    }
+    
+    public void createIndExpMapModelLines(JourneyDTO journeyDTO, FieldResearcherDTO fieldResearcherDTO) {
         dashboardView.getIndExpMapModel().clear();
         TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
-        ChartSeries csind = null;
+
+        //if there is no research work, initialize the empty graph
+        if (null == touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()
+                || touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().isEmpty()) {
+            initDummyIndExpMapChart();
+            return;
+        }
+        Map<String, ChartSeries> chartSeriesForFieldResearcher = new HashMap<>();
+
         for (TouchPointFieldResearcherDTO touchPointFieldResearcherDTO : touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList()) {
             if ((dashboardModel.getFieldResearcherName()).equals(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername())){
-                csind = new ChartSeries();
-                System.out.println("inside here" +touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
-                csind.setLabel(dashboardModel.getFieldResearcherName());
-                csind.set(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc(),
+                ChartSeries chartSeries = chartSeriesForFieldResearcher.get(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+                if (null == chartSeries) {
+                    chartSeries = new ChartSeries();
+                    chartSeriesForFieldResearcher.put(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername(), chartSeries);
+                }
+                chartSeries.setLabel(touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+                chartSeries.set(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc(),
                     Integer.parseInt(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
-            }
-            System.out.println(csind.getLabel());
-            System.out.println(csind.getData());
-            dashboardView.getIndExpMapModel().addSeries(csind);
+            }    
+        }
+        for (Map.Entry<String, ChartSeries> mapChartSeries : chartSeriesForFieldResearcher.entrySet()) {
+            dashboardView.getIndExpMapModel().addSeries(mapChartSeries.getValue());
         }
     }
     
@@ -303,13 +339,14 @@ public class DashboardController implements Serializable {
         chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
         chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
         dashboardView.getIntegrationMapModel().addSeries(chartSeries);
+        dashboardView.getIndExpMapModel().addSeries(chartSeries);
     }
     
     private void initDummyIndExpMapChart() {
-        ChartSeries chartSeries = new ChartSeries();
-        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
-        chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
-        dashboardView.getIndExpMapModel().addSeries(chartSeries);
+    ChartSeries chartSeries = new ChartSeries();
+    chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
+    chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+    dashboardView.getIndExpMapModel().addSeries(chartSeries);
     }
     
     private void initDummyTimeGapDia() {
