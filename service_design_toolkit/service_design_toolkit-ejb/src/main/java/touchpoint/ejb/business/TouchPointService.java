@@ -23,6 +23,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import common.dto.ChannelDTO;
+import common.dto.MasterDataDTO;
 import journey.dto.JourneyDTO;
 import common.dto.RatingDTO;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
@@ -65,12 +66,14 @@ public class TouchPointService implements TouchPointServiceLocal {
             touchPointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
             touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
             touchPointFieldResearcherDTO.setRatingDTO(new RatingDTO());
+            touchPointFieldResearcherDTO.getTouchpointDTO().setMasterDataDTO(new MasterDataDTO());
 
             try {
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO.getTouchpointDTO(), touchpointFieldResearcher.getTouchpointId());
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO.getTouchpointDTO().getJourneyDTO(), touchpointFieldResearcher.getTouchpointId().getJourneyId());
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO.getTouchpointDTO().getChannelDTO(), touchpointFieldResearcher.getTouchpointId().getChannelId());
+                BeanUtils.copyProperties(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO(), touchpointFieldResearcher.getTouchpointId().getDurationUnit());
                 if (ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE.equals(touchPointFieldResearcherDTO.getStatus())) {
                     BeanUtils.copyProperties(touchPointFieldResearcherDTO.getRatingDTO(), touchpointFieldResearcher.getRatingId());
                 }
