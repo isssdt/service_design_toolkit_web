@@ -62,7 +62,7 @@
             <p:panel> 
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list,fr " />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list,fr, ind_Exp, timeGapDiagram" />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
@@ -160,7 +160,7 @@
                 </p:dialog>
             </p:panel>
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
-                <p:chart widgetVar="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
+                <p:chart widgetVar="timeGapDiagram" id="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
                     styleClass="ui-diagram-layout" responsive="true"/>      
             </p:panel>
             <p:panel header="Individual Experience" styleClass="ui-dashboard-layout">

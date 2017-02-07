@@ -176,11 +176,13 @@ public class DashboardController implements Serializable {
         JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
         dashboardView.getIndExpMapModel().clear();
-        
+        dashboardView.getTimeGapDiagram().clear();
+        initDummyIndExpMapChart();
         updateIntegrationMap(journeyDTO);
         updateSnakeMap(journeyDTO);
         updateFeildResearcherList(journeyDTO);
         updateCombineMap(journeyDTO);
+        updateTimeGapDiagram(journeyDTO);
         //updateTouchPointLocationMap(journeyDTO);
          HashMap<String, String> frNameMap = new HashMap<>();
          List<FieldResearcherDTO> frDTOList = dashboardView.getFieldResearcherDTOList();
@@ -242,8 +244,14 @@ public class DashboardController implements Serializable {
                     Integer.parseInt(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
             }    
         }
-        for (Map.Entry<String, ChartSeries> mapChartSeries : chartSeriesForFieldResearcher.entrySet()) {
-            dashboardView.getIndExpMapModel().addSeries(mapChartSeries.getValue());
+        if (chartSeriesForFieldResearcher.isEmpty()) {
+            System.out.println("is Empty");
+            initDummyIndExpMapChart();
+        }
+        else{
+            for (Map.Entry<String, ChartSeries> mapChartSeries : chartSeriesForFieldResearcher.entrySet()) {
+                dashboardView.getIndExpMapModel().addSeries(mapChartSeries.getValue());
+            }
         }
     }
     
@@ -289,7 +297,6 @@ public class DashboardController implements Serializable {
     private void updateIntegrationMap(JourneyDTO journeyDTO) {
         //integrate view
         createLineModels(journeyDTO);
-
         dashboardView.getIntegrationMapModel().setTitle(journeyDTO.getJourneyName());
         dashboardView.getIntegrationMapModel().setLegendPosition("ne");
         dashboardView.getIntegrationMapModel().getAxes().put(AxisType.X, new CategoryAxis(ConstantValues.CHART_INTEGRATION_X_AXIS));
@@ -302,8 +309,66 @@ public class DashboardController implements Serializable {
         dashboardView.getIntegrationMapModel().setShowPointLabels(false);
     }
     
+    private void updateTimeGapDiagram(JourneyDTO journeyDTO) {
+        createTimeGapDiaLineModels(journeyDTO);
+        dashboardView.getTimeGapDiagram().setStacked(true);
+        dashboardView.getTimeGapDiagram().setTitle(journeyDTO.getJourneyName());
+        dashboardView.getTimeGapDiagram().setLegendPosition("ne");
+        dashboardView.getTimeGapDiagram().setShowDatatip(false);
+        dashboardView.getTimeGapDiagram().setMouseoverHighlight(true);
+        dashboardView.getTimeGapDiagram().setShowPointLabels(false);
+    }
     
-
+    private void createTimeGapDiaLineModels(JourneyDTO journeyDTO) {
+        dashboardView.getTimeGapDiagram().clear();
+        List<TouchPointDTO> tplist = getTouchPointList(journeyDTO);
+        ChartSeries cs;
+        String a1=null;
+        int b1=0;
+        Map<String, ChartSeries> mapcs = new HashMap<>();
+        
+        TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        for (int i = 0; i<tplist.size(); i++){
+            cs = new ChartSeries();
+            String n1 = tplist.get(i).getTouchPointDesc();
+            cs.setLabel(n1);
+            for (int j=0; j<touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().size(); j++){
+                if (touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getTouchpointDTO().getTouchPointDesc().equals(tplist.get(i).getTouchPointDesc()))
+                {
+                    a1= touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getFieldResearcherDTO().getSdtUserDTO().getUsername();
+                    System.out.println(touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getFieldResearcherDTO().getSdtUserDTO().getUsername());
+                    System.out.println(touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getDuration());
+                    
+                    if (touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getDuration()==null){
+                        System.out.println("here");
+                        b1=0;  
+                    }else {
+                        b1 = touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getDuration();
+                    }
+                }
+                cs.set(a1,b1);
+                }
+            mapcs.put(n1, cs);
+            }
+            
+            //dashboardView.getTimeGapDiagram().addSeries(cs);
+        
+        for (Map.Entry<String, ChartSeries> mapChartSeries : mapcs.entrySet()) {   
+            System.out.println(mapChartSeries.getValue().getLabel());
+           
+            System.out.println(mapChartSeries.getValue().getData());
+            dashboardView.getTimeGapDiagram().addSeries(mapChartSeries.getValue());
+    }
+    }
+            /* ChartSeries touchPoint;
+            for(TouchPointDTO t:tplist) {
+            touchPoint=new ChartSeries();
+            touchPoint.setLabel(t.getTouchPointDesc());
+            for(TouchPointFieldResearcherDTO tp: TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList){
+            tp.getTouchPointFieldResearcherDTOList().
+            }
+            }*/
+    
     private void createLineModels(JourneyDTO journeyDTO) {
         dashboardView.getIntegrationMapModel().clear();
         TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
