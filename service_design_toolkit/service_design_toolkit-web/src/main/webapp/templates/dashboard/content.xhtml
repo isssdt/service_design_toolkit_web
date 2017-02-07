@@ -9,29 +9,29 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
     </script>  
     <style type="text/css">
-                .ui-diagram-element {
-                    border: 0.1em dotted #E5E4E2;
-                    background-color: #9CB071;width: 10em;
-                    height: 8em;
-                    text-align: center;
-                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-                    border-radius: 4px;
-                    color: #ffffff;
-                }
-                .ui-start-element {
-                   width:5em; 
-                   height:5em;
-                    background-color: #9CB071;
-                    text-align: center;
-                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-                    border-radius: 5em;
-                    border: 1px solid #404a4e;
-                    color: #ffffff;
-                }
-
-
-                .ui-diagram-element:hover {
-                    background-color: #C7C6C4;
+                .ui-element-home {
+                     width: 30px;
+                    height: 30px;
+                    background: red;
+                    position: absolute;
+                    border-radius: 50%;
+        }       
+        .ui-diagram-element {
+                    width: 140px;
+                    height: 140px;
+                    background: red;
+                    position: absolute;
+                    
+                 }
+                 .ui-element-arrow{
+                    display: block;
+                    width: 0; 
+                    height: 0;
+                    border-top: 70px solid transparent;
+                    border-bottom: 70px solid transparent;
+                    border-left: 70px solid #4679BD;
+                    border-right: 5px solid transparent;
+                    
                 }
                 
                 .ui-dashboard-layout {
@@ -98,31 +98,62 @@
             </p:panel>
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
                 <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
-                    <f:facet name="element">
-                        <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
-                        <h:outputText value="#{el.channelDTO.channelName}" styleClass="ui-facet-element"/>
-                        <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
-                        <h:commandLink onclick="myRemote([{name:'token',value:'#{el.touchPointDesc}'},{name:'token1',value:'#{el.latitude}'},{name:'token2',value:'#{el.longitude}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
-                            <i class="fa fa-map-marker" aria-hidden="true" ></i>
-                            <f:ajax ></f:ajax>
-                        </h:commandLink>
-                        <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
-                        <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
-                        <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
-    <!--                <p:commandLink onclick="PF('confirmation').show();" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <f:attribute id="touch" value="#{e1}"></f:attribute>
-                        </p:commandLink> 
-                        <p:dialog widgetVar="confirmation" >
-                            <h:outputText value="#{el.touchPointDesc}"></h:outputText>
-                        </p:dialog>-->
-                    </f:facet> 
+                <f:facet name="element" >
+                    <h:panelGrid columns="2">  
+                  <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
+                   
+                  <h:commandLink rendered="#{el.channelDTO.channelName eq 'Face To Face' }">
+                       <i class="fa fa-users" aria-hidden="true"></i>
+                  </h:commandLink>
+                   
+                   <p:graphicImage name="img/kiosk.png" rendered="#{el.channelDTO.channelName eq 'Kiosk' }" height="30px" width="70px"></p:graphicImage>
+                      
+                   <h:commandLink rendered="#{el.channelDTO.channelName eq 'Website' }">
+                      <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+                      
+                  </h:commandLink>
+                   
+                    </h:panelGrid>
+                    
+                  <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
+                  
+                  <h:commandLink onclick="myRemote([{name:'token',value:'#{el.touchPointDesc}'},{name:'token1',value:'#{el.latitude}'},{name:'token2',value:'#{el.longitude}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                        <i class="fa fa-map-marker" aria-hidden="true" ></i>
+                        <f:ajax ></f:ajax>
+                  </h:commandLink>
+                  <h:panelGrid columns="6" rendered="#{not empty el.touchPointDesc }">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                   <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
+                   <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                  <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
+                                        <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true"></i>
+
+                  <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
+                      
+                  </h:panelGrid>
+<!--                  <p:commandLink onclick="PF('confirmation').show();" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <f:attribute id="touch" value="#{e1}"></f:attribute>
+                  </p:commandLink> 
+                  <p:dialog widgetVar="confirmation" >
+                      <h:outputText value="#{el.touchPointDesc}"></h:outputText>
+                  </p:dialog>-->
+                  
+                  
+
+                
+                </f:facet>
+                    
                 </p:diagram> 
-                <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" update="dialog" oncomplete="PF('dlg').show();"/> 
-                <p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
-                    <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
-                    <h:outputText value="---"/>
-                    <h:outputText value="#{dashboardController.touchPointDesc}" />
+<p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" 
+                 update="dialog" oncomplete="PF('dlg').show();"  />
+                
+<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
+     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
+     <h:outputText value="---"/>
+     <h:outputText value="#{dashboardController.touchPointDesc}" />
+   
+
                     <p:gmap id="click_map" widgetVar="click_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
                         model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
