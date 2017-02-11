@@ -8,31 +8,42 @@
         type="text/javascript" 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
     </script>  
-    <style type="text/css">
-                .ui-element-home {
-                     width: 30px;
-                    height: 30px;
-                    background: red;
-                    position: absolute;
-                    border-radius: 50%;
-        }       
-        .ui-diagram-element {
-                    width: 140px;
-                    height: 140px;
-                    background: red;
-                    position: absolute;
-                    
-                 }
-                 .ui-element-arrow{
-                    display: block;
-                    width: 0; 
-                    height: 0;
-                    border-top: 70px solid transparent;
-                    border-bottom: 70px solid transparent;
-                    border-left: 70px solid #4679BD;
-                    border-right: 5px solid transparent;
-                    
-                }
+        <style type="text/css">
+            .ui-diagram-crumbs  {
+	display: block;
+	float: left;
+	height: 50px;
+	background: #3498db;
+	text-align: center;
+	padding: 30px 40px 0 40px;
+	position: relative;
+	margin: 0 10px 0 0; 
+	
+	font-size: 20px;
+	text-decoration: none;
+	color: #fff;
+    padding: 30px 40px 0 80px;
+}
+ .ui-diagram-crumbs:after {
+	content: "";  
+	border-top: 40px solid transparent;
+border-bottom: 40px solid transparent;
+border-left: 40px solid #3498db;
+	position: absolute; right: -40px; top: 0;
+        z-index: 2;
+   
+}
+ .ui-diagram-crumbs:before {
+	content: "";  
+	border-top: 40px solid transparent;
+	border-bottom: 40px solid transparent;
+	border-left: 40px solid white;
+	position: absolute; left: 0; top: 0;
+        z-index: 1;
+}
+
+
+        
                 
                 .ui-dashboard-layout {
                     width: 100%; 
@@ -51,56 +62,31 @@
                 
                 .ui-facet-element {
                     display:block;
-                    margin-top:1em;
+                    margin-top:0em;
                 }
 
 
             </style>  
 
     <h:form>
-        <h:panelGrid columns="2" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
-            <p:panel> 
+        <h:panelGrid columns="1" styleClass="ui-panelgrid-layout" cellpadding="5" columnClasses="label, value">
+            <p:panel closable="true"> 
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, field_researcher_list,fr, ind_Exp, timeGapDiagram" />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, fr, ind_Exp, timeGapDiagram" />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
             </p:panel>
-            <p:panel id ="fr" widgetVar="fr">
-                <p:outputLabel for="fr_list" value="FieldResearcher" />
-                <p:selectOneMenu id="fr_list" value="#{dashboardController.dashboardModel.fieldResearcherName}">
-                <p:ajax listener="#{dashboardController.onFieldResearcherChange()}" update = "ind_Exp"/>
-                <f:selectItem itemLabel="Select Field Researcher" itemValue="" noSelectionOption="true" />                         
-                <f:selectItems value="#{dashboardController.dashboardView.frMap}"/>
-                </p:selectOneMenu>
-            </p:panel>
+           
         </h:panelGrid>
-        <p:panelGrid columns="3" layout="grid">
-            <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
-                <p:gmap id="combine_map" widgetVar="field_researcher_location_map" 
-                    center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                    model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
-            </p:panel>
-            <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
-                <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
-                        styleClass="ui-diagram-layout" responsive="true"/>
-                <p:resizable for="integration_map" />
-            </p:panel>
-            <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >
-                <p:dataList  widgetVar="field_researcher_list" id="field_researcher_list" value="#{dashboardController.dashboardView.fieldResearcherDTOList}" 
-                             var="fieldResearcher" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
-                    <f:facet name="header">
-                        #{dashboardController.dashboardModel.journeyName}
-                    </f:facet>
-                    #{fieldResearcher.sdtUserDTO.username}
-                </p:dataList>
-            </p:panel>
+       
+        <p:panelGrid columns="1" layout="grid">
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
                 <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
-                <f:facet name="element" >
-                    <h:panelGrid columns="2">  
-                  <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
+            <f:facet name="element" >
+                    <h:panelGrid columns="3">  
+                  
                    
                   <h:commandLink rendered="#{el.channelDTO.channelName eq 'Face To Face' }">
                        <i class="fa fa-users" aria-hidden="true"></i>
@@ -112,37 +98,27 @@
                       <i class="fa fa-internet-explorer" aria-hidden="true"></i>
                       
                   </h:commandLink>
+                   <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
                    
-                    </h:panelGrid>
-                    
-                  <h:outputText value="#{el.channelDescription}" styleClass="ui-facet-element"/>
-                  
                   <h:commandLink onclick="myRemote([{name:'token',value:'#{el.touchPointDesc}'},{name:'token1',value:'#{el.latitude}'},{name:'token2',value:'#{el.longitude}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
                         <i class="fa fa-map-marker" aria-hidden="true" ></i>
                         <f:ajax ></f:ajax>
                   </h:commandLink>
-                  <h:panelGrid columns="6" rendered="#{not empty el.touchPointDesc }">
-                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    </h:panelGrid>
+                    
+         
+                  <h:panelGrid columns="6" >
+                      <i class="fa fa-thumbs-up" aria-hidden="true" style="color:green"></i>
                    <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
-                   <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                   <i class="fa fa-thumbs-down" aria-hidden="true" style="color:red"></i>
                   <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
-                                        <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true"></i>
+                  <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true" style="color:blue"></i>
 
                   <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
                       
                   </h:panelGrid>
-<!--                  <p:commandLink onclick="PF('confirmation').show();" rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <f:attribute id="touch" value="#{e1}"></f:attribute>
-                  </p:commandLink> 
-                  <p:dialog widgetVar="confirmation" >
-                      <h:outputText value="#{el.touchPointDesc}"></h:outputText>
-                  </p:dialog>-->
-                  
-                  
-
                 
-                </f:facet>
+             </f:facet>
                     
                 </p:diagram> 
 <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" 
@@ -159,15 +135,56 @@
                         model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
                 </p:dialog>
             </p:panel>
+        </p:panelGrid>
+         <p:panelGrid columns="1" layout="grid">
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
                 <p:chart widgetVar="timeGapDiagram" id="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
                     styleClass="ui-diagram-layout" responsive="true"/>      
             </p:panel>
+        </p:panelGrid>
+        <p:panelGrid columns="2" layout="grid">
+            <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
+                <p:gmap id="combine_map" widgetVar="field_researcher_location_map" 
+                    center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
+                    model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
+            </p:panel>
+            <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
+                <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
+                        styleClass="ui-diagram-layout" responsive="true"/>
+                <p:resizable for="integration_map" />
+            </p:panel>
+        </p:panelGrid>
+<!--            <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >
+                <p:dataList  widgetVar="field_researcher_list" id="field_researcher_list" value="#{dashboardController.dashboardView.fieldResearcherDTOList}" 
+                             var="fieldResearcher" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                    <f:facet name="header">
+                        #{dashboardController.dashboardModel.journeyName}
+                    </f:facet>
+                    #{fieldResearcher.sdtUserDTO.username}
+                </p:dataList>
+            </p:panel>-->
+
+
+<p:panelGrid columns="1" layout="grid">
+     <p:panel id ="fr" widgetVar="fr">
+                <p:outputLabel for="fr_list" value="FieldResearcher" />
+                <p:selectOneMenu id="fr_list" value="#{dashboardController.dashboardModel.fieldResearcherName}">
+                <p:ajax listener="#{dashboardController.onFieldResearcherChange()}" update = "ind_Exp"/>
+                <f:selectItem itemLabel="Select Field Researcher" itemValue="" noSelectionOption="true" />                         
+                <f:selectItems value="#{dashboardController.dashboardView.frMap}"/>
+                </p:selectOneMenu>
+            </p:panel>
+</p:panelGrid>
+<p:panelGrid columns="2" layout="grid">
             <p:panel header="Individual Experience" styleClass="ui-dashboard-layout">
+               
                 <p:chart  widgetVar="ind_Exp" id="ind_Exp" type="line" model="#{dashboardController.dashboardView.indExpMapModel}"
                         styleClass="ui-diagram-layout" responsive="true"/>
                 <p:resizable for="ind_Exp" />
+               
             </p:panel>
+            
+    <p:panel header="service gap for add touchpoint"></p:panel>
         </p:panelGrid>
         <!--<p:panelGrid columns="1" layout="grid">
                 <p:panel widgetVar="fr1" id="fr1">

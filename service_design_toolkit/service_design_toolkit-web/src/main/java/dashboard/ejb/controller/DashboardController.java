@@ -46,6 +46,7 @@ import common.visualization.NetworkElement;
 import java.util.ArrayList;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
+
 import org.primefaces.model.map.Polyline;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
@@ -424,36 +425,24 @@ public class DashboardController implements Serializable {
     private void initsnakeModel() {
        DefaultDiagramModel model = new DefaultDiagramModel();
         model.setMaxConnections(-1);
-
-        FlowChartConnector connector = new FlowChartConnector();
-        connector.setPaintStyle("{strokeStyle:'#C7B097',lineWidth:3}");
-        model.setDefaultConnector(connector);
-
-        
         Element start;
         TouchPointDTO startTouch=new TouchPointDTO();
-        startTouch.setChannelDescription("start");
-        start = new Element(startTouch, "6em", "2em");
-        
-       
-        start.addEndPoint(new BlankEndPoint(EndPointAnchor.RIGHT));
+        startTouch.setTouchPointDesc("Customer journey map");
+        start = new Element(startTouch);
         start.setDraggable(false);
-        start.setStyleClass("ui-element-home");
-
-        model.addElement(start);
+        start.setStyleClass("ui-diagram-crumbs");
+         model.addElement(start);
         dashboardView.setSnakeModel(model);
         
     }
 
     
     private void updateSnakeMap(JourneyDTO journeyDTO) {
-            System.out.println("inside updateSnakeMap ");
-       
-       dashboardView.getSnakeModel().clear();
-       
-      List<TouchPointDTO> touchPointList=getTouchPointList(journeyDTO);
-     System.out.println("touchpointlist size "+touchPointList.size()+"for journey"+journeyDTO.getJourneyName());
-     initsnakeModel();
+        System.out.println("inside updateSnakeMap ");
+        dashboardView.getSnakeModel().clear();
+        List<TouchPointDTO> touchPointList=getTouchPointList(journeyDTO);
+        System.out.println("touchpointlist size "+touchPointList.size()+"for journey"+journeyDTO.getJourneyName());
+    // initsnakeModel();
       for (TouchPointDTO touchPoint:touchPointList)
       {
           System.out.println("touchpoint"+touchPoint.getTouchPointDesc());
@@ -463,77 +452,24 @@ public class DashboardController implements Serializable {
     
     
      public void addElement(TouchPointDTO touchPoint) {        
-        String X, Y, X1 = null, Y1;
-        int a, b;   
-        X = dashboardView.getSnakeModel().getElements().get(dashboardView.getSnakeModel().getElements().size() - 1).getX();
-        Y = dashboardView.getSnakeModel().getElements().get(dashboardView.getSnakeModel().getElements().size() - 1).getY();
-        System.out.println("x" + X);
-        System.out.println("Y" + Y);
-        a = Integer.parseInt(X.split("em")[0]);
-        b = Integer.parseInt(Y.split("em")[0]);
-
-        if (a < 40) {
-            a = a +4;}
-//        } else {
-//            System.out.println("a>60");
-//            a = 6;
-//            b = b + 10;
-//        }
-
-        X1 = a + "em";
-        Y1 = b + "em";
-        
-       String description= touchPoint.getChannelDescription();
-       if(touchPoint.getLatitude().equals("NONE")){
-            //For website channel
-            String replaceFirst = description.replaceFirst("^(http://www\\.|http://|www\\.)","");
-           System.out.println("desc in website "+replaceFirst);
-           description=replaceFirst;
-       }
-       if (description !=null && description.length()>20)
-       {
-           //for kiosk and face to face channel
-        description = description.substring(0, 20);
-        description=description+"...";
-       }
-       
-         System.out.println("like "+touchPoint.getNo_like());
-       
-       touchPoint.setChannelDescription(description);
-        Element touch = new Element(touchPoint, X1, Y1);
-        //Element touch = new Element(new NetworkElement(touchPoint.getTouchPointDesc(),touchPoint.getChannelDTO().getChannelName(), touchPoint.getChannelDescription()), X1, Y1);
+        Element touch = new Element(touchPoint);
+        if(touchPoint.getNo_like() == null)
+                {
+                    touchPoint.setNo_like(0);
+                }
+        if(touchPoint.getNo_dislike() == null)
+                {
+                    touchPoint.setNo_dislike(0);
+                }
+        if(touchPoint.getNo_neutral()== null)
+                {
+                    touchPoint.setNo_neutral(0);
+                }
         touch.setDraggable(false);
-        touch.setStyleClass("ui-diagram-element");
+        touch.setStyleClass("ui-diagram-crumbs");
         dashboardView.getSnakeModel().addElement(touch);
-        a=a+8;
-        X1 = a + "em";
-        TouchPointDTO blank=new TouchPointDTO();
-        blank.setTouchPointDesc("");
-        Element arrow = new Element(blank, X1, Y1);
-        arrow.setDraggable(false);
-        arrow.setStyleClass("ui-element-arrow");
-         dashboardView.getSnakeModel().addElement(arrow);
-
-     //   if (size == 2) {
-      //      dashboardView.getSnakeModel().connect(createConnection(dashboardView.getSnakeModel().getElements().get(0).getEndPoints().get(0), 
-     //               touch.getEndPoints().get(0), null));
-     //   } else {
-      //      dashboardView.getSnakeModel().connect(createConnection(dashboardView.getSnakeModel().getElements().get(size - 2).getEndPoints().get(1), 
-         //           touch.getEndPoints().get(0), null));
-       // }
-
-    }
-//      private Connection createConnection(EndPoint from, EndPoint to, String label) {
-//        Connection conn = new Connection(from, to);
-//        conn.getOverlays().add(new ArrowOverlay(20, 20, 1, 1));
-//
-//        if (label != null) {
-//            conn.getOverlays().add(new LabelOverlay(label, "flow-label", 0.5));
-//        }
-//
-//        return conn;
-//    }
-      
+        System.out.println("size "+dashboardView.getSnakeModel().getElements().size());
+     }
        public  void  onFRChange()
       {
           JourneyDTO journeyDTO = new JourneyDTO();
@@ -620,7 +556,8 @@ public class DashboardController implements Serializable {
           String token2 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token2");
           setLongitude(token2);
          System.out.println("dash"+dashboardModel.getJourneyName());
-          
+      //Object mera=  FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("mera");
+         // System.out.println("hellooooo"+mera.toString());
           String jName=dashboardModel.getJourneyName();
           
           if(jName!=null){
@@ -652,5 +589,5 @@ public class DashboardController implements Serializable {
           
         
 }
-
+     
 }
