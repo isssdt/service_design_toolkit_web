@@ -149,9 +149,15 @@ border-left: 40px solid #3498db;
                     model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
             </p:panel>
             <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
+               
+              
                 <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
-                        styleClass="ui-diagram-layout" responsive="true"/>
+                        styleClass="ui-diagram-layout" responsive="true">
+                
+                 
+                </p:chart>
                 <p:resizable for="integration_map" />
+                
             </p:panel>
         </p:panelGrid>
 <!--            <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >
@@ -177,13 +183,26 @@ border-left: 40px solid #3498db;
 </p:panelGrid>
 <p:panelGrid columns="2" layout="grid">
             <p:panel header="Individual Experience" styleClass="ui-dashboard-layout">
-               
+                  <p:remoteCommand name="func" actionListener="#{dashboardController.showChartDialog()}" update="dialogChart" oncomplete="PF('dlgChart').show();"/>
                 <p:chart  widgetVar="ind_Exp" id="ind_Exp" type="line" model="#{dashboardController.dashboardView.indExpMapModel}"
-                        styleClass="ui-diagram-layout" responsive="true"/>
+                        styleClass="ui-diagram-layout" responsive="true">
+                   <p:ajax   event="itemSelect" listener="#{dashboardController.itemSelect}" oncomplete="func()" ></p:ajax>
+                </p:chart>
                 <p:resizable for="ind_Exp" />
-               
+                
+                
+                <p:dialog widgetVar="dlgChart" id="dialogChart" header="Touchpoint Reaction" responsive="true" showHeader="true" >
+                    <p:panelGrid columns="1" layout="grid">
+                    
+                        <h:outputText title="TouchPoint Name:" value ="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.touchpointDTO.touchPointDesc}"></h:outputText>
+                        <h:outputText title="Rating" value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.ratingDTO.value}"></h:outputText>
+                        <h:outputText title="Comments:" value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.comments}"></h:outputText>
+                    
+                    </p:panelGrid>
+                </p:dialog>
             </p:panel>
-            
+         
+    
     <p:panel header="service gap for add touchpoint"></p:panel>
         </p:panelGrid>
         <!--<p:panelGrid columns="1" layout="grid">

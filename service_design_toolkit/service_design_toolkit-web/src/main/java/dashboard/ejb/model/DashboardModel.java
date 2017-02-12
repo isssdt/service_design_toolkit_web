@@ -6,6 +6,7 @@
 package dashboard.ejb.model;
 
 import java.io.Serializable;
+import user.dto.TouchPointFieldResearcherDTO;
 
 /**
  *
@@ -15,6 +16,16 @@ import java.io.Serializable;
 public class DashboardModel implements Serializable {
     private String journeyName;
     private String fRName;
+    private TouchPointFieldResearcherDTO touchPointFieldResearcherDTO;
+
+    public TouchPointFieldResearcherDTO getTouchPointFieldResearcherDTO() {
+        return touchPointFieldResearcherDTO;
+    }
+
+    public void setTouchPointFieldResearcherDTO(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {
+        this.touchPointFieldResearcherDTO = touchPointFieldResearcherDTO;
+    }
+    
 
     public void setfRName(String fRName) {
         this.fRName = fRName;

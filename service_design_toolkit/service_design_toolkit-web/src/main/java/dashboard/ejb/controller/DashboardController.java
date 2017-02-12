@@ -44,8 +44,11 @@ import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
 import common.visualization.NetworkElement;
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Set;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.ItemSelectEvent;
 
 import org.primefaces.model.map.Polyline;
 import user.dto.FieldResearcherDTO;
@@ -589,5 +592,40 @@ public class DashboardController implements Serializable {
           
         
 }
-     
+      public void itemSelect(ItemSelectEvent event) {
+
+        ChartSeries current=dashboardView.getIndExpMapModel().getSeries().get(0);
+        System.out.println("current"+current.getData());
+        Set<Entry<Object, Number>> mapValues = current.getData().entrySet();
+        Entry<Object,Number>[] test = new Entry[mapValues.size()];
+
+        mapValues.toArray(test);
+        System.out.println("Key"+test[event.getItemIndex()].getKey());
+        System.out.println("Value"+test[event.getItemIndex()].getValue());
+
+      
+         JourneyDTO journeyDTO=new JourneyDTO();
+         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
+        
+         SdtUserDTO sdtUserDTO=new SdtUserDTO();
+       sdtUserDTO.setUsername(dashboardView.getIndExpMapModel().getSeries().get(0).getLabel());
+   
+      TouchPointFieldResearcherListDTO list=   journeyService.getTouchPointFiedlResearcherListByJourneyNameAndUsername(journeyDTO, sdtUserDTO);  
+          System.out.println("size"+list.getTouchPointFieldResearcherDTOList().size());
+for (TouchPointFieldResearcherDTO l:list.getTouchPointFieldResearcherDTOList())
+    {
+         if( l.getTouchpointDTO().getTouchPointDesc().equals(test[event.getItemIndex()].getKey()))
+         {
+             System.out.println("ama inside"+l.getRatingDTO().getValue());
+             dashboardModel.setTouchPointFieldResearcherDTO(l);
+         }
+          
+    }
+          
+}
+      public void showChartDialog()
+      {
+          
+          System.out.println("showChartDialog");
+      }
 }
