@@ -98,9 +98,11 @@ border-left: 40px solid #3498db;
                       <i class="fa fa-internet-explorer" aria-hidden="true"></i>
                       
                   </h:commandLink>
-                   <h:outputText value="#{el.touchPointDesc}" styleClass="ui-facet-element"/>
+                   <h:commandLink value="#{el.touchPointDesc}" styleClass="ui-facet-element" onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);" >
+                       <f:ajax ></f:ajax>
+                   </h:commandLink>
                    
-                  <h:commandLink onclick="myRemote([{name:'token',value:'#{el.touchPointDesc}'},{name:'token1',value:'#{el.latitude}'},{name:'token2',value:'#{el.longitude}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                  <h:commandLink onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
                         <i class="fa fa-map-marker" aria-hidden="true" ></i>
                         <f:ajax ></f:ajax>
                   </h:commandLink>
@@ -121,19 +123,33 @@ border-left: 40px solid #3498db;
              </f:facet>
                     
                 </p:diagram> 
-<p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialog}" 
+<p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
                  update="dialog" oncomplete="PF('dlg').show();"  />
                 
-<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true">
-     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />
-     <h:outputText value="---"/>
-     <h:outputText value="#{dashboardController.touchPointDesc}" />
-   
+<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true" header="TouchPoint Details">
 
-                    <p:gmap id="click_map" widgetVar="click_map" 
+    <p:panelGrid columns="1" layout="grid">
+        <h:panelGrid columns="2" >
+        <h:outputLabel  value="Journey:-"></h:outputLabel>
+     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />  
+        </h:panelGrid>
+    <h:panelGrid columns="2" >
+        <h:outputLabel value="TouchPoint:-"></h:outputLabel>
+        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc}" />   
+    </h:panelGrid>
+         <h:panelGrid columns="2" >
+        <h:outputLabel value="Channel :-"></h:outputLabel>
+        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />   
+    </h:panelGrid>
+         <h:panelGrid columns="2" >
+        <h:outputLabel value="Action:-"></h:outputLabel>
+        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />   
+    </h:panelGrid>
+     <p:gmap id="click_map" widgetVar="click_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
                         model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
-                </p:dialog>
+    </p:panelGrid>
+</p:dialog>
             </p:panel>
         </p:panelGrid>
          <p:panelGrid columns="1" layout="grid">

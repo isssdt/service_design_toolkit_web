@@ -6,6 +6,7 @@
 package dashboard.ejb.controller;
 
 import common.constant.ConstantValues;
+import common.dto.ChannelDTO;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.utils.Utils;
@@ -70,24 +71,14 @@ public class DashboardController implements Serializable {
     DashboardView dashboardView;
 
     DashboardModel dashboardModel;
-    String address;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    
 
     /**
      * Creates a new instance of DashboardController
      */
     public DashboardController() {
     }
- private String touchPointDesc;
-    private String latitude;
-    private String longitude;
+
     private String name;
 
     public String getName() {
@@ -99,29 +90,6 @@ public class DashboardController implements Serializable {
     }
     
 
-    public String getTouchPointDesc() {
-        return touchPointDesc;
-    }
-
-    public void setTouchPointDesc(String touchPointDesc) {
-        this.touchPointDesc = touchPointDesc;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
     
     
     @PostConstruct
@@ -551,30 +519,44 @@ public class DashboardController implements Serializable {
            dashboardView.getPolylineModel().addOverlay(polyline1);
 
     }
-      public void showDialog() {
-          String token = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token");
-          setTouchPointDesc(token);
-          String token1 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token1");
-          setLatitude(token1);
-          String token2 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("token2");
-          setLongitude(token2);
+      public void showDialogOnClickTouchPoint() {
+          System.out.println("hellooo");
+         TouchPointDTO touchPointDTOModel =new TouchPointDTO();
+          String touchPointDesc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("touchPointDesc");
+         
+          touchPointDTOModel.setTouchPointDesc(touchPointDesc);
+          System.out.println("desc model"+touchPointDTOModel.getTouchPointDesc());
+          String latitude = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("latitude");
+         
+         touchPointDTOModel.setLatitude(latitude);
+          String longitude = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("longitude");
+     
+          touchPointDTOModel.setLongitude(longitude);
+          
+            String channelName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("channelName");
+     ChannelDTO channelDTO=new ChannelDTO();
+     channelDTO.setChannelName(channelName);
+          touchPointDTOModel.setChannelDTO(channelDTO);
+          
+            String action = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("action");
+     
+          touchPointDTOModel.setAction(action);
          System.out.println("dash"+dashboardModel.getJourneyName());
-      //Object mera=  FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("mera");
-         // System.out.println("hellooooo"+mera.toString());
+     
           String jName=dashboardModel.getJourneyName();
           
           if(jName!=null){
          JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(jName);
-          
-       
+         
+       dashboardModel.setTouchPointDTO(touchPointDTOModel);
         List<TouchPointDTO> touchPointDTOList = touchPointService.getTouchPointListJourney(journeyDTO);
           System.out.println("size "+touchPointDTOList.size()+dashboardModel.getJourneyName());
           dashboardView.getCombine_map().getMarkers().clear();
         
         for (TouchPointDTO touchPointDTO : touchPointDTOList) {
            if(!touchPointDTO.getLatitude().equals("NONE")){
-            if(touchPointDTO.getTouchPointDesc().equals(getTouchPointDesc())){
+            if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
             Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
                  ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
