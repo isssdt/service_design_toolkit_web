@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import common.dto.MasterDataDTO;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import journey.dto.JourneyDTO;
 
 /**
@@ -31,9 +30,12 @@ public class TouchPointDTO implements Serializable {
     private String action;
     private String channelDescription;
     private Integer duration;    
-    private MasterDataDTO masterDataDTO;  
+    private Integer sequenceNo;
+    
+    private MasterDataDTO masterDataDTO;      
     private ChannelDTO channelDTO;
     private JourneyDTO journeyDTO;
+    
     private Integer no_like;
     private Integer no_dislike;
     private Integer no_neutral;
@@ -54,6 +56,14 @@ public class TouchPointDTO implements Serializable {
         this.channelDTO = channelDTO;
         this.journeyDTO = journeyDTO;
     }    
+
+    public Integer getSequenceNo() {
+        return sequenceNo;
+    }
+
+    public void setSequenceNo(Integer sequenceNo) {
+        this.sequenceNo = sequenceNo;
+    }
 
     public Integer getDuration() {
         return duration;

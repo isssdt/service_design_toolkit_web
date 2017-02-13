@@ -5,10 +5,11 @@
  */
 package user.entity;
 
+import common.entity.MasterData;
 import common.entity.Rating;
 import touchpoint.entity.TouchPoint;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -53,6 +57,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TouchpointFieldResearcher.00001", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')")})           
 public class TouchpointFieldResearcher implements Serializable {
+
+    @JoinColumn(name = "duration_unit", referencedColumnName = "id")
+    @ManyToOne
+    private MasterData durationUnit;
+
+    @Size(max = 500)
+    @Column(name = "photo_location")
+    private String photoLocation;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "action_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date actionTime;
 
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "duration")
@@ -179,6 +196,30 @@ public class TouchpointFieldResearcher implements Serializable {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public String getPhotoLocation() {
+        return photoLocation;
+    }
+
+    public void setPhotoLocation(String photoLocation) {
+        this.photoLocation = photoLocation;
+    }
+
+    public Date getActionTime() {
+        return actionTime;
+    }
+
+    public void setActionTime(Date actionTime) {
+        this.actionTime = actionTime;
+    }
+
+    public MasterData getDurationUnit() {
+        return durationUnit;
+    }
+
+    public void setDurationUnit(MasterData durationUnit) {
+        this.durationUnit = durationUnit;
     }
     
 }

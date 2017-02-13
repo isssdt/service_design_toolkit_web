@@ -151,6 +151,7 @@ public class JourneyService implements JourneyServiceLocal {
             touchpointFieldResearcher.setTouchpointId(touchPoint);
             touchpointFieldResearcher.setFieldResearcherId(sdtUser.getFieldResearcher());
             touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+            touchpointFieldResearcher.setActionTime(new Date());
             factory.getTouchPointFieldResearcherFacade().create(touchpointFieldResearcher);
         }
 

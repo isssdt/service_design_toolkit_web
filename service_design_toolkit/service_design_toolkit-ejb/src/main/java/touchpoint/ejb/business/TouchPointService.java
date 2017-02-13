@@ -26,6 +26,8 @@ import common.dto.ChannelDTO;
 import common.dto.MasterDataDTO;
 import journey.dto.JourneyDTO;
 import common.dto.RatingDTO;
+import common.entity.MasterData;
+import java.util.Date;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
@@ -109,12 +111,17 @@ public class TouchPointService implements TouchPointServiceLocal {
                         Response.Status.NOT_ACCEPTABLE.getStatusCode());
             }
             touchpointFieldResearcher.setRatingId(factory.getRatingFacade().findRatingByValue(touchpointFieldResearcherDTO.getRatingDTO().getValue()));
+            touchpointFieldResearcher.setActionTime(new Date());
         }
 
         //update comment and reaction for this Touch Point        
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
         touchpointFieldResearcher.setDuration(touchpointFieldResearcherDTO.getDuration());
+        String durationUnitID = common.util.Utils.getMasterDataID(touchpointFieldResearcherDTO.getDurationUnitDTO());
+        if (null != durationUnitID) {
+            touchpointFieldResearcher.setDurationUnit(new MasterData(durationUnitID));
+        }
         touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE);
 
         factory.getTouchPointFieldResearcherFacade().edit(touchpointFieldResearcher);

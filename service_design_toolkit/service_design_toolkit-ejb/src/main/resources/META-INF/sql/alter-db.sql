@@ -8,12 +8,13 @@
  * Created: Oct 28, 2016
  */
 
-ALTER TABLE touch_point DROP duration;
-ALTER TABLE touch_point ADD duration int;
 
-ALTER TABLE touchpoint_field_researcher DROP duration;
-ALTER TABLE touchpoint_field_researcher ADD duration int;
-
+ALTER TABLE touchpoint_field_researcher ADD duration_unit varchar(50);
+ALTER TABLE touchpoint_field_researcher ADD FOREIGN KEY (duration_unit)
+REFERENCES master_data(id);
+ALTER TABLE touchpoint_field_researcher ADD photo_location varchar(500);
+ALTER TABLE touchpoint_field_researcher ADD action_time timestamp;
+ALTER TABLE touch_point ADD sequence_no int;
 
 
 

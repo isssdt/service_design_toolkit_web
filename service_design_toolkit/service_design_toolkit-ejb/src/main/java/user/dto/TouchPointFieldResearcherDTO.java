@@ -10,6 +10,8 @@ import touchpoint.dto.TouchPointDTO;
 import common.dto.RatingDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import common.dto.MasterDataDTO;
+import java.util.Date;
 
 /**
  *
@@ -26,6 +28,34 @@ public class TouchPointFieldResearcherDTO {
     private RatingDTO ratingDTO;
     private String status;
     private Integer duration;
+    private String photoLocation;
+    private Date actionTime;
+    
+    private MasterDataDTO durationUnitDTO;
+
+    public String getPhotoLocation() {
+        return photoLocation;
+    }
+
+    public void setPhotoLocation(String photoLocation) {
+        this.photoLocation = photoLocation;
+    }
+
+    public Date getActionTime() {
+        return actionTime;
+    }
+
+    public void setActionTime(Date actionTime) {
+        this.actionTime = actionTime;
+    }
+
+    public MasterDataDTO getDurationUnitDTO() {
+        return durationUnitDTO;
+    }
+
+    public void setDurationUnitDTO(MasterDataDTO durationUnitDTO) {
+        this.durationUnitDTO = durationUnitDTO;
+    }
 
     public Integer getDuration() {
         return duration;

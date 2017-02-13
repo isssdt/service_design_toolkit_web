@@ -41,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FieldResearcher.findByLastActive", query = "SELECT f FROM FieldResearcher f WHERE f.lastActive = :lastActive")})
 public class FieldResearcher implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fieldResearcherId")
+    private List<TouchpointFieldResearcher> touchpointFieldResearcherList;
+
     @Id
     @Basic(optional = false)
     @NotNull
@@ -157,4 +160,13 @@ public class FieldResearcher implements Serializable {
     public void setJourneyFieldResearcherList(List<JourneyFieldResearcher> journeyFieldResearcherList) {
         this.journeyFieldResearcherList = journeyFieldResearcherList;
     }    
+
+    @XmlTransient
+    public List<TouchpointFieldResearcher> getTouchpointFieldResearcherList() {
+        return touchpointFieldResearcherList;
+    }
+
+    public void setTouchpointFieldResearcherList(List<TouchpointFieldResearcher> touchpointFieldResearcherList) {
+        this.touchpointFieldResearcherList = touchpointFieldResearcherList;
+    }
 }

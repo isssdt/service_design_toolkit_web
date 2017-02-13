@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import touchpoint.entity.TouchPoint;
+import user.entity.TouchpointFieldResearcher;
 
 /**
  *
@@ -33,6 +34,9 @@ import touchpoint.entity.TouchPoint;
     @NamedQuery(name = "MasterData.findById", query = "SELECT m FROM MasterData m WHERE m.id = :id"),
     @NamedQuery(name = "MasterData.findByDataValue", query = "SELECT m FROM MasterData m WHERE m.dataValue = :dataValue")})
 public class MasterData implements Serializable {
+
+    @OneToMany(mappedBy = "durationUnit")
+    private List<TouchpointFieldResearcher> touchpointFieldResearcherList;
 
     @OneToMany(mappedBy = "durationUnit")
     private List<TouchPoint> touchPointList;
@@ -103,6 +107,15 @@ public class MasterData implements Serializable {
 
     public void setTouchPointList(List<TouchPoint> touchPointList) {
         this.touchPointList = touchPointList;
+    }
+
+    @XmlTransient
+    public List<TouchpointFieldResearcher> getTouchpointFieldResearcherList() {
+        return touchpointFieldResearcherList;
+    }
+
+    public void setTouchpointFieldResearcherList(List<TouchpointFieldResearcher> touchpointFieldResearcherList) {
+        this.touchpointFieldResearcherList = touchpointFieldResearcherList;
     }
     
 }

@@ -27,7 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import common.entity.Channel;
 import common.entity.MasterData;
-import java.math.BigDecimal;
 import journey.entity.Journey;
 import user.entity.TouchpointFieldResearcher;
 
@@ -46,6 +45,9 @@ import user.entity.TouchpointFieldResearcher;
     @NamedQuery(name = "TouchPoint.findByLongitude", query = "SELECT t FROM TouchPoint t WHERE t.longitude = :longitude"),
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
+
+    @Column(name = "sequence_no")
+    private Integer sequenceNo;
 
     @Column(name = "duration")
     private Integer duration;
@@ -243,6 +245,14 @@ public class TouchPoint implements Serializable {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Integer getSequenceNo() {
+        return sequenceNo;
+    }
+
+    public void setSequenceNo(Integer sequenceNo) {
+        this.sequenceNo = sequenceNo;
     }
     
 }
