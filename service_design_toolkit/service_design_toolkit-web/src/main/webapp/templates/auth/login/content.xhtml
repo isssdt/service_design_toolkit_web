@@ -3,7 +3,8 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:h="http://java.sun.com/jsf/html">  
-    <h:form>
+    <p:importConstants type="common.ScreenTitles" var="ScreenTitles" /> 
+    <h:form prependId="false">
         <p:messages id="messages" autoUpdate="true" closable="true" />
         <h:panelGrid columns="2" cellpadding="5">        
             <h:outputLabel for="username" value="Username:" />
@@ -13,7 +14,8 @@
             <p:password id="password" value="#{loginModel.sdtUserDTO.password}" label="Password" />            
 
             <p:commandButton value="Login" action="#{authControl.authenticate}" ajax="false" /> 
-            <p:commandButton value="Reset Password" action="#{authControl.resetPassword()}" ajax="false" /> 
+            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD}" 
+                             action="#{authControl.resetPassword()}" ajax="false" /> 
 
         </h:panelGrid>
     </h:form>

@@ -86,6 +86,10 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID = "SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID";
     public static final String SCREEN_COMPONENT_JS_FUNCTION_LOCATE_TOUCH_POINT = "locateTouchPoint()";
     
+    //Login Screen
+    public static final String SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD = "Reset Password";
+    public static final String SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID = "SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID";
+    
     //Global
     public static final String SCREEN_COMPONENT_MESSAGES_ID = "SCREEN_COMPONENT_MESSAGES_ID";
 }

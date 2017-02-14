@@ -17,11 +17,6 @@ import javax.faces.view.ViewScoped;
 import journey.controller.JourneyController;
 import journey.dto.JourneyDTO;
 import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.connector.FlowChartConnector;
-import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import common.visualization.NetworkElement;
 
 /**
  *
