@@ -15,6 +15,7 @@
 
             <p:commandButton value="Login" action="#{authControl.authenticate}" ajax="false" /> 
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD}" 
+                             id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID}"
                              action="#{authControl.resetPassword()}" ajax="false" /> 
 
         </h:panelGrid>
