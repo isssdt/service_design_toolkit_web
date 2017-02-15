@@ -150,7 +150,10 @@ border-left: 40px solid #3498db;
         
         <p:gmap id="click_map" widgetVar="click_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                        model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
+                        model="#{dashboardController.dashboardView.combine_map}" 
+                        fitBounds="true"
+                        styleClass="ui-diagram-layout"/>
+        
     </p:panelGrid>
 </p:dialog>
             </p:panel>
@@ -165,7 +168,9 @@ border-left: 40px solid #3498db;
             <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
                 <p:gmap id="combine_map" widgetVar="field_researcher_location_map" 
                     center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                    model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
+                    model="#{dashboardController.dashboardView.combine_map}" 
+                    fitBounds="true"
+                    styleClass="ui-diagram-layout"/>
             </p:panel>
             <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
                
