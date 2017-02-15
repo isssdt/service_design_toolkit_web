@@ -78,6 +78,7 @@ public class TouchPointService implements TouchPointServiceLocal {
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO(), touchpointFieldResearcher.getTouchpointId().getDurationUnit());
                 if (ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE.equals(touchPointFieldResearcherDTO.getStatus())) {
                     BeanUtils.copyProperties(touchPointFieldResearcherDTO.getRatingDTO(), touchpointFieldResearcher.getRatingId());
+                    touchPointFieldResearcherDTO.setDurationUnitDTO(new MasterDataDTO());
                     BeanUtils.copyProperties(touchPointFieldResearcherDTO.getDurationUnitDTO(), touchpointFieldResearcher.getDurationUnit());
                 }
             } catch (IllegalAccessException | InvocationTargetException ex) {
