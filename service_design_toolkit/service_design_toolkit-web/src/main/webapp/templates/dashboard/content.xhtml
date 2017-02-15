@@ -64,6 +64,14 @@ border-left: 40px solid #3498db;
                     display:block;
                     margin-top:0em;
                 }
+                
+                .ui-action-layout {
+                    width: 600px;
+                }
+                
+                .ui-column-layout {
+                    text-align: left;
+                }
 
 
             </style>  
@@ -126,26 +134,21 @@ border-left: 40px solid #3498db;
 <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
                  update="dialog" oncomplete="PF('dlg').show();"  />
                 
-<p:dialog id="dialog" widgetVar="dlg" width="625" height="400" modal="true" header="TouchPoint Details">
+<p:dialog id="dialog" widgetVar="dlg" width="750" height="400" modal="true" header="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc} of #{dashboardController.dashboardModel.journeyName}">
 
     <p:panelGrid columns="1" layout="grid">
-        <h:panelGrid columns="2" >
-        <h:outputLabel  value="Journey:-"></h:outputLabel>
-     <h:outputText value="#{dashboardController.dashboardModel.journeyName}" />  
+        <h:panelGrid columns="2" styleClass="ui-column-layout" >
+            <h:outputText value="Action:"/>
+            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />
+            
+            <h:outputText value="Channel:"/>
+            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
+            
+            <h:outputText value="Channel Description:"/>
+            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
         </h:panelGrid>
-    <h:panelGrid columns="2" >
-        <h:outputLabel value="TouchPoint:-"></h:outputLabel>
-        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc}" />   
-    </h:panelGrid>
-         <h:panelGrid columns="2" >
-        <h:outputLabel value="Channel :-"></h:outputLabel>
-        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />   
-    </h:panelGrid>
-         <h:panelGrid columns="2" >
-        <h:outputLabel value="Action:-"></h:outputLabel>
-        <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />   
-    </h:panelGrid>
-     <p:gmap id="click_map" widgetVar="click_map" 
+        
+        <p:gmap id="click_map" widgetVar="click_map" 
                         center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
                         model="#{dashboardController.dashboardView.combine_map}" styleClass="ui-diagram-layout"/>
     </p:panelGrid>
@@ -207,13 +210,16 @@ border-left: 40px solid #3498db;
                 <p:resizable for="ind_Exp" />
                 
                 
-                <p:dialog widgetVar="dlgChart" id="dialogChart" header="Touchpoint Reaction" responsive="true" showHeader="true" >
-                    <p:panelGrid columns="1" layout="grid">
+                <p:dialog widgetVar="dlgChart" id="dialogChart" header="Touchpoint Reaction" width="400" responsive="true" showHeader="true" >
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-column-layout">
+                        <h:outputText value="TouchPoint Name:"/>
+                        <h:outputText value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.touchpointDTO.touchPointDesc}"/>
+                        
+                        <h:outputText value="Rating:"/>  
+                        <h:outputText value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.ratingDTO.value}"/> 
                     
-                        <h:outputText title="TouchPoint Name:" value ="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.touchpointDTO.touchPointDesc}"></h:outputText>
-                        <h:outputText title="Rating" value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.ratingDTO.value}"></h:outputText>
-                        <h:outputText title="Comments:" value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.comments}"></h:outputText>
-                    
+                        <h:outputText value="Comments:"/>
+                        <h:outputText value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.comments}"/>
                     </p:panelGrid>
                 </p:dialog>
             </p:panel>
