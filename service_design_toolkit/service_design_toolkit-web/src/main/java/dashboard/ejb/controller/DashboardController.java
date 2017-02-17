@@ -552,7 +552,7 @@ public class DashboardController implements Serializable {
        dashboardModel.setTouchPointDTO(touchPointDTOModel);
         List<TouchPointDTO> touchPointDTOList = touchPointService.getTouchPointListJourney(journeyDTO);
           System.out.println("size "+touchPointDTOList.size()+dashboardModel.getJourneyName());
-          dashboardView.getCombine_map().getMarkers().clear();
+          dashboardView.getTp_map().getMarkers().clear();
         
         for (TouchPointDTO touchPointDTO : touchPointDTOList) {
            if(!touchPointDTO.getLatitude().equals("NONE")){
@@ -560,16 +560,15 @@ public class DashboardController implements Serializable {
             Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
                  ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
-            dashboardView.getCombine_map().addOverlay(marker);
+            dashboardView.getTp_map().addOverlay(marker);
             }else{
                 Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
                     ConstantValues.MARKER_ICON_TOUCH_POINT);
-            dashboardView.getCombine_map().addOverlay(marker);
-                
+                dashboardView.getTp_map().addOverlay(marker);
             }
            }
-      }
+        }
           }
           
         

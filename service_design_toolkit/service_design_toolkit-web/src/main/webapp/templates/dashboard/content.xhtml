@@ -72,6 +72,17 @@ border-left: 40px solid #3498db;
                 .ui-column-layout {
                     text-align: left;
                 }
+                
+                .ui-touchpoint-dialog {
+                    width: 900px;
+                    height: 0px;
+                    text-align: center; 
+                }
+                
+                .ui-dialog-diagram {
+                    width: 100%;
+                    height: 400px;
+                }
 
 
             </style>  
@@ -93,71 +104,65 @@ border-left: 40px solid #3498db;
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
                 <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
             <f:facet name="element" >
-                    <h:panelGrid columns="3">  
-                  
-                   
-                  <h:commandLink rendered="#{el.channelDTO.channelName eq 'Face To Face' }">
+                <h:panelGrid columns="3">
+                    <h:commandLink rendered="#{el.channelDTO.channelName eq 'Face To Face' }">
                        <i class="fa fa-users" aria-hidden="true"></i>
-                  </h:commandLink>
-                   
-                   <p:graphicImage name="img/kiosk.png" rendered="#{el.channelDTO.channelName eq 'Kiosk' }" height="30px" width="70px"></p:graphicImage>
-                      
-                   <h:commandLink rendered="#{el.channelDTO.channelName eq 'Website' }">
+                    </h:commandLink>
+                    
+                    <p:graphicImage name="img/kiosk.png" rendered="#{el.channelDTO.channelName eq 'Kiosk' }" height="30px" width="70px"></p:graphicImage>
+                    <h:commandLink rendered="#{el.channelDTO.channelName eq 'Website' }">
                       <i class="fa fa-internet-explorer" aria-hidden="true"></i>
-                      
-                  </h:commandLink>
-                   <h:commandLink value="#{el.touchPointDesc}" styleClass="ui-facet-element" onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);" >
+                    </h:commandLink>
+                    
+                    <h:commandLink value="#{el.touchPointDesc}" styleClass="ui-facet-element" onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);" >
                        <f:ajax ></f:ajax>
-                   </h:commandLink>
-                   
-                  <h:commandLink onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
+                    </h:commandLink>
+                    
+                    <h:commandLink onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);"   rendered="#{el.channelDTO.channelName eq 'Kiosk'  or el.channelDTO.channelName eq 'Face To Face' }">
                         <i class="fa fa-map-marker" aria-hidden="true" ></i>
                         <f:ajax ></f:ajax>
-                  </h:commandLink>
-                    </h:panelGrid>
-                    
-         
-                  <h:panelGrid columns="6" >
-                      <i class="fa fa-thumbs-up" aria-hidden="true" style="color:green"></i>
-                   <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
-                   <i class="fa fa-thumbs-down" aria-hidden="true" style="color:red"></i>
-                  <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
-                  <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true" style="color:blue"></i>
-
-                  <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
-                      
-                  </h:panelGrid>
+                    </h:commandLink>
+                </h:panelGrid>
                 
-             </f:facet>
+                <h:panelGrid columns="6" >
+                    <i class="fa fa-thumbs-up" aria-hidden="true" style="color:green"></i>
+                    <h:outputText value="#{el.no_like}" styleClass="ui-facet-element" />
+                    <i class="fa fa-thumbs-down" aria-hidden="true" style="color:red"></i>
+                    <h:outputText value="#{el.no_dislike}" styleClass="ui-facet-element"/>
+                    <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true" style="color:blue"></i>
+                    <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
+                </h:panelGrid>
+            
+            </f:facet>
                     
-                </p:diagram> 
-<p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
+                </p:diagram>
+                <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
                  update="dialog" oncomplete="PF('dlg').show();"  />
-                
-<p:dialog id="dialog" widgetVar="dlg" width="750" height="400" modal="true" header="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc} of #{dashboardController.dashboardModel.journeyName}">
-
-    <p:panelGrid columns="1" layout="grid">
-        <h:panelGrid columns="2" styleClass="ui-column-layout" >
-            <h:outputText value="Action:"/>
-            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />
-            
-            <h:outputText value="Channel:"/>
-            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
-            
-            <h:outputText value="Channel Description:"/>
-            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
-        </h:panelGrid>
-        
-        <p:gmap id="click_map" widgetVar="click_map" 
-                        center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
-                        model="#{dashboardController.dashboardView.combine_map}" 
-                        fitBounds="true"
-                        styleClass="ui-diagram-layout"/>
-        
-    </p:panelGrid>
-</p:dialog>
+                <p:dialog id="dialog" widgetVar="dlg" modal="true"
+                          header="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc} of #{dashboardController.dashboardModel.journeyName}"
+                          fitViewport="true"
+                          width="700" height="500">
+                    <p:panelGrid columns="1" layout="grid">
+                        <h:panelGrid columns="2" styleClass="ui-column-layout" >
+                            <h:outputText value="Action:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />
+                            
+                            <h:outputText value="Channel:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
+                            
+                            <h:outputText value="Channel Description:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
+                        </h:panelGrid>
+                        <p:gmap id="tp_map" widgetVar="tp_map"
+                                center="#{dashboardController.dashboardView.centerGeoMap}" zoom="10" type="ROADMAP"
+                                model="#{dashboardController.dashboardView.tp_map}"
+                                fitBounds="true"
+                                styleClass="ui-dialog-diagram"/>
+                        </p:panelGrid>
+                    </p:dialog>
             </p:panel>
         </p:panelGrid>
+           
          <p:panelGrid columns="1" layout="grid">
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
                 <p:chart widgetVar="timeGapDiagram" id="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
@@ -173,15 +178,10 @@ border-left: 40px solid #3498db;
                     styleClass="ui-diagram-layout"/>
             </p:panel>
             <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
-               
-              
                 <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
                         styleClass="ui-diagram-layout" responsive="true">
-                
-                 
                 </p:chart>
                 <p:resizable for="integration_map" />
-                
             </p:panel>
         </p:panelGrid>
 <!--            <p:panel id="field_researcher_list_panel" header="Field Researcher List" styleClass="ui-dashboard-layout" >

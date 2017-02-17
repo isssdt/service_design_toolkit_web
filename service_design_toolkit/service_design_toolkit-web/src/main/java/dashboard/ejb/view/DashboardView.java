@@ -26,6 +26,7 @@ public class DashboardView implements Serializable {
     private MapModel field_researcher_location_map;
     private MapModel touch_point_location_map;
     private MapModel combine_map;
+    private MapModel tp_map;
     private String centerGeoMap = "1.2971342, 103.7777567";   
     private CartesianChartModel integrationMapModel;
     private CartesianChartModel indExpMapModel;
@@ -42,6 +43,7 @@ public class DashboardView implements Serializable {
         field_researcher_location_map = new DefaultMapModel();
         touch_point_location_map = new DefaultMapModel();
         combine_map = new DefaultMapModel();
+        tp_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         indExpMapModel = new LineChartModel();
         timeGapDiagram = new HorizontalBarChartModel();
@@ -118,6 +120,14 @@ public class DashboardView implements Serializable {
 
     public void setCombine_map(MapModel combine_map) {
         this.combine_map = combine_map;
+    }
+    
+    public MapModel getTp_map() {
+        return tp_map;
+    }
+
+    public void setTp_map(MapModel tp_map) {
+        this.tp_map = tp_map;
     }
     
     public Map<String, String> getFrMap() {
