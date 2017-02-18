@@ -61,13 +61,14 @@ public class JourneyService implements JourneyServiceLocal {
     public Integer createJourney(JourneyDTO journeyDTO) throws CustomReasonPhraseException {
         System.out.println(journeyDTO.getTouchPointListDTO().getTouchPointDTOList().size());
 
-        Journey journey = new Journey();
+        Journey journey = new Journey();        
         try {
             BeanUtils.copyProperties(journey, journeyDTO);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
         }
+        journey.setIsGeo('Y');
         List<TouchPoint> touchPointList = new ArrayList<>();
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {
             TouchPoint touchPoint = new TouchPoint();
@@ -78,6 +79,10 @@ public class JourneyService implements JourneyServiceLocal {
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
                 throw new CustomReasonPhraseException(ConstantValues.GENERIC_APP_ERROR_CODE, ex.getMessage());
+            }            
+            
+            if ('Y' == journey.getIsGeo() && "NONE".equals(touchPointDTO.getLatitude())) {
+                journey.setIsGeo('N');                
             }
 
             touchPoint.setDurationUnit(new MasterData(touchPointDTO.getMasterDataDTO().getId()));
@@ -85,8 +90,8 @@ public class JourneyService implements JourneyServiceLocal {
             touchPoint.setJourneyId(journey);            
             touchPointList.add(touchPoint);
         }
-        journey.setTouchPointList(touchPointList);
-
+        journey.setTouchPointList(touchPointList);        
+        
         return factory.getJourneyFacade().create(journey).getId();
 
     }

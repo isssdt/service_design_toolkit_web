@@ -15,6 +15,7 @@ REFERENCES master_data(id);
 ALTER TABLE touchpoint_field_researcher ADD photo_location varchar(500);
 ALTER TABLE touchpoint_field_researcher ADD action_time timestamp;
 ALTER TABLE touch_point ADD sequence_no int;
+ALTER TABLE journey ADD is_geo char(1);
 
 
 
