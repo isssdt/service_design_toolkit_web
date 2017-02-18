@@ -25,6 +25,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 import common.dto.ChannelDTO;
 import common.dto.ChannelListDTO;
+import common.dto.MasterDataDTO;
 import journey.dto.JourneyDTO;
 import user.dto.JourneyFieldResearcherDTO;
 import journey.dto.JourneyListDTO;
@@ -35,6 +36,7 @@ import journey.ejb.eao.JourneyFacadeLocal;
 import journey.ejb.eao.JourneyFieldResearcherFacadeLocal;
 import common.entity.Channel;
 import common.entity.MasterData;
+import java.util.concurrent.TimeUnit;
 import journey.entity.Journey;
 import user.entity.JourneyFieldResearcher;
 import touchpoint.entity.TouchPoint;
@@ -308,16 +310,20 @@ public class JourneyService implements JourneyServiceLocal {
         while (iterator.hasNext()) {
             TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();            
 
-            TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();
+            TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();            
             TouchPointDTO touchPointDTO = new TouchPointDTO();
             FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
             SdtUserDTO sdtUserDTO = new SdtUserDTO();
             RatingDTO ratingDTO = new RatingDTO();
+            touchPointFieldResearcherDTO.setDurationUnitDTO(new MasterDataDTO());           
+            touchPointDTO.setMasterDataDTO(new MasterDataDTO());
 
             try {
                 BeanUtils.copyProperties(touchPointDTO, touchpointFieldResearcher.getTouchpointId());
                 BeanUtils.copyProperties(sdtUserDTO, touchpointFieldResearcher.getFieldResearcherId().getSdtUser());
                 BeanUtils.copyProperties(fieldResearcherDTO, touchpointFieldResearcher.getFieldResearcherId());
+                BeanUtils.copyProperties(touchPointFieldResearcherDTO.getDurationUnitDTO(), touchpointFieldResearcher.getDurationUnit());
+                BeanUtils.copyProperties(touchPointDTO.getMasterDataDTO(), touchpointFieldResearcher.getTouchpointId().getDurationUnit());
                 fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);                
                 BeanUtils.copyProperties(ratingDTO, touchpointFieldResearcher.getRatingId());                
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
@@ -327,6 +333,7 @@ public class JourneyService implements JourneyServiceLocal {
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }
+            convertDurationToExpectedUnit(touchPointFieldResearcherDTO);
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
 
@@ -356,18 +363,23 @@ public class JourneyService implements JourneyServiceLocal {
             TouchPointDTO touchPointDTO = new TouchPointDTO();
             FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
             RatingDTO ratingDTO = new RatingDTO();
+            touchPointFieldResearcherDTO.setDurationUnitDTO(new MasterDataDTO());           
+            touchPointDTO.setMasterDataDTO(new MasterDataDTO());
 
             try {
                 BeanUtils.copyProperties(touchPointDTO, touchpointFieldResearcher.getTouchpointId());
                 BeanUtils.copyProperties(fieldResearcherDTO, touchpointFieldResearcher.getFieldResearcherId());
                 BeanUtils.copyProperties(ratingDTO, touchpointFieldResearcher.getRatingId());
                 BeanUtils.copyProperties(touchPointFieldResearcherDTO, touchpointFieldResearcher);
+                BeanUtils.copyProperties(touchPointFieldResearcherDTO.getDurationUnitDTO(), touchpointFieldResearcher.getDurationUnit());
+                BeanUtils.copyProperties(touchPointDTO.getMasterDataDTO(), touchpointFieldResearcher.getTouchpointId().getDurationUnit());
                 touchPointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
                 touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
                 touchPointFieldResearcherDTO.setRatingDTO(ratingDTO);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(JourneyService.class.getName()).log(Level.SEVERE, null, ex);
             }
+            convertDurationToExpectedUnit(touchPointFieldResearcherDTO);
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
 
@@ -423,6 +435,48 @@ public class JourneyService implements JourneyServiceLocal {
                 }
                 journeyDTO.getJourneyFieldResearcherListDTO().getJourneyFieldResearcherDTOList().add(journeyFieldResearcherDTO);
                 break;
+            }
+        }
+    }
+    
+    private void convertDurationToExpectedUnit(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) {   
+        if (null == touchPointFieldResearcherDTO.getDurationUnitDTO().getId()) {
+            return;
+        }
+        if (touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getId().equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+            touchPointFieldResearcherDTO.setConvertedToExepectedDuration(touchPointFieldResearcherDTO.getDuration().doubleValue());            
+        }          
+        else if (common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID.equals(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getId())) {
+            TimeUnit timeUnit = TimeUnit.MINUTES;
+            if (common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.HOURS));
+            }
+            else if (common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.DAYS));
+            }
+        }
+        else if (common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID.equals(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getId())) {
+            TimeUnit timeUnit = TimeUnit.HOURS;
+            if (common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.MINUTES));
+            }
+            else if (common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.DAYS));
+            }
+        }        
+        else if (common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID.equals(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getId())) {
+            TimeUnit timeUnit = TimeUnit.DAYS;
+            if (common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.MINUTES));
+            }
+            else if (common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
+                touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
+                        (double)timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.HOURS));
             }
         }
     }
