@@ -17,7 +17,7 @@
 	text-align: center;
 	padding: 30px 40px 0 40px;
 	position: relative;
-	margin: 0 10px 0 0; 
+	margin: 11px 12px 12px 11px; 
 	
 	font-size: 20px;
 	text-decoration: none;
@@ -27,8 +27,8 @@
  .ui-diagram-crumbs:after {
 	content: "";  
 	border-top: 40px solid transparent;
-border-bottom: 40px solid transparent;
-border-left: 40px solid #3498db;
+        border-bottom: 40px solid transparent;
+        border-left: 40px solid #3498db;
 	position: absolute; right: -40px; top: 0;
         z-index: 2;
    
@@ -92,7 +92,8 @@ border-left: 40px solid #3498db;
             <p:panel closable="true"> 
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
-                <p:ajax listener="#{dashboardController.onJourneyChange()}" update="combine_map, integration_map ,dia, fr, ind_Exp, timeGapDiagram" />
+                <p:ajax listener="#{dashboardController.onJourneyChange()}" 
+                        update="combine_map, integration_map , dia, fr, ind_Exp, timeGapDiaGrid" />
                 <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                 <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
@@ -155,19 +156,21 @@ border-left: 40px solid #3498db;
                         </h:panelGrid>
                         <p:gmap id="tp_map" widgetVar="tp_map"
                                 center="#{dashboardController.dashboardView.centerGeoMap}" zoom="10" type="ROADMAP"
-                                model="#{dashboardController.dashboardView.tp_map}"
-                                fitBounds="true"
-                                styleClass="ui-dialog-diagram"/>
+                                model="#{dashboardController.dashboardView.tp_map}" styleClass="ui-dialog-diagram"/>
+<!--                                fitBounds="true"-->
+                                
                         </p:panelGrid>
                     </p:dialog>
             </p:panel>
         </p:panelGrid>
            
          <p:panelGrid columns="1" layout="grid">
+             <p:dataGrid id="timeGapDiaGrid" value="#{dashboardController.dashboardView.timeGapDiagrams}" var="timeGapModel">
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
-                <p:chart widgetVar="timeGapDiagram" id="timeGapDiagram" type="bar" model="#{dashboardController.dashboardView.timeGapDiagram}" 
-                    styleClass="ui-diagram-layout" responsive="true"/>      
-            </p:panel>
+                <p:chart id="timeGapDiagram" type="bar" model="#{timeGapModel}" styleClass="ui-diagram-layout" responsive="true"/>   
+                </p:panel>
+             </p:dataGrid>
+            
         </p:panelGrid>
         <p:panelGrid columns="2" layout="grid">
             <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >

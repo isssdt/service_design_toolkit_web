@@ -31,7 +31,7 @@ public class DashboardView implements Serializable {
     private CartesianChartModel integrationMapModel;
     private CartesianChartModel indExpMapModel;
     private DefaultDiagramModel snakeModel;
-    private HorizontalBarChartModel timeGapDiagram;
+    private List<HorizontalBarChartModel> timeGapDiagrams;    
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private Map<String, String> frMap;
     private MapModel polylineModel;
@@ -46,7 +46,6 @@ public class DashboardView implements Serializable {
         tp_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         indExpMapModel = new LineChartModel();
-        timeGapDiagram = new HorizontalBarChartModel();
         polylineModel = new DefaultMapModel();
     }
 
@@ -97,15 +96,7 @@ public class DashboardView implements Serializable {
     public void setSnakeModel(DefaultDiagramModel snakeModel) {
         this.snakeModel = snakeModel;
     }
-    
-    public void setTimeGapDiagram(HorizontalBarChartModel timeGapDiagram) {
-    this.timeGapDiagram = timeGapDiagram;
-    }
 
-    public HorizontalBarChartModel getTimeGapDiagram() {
-        return timeGapDiagram;
-    }
-    
     public List<FieldResearcherDTO> getFieldResearcherDTOList() {
         return fieldResearcherDTOList;
     }
@@ -152,5 +143,13 @@ public class DashboardView implements Serializable {
 
     public CartesianChartModel getIndExpMapModel() {
         return indExpMapModel;
+    }
+    
+    public List<HorizontalBarChartModel> getTimeGapDiagrams() {
+        return timeGapDiagrams;
+    }
+
+    public void setTimeGapDiagrams(List<HorizontalBarChartModel> timeGapDiagrams) {
+        this.timeGapDiagrams = timeGapDiagrams;
     }
 }

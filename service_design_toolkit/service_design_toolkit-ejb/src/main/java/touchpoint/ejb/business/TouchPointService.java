@@ -163,6 +163,12 @@ public class TouchPointService implements TouchPointServiceLocal {
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
             }
+            MasterDataDTO masterDataDTO = new MasterDataDTO();
+            try {
+                BeanUtils.copyProperties(masterDataDTO, touchPoint.getDurationUnit());
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             TouchPointDTO touchPointDTO = new TouchPointDTO();
             try {
@@ -171,6 +177,7 @@ public class TouchPointService implements TouchPointServiceLocal {
                 Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
             }
             touchPointDTO.setChannelDTO(channelDTO);
+            touchPointDTO.setMasterDataDTO(masterDataDTO);
             setNeutralLikeDislike(touchPointDTO, touchPointNeutralRatingList, touchPointLikeRatingList, touchPointDislikeRatingList);            
             
             touchPointDTOList.add(touchPointDTO);
