@@ -22,7 +22,7 @@
 	font-size: 20px;
 	text-decoration: none;
 	color: #fff;
-    padding: 30px 40px 0 80px;
+    padding: 10px 40px 20px 80px;
 }
  .ui-diagram-crumbs:after {
 	content: "";  
@@ -62,7 +62,7 @@ border-left: 40px solid #3498db;
                 
                 .ui-facet-element {
                     display:block;
-                    margin-top:0em;
+                    margin-top:0px;
                 }
                 
                 .ui-action-layout {
@@ -109,12 +109,12 @@ border-left: 40px solid #3498db;
                        <i class="fa fa-users" aria-hidden="true"></i>
                     </h:commandLink>
                     
-                    <p:graphicImage name="img/kiosk.png" rendered="#{el.channelDTO.channelName eq 'Kiosk' }" height="30px" width="70px"></p:graphicImage>
+                    <p:graphicImage name="img/kiosk.png" rendered="#{el.channelDTO.channelName eq 'Kiosk' }" height="20px" width="60px"></p:graphicImage>
                     <h:commandLink rendered="#{el.channelDTO.channelName eq 'Website' }">
                       <i class="fa fa-internet-explorer" aria-hidden="true"></i>
                     </h:commandLink>
                     
-                    <h:commandLink value="#{el.touchPointDesc}" styleClass="ui-facet-element" onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);" >
+                    <h:commandLink  value="#{el.touchPointDesc}" styleClass="ui-facet-element" onclick="myRemote([{name:'touchPointDesc',value:'#{el.touchPointDesc}'},{name:'latitude',value:'#{el.latitude}'},{name:'longitude',value:'#{el.longitude}'},{name:'channelName',value:'#{el.channelDTO.channelName}'},{name:'action',value:'#{el.action}'}]);" >
                        <f:ajax ></f:ajax>
                     </h:commandLink>
                     
