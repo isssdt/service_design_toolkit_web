@@ -11,6 +11,8 @@ import common.rest.dto.RESTReponse;
 import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
+import common.util.MailBridge;
+import common.util.MailGoogle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
@@ -194,6 +196,15 @@ public class UserService implements UserServiceLocal {
 
         //return successful message and set the generated password to DTO
         sdtUserDTO.setPassword(generatedPassword);
+        
+        MailBridge mailBridge = new MailGoogle();
+        try {
+            mailBridge.sendMail(ConstantValues.MAIL_RESET_PASSWORD_FROM_ADDRESS, ConstantValues.MAIL_RESET_PASSWORD_TO_ADDRESS, "Hello", 
+                    ConstantValues.MAIL_RESET_PASSWORD_SUBJECT);
+        } catch (Exception ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
     }
 

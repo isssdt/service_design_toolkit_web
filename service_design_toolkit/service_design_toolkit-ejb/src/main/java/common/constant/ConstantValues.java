@@ -10,6 +10,19 @@ package common.constant;
  * @author longnguyen
  */
 public class ConstantValues {
+    /**
+     * From Address for Reset Password Email
+     */
+    public static final String MAIL_RESET_PASSWORD_FROM_ADDRESS = "no-reply@nguyenduclong.com";    
+    /**
+     * To Address for Reset Password Email
+     */
+    public static final String MAIL_RESET_PASSWORD_TO_ADDRESS = "rock_mozart_ndlong@yahoo.com";
+    /**
+     * Subject for Reset Password Email
+     */
+    public static final String MAIL_RESET_PASSWORD_SUBJECT = "Your password of Service Design Toolkit has been reset";
+    
     public static final String FIELD_RESEARCHER_ROLE_NAME = "Field Researcher";
     public static final int GENERIC_APP_ERROR_CODE = 5001;
     public static final String BLOG_POST_URL = "/service-design-toolkit-web";
