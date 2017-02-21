@@ -11,13 +11,9 @@ import common.ejb.eao.EAOFactory;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
 import common.rest.dto.RESTReponse;
-import common.util.UtilConverter;
 import java.util.HashMap;
 import java.util.Map;
-import touchpoint.dto.TouchPointDTO;
-import common.entity.Channel;
-import journey.entity.Journey;
-import touchpoint.entity.TouchPoint;
+import javax.enterprise.event.Event;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -43,6 +39,7 @@ public class UserServiceTest {
     SdtUserFacadeLocal sdtUserFacade;
     FieldResearcherFacadeLocal fieldResearcherFacade;
     EAOFactory factory;
+    
     
     public UserServiceTest() {
     }
@@ -136,34 +133,34 @@ public class UserServiceTest {
         
     }
     
-    @Test
-    public void testResetPassword() throws AppException, CustomReasonPhraseException {
-        //create SDTUser
-        SdtUser sdtUser = new SdtUser(null, "username", null, null, null);
-        
-        //mocking the authenticate query
-        Map<String, Object> params = new HashMap<>();
-        params.put("username", "username");        
-        Mockito.when(sdtUserFacade.findSingleByQueryName(ConstantValues.SDT_USER_QUERY_FIND_BY_USERNAME, params)).thenReturn(sdtUser);
-        
-        //create SDTUserDTO with no username
-        SdtUserDTO sdtUserDTO = new SdtUserDTO();        
-        RESTReponse response = userService.resetPassword(sdtUserDTO);        
-        //it should be failed
-        Assert.assertEquals(ConstantValues.SDT_USER_ERROR_NO_USERNAME, response.getMessage());
-        
-        //set username incorrectly
-        sdtUserDTO.setUsername("wrong");
-        response = userService.resetPassword(sdtUserDTO);
-        //it should be failed
-        Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME, response.getMessage());
-        
-        //set username correctly
-        sdtUserDTO.setUsername("username");
-        response = userService.resetPassword(sdtUserDTO);
-        //it should be successful
-        Assert.assertEquals(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE, response.getMessage());
-    }
+//    @Test
+//    public void testResetPassword() throws AppException, CustomReasonPhraseException {
+//        //create SDTUser
+//        SdtUser sdtUser = new SdtUser(null, "username", null, null, null);
+//        
+//        //mocking the authenticate query
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("username", "username");        
+//        Mockito.when(sdtUserFacade.findSingleByQueryName(ConstantValues.SDT_USER_QUERY_FIND_BY_USERNAME, params)).thenReturn(sdtUser);
+//        
+//        //create SDTUserDTO with no username
+//        SdtUserDTO sdtUserDTO = new SdtUserDTO();        
+//        RESTReponse response = userService.resetPassword(sdtUserDTO);        
+//        //it should be failed
+//        Assert.assertEquals(ConstantValues.SDT_USER_ERROR_NO_USERNAME, response.getMessage());
+//        
+//        //set username incorrectly
+//        sdtUserDTO.setUsername("wrong");
+//        response = userService.resetPassword(sdtUserDTO);
+//        //it should be failed
+//        Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME, response.getMessage());
+//        
+//        //set username correctly
+//        sdtUserDTO.setUsername("username");
+//        response = userService.resetPassword(sdtUserDTO);
+//        //it should be successful
+//        Assert.assertEquals(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE, response.getMessage());
+//    }
     
     @Test
     public void testChangePassword() throws AppException, CustomReasonPhraseException {

@@ -127,6 +127,10 @@ public class ConstantValues {
      * Password has been changed
      */
     public static final String SDT_USER_STATUS_PASSWORD_CHANGE = "Password has been changed";
+    /**
+     * Password reset message
+     */
+    public static final String SDT_USER_STATUS_PASSWORD_RESET = "Your password has been reset and sent to your mail.";
     
     /**
      * Dashboard page

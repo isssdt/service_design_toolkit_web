@@ -78,12 +78,12 @@ public class AuthController implements Serializable {
             Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
             Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
         }
-        if (!ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE.equals(response.getMessage())) {
+        if (!ConstantValues.SDT_USER_STATUS_PASSWORD_RESET.equals(response.getMessage())) {
             Utils.postMessage(FacesMessage.SEVERITY_WARN, response.getMessage(), null, null);
             return "";
-        }
+        }        
         
-        Utils.postMessage(FacesMessage.SEVERITY_INFO, response.getMessage() + " : " + loginModel.getSdtUserDTO().getPassword(), null, null);
+        Utils.postMessage(FacesMessage.SEVERITY_INFO, response.getMessage(), null, null);
         return "";
     }
 

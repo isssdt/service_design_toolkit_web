@@ -34,8 +34,7 @@ public class MailGoogle implements MailBridge {
         
         Transport transport = getMailSession.getTransport("smtp");        
         transport.connect("smtp.gmail.com", "iss.service.design.toolkit@gmail.com", "HoangYen1601");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());        
         transport.close();
     }
-
 }

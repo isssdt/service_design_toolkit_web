@@ -22,6 +22,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import user.dto.JourneyFieldResearcherDTO;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -49,6 +52,9 @@ public class UserService implements UserServiceLocal {
 
     @EJB
     private EAOFactory factory;
+    
+    @Inject
+    private Event<String> eventProducer;
 
     @Override
     public RESTReponse refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) {
@@ -195,17 +201,11 @@ public class UserService implements UserServiceLocal {
         factory.getSdtUserFacade().edit(sdtUser);
 
         //return successful message and set the generated password to DTO
-        sdtUserDTO.setPassword(generatedPassword);
+        sdtUserDTO.setPassword(generatedPassword);       
         
-        MailBridge mailBridge = new MailGoogle();
-        try {
-            mailBridge.sendMail(ConstantValues.MAIL_RESET_PASSWORD_FROM_ADDRESS, ConstantValues.MAIL_RESET_PASSWORD_TO_ADDRESS, "Hello", 
-                    ConstantValues.MAIL_RESET_PASSWORD_SUBJECT);
-        } catch (Exception ex) {
-            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        eventProducer.fire(generatedPassword);
         
-        return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_CHANGE);
+        return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_RESET);
     }
 
     @Override
