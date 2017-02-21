@@ -4,12 +4,36 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html">
+    <h:outputScript library="js" name="dashboard/panel.js" target="body" />
     <script 
         type="text/javascript" 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
     </script>  
         <style type="text/css">
-            .ui-diagram-crumbs  {
+            
+.panel-actions {
+  margin-top: -20px;
+  margin-bottom: 0;
+  text-align: right;
+   color:#333;
+}
+
+
+
+.panel-fullscreen {
+    display: block;
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: auto;
+    
+}
+.ui-diagram-crumbs  {
 	display: block;
 	float: left;
 	height: 50px;
@@ -102,7 +126,10 @@
         </h:panelGrid>
        
         <p:panelGrid columns="1" layout="grid">
-            <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout">
+            <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout" class="panel panel-default">
+               <f:facet name="actions">
+                   <a href="#" id="dia_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
                 <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
             <f:facet name="element" >
                 <h:panelGrid columns="3">
@@ -165,22 +192,33 @@
         </p:panelGrid>
            
          <p:panelGrid columns="1" layout="grid">
-             <p:dataGrid id="timeGapDiaGrid" value="#{dashboardController.dashboardView.timeGapDiagrams}" var="timeGapModel">
+              <p:panel  id="timegap" header="Time Gap Diagram" styleClass="ui-dashboard-layout" class="panel panel-default">
+ <f:facet name="actions">
+ <a href="#" id="timeGapDiagram_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
+                  
+                  <p:dataGrid id="timeGapDiaGrid" value="#{dashboardController.dashboardView.timeGapDiagrams}" var="timeGapModel">
             <p:panel id="timegap" header="Time gap Diagram" styleClass="ui-dashboard-layout">
                 <p:chart id="timeGapDiagram" type="bar" model="#{timeGapModel}" styleClass="ui-diagram-layout" responsive="true"/>   
                 </p:panel>
              </p:dataGrid>
-            
+              </p:panel>
         </p:panelGrid>
         <p:panelGrid columns="2" layout="grid">
-            <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" >
+            <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" class="panel panel-default">
+ <f:facet name="actions">
+ <a href="#" id="combine_map_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
                 <p:gmap id="combine_map" widgetVar="field_researcher_location_map" 
                     center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="ROADMAP"
                     model="#{dashboardController.dashboardView.combine_map}" 
                     fitBounds="true"
                     styleClass="ui-diagram-layout"/>
             </p:panel>
-            <p:panel header="Integration Map" styleClass="ui-dashboard-layout">
+            <p:panel header="Integration Map" styleClass="ui-dashboard-layout" class="panel panel-default">
+<f:facet name="actions">
+ <a href="#" id="integration_map_clcik" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
                 <p:chart  widgetVar="integration_map" id="integration_map" type="line" model="#{dashboardController.dashboardView.integrationMapModel}"
                         styleClass="ui-diagram-layout" responsive="true">
                 </p:chart>
@@ -209,7 +247,10 @@
             </p:panel>
 </p:panelGrid>
 <p:panelGrid columns="2" layout="grid">
-            <p:panel header="Individual Experience" styleClass="ui-dashboard-layout">
+            <p:panel header="Individual Experience" styleClass="ui-dashboard-layout" class="panel  ">
+<f:facet name="actions">
+ <a href="#" id="ind_Exp_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
                   <p:remoteCommand name="func" actionListener="#{dashboardController.showChartDialog()}" update="dialogChart" oncomplete="PF('dlgChart').show();"/>
                 <p:chart  widgetVar="ind_Exp" id="ind_Exp" type="line" model="#{dashboardController.dashboardView.indExpMapModel}"
                         styleClass="ui-diagram-layout" responsive="true">
@@ -233,7 +274,11 @@
             </p:panel>
          
     
-    <p:panel header="service gap for add touchpoint"></p:panel>
+    <p:panel header="service gap for add touchpoint" class="panel panel-default">
+    <f:facet name="actions">
+ <a href="#" id="ser_add_touch_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
+</f:facet>
+    </p:panel>
         </p:panelGrid>
         <!--<p:panelGrid columns="1" layout="grid">
                 <p:panel widgetVar="fr1" id="fr1">
