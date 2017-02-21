@@ -37,5 +37,7 @@ public interface TouchPointServiceLocal extends BusinessService {
     public RESTReponse saveResponse(TouchPointFieldResearcherDTO touchpointFieldResearcherDTO)
             throws AppException, CustomReasonPhraseException;
     
-    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO);             
+    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO);   
+    
+    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException;
 }

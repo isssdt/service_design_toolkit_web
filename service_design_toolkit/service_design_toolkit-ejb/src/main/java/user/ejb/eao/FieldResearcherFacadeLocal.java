@@ -5,6 +5,7 @@
  */
 package user.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -15,7 +16,7 @@ import user.entity.FieldResearcher;
  * @author longnguyen
  */
 @Local
-public interface FieldResearcherFacadeLocal {
+public interface FieldResearcherFacadeLocal extends EAOFacade {
 
     FieldResearcher create(FieldResearcher fieldResearcher);
 
@@ -31,5 +32,7 @@ public interface FieldResearcherFacadeLocal {
 
     int count();    
     
-    public List<FieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);    
+    List<FieldResearcher> findListByQueryName(String queryName, Map<String, Object> queryParamValues);  
+    
+    FieldResearcher findSingleByQueryName(String queryName, Map<String, Object> params);
 }

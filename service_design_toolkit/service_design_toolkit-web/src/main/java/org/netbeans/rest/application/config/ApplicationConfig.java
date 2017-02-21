@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.journey.GetResearchWorkListByJourneyNameAndUsername.class);
         resources.add(rest.journey.JourneyMarkComplete.class);
         resources.add(rest.journey.RegisterFieldResearcherWithJourney.class);
+        resources.add(rest.touchpoint.AddTouchPoint.class);
         resources.add(rest.touchpoint.GetTouchPointListOfRegisteredJourney.class);
         resources.add(rest.touchpoint.UpdateResearchWork.class);
         resources.add(rest.user.FieldResearcherRegister.class);

@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import touchpoint.entity.TouchPoint;
@@ -13,7 +14,7 @@ import touchpoint.entity.TouchPoint;
  *
  * @author samru
  */
-public interface TouchPointFacadeLocal {
+public interface TouchPointFacadeLocal extends EAOFacade {
     TouchPoint create(TouchPoint touchpoint);
     void edit(TouchPoint touchpoint);
 

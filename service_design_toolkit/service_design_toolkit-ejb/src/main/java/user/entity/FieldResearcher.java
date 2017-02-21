@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FieldResearcher.findById", query = "SELECT f FROM FieldResearcher f WHERE f.id = :id"),
     @NamedQuery(name = "FieldResearcher.findByCurrentLatitude", query = "SELECT f FROM FieldResearcher f WHERE f.currentLatitude = :currentLatitude"),
     @NamedQuery(name = "FieldResearcher.findByCurrentLongitude", query = "SELECT f FROM FieldResearcher f WHERE f.currentLongitude = :currentLongitude"),
+    @NamedQuery(name = "FieldResearcher.00001", query = "SELECT f FROM FieldResearcher f WHERE f.sdtUser.username = :username"),
     @NamedQuery(name = "FieldResearcher.findByLastActive", query = "SELECT f FROM FieldResearcher f WHERE f.lastActive = :lastActive")})
 public class FieldResearcher implements Serializable {
 

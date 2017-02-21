@@ -5,6 +5,7 @@
  */
 package journey.ejb.eao;
 
+import common.ejb.eao.EAOFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -15,7 +16,7 @@ import common.entity.Channel;
  * @author samru
  */
 @Local
-public interface ChannelFacadeLocal {
+public interface ChannelFacadeLocal extends EAOFacade {
     Channel create(Channel channel);
     void edit(Channel channel);
 
@@ -38,7 +39,7 @@ public interface ChannelFacadeLocal {
     List<Channel> findListByQueryName(String queryName, Map<String, Object> queryParamValues);
     
     List<Channel>  findListOfChannel();
-             
     
+    Channel findSingleByQueryName(String queryName, Map<String, Object> params);   
 }
 

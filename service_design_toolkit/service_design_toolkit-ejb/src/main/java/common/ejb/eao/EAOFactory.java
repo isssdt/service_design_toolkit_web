@@ -111,6 +111,15 @@ public class EAOFactory {
         if (TouchPointFieldResearcherFacadeLocal.class.toString().equals(facade)) {
             return touchPointFieldResearcherFacade;
         }
+        if (ChannelFacadeLocal.class.toString().equals(facade)) {
+            return channelFacade;
+        }
+        if (TouchPointFacadeLocal.class.toString().equals(facade)) {
+            return touchPointFacade;
+        }
+        if (FieldResearcherFacadeLocal.class.toString().equals(facade)) {
+            return fieldResearcherFacade;
+        }
         return null;
     }
 }

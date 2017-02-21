@@ -68,6 +68,10 @@ public class ConstantValues {
      */
     public static final String QUERY_SDT_USER_FIND_USER_BY_USERNAME = "SdtUser.findByUsername";
     /**
+     * SELECT f FROM FieldResearcher f WHERE f.sdtUser.username = :username
+     */
+    public static final String QUERY_FIELD_RESEARCHER_FIND_BY_USERNAME = "FieldResearcher.00001";
+    /**
      * SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username 
      * and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J 
      * WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS') 
@@ -102,7 +106,15 @@ public class ConstantValues {
     /**
      * SELECT u FROM UserRole u WHERE u.roleName = :roleName
      */
-    public static final String QUERY_USER_ROLE_FIND_ROLE_BY_NAME = "UserRole.findByRoleName";    
+    public static final String QUERY_USER_ROLE_FIND_ROLE_BY_NAME = "UserRole.findByRoleName";
+    /**
+     * SELECT j FROM Journey j WHERE j.journeyName = :journeyName
+     */
+    public static final String QUERY_JOURNEY_FIND_JOURNEY_BY_NAME = "Journey.findByJourneyName";
+    /**
+     * SELECT c FROM Channel c WHERE c.channelName = :channelName
+     */
+    public static final String QUERY_CHANNEL_FIND_CHANNEL_BY_NAME = "Channel.findByChannelName";
     /**
      * SELECT m FROM MasterData m WHERE m.dataValue = :dataValue
      */

@@ -26,8 +26,12 @@ import common.dto.ChannelDTO;
 import common.dto.MasterDataDTO;
 import journey.dto.JourneyDTO;
 import common.dto.RatingDTO;
+import common.entity.Channel;
 import common.entity.MasterData;
 import java.util.Date;
+import journey.ejb.eao.ChannelFacadeLocal;
+import journey.ejb.eao.JourneyFacadeLocal;
+import journey.ejb.eao.TouchPointFacadeLocal;
 import journey.ejb.eao.TouchPointFieldResearcherFacadeLocal;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
@@ -37,6 +41,8 @@ import user.entity.TouchpointFieldResearcher;
 import org.apache.commons.beanutils.BeanUtils;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
+import user.ejb.eao.FieldResearcherFacadeLocal;
+import user.entity.FieldResearcher;
 
 /**
  *
@@ -203,5 +209,52 @@ public class TouchPointService implements TouchPointServiceLocal {
                 touchPointDTO.setNo_dislike(((Long)dislikeRating[1]).intValue());
             }
         }
+    }
+
+    @Override
+    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException {        
+        JourneyFacadeLocal journeyFacadeLocal = (JourneyFacadeLocal)factory.getFacade(JourneyFacadeLocal.class.toString());
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("journeyName", touchPointFieldResearcherDTO.getTouchpointDTO().getJourneyDTO().getJourneyName());
+        Journey journey = journeyFacadeLocal.findSingleByQueryName(ConstantValues.QUERY_JOURNEY_FIND_JOURNEY_BY_NAME, params);
+        
+        ChannelFacadeLocal channelFacadeLocal = (ChannelFacadeLocal)factory.getFacade(ChannelFacadeLocal.class.toString());
+        params.clear();
+        params.put("channelName", touchPointFieldResearcherDTO.getTouchpointDTO().getChannelDTO().getChannelName());
+        Channel channel = channelFacadeLocal.findSingleByQueryName(ConstantValues.QUERY_CHANNEL_FIND_CHANNEL_BY_NAME, params);  
+        
+        MasterData durationUnit = new MasterData(common.util.Utils.getMasterDataID(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO()));
+        
+        FieldResearcherFacadeLocal fieldResearcherFacadeLocal = (FieldResearcherFacadeLocal)factory.getFacade(FieldResearcherFacadeLocal.class.toString());
+        params.clear();
+        params.put("username", touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername());
+        FieldResearcher fieldResearcher = fieldResearcherFacadeLocal.findSingleByQueryName(ConstantValues.QUERY_FIELD_RESEARCHER_FIND_BY_USERNAME, params);
+        
+        TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
+        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
+        touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+        touchpointFieldResearcher.setActionTime(new Date());
+        
+        TouchPoint touchPoint = new TouchPoint();                
+        touchpointFieldResearcher.setTouchpointId(touchPoint);
+        
+        try {
+            BeanUtils.copyProperties(touchPoint, touchPointFieldResearcherDTO.getTouchpointDTO());                        
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        touchPoint.setJourneyId(journey);       
+        touchPoint.setChannelId(channel);
+        touchPoint.setDurationUnit(durationUnit);
+        touchPoint.setTouchpointFieldResearcherList(new ArrayList<>());
+        touchPoint.getTouchpointFieldResearcherList().add(touchpointFieldResearcher);               
+        
+        TouchPointFacadeLocal touchPointFacadeLocal = (TouchPointFacadeLocal)factory.getFacade(TouchPointFacadeLocal.class.toString());
+        touchPointFacadeLocal.create(touchPoint);
+        
+        
+        
+        return new RESTReponse(touchPoint.getId().toString());
     }
 }
