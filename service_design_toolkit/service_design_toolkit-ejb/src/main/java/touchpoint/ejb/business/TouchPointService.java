@@ -244,6 +244,11 @@ public class TouchPointService implements TouchPointServiceLocal {
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
         }        
+        if (null == touchPoint.getLongitude()) {
+            touchPoint.setLatitude("NONE");
+            touchPoint.setLongitude("NONE");
+            touchPoint.setRadius("NONE");
+        }
         touchPoint.setJourneyId(journey);       
         touchPoint.setChannelId(channel);
         touchPoint.setDurationUnit(durationUnit);
