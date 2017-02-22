@@ -4,6 +4,46 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">           
     <h:outputScript library="js" name="journey/addtouchpoint.js" target="body" />
+    <style type="text/css">
+        .ui-diagram-crumbs  {
+                display: block;
+                float: left;
+                height: 50px;
+                background: #3498db;
+                text-align: center;
+                padding: 30px 40px 0 40px;
+                position: relative;
+                margin: 11px 12px 12px 11px; 
+                font-size: 20px;
+                text-decoration: none;
+                color: #fff;
+                padding: 10px 40px 20px 80px;
+        }
+         .ui-diagram-crumbs:after {
+                content: "";  
+                border-top: 40px solid transparent;
+                border-bottom: 40px solid transparent;
+                border-left: 40px solid #3498db;
+                position: absolute; right: -40px; top: 0;
+                z-index: 2;
+        }
+         .ui-diagram-crumbs:before {
+                content: "";  
+                border-top: 40px solid transparent;
+                border-bottom: 40px solid transparent;
+                border-left: 40px solid white;
+                position: absolute; left: 0; top: 0;
+                z-index: 1;
+         }
+         .ui-strat-element {
+                width: 100px;
+                height: 100px;
+                background: red;
+                -moz-border-radius: 50px;
+                -webkit-border-radius: 50px;
+                border-radius: 50px;
+         }
+    </style>
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
     <h:form prependId="false" id="#{ScreenTitles.SCREEN_COMPONENT_FORM_ID}">  
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" /> 
@@ -42,9 +82,41 @@
                 <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
                         update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
             </p:commandButton>            
-        </h:panelGrid>                     
+        </h:panelGrid>  
+        
+        <p:panelGrid columns="1" layout="grid">
+            <p:diagram  id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
+                value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" 
+                style="width: 100%; height: 350px" styleClass="ui-widget-content" var="touchpoint">
+                    <f:facet name="element">
+                        <h:panelGrid columns="3">
+                            <h:commandLink rendered="#{touchpoint.channelDTO.channelName eq 'Face To Face' }">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                            </h:commandLink>
 
-        <p:diagram id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
+                            <p:graphicImage name="img/kiosk.png" height="20px" width="60px"
+                                rendered="#{touchpoint.channelDTO.channelName eq 'Kiosk' }" >
+                            </p:graphicImage>
+                            
+                            <h:commandLink rendered="#{touchpoint.channelDTO.channelName eq 'Website' }">
+                                <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+                            </h:commandLink>
+
+                            <h:commandLink  value="#{touchpoint.touchPointDesc}" styleClass="ui-facet-element" 
+                                onclick="myRemote([{name:'touchPointDesc',value:'#{touchpoint.touchPointDesc}'},{name:'latitude',value:'#{touchpoint.latitude}'},{name:'longitude',value:'#{touchpoint.longitude}'},{name:'channelName',value:'#{touchpoint.channelDTO.channelName}'},{name:'action',value:'#{touchpoint.action}'}]);" >
+                                <f:ajax ></f:ajax>
+                            </h:commandLink>
+
+                            <h:commandLink onclick="myRemote([{name:'touchPointDesc',value:'#{touchpoint.touchPointDesc}'},{name:'latitude',value:'#{touchpoint.latitude}'},{name:'longitude',value:'#{touchpoint.longitude}'},{name:'channelName',value:'#{touchpoint.channelDTO.channelName}'},{name:'action',value:'#{touchpoint.action}'}]);"   rendered="#{touchpoint.channelDTO.channelName eq 'Kiosk'  or touchpoint.channelDTO.channelName eq 'Face To Face' }">
+                                <i class="fa fa-map-marker" aria-hidden="true" ></i>
+                                <f:ajax ></f:ajax>
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </f:facet>
+            </p:diagram> 
+        </p:panelGrid>
+
+        <!--<p:diagram id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
                    value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" style="height:600px" 
                    styleClass="ui-widget-content" var="touchpoint" >
             <f:facet name="element">
@@ -54,6 +126,6 @@
                 <p:graphicImage  name="img/marker.png" width="20%" height="20%" 
                                  rendered="#{touchpoint.channelName eq 'Kiosk' or touchpoint.channelName eq 'Face To Face' }"/>
             </f:facet>
-        </p:diagram>        
+        </p:diagram>-->       
     </h:form>    
 </ui:composition>

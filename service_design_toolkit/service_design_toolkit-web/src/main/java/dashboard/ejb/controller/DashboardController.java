@@ -5,7 +5,6 @@
  */
 package dashboard.ejb.controller;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import common.constant.ConstantValues;
 import common.dto.ChannelDTO;
 import common.exception.AppException;
@@ -31,25 +30,16 @@ import journey.ejb.business.JourneyServiceLocal;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.diagram.Connection;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.connector.FlowChartConnector;
-import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import org.primefaces.model.diagram.overlay.ArrowOverlay;
-import org.primefaces.model.diagram.overlay.LabelOverlay;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
 import touchpoint.dto.TouchPointFieldResearcherListDTO;
 import touchpoint.ejb.business.TouchPointServiceLocal;
-import common.visualization.NetworkElement;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.Set;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
@@ -90,10 +80,7 @@ public class DashboardController implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
 
-    
-    
     @PostConstruct
     public void init() {
         dashboardModel = new DashboardModel();
@@ -400,60 +387,44 @@ public class DashboardController implements Serializable {
         start.setDraggable(false);
         start.setStyleClass("ui-diagram-crumbs");
          model.addElement(start);
-        dashboardView.setSnakeModel(model);
-        
+        dashboardView.setSnakeModel(model);        
     }
 
-    
     private void updateSnakeMap(JourneyDTO journeyDTO) {
-        System.out.println("inside updateSnakeMap ");
         dashboardView.getSnakeModel().clear();
         List<TouchPointDTO> touchPointList=getTouchPointList(journeyDTO);
-        System.out.println("touchpointlist size "+touchPointList.size()+"for journey"+journeyDTO.getJourneyName());
-    // initsnakeModel();
-      for (TouchPointDTO touchPoint:touchPointList)
-      {
-          System.out.println("touchpoint"+touchPoint.getTouchPointDesc());
-          addElement(touchPoint);
-      }
+        for (TouchPointDTO touchPoint:touchPointList){
+            addElement(touchPoint);
+        }
     }
     
-    
-     public void addElement(TouchPointDTO touchPoint) {        
+    public void addElement(TouchPointDTO touchPoint) {        
         Element touch = new Element(touchPoint);
-        if(touchPoint.getNo_like() == null)
-                {
-                    touchPoint.setNo_like(0);
-                }
-        if(touchPoint.getNo_dislike() == null)
-                {
-                    touchPoint.setNo_dislike(0);
-                }
-        if(touchPoint.getNo_neutral()== null)
-                {
-                    touchPoint.setNo_neutral(0);
-                }
+        if(touchPoint.getNo_like() == null){
+            touchPoint.setNo_like(0);
+        }
+        if(touchPoint.getNo_dislike() == null){
+            touchPoint.setNo_dislike(0);
+        }
+        if(touchPoint.getNo_neutral()== null){
+            touchPoint.setNo_neutral(0);
+        }
         touch.setDraggable(false);
         touch.setStyleClass("ui-diagram-crumbs");
         dashboardView.getSnakeModel().addElement(touch);
-        System.out.println("size "+dashboardView.getSnakeModel().getElements().size());
-     }
-       public  void  onFRChange()
-      {
-          JourneyDTO journeyDTO = new JourneyDTO();
+    }
+       
+    public  void  onFRChange(){
+        JourneyDTO journeyDTO = new JourneyDTO();
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
-           FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
-           SdtUserDTO sdtUserDTO =new SdtUserDTO();
-           sdtUserDTO.setUsername(dashboardModel.getFieldResearcherName());
+        FieldResearcherDTO fieldResearcherDTO = new FieldResearcherDTO();
+        SdtUserDTO sdtUserDTO =new SdtUserDTO();
+        sdtUserDTO.setUsername(dashboardModel.getFieldResearcherName());
         fieldResearcherDTO.setSdtUserDTO(sdtUserDTO);
-          System.out.println("journey"+journeyDTO.getJourneyName());
-          updatePolylines( journeyDTO,fieldResearcherDTO);
+        updatePolylines( journeyDTO,fieldResearcherDTO);
       }
 
-    private void initPolylines() {
-       
-  
-          
+    private void initPolylines() {          
         //Shared coordinates
         LatLng coord1 = new LatLng(36.879466, 30.667648);
         LatLng coord2 = new LatLng(36.883707, 30.689216);
@@ -472,32 +443,24 @@ public class DashboardController implements Serializable {
         polyline.setStrokeOpacity(0.7);
           
         dashboardView.getPolylineModel().addOverlay(polyline);
-
     }
     
      private void updatePolylines(JourneyDTO journeyDTO ,FieldResearcherDTO fieldResearcherDTO) {
-       
-         System.out.println("updatePolylines");
-          //journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
-          Polyline polyline = new Polyline();
-          System.out.println("size"+getTouchPointList(journeyDTO).size());
-          for(TouchPointDTO touchPointDTO:getTouchPointList(journeyDTO)){
-        //Shared coordinates
-              System.out.println("location "+touchPointDTO.getLatitude()+touchPointDTO.getLongitude());
-        LatLng coord = new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),Double.parseDouble(touchPointDTO.getLongitude()));
-       
-          
-        //Polyline
+        //journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
+        Polyline polyline = new Polyline();
+        System.out.println("size"+getTouchPointList(journeyDTO).size());
+        for(TouchPointDTO touchPointDTO:getTouchPointList(journeyDTO)){
+            //Shared coordinates
+            LatLng coord = new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),Double.parseDouble(touchPointDTO.getLongitude()));
+
+            //Polyline       
+            polyline.getPaths().add(coord);         
+            polyline.setStrokeWeight(10);
+            polyline.setStrokeColor("#FF9900");
+            polyline.setStrokeOpacity(0.7);
+        }
         
-        polyline.getPaths().add(coord);
-        
-          
-        polyline.setStrokeWeight(10);
-        polyline.setStrokeColor("#FF9900");
-        polyline.setStrokeOpacity(0.7);
-     
-          }
-          LatLng coord1 = new LatLng(36.879466, 30.667648);
+        LatLng coord1 = new LatLng(36.879466, 30.667648);
         LatLng coord2 = new LatLng(36.883707, 30.689216);
         LatLng coord3 = new LatLng(36.879703, 30.706707);
         LatLng coord4 = new LatLng(36.885233, 30.702323);
@@ -507,16 +470,15 @@ public class DashboardController implements Serializable {
         polyline1.getPaths().add(coord1);
         polyline1.getPaths().add(coord2);
         polyline1.getPaths().add(coord3);
-        polyline1.getPaths().add(coord4);
-          
+        polyline1.getPaths().add(coord4);  
         polyline1.setStrokeWeight(10);
         polyline1.setStrokeColor("#FD9900");
         polyline1.setStrokeOpacity(0.7);
-           dashboardView.getPolylineModel().addOverlay(polyline);
-           dashboardView.getPolylineModel().addOverlay(polyline1);
-
+        dashboardView.getPolylineModel().addOverlay(polyline);
+        dashboardView.getPolylineModel().addOverlay(polyline1);
     }
-      public void showDialogOnClickTouchPoint() {
+     
+    public void showDialogOnClickTouchPoint() {
           System.out.println("hellooo");
          TouchPointDTO touchPointDTOModel =new TouchPointDTO();
           String touchPointDesc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("touchPointDesc");
