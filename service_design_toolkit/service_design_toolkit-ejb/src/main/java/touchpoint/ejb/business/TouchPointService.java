@@ -126,6 +126,7 @@ public class TouchPointService implements TouchPointServiceLocal {
         touchpointFieldResearcher.setComments(touchpointFieldResearcherDTO.getComments());
         touchpointFieldResearcher.setReaction(touchpointFieldResearcherDTO.getReaction());
         touchpointFieldResearcher.setDuration(touchpointFieldResearcherDTO.getDuration());
+        touchpointFieldResearcher.setPhotoLocation(touchpointFieldResearcherDTO.getPhotoLocation());
         String durationUnitID = common.util.Utils.getMasterDataID(touchpointFieldResearcherDTO.getDurationUnitDTO());
         if (null != durationUnitID) {
             touchpointFieldResearcher.setDurationUnit(new MasterData(durationUnitID));
