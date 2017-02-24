@@ -43,8 +43,12 @@ import user.entity.TouchpointFieldResearcher;
     @NamedQuery(name = "TouchPoint.findByTouchPointDesc", query = "SELECT t FROM TouchPoint t WHERE t.touchPointDesc = :touchPointDesc"),
     @NamedQuery(name = "TouchPoint.findByLatitude", query = "SELECT t FROM TouchPoint t WHERE t.latitude = :latitude"),
     @NamedQuery(name = "TouchPoint.findByLongitude", query = "SELECT t FROM TouchPoint t WHERE t.longitude = :longitude"),
+    @NamedQuery(name = "TouchPoint.00001", query = "SELECT t FROM TouchPoint t WHERE t.journeyId.journeyName = :journeyName ORDER BY t.sequenceNo"),
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
+
+    @Column(name = "sub_seq_no")
+    private Integer subSeqNo;
 
     @Column(name = "sequence_no")
     private Integer sequenceNo;
@@ -253,6 +257,14 @@ public class TouchPoint implements Serializable {
 
     public void setSequenceNo(Integer sequenceNo) {
         this.sequenceNo = sequenceNo;
+    }
+
+    public Integer getSubSeqNo() {
+        return subSeqNo;
+    }
+
+    public void setSubSeqNo(Integer subSeqNo) {
+        this.subSeqNo = subSeqNo;
     }
     
 }

@@ -147,13 +147,16 @@ public class TouchPointService implements TouchPointServiceLocal {
     }
 
     @Override
-    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO) {
-        Journey journey = factory.getJourneyFacade().findJourneyByName(journeyDTO);
+    public List<TouchPointDTO> getTouchPointListJourney(JourneyDTO journeyDTO) {               
+        TouchPointFacadeLocal touchPointFacadeLocal = (TouchPointFacadeLocal)factory.getFacade(TouchPointFacadeLocal.class.toString());
+        Map<String, Object> params = new HashMap<>();        
+        params.put("journeyName", journeyDTO.getJourneyName());
+        List<TouchPoint> touchPointList = touchPointFacadeLocal.findListByQueryName(ConstantValues.QUERY_TOUCH_POINT_GET_LIST_OF_TOUCH_POINT_OF_JOURNEY, params);
 
         TouchPointFieldResearcherFacadeLocal touchPointFieldResearcherFacade = (TouchPointFieldResearcherFacadeLocal) 
                 factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
-        Map<String, Object> params = new HashMap<>();
-        params.put("journeyName", journeyDTO.getJourneyName());
+        
+        
         List<Object[]> touchPointNeutralRatingList = touchPointFieldResearcherFacade.countByQueryName(
                     ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
         List<Object[]> touchPointLikeRatingList = touchPointFieldResearcherFacade.countByQueryName(
@@ -162,7 +165,8 @@ public class TouchPointService implements TouchPointServiceLocal {
                     ConstantValues.QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
 
         List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
-        for (TouchPoint touchPoint : journey.getTouchPointList()) {
+        for (TouchPoint touchPoint : touchPointList) {
+            System.out.println(touchPoint.getTouchPointDesc());
             ChannelDTO channelDTO = new ChannelDTO();
             try {
                 BeanUtils.copyProperties(channelDTO, touchPoint.getChannelId());

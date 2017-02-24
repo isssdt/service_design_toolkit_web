@@ -61,8 +61,6 @@ public class JourneyService implements JourneyServiceLocal {
 
     @Override
     public Integer createJourney(JourneyDTO journeyDTO) throws CustomReasonPhraseException {
-        System.out.println(journeyDTO.getTouchPointListDTO().getTouchPointDTOList().size());
-
         Journey journey = new Journey();        
         try {
             BeanUtils.copyProperties(journey, journeyDTO);
@@ -73,7 +71,7 @@ public class JourneyService implements JourneyServiceLocal {
         journey.setIsGeo('Y');
         List<TouchPoint> touchPointList = new ArrayList<>();
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {
-            TouchPoint touchPoint = new TouchPoint();
+            TouchPoint touchPoint = new TouchPoint();            
             Channel channel = factory.getChannelFacade().findChannelByName(touchPointDTO.getChannelDTO().getChannelName());            
             
             try {
@@ -87,6 +85,7 @@ public class JourneyService implements JourneyServiceLocal {
                 journey.setIsGeo('N');                
             }
 
+            touchPoint.setSequenceNo(journeyDTO.getTouchPointListDTO().getTouchPointDTOList().indexOf(touchPointDTO));
             touchPoint.setDurationUnit(new MasterData(touchPointDTO.getMasterDataDTO().getId()));
             touchPoint.setChannelId(channel);
             touchPoint.setJourneyId(journey);            
@@ -308,7 +307,7 @@ public class JourneyService implements JourneyServiceLocal {
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = new ArrayList<>();
         Iterator<TouchpointFieldResearcher> iterator = touchpointFieldResearcherList.iterator();
         while (iterator.hasNext()) {
-            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();            
+            TouchpointFieldResearcher touchpointFieldResearcher = iterator.next();                       
 
             TouchPointFieldResearcherDTO touchPointFieldResearcherDTO = new TouchPointFieldResearcherDTO();            
             TouchPointDTO touchPointDTO = new TouchPointDTO();

@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TouchpointFieldResearcher.findByStatusAndFieldResearcherName", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.status = :status and t.fieldResearcherId.sdtUser.username = :username"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyName", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL"),
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL ORDER BY t.touchpointId.sequenceNo"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyNameAndUsername", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username and t.ratingId IS NOT NULL"),
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username and t.ratingId IS NOT NULL ORDER BY t.touchpointId.sequenceNo"),
     @NamedQuery(name = "TouchpointFieldResearcher.00002", 
             query = "SELECT t.touchpointId.id, COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id = 3 GROUP BY t.touchpointId.id"),
     @NamedQuery(name = "TouchpointFieldResearcher.00003", 
@@ -55,7 +55,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TouchpointFieldResearcher.00004", 
             query = "SELECT t.touchpointId.id, COUNT(1) FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName AND t.ratingId.id in (4,5) GROUP BY t.touchpointId.id"),
     @NamedQuery(name = "TouchpointFieldResearcher.00001", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS')")})           
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.fieldResearcherId.sdtUser.username = :username and t.touchpointId.journeyId IN (SELECT J.journeyId FROM JourneyFieldResearcher J WHERE J.fieldResearcherId.sdtUser.username = :username and J.status = 'IN PROGRESS') ORDER BY t.touchpointId.sequenceNo")})           
 public class TouchpointFieldResearcher implements Serializable {
 
     @JoinColumn(name = "duration_unit", referencedColumnName = "id")

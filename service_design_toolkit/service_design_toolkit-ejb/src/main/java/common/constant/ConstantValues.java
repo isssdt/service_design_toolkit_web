@@ -68,6 +68,10 @@ public class ConstantValues {
      */
     public static final String QUERY_SDT_USER_FIND_USER_BY_USERNAME = "SdtUser.findByUsername";
     /**
+     * SELECT t FROM TouchPoint t WHERE t.journeyId.journeyName = :journeyName ORDER BY t.sequenceNo
+     */
+    public static final String QUERY_TOUCH_POINT_GET_LIST_OF_TOUCH_POINT_OF_JOURNEY = "TouchPoint.00001"; 
+    /**
      * SELECT f FROM FieldResearcher f WHERE f.sdtUser.username = :username
      */
     public static final String QUERY_FIELD_RESEARCHER_FIND_BY_USERNAME = "FieldResearcher.00001";
