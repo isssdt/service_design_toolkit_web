@@ -31,7 +31,7 @@ public class TouchPointFieldResearcherDTO {
     private String photoLocation;
     private Date actionTime;
     private MasterDataDTO durationUnitDTO;
-    private Double convertedToExepectedDuration;
+    private Double convertedToExepectedDuration;    
 
     public Double getConvertedToExepectedDuration() {
         return convertedToExepectedDuration;

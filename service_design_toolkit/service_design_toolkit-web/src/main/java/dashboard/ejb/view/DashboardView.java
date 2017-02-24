@@ -5,9 +5,20 @@
  */
 package dashboard.ejb.view;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.LineChartModel;
@@ -27,14 +38,15 @@ public class DashboardView implements Serializable {
     private MapModel touch_point_location_map;
     private MapModel combine_map;
     private MapModel tp_map;
-    private String centerGeoMap = "1.2971342, 103.7777567";   
+    private String centerGeoMap = "1.2971342, 103.7777567";
     private CartesianChartModel integrationMapModel;
     private CartesianChartModel indExpMapModel;
     private DefaultDiagramModel snakeModel;
-    private List<HorizontalBarChartModel> timeGapDiagrams;    
+    private List<HorizontalBarChartModel> timeGapDiagrams;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private Map<String, String> frMap;
     private MapModel polylineModel;
+    private StreamedContent photo;
 
     /**
      * Creates a new instance of DashboardView
@@ -47,6 +59,19 @@ public class DashboardView implements Serializable {
         integrationMapModel = new LineChartModel();
         indExpMapModel = new LineChartModel();
         polylineModel = new DefaultMapModel();
+        try {
+            photo = new DefaultStreamedContent(new ByteArrayInputStream(FileUtils.readFileToByteArray(new File("/Users/longnguyen/Downloads/Lenovo-p780-camera-sample-10.jpg"))), "image/jpg");
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public StreamedContent getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(StreamedContent photo) {
+        this.photo = photo;
     }
 
     public MapModel getTouch_point_location_map() {
@@ -72,7 +97,7 @@ public class DashboardView implements Serializable {
     public void setJourneyNameMap(Map<String, String> journeyNameMap) {
         this.journeyNameMap = journeyNameMap;
     }
-    
+
     public MapModel getField_researcher_location_map() {
         return field_researcher_location_map;
     }
@@ -100,11 +125,11 @@ public class DashboardView implements Serializable {
     public List<FieldResearcherDTO> getFieldResearcherDTOList() {
         return fieldResearcherDTOList;
     }
-    
+
     public void setFieldResearcherDTOList(List<FieldResearcherDTO> fieldResearcherDTOList) {
         this.fieldResearcherDTOList = fieldResearcherDTOList;
     }
-    
+
     public MapModel getCombine_map() {
         return combine_map;
     }
@@ -112,7 +137,7 @@ public class DashboardView implements Serializable {
     public void setCombine_map(MapModel combine_map) {
         this.combine_map = combine_map;
     }
-    
+
     public MapModel getTp_map() {
         return tp_map;
     }
@@ -120,7 +145,7 @@ public class DashboardView implements Serializable {
     public void setTp_map(MapModel tp_map) {
         this.tp_map = tp_map;
     }
-    
+
     public Map<String, String> getFrMap() {
         return frMap;
     }
@@ -136,7 +161,7 @@ public class DashboardView implements Serializable {
     public void setPolylineModel(MapModel polylineModel) {
         this.polylineModel = polylineModel;
     }
-    
+
     public void setIndExpMapModel(CartesianChartModel indExpMapModel) {
         this.indExpMapModel = indExpMapModel;
     }
@@ -144,7 +169,7 @@ public class DashboardView implements Serializable {
     public CartesianChartModel getIndExpMapModel() {
         return indExpMapModel;
     }
-    
+
     public List<HorizontalBarChartModel> getTimeGapDiagrams() {
         return timeGapDiagrams;
     }

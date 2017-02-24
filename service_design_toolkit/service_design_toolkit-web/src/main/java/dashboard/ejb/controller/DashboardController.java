@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
 import journey.dto.JourneyDTO;
 import touchpoint.dto.TouchPointDTO;
 import user.dto.TouchPointFieldResearcherDTO;
@@ -40,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.Set;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
