@@ -16,6 +16,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.enterprise.event.Observes;
+import user.dto.SdtUserDTO;
 import user.ejb.business.UserService;
 
 /**
@@ -27,10 +28,10 @@ import user.ejb.business.UserService;
 public class MailService {
     @Asynchronous   
     @Lock(LockType.READ)
-    public void sendResetPasswordMail(@Observes String generatedPassword) {        
+    public void sendResetPasswordMail(@Observes SdtUserDTO sdtUserDTO) {        
         MailBridge mailBridge = new MailGoogle();
         try {
-            mailBridge.sendMail(ConstantValues.MAIL_RESET_PASSWORD_FROM_ADDRESS, ConstantValues.MAIL_RESET_PASSWORD_TO_ADDRESS, generatedPassword,
+            mailBridge.sendMail(ConstantValues.MAIL_RESET_PASSWORD_FROM_ADDRESS, sdtUserDTO.getUsername(), sdtUserDTO.getPassword(),
                     ConstantValues.MAIL_RESET_PASSWORD_SUBJECT);
         } catch (Exception ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);

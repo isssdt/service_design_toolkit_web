@@ -8,6 +8,7 @@ s/*
  * Created: Oct 28, 2016
  */
 
+ALTER TABLE sdt_user MODIFY username VARCHAR(100);
 
 
 

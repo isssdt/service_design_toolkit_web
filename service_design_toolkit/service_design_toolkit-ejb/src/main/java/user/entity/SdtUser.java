@@ -49,7 +49,7 @@ public class SdtUser implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 100)
     @Column(name = "username")
     private String username;
 

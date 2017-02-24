@@ -51,7 +51,7 @@ public class UserService implements UserServiceLocal {
     private EAOFactory factory;
     
     @Inject
-    private Event<String> eventProducer;
+    private Event<SdtUserDTO> eventProducer;
 
     @Override
     public RESTReponse refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) {
@@ -200,7 +200,7 @@ public class UserService implements UserServiceLocal {
         //return successful message and set the generated password to DTO
         sdtUserDTO.setPassword(generatedPassword);       
         
-        eventProducer.fire(generatedPassword);
+        eventProducer.fire(sdtUserDTO);
         
         return new RESTReponse(ConstantValues.SDT_USER_STATUS_PASSWORD_RESET);
     }

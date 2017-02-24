@@ -122,8 +122,11 @@ public class ConstantValues {
     
     
     //Username or password is not correct    
-    public static final String SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD = "Username or password is not correct";    
-    //Username is not correct    
+    public static final String SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD = "Username or password is not correct";      
+
+    /**
+     * Username is not correct
+     */
     public static final String SDT_USER_ERROR_INCORRECT_USERNAME = "Username is not correct";    
     //No Username     
     public static final String SDT_USER_ERROR_NO_USERNAME = "No Username";        
