@@ -43,7 +43,7 @@ import user.entity.TouchpointFieldResearcher;
     @NamedQuery(name = "TouchPoint.findByTouchPointDesc", query = "SELECT t FROM TouchPoint t WHERE t.touchPointDesc = :touchPointDesc"),
     @NamedQuery(name = "TouchPoint.findByLatitude", query = "SELECT t FROM TouchPoint t WHERE t.latitude = :latitude"),
     @NamedQuery(name = "TouchPoint.findByLongitude", query = "SELECT t FROM TouchPoint t WHERE t.longitude = :longitude"),
-    @NamedQuery(name = "TouchPoint.00001", query = "SELECT t FROM TouchPoint t WHERE t.journeyId.journeyName = :journeyName ORDER BY t.sequenceNo"),
+    @NamedQuery(name = "TouchPoint.00001", query = "SELECT t FROM TouchPoint t WHERE t.journeyId.journeyName = :journeyName ORDER BY t.sequenceNo, t.subSeqNo"),
     @NamedQuery(name = "TouchPoint.findByRadius", query = "SELECT t FROM TouchPoint t WHERE t.radius = :radius")})
 public class TouchPoint implements Serializable {
 
