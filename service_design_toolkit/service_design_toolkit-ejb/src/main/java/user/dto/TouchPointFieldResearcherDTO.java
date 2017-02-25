@@ -32,6 +32,15 @@ public class TouchPointFieldResearcherDTO {
     private Date actionTime;
     private MasterDataDTO durationUnitDTO;
     private Double convertedToExepectedDuration;    
+    private String serverPhotoPath;
+
+    public String getServerPhotoPath() {
+        return serverPhotoPath;
+    }
+
+    public void setServerPhotoPath(String serverPhotoPath) {
+        this.serverPhotoPath = serverPhotoPath;
+    }
 
     public Double getConvertedToExepectedDuration() {
         return convertedToExepectedDuration;

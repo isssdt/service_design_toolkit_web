@@ -189,7 +189,7 @@ public class TouchPointService implements TouchPointServiceLocal {
             }
             touchPointDTO.setChannelDTO(channelDTO);
             touchPointDTO.setMasterDataDTO(masterDataDTO);
-            setNeutralLikeDislike(touchPointDTO, touchPointNeutralRatingList, touchPointLikeRatingList, touchPointDislikeRatingList);            
+            setNeutralLikeDislike(touchPointDTO, touchPointNeutralRatingList, touchPointLikeRatingList, touchPointDislikeRatingList);                        
             
             touchPointDTOList.add(touchPointDTO);
         }

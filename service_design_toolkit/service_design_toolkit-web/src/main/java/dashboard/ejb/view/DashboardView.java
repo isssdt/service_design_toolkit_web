@@ -5,20 +5,9 @@
  */
 package dashboard.ejb.view;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.LineChartModel;
@@ -45,8 +34,7 @@ public class DashboardView implements Serializable {
     private List<HorizontalBarChartModel> timeGapDiagrams;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
     private Map<String, String> frMap;
-    private MapModel polylineModel;
-    private StreamedContent photo;
+    private MapModel polylineModel;    
 
     /**
      * Creates a new instance of DashboardView
@@ -58,20 +46,7 @@ public class DashboardView implements Serializable {
         tp_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         indExpMapModel = new LineChartModel();
-        polylineModel = new DefaultMapModel();
-        try {
-            photo = new DefaultStreamedContent(new ByteArrayInputStream(FileUtils.readFileToByteArray(new File("/Users/longnguyen/Downloads/Lenovo-p780-camera-sample-10.jpg"))), "image/jpg");
-        } catch (IOException ex) {
-            Logger.getLogger(DashboardView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public StreamedContent getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(StreamedContent photo) {
-        this.photo = photo;
+        polylineModel = new DefaultMapModel();        
     }
 
     public MapModel getTouch_point_location_map() {

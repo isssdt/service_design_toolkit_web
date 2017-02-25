@@ -271,7 +271,8 @@
 
                         <h:outputText value="Comments:"/>
                         <h:outputText value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.comments}"/>
-                        <h:graphicImage value="/images/images.png"/>
+                        <h:graphicImage value="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.serverPhotoPath}" 
+                                        rendered="#{dashboardController.dashboardModel.touchPointFieldResearcherDTO.photoLocation ne null}"/>
                     </p:panelGrid>
                 </p:dialog>
             </p:panel>
