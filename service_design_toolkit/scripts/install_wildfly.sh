@@ -46,6 +46,8 @@ sudo useradd --system --shell /bin/false wildfly
 sudo mkdir -p /var/log/wildfly
 sudo chown -R wildfly:wildfly /opt/wildfly-9.0.1.Final/
 sudo chown -R wildfly:wildfly /var/log/wildfly
+#this command is used to grant permission on wildfly to save photos
+#sudo chown -R wildfly:wildfly /pathToPhots
 
 # Tunning
 sudo sed -i 's|   JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"|   JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:NewRatio=2 -XX:PermSize=64m -Djava.net.preferIPv4Stack=true"|g' /opt/wildfly-9.0.1.Final/bin/standalone.conf
