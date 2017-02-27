@@ -8,7 +8,6 @@ s/*
  * Created: Oct 28, 2016
  */
 
-ALTER TABLE sdt_user MODIFY username VARCHAR(100);
-ALTER TABLE touch_point ADD sub_seq_no int;
+
 
 

@@ -33,6 +33,24 @@ public class TouchPointFieldResearcherDTO {
     private MasterDataDTO durationUnitDTO;
     private Double convertedToExepectedDuration;    
     private String serverPhotoPath;
+    private String touchPointBefore;
+    private Integer touchPointBeforeID;
+
+    public Integer getTouchPointBeforeID() {
+        return touchPointBeforeID;
+    }
+
+    public void setTouchPointBeforeID(Integer touchPointBeforeID) {
+        this.touchPointBeforeID = touchPointBeforeID;
+    }
+
+    public String getTouchPointBefore() {
+        return touchPointBefore;
+    }
+
+    public void setTouchPointBefore(String touchPointBefore) {
+        this.touchPointBefore = touchPointBefore;
+    }
 
     public String getServerPhotoPath() {
         return serverPhotoPath;

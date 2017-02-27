@@ -74,6 +74,10 @@ public class ConstantValues {
      */
     public static final String QUERY_TOUCH_POINT_GET_LIST_OF_TOUCH_POINT_OF_JOURNEY = "TouchPoint.00001";
     /**
+     * SELECT MAX(t.subSeqNo) FROM TouchPoint t WHERE t.sequenceNo = :sequenceNo and t.journeyId.journeyName = :journeyName
+     */
+    public static final String QUERY_TOUCH_POINT_GET_MAX_SUBSEQNO_BY_SEQNO = "TouchPoint.00002";
+    /**
      * SELECT f FROM FieldResearcher f WHERE f.sdtUser.username = :username
      */
     public static final String QUERY_FIELD_RESEARCHER_FIND_BY_USERNAME = "FieldResearcher.00001";

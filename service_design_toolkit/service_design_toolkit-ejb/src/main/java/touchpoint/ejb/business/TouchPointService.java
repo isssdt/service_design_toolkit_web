@@ -158,16 +158,15 @@ public class TouchPointService implements TouchPointServiceLocal {
                 factory.getFacade(TouchPointFieldResearcherFacadeLocal.class.toString());
         
         
-        List<Object[]> touchPointNeutralRatingList = touchPointFieldResearcherFacade.countByQueryName(
+        List<Object[]> touchPointNeutralRatingList = touchPointFieldResearcherFacade.aggregateByQueryName(
                     ConstantValues.QUERY_GET_COUNT_NEUTRAL_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
-        List<Object[]> touchPointLikeRatingList = touchPointFieldResearcherFacade.countByQueryName(
+        List<Object[]> touchPointLikeRatingList = touchPointFieldResearcherFacade.aggregateByQueryName(
                     ConstantValues.QUERY_GET_COUNT_LIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
-        List<Object[]> touchPointDislikeRatingList = touchPointFieldResearcherFacade.countByQueryName(
+        List<Object[]> touchPointDislikeRatingList = touchPointFieldResearcherFacade.aggregateByQueryName(
                     ConstantValues.QUERY_GET_COUNT_DISLIKE_RATING_FOR_TOUCH_POINT_OF_JOURNEY, params);
 
         List<TouchPointDTO> touchPointDTOList = new ArrayList<>();
-        for (TouchPoint touchPoint : touchPointList) {
-            System.out.println(touchPoint.getTouchPointDesc());
+        for (TouchPoint touchPoint : touchPointList) {            
             ChannelDTO channelDTO = new ChannelDTO();
             try {
                 BeanUtils.copyProperties(channelDTO, touchPoint.getChannelId());
@@ -217,7 +216,7 @@ public class TouchPointService implements TouchPointServiceLocal {
     }
 
     @Override
-    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException {        
+    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException {                       
         JourneyFacadeLocal journeyFacadeLocal = (JourneyFacadeLocal)factory.getFacade(JourneyFacadeLocal.class.toString());
         
         Map<String, Object> params = new HashMap<>();
@@ -239,7 +238,7 @@ public class TouchPointService implements TouchPointServiceLocal {
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
         touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
         touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
-        touchpointFieldResearcher.setActionTime(new Date());
+        touchpointFieldResearcher.setActionTime(new Date());        
         
         TouchPoint touchPoint = new TouchPoint();                
         touchpointFieldResearcher.setTouchpointId(touchPoint);
@@ -261,6 +260,20 @@ public class TouchPointService implements TouchPointServiceLocal {
         touchPoint.getTouchpointFieldResearcherList().add(touchpointFieldResearcher);               
         
         TouchPointFacadeLocal touchPointFacadeLocal = (TouchPointFacadeLocal)factory.getFacade(TouchPointFacadeLocal.class.toString());
+        TouchPoint beforeTouchPoint = touchPointFacadeLocal.find(touchPointFieldResearcherDTO.getTouchPointBeforeID());
+        
+        params.clear();
+        params.put("sequenceNo", beforeTouchPoint.getSequenceNo());
+        params.put("journeyName", touchPointFieldResearcherDTO.getTouchpointDTO().getJourneyDTO().getJourneyName());
+        List<Object[]> maxSubSeq = touchPointFacadeLocal.aggregateByQueryName(ConstantValues.QUERY_TOUCH_POINT_GET_MAX_SUBSEQNO_BY_SEQNO, params);              
+        if (null == maxSubSeq.get(0) || null == maxSubSeq.get(0)[0]) {
+            touchPoint.setSubSeqNo(0);
+        }
+        else {             
+            touchPoint.setSubSeqNo((Integer)maxSubSeq.get(0)[0] + 1);
+        }
+                
+        touchPoint.setSequenceNo(beforeTouchPoint.getSequenceNo());        
         touchPointFacadeLocal.create(touchPoint);
         
         

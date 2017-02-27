@@ -13,5 +13,5 @@ import java.util.Map;
  * @author longnguyen
  */
 public interface EAOFacade {
-    List<Object[]> countByQueryName(String queryName, Map<String, Object> queryParamValues);
+    List<Object[]> aggregateByQueryName(String queryName, Map<String, Object> queryParamValues);
 }

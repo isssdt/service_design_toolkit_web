@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findByJourneyName", query = "SELECT j FROM Journey j WHERE j.journeyName = :journeyName"),
     @NamedQuery(name = "Journey.findByNoOfFieldResearcher", query = "SELECT j FROM Journey j WHERE j.noOfFieldResearcher = :noOfFieldResearcher"),
     @NamedQuery(name = "Journey.findByIsActiveAndCanBeRegistered", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive and j.canBeRegistered = :canBeRegistered"),
-    @NamedQuery(name = "Journey.findByIsActive", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive"),
+    @NamedQuery(name = "Journey.findByIsActive", query = "SELECT j FROM Journey j WHERE j.isActive = :isActive"),   
     @NamedQuery(name = "Journey.findJourneyListForRegister", 
             query = "SELECT j FROM Journey j WHERE j.startDate <= :startDate and j.endDate >= :endDate and j.canBeRegistered = 'Y'")})
 public class Journey implements Serializable {
