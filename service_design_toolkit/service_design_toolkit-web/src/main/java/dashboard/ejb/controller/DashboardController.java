@@ -383,7 +383,7 @@ public class DashboardController implements Serializable {
         Element start;
         TouchPointDTO startTouch=new TouchPointDTO();
         startTouch.setTouchPointDesc("Customer journey map");
-        start = new Element(startTouch);
+        start = new Element(startTouch,"20em","6em");
         start.setDraggable(false);
         start.setStyleClass("ui-diagram-crumbs");
          model.addElement(start);

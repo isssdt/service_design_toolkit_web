@@ -23,10 +23,12 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
                 || journeyDTO.getTouchPointListDTO().getTouchPointDTOList().isEmpty()) {
             initNonTouchPointJourney(journeyVisualization);
             return;
-        }        
+        }   
+        journeyVisualization.clear();
         for (TouchPointDTO touchPointDTO : journeyDTO.getTouchPointListDTO().getTouchPointDTOList()) {       
             addElement(journeyVisualization, touchPointDTO);
         }
+       // journeyVisualization.clear();
     }
     
     private void initNonTouchPointJourney(DefaultDiagramModel journeyVisualization) {       
@@ -42,14 +44,24 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
         
         journeyVisualization.addElement(start);*/    
         //DefaultDiagramModel model = new DefaultDiagramModel();
+//        journeyVisualization.setMaxConnections(-1);
+//        Element start;
+//        TouchPointDTO startTouch=new TouchPointDTO();
+//        startTouch.setTouchPointDesc("Start");
+//        start = new Element(startTouch);
+//        start.setDraggable(false);
+//        start.setStyleClass("ui-strat-element");
+//        journeyVisualization.addElement(start);  
+//DefaultDiagramModel model = new DefaultDiagramModel();
         journeyVisualization.setMaxConnections(-1);
         Element start;
         TouchPointDTO startTouch=new TouchPointDTO();
-        startTouch.setTouchPointDesc("Start");
-        start = new Element(startTouch);
+        startTouch.setTouchPointDesc("Customer journey map");
+        start = new Element(startTouch,"20em","6em");
         start.setDraggable(false);
-        start.setStyleClass("ui-strat-element");
-        journeyVisualization.addElement(start);          
+        start.setStyleClass("ui-diagram-crumbs");
+         journeyVisualization.addElement(start);
+        //dashboardView.setSnakeModel(model);         
     }
     
     private void addElement(DefaultDiagramModel journeyVisualization, TouchPointDTO touchPointDTO) {        
