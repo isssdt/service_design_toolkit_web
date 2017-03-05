@@ -7,19 +7,22 @@
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.MasterData" var="MasterData"/>     
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />
-        <h:panelGrid columns="1" cellpadding="8">            
+        <h:panelGrid columns="2" cellpadding="8"> 
+            <p:outputLabel value="*" />
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_ID}" 
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.touchPointDesc}" 
                          required="true" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_MESSAGE}"/>                             
+            <p:outputLabel value="*" />
             <p:inputTextarea id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION}"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.action}" 
                          required="true" cols ="35" rows="5"
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_MESSAGE}" />
         </h:panelGrid>
-        <h:panelGrid columns="2" cellpadding="8">    
+        <h:panelGrid columns="3" cellpadding="8"> 
+            <p:outputLabel value="*" />
             <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_ID}" 
                              value="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName}" required="true"
                              requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_CHANNEL_MESSAGE}">
@@ -36,20 +39,24 @@
                          disabled="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName ne MasterData.CHANNEL_WEBSITE}"
                          required="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_WEBSITE}" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_CHANNEL_DESCRIPTION_MESSAGE}" /> 
-            <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_ID}" 
+            </h:panelGrid>
+            <h:panelGrid columns="4" cellpadding="8">
+                <p:outputLabel value="*" />
+                <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_ID}" 
                            placeholder="enter duration" required="true"
                            requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_MESSAGE}"
                            value="#{touchpoint_ejb_view_CreateView.touchPointDTO.duration}" >
-                <f:validateLongRange minimum="1"/>
-            </p:inputNumber>
-            <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_ID}" 
+                    <f:validateLongRange minimum="1"/>
+                </p:inputNumber>
+                <p:outputLabel value="*" />
+                <p:selectOneMenu id="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_ID}" 
                              value="#{touchpoint_ejb_view_CreateView.touchPointDTO.masterDataDTO.id}" 
                              required="true" 
                              requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT_MESSAGE}">
-                <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT}" 
-                              itemValue="" noSelectionOption="false" />                         
-                <f:selectItems value="#{touchpoint_ejb_view_CreateView.durationDropDown}"/>
-            </p:selectOneMenu>
+                    <f:selectItem itemLabel="#{ScreenTitles.SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT}" 
+                              itemValue="" noSelectionOption="false" /> 
+                    <f:selectItems value="#{touchpoint_ejb_view_CreateView.durationDropDown}"/>
+                </p:selectOneMenu>
                 
         </h:panelGrid>
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD_ID}" 
