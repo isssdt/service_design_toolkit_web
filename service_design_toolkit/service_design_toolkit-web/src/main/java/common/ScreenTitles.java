@@ -89,6 +89,8 @@ public class ScreenTitles {
     //Login Screen
     public static final String SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD = "Reset Password";
     public static final String SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID = "SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID";
+    public static final String SCREEN_COMPONENT_BUTTON_LOGIN_LOGIN = "Login";
+    public static final String SCREEN_COMPONENT_BUTTON_LOGIN_LOGIN_ID = "SCREEN_COMPONENT_BUTTON_LOGIN_LOGIN_ID";
     
     //Global
     public static final String SCREEN_COMPONENT_MESSAGES_ID = "SCREEN_COMPONENT_MESSAGES_ID";

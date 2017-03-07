@@ -41,12 +41,12 @@ public class LoginView extends AbstractView implements Serializable {
 
     @Override
     public void initController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void initData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sdtUserDTO = new SdtUserDTO();
     }
 
     @Override
