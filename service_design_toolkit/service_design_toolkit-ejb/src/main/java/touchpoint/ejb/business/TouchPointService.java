@@ -28,6 +28,7 @@ import journey.dto.JourneyDTO;
 import common.dto.RatingDTO;
 import common.entity.Channel;
 import common.entity.MasterData;
+import common.entity.Rating;
 import java.util.Date;
 import journey.ejb.eao.ChannelFacadeLocal;
 import journey.ejb.eao.JourneyFacadeLocal;
@@ -216,8 +217,8 @@ public class TouchPointService implements TouchPointServiceLocal {
     }
 
     @Override
-    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException {                       
-        JourneyFacadeLocal journeyFacadeLocal = (JourneyFacadeLocal)factory.getFacade(JourneyFacadeLocal.class.toString());
+    public RESTReponse addTouchPointToJourney(TouchPointFieldResearcherDTO touchPointFieldResearcherDTO) throws AppException, CustomReasonPhraseException {                               
+        JourneyFacadeLocal journeyFacadeLocal = (JourneyFacadeLocal)factory.getFacade(JourneyFacadeLocal.class.toString());       
         
         Map<String, Object> params = new HashMap<>();
         params.put("journeyName", touchPointFieldResearcherDTO.getTouchpointDTO().getJourneyDTO().getJourneyName());
@@ -236,8 +237,17 @@ public class TouchPointService implements TouchPointServiceLocal {
         FieldResearcher fieldResearcher = fieldResearcherFacadeLocal.findSingleByQueryName(ConstantValues.QUERY_FIELD_RESEARCHER_FIND_BY_USERNAME, params);
         
         TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
-        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);
-        touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
+        try {
+            BeanUtils.copyProperties(touchpointFieldResearcher, touchPointFieldResearcherDTO);
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(TouchPointService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        touchpointFieldResearcher.setRatingId(new Rating());        
+        touchpointFieldResearcher.getRatingId().setId(Integer.valueOf(touchPointFieldResearcherDTO.getRatingDTO().getValue()));
+        touchpointFieldResearcher.setDurationUnit(new MasterData());
+        touchpointFieldResearcher.getDurationUnit().setId(common.util.Utils.getMasterDataID(touchPointFieldResearcherDTO.getDurationUnitDTO()));        
+        touchpointFieldResearcher.setFieldResearcherId(fieldResearcher);                                
+        touchpointFieldResearcher.setStatus(ConstantValues.TOUCH_POINT_FIELD_RESEARCHER_STATUS_DONE);
         touchpointFieldResearcher.setActionTime(new Date());        
         
         TouchPoint touchPoint = new TouchPoint();                

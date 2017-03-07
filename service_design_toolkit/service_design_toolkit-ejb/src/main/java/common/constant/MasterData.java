@@ -25,6 +25,5 @@ public class MasterData {
     public static final String TOUCH_POINT_DURATION_MINS = "Minute";
     public static final String TOUCH_POINT_DURATION_DAYS_ID = "TOUCH_POINT_DURATION_UNIT_DAY";
     public static final String TOUCH_POINT_DURATION_HOURS_ID = "TOUCH_POINT_DURATION_UNIT_HOUR";
-    public static final String TOUCH_POINT_DURATION_MINS_ID = "TOUCH_POINT_DURATION_UNIT_MINUTE";
-    
+    public static final String TOUCH_POINT_DURATION_MINS_ID = "TOUCH_POINT_DURATION_UNIT_MINUTE";   
 }
