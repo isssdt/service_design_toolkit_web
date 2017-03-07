@@ -15,6 +15,8 @@ import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_ADD_AJAX;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX;
 import journey.action.ACTION_BUTTON_ADD_TOUCH_POINT_SAVE;
+import journey.action.ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY;
+import journey.action.ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX;
 import journey.action.ACTION_BUTTON_CREATE_JOURNEY_NEXT;
 import org.primefaces.event.SelectEvent;
 
@@ -42,11 +44,22 @@ public class JourneyController extends AbstractController {
         if ((event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID.equals(event.getComponent().getId())) {
              return new ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX();
         }
-        if (ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID.equals(event.getComponent().getId())) {
+        if ((event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID.equals(event.getComponent().getId())) {
+             return new ACTION_BUTTON_ADD_TOUCH_POINT_HIDDEN_AJAX();
+        }
+        if (!(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_ADD_TOUCH_POINT_SAVE();
         }
         if (ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_NEXT_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_CREATE_JOURNEY_NEXT();
+        }
+        if (!(event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION_ID.equals(event.getComponent().getId())) {
+            System.out.println("confirmation");
+            return new ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY();
+        }
+        if ((event instanceof SelectEvent) && ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID.equals(event.getComponent().getId())) {
+            System.out.println("confirmation Ajax");
+            return new ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX();
         }
         return null;
     }
