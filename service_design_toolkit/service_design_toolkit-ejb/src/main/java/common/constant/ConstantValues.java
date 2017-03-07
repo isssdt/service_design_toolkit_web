@@ -248,4 +248,6 @@ public class ConstantValues {
     public static final String CONSTANT_GEO_MAP_TYPE_ROADMAP = "ROADMAP";
 
     public static final String CONSTANT_GEO_MAP_CENTER = "1.2971342, 103.7777567";
+    
+    public static final String DIALOG_JOURNEY_CREATED_CONFIRMATION = "/journey/dialog/confirmation";
 }
