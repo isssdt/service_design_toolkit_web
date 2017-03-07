@@ -69,7 +69,8 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_UNIT = "Days/Hours/Mins";
     public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_ID = "Duration";
     public static final String SCREEN_COMPONENT_DROP_DOWN_CREATE_TOUCH_POINT_DURATION_MESSAGE = "Specify expected Duration";
-    
+    public static final String SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION_ID = "SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION_ID";
+    public static final String SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION = "GO TO DASHBOARD";
 
     //Touch Point Location Dialog
     public static final String SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS = "Address";

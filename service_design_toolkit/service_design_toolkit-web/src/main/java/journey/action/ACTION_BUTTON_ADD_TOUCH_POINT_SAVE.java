@@ -13,6 +13,8 @@ import common.exception.CustomReasonPhraseException;
 import common.utils.Utils;
 import common.view.AbstractView;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -20,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
 import journey.ejb.business.JourneyServiceLocal;
 import journey.ejb.view.AddTouchPointView;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -48,14 +51,19 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_SAVE implements ActionHandler {
         } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(ACTION_BUTTON_ADD_TOUCH_POINT_SAVE.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Utils.removeAttributeOfSession(addTouchPointView.getJourneyDTO());
-        Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "A Journey has been created", null, 
-                null, true);
-        try {
-            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
-        } catch (IOException ex) {
-            Logger.getLogger(ACTION_BUTTON_ADD_TOUCH_POINT_SAVE.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        Map<String,Object> options = new HashMap<>();
+        options.put("draggable", true);
+        options.put("modal", true);
+        options.put("resizable", false);
+        RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_JOURNEY_CREATED_CONFIRMATION, options, null);
+//        Utils.removeAttributeOfSession(addTouchPointView.getJourneyDTO());
+//        Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "A Journey has been created", null, 
+//                null, true);
+//        try {
+//            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
+//        } catch (IOException ex) {
+//            Logger.getLogger(ACTION_BUTTON_ADD_TOUCH_POINT_SAVE.class.getName()).log(Level.SEVERE, null, ex);
+//        }        
     }
     
 }

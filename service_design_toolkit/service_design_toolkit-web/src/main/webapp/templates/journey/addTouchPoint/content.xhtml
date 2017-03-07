@@ -75,7 +75,8 @@
             </p:commandButton>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
-                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="false">                
+                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="true">  
+                <p:ajax event="dialogReturn" listener="#{journey_ejb_view_ConfirmationView.onDialogReturnListener}" />
             </p:commandButton>
             <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
                              actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" style="display: none;">

@@ -14,24 +14,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
-import journey.dto.JourneyDTO;
-import journey.ejb.view.CreateView;
+import journey.ejb.view.AddTouchPointView;
+import journey.ejb.view.ConfirmationView;
+import org.primefaces.context.RequestContext;
+
 /**
  *
- * @author longnguyen
+ * @author Manish
  */
-public class ACTION_BUTTON_CREATE_JOURNEY_NEXT implements ActionHandler {
+public class ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX implements ActionHandler {
+    
     @Override
     public void execute(AbstractView view, FacesEvent event) {
-        CreateView createView = (CreateView)view;
-        JourneyDTO journeyDTO = createView.getJourneyDTO();        
-        journeyDTO.setJourneyName(createView.getJourneyName());
-        Utils.setAttributeOfSession(journeyDTO);
+        ConfirmationView confirmationView = (ConfirmationView)view;
         try {
-            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_ADD_TOUCH_POINT_PAGE);
+            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
+            System.out.println("inside try");
         } catch (IOException ex) {
-            Logger.getLogger(ACTION_BUTTON_CREATE_JOURNEY_NEXT.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            System.out.println("inside catch");
+            Logger.getLogger(ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
     
 }
