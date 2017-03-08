@@ -5,6 +5,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html">
     <h:outputScript library="js" name="dashboard/panel.js" target="body" />
+    <h:outputScript library="js" name="dashboard/extender.js" target="body" />
     <script 
         type="text/javascript" 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
@@ -17,9 +18,6 @@
             text-align: right;
             color:#333;
         }
-
-
-
         .panel-fullscreen {
             display: block;
             z-index: 9999;
@@ -31,18 +29,16 @@
             left: 10%;
             bottom: 10%;
             overflow: auto;
-
         }
         .ui-diagram-crumbs  {
             display: block;
             float: left;
             height: 80px;
-            background: #3498db;
+            background: gainsboro;
             text-align: center;
             padding: 30px 40px 0 40px;
             position: relative;
             margin: 11px 12px 12px 11px; 
-
             font-size: 20px;
             text-decoration: none;
             color: #fff;
@@ -52,7 +48,7 @@
             content: "";  
             border-top: 40px solid transparent;
             border-bottom: 40px solid transparent;
-            border-left: 40px solid #3498db;
+            border-left: 40px solid gainsboro;
             position: absolute; right: -40px; top: 0;
             z-index: 2;
 
@@ -65,9 +61,6 @@
             position: absolute; left: 0; top: 0;
             z-index: 1;
         }
-
-
-
 
         .ui-dashboard-layout {
             width: 100%; 
@@ -87,6 +80,7 @@
         .ui-facet-element {
             display:block;
             margin-top:0px;
+            padding-right: 10px;
         }
 
         .ui-action-layout {
@@ -130,8 +124,8 @@
                 <f:facet name="actions">
                     <a href="#" id="dia_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
                 </f:facet>
-                <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%; height: 350px" styleClass="ui-widget-content" var="el" >
-                    <f:facet name="element" >
+                <p:diagram  id="dia" value="#{dashboardController.dashboardView.snakeModel}" style="width: 100%" styleClass="ui-widget-content" var="el" >
+                    <f:facet name="element">
                         <h:panelGrid columns="3">
                             <h:commandLink rendered="#{el.channelDTO.channelName eq 'Face To Face' }">
                                 <i class="fa fa-users" aria-hidden="true"></i>

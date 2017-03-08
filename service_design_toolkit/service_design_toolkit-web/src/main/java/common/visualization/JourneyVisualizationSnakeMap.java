@@ -57,7 +57,7 @@ public class JourneyVisualizationSnakeMap implements JourneyVisualizationStrateg
         Element start;
         TouchPointDTO startTouch=new TouchPointDTO();
         startTouch.setTouchPointDesc("Customer journey map");
-        start = new Element(startTouch,"20em","6em");
+        start = new Element(startTouch);
         start.setDraggable(false);
         start.setStyleClass("ui-diagram-crumbs");
          journeyVisualization.addElement(start);

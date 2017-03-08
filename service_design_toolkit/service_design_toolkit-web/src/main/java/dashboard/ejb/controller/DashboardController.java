@@ -178,6 +178,7 @@ public class DashboardController implements Serializable {
         dashboardView.getIndExpMapModel().setShowDatatip(false);
         dashboardView.getIndExpMapModel().setMouseoverHighlight(true);
         dashboardView.getIndExpMapModel().setShowPointLabels(false);
+        dashboardView.getIndExpMapModel().setExtender("extender");
     
     }
     
@@ -268,6 +269,7 @@ public class DashboardController implements Serializable {
         dashboardView.getIntegrationMapModel().setShowDatatip(false);
         dashboardView.getIntegrationMapModel().setMouseoverHighlight(true);
         dashboardView.getIntegrationMapModel().setShowPointLabels(false);
+        dashboardView.getIntegrationMapModel().setExtender("extender");
     }
     
     private void updateTimeGapDiagram(JourneyDTO journeyDTO) {
@@ -285,10 +287,7 @@ public class DashboardController implements Serializable {
         HorizontalBarChartModel tgdia;
         List<HorizontalBarChartModel> tgdiaList = new ArrayList<HorizontalBarChartModel>();
         ChartSeries cs;
-        
         double b1=0;
-       
-        
         TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
         for (int i = 0; i<tplist.size(); i++){
             cs = new ChartSeries();
@@ -314,10 +313,6 @@ public class DashboardController implements Serializable {
             tgdiaList.add(tgdia);
             }
         dashboardView.setTimeGapDiagrams(tgdiaList);
-        for(int k=0; k<dashboardView.getTimeGapDiagrams().size(); k++){
-            System.out.println("hello" +dashboardView.getTimeGapDiagrams().get(k).getTitle());
-        }
-        
     }
 
     private void createLineModels(JourneyDTO journeyDTO) {
@@ -383,10 +378,10 @@ public class DashboardController implements Serializable {
         Element start;
         TouchPointDTO startTouch=new TouchPointDTO();
         startTouch.setTouchPointDesc("Customer journey map");
-        start = new Element(startTouch,"20em","6em");
+        start = new Element(startTouch);
         start.setDraggable(false);
         start.setStyleClass("ui-diagram-crumbs");
-         model.addElement(start);
+        model.addElement(start);
         dashboardView.setSnakeModel(model);        
     }
 
