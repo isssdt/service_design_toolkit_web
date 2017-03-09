@@ -1,6 +1,7 @@
 function extender() {
             this.cfg.axes.xaxis.tickOptions.showGridline = false;
             this.cfg.axes.yaxis.tickOptions.showGridline = false;
+            this.cfg.axes.xaxis.label = false;
             this.cfg.canvasOverlay = {
                 show: true,
                 objects: [{horizontalLine:{
@@ -11,3 +12,4 @@ function extender() {
                 y:3
             }}]}
         }
+  
