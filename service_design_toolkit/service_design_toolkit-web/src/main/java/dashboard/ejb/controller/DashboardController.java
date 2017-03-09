@@ -71,15 +71,15 @@ public class DashboardController implements Serializable {
     public DashboardController() {
     }
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    private String name;
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     @PostConstruct
     public void init() {
@@ -138,7 +138,7 @@ public class DashboardController implements Serializable {
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
         dashboardView.getIndExpMapModel().clear();
         dashboardView.getTimeGapDiagrams().clear();
-        initDummyIndExpMapChart();
+//        initDummyIndExpMapChart();
         updateIntegrationMap(journeyDTO);
         updateSnakeMap(journeyDTO);
         updateFeildResearcherList(journeyDTO);
@@ -172,7 +172,7 @@ public class DashboardController implements Serializable {
         dashboardView.getIndExpMapModel().setLegendPosition("ne");
         dashboardView.getIndExpMapModel().getAxes().put(AxisType.X, new CategoryAxis(ConstantValues.CHART_INTEGRATION_X_AXIS));
         dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setLabel(ConstantValues.CHART_INTEGRATION_Y_AXIS);
-        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setMin(0);
+        dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setMin(1);
         dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setMax(5);
         dashboardView.getIndExpMapModel().getAxis(AxisType.Y).setTickInterval("1"); 
         dashboardView.getIndExpMapModel().setShowDatatip(false);
@@ -263,7 +263,7 @@ public class DashboardController implements Serializable {
         dashboardView.getIntegrationMapModel().setLegendPosition("ne");
         dashboardView.getIntegrationMapModel().getAxes().put(AxisType.X, new CategoryAxis(ConstantValues.CHART_INTEGRATION_X_AXIS));
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setLabel(ConstantValues.CHART_INTEGRATION_Y_AXIS);
-        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMin(0);
+        dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMin(1);
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setMax(5);
         dashboardView.getIntegrationMapModel().getAxis(AxisType.Y).setTickInterval("1");  
         dashboardView.getIntegrationMapModel().setShowDatatip(false);
@@ -347,10 +347,10 @@ public class DashboardController implements Serializable {
     //initialize dummy chart when there is no data
     private void initDummyIntMapChart() {
         ChartSeries chartSeries = new ChartSeries();
-        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
-        chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+        chartSeries.set(" ", 0);
+        chartSeries.setLabel(" ");
         dashboardView.getIntegrationMapModel().addSeries(chartSeries);
-        dashboardView.getIndExpMapModel().addSeries(chartSeries);
+//        dashboardView.getIndExpMapModel().addSeries(chartSeries);
     }
     
     private void initDummyIndExpMapChart() {
@@ -362,8 +362,8 @@ public class DashboardController implements Serializable {
     
     private void initDummyTimeGapDia() {
        ChartSeries chartSeries = new ChartSeries();
-        chartSeries.set(ConstantValues.CHART_DUMMY_NAME, 0);
-       chartSeries.setLabel(ConstantValues.CHART_DUMMY_NAME);
+       chartSeries.set(" ", 0);
+       chartSeries.setLabel(" ");
        List<HorizontalBarChartModel> timeGapDiagrams= new ArrayList<HorizontalBarChartModel>();
        HorizontalBarChartModel dummyModel =new HorizontalBarChartModel();
        dummyModel.addSeries(chartSeries);

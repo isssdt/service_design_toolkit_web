@@ -4,14 +4,18 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html">
-    <h:outputScript library="js" name="dashboard/panel.js" target="body" />
-    <h:outputScript library="js" name="dashboard/extender.js" target="body" />
+    <h:outputScript name="js/dashboard/panel.js" target="head" />
+    <h:outputScript library="jqplot-plugin" name="jqplot.canvasOverlay.min.js" target="head"/>
+    <h:outputScript name="js/dashboard/extender.js" target="head" />
+    <h:outputScript library="scripts" name="jqplot.canvasTextRenderer.min.js" target="head"/>
+    <h:outputScript library="scripts" name="jqplot.canvasOverlay.min.js" target="head"/>
+    <h:outputScript library="scripts" name="jqplot.canvasAxisTickRenderer.min.js" target="head"/>
+
     <script 
         type="text/javascript" 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo&amp;libraries=visualization">
     </script>  
     <style type="text/css">
-
         .panel-actions {
             margin-top: -20px;
             margin-bottom: 0;
@@ -106,6 +110,7 @@
     </style>  
 
     <h:form>
+        
         <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
             <p:panel closable="true"> 
                 <p:outputLabel for="journey_list" value="Journey" />
@@ -116,7 +121,6 @@
                     <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
             </p:panel>
-
         </p:panelGrid>
 
         <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
@@ -154,10 +158,9 @@
                             <i class="fa fa-thumbs-up fa-rotate-270" aria-hidden="true" style="color:blue"></i>
                             <h:outputText value="#{el.no_neutral}" styleClass="ui-facet-element"/>
                         </h:panelGrid>
-
                     </f:facet>
-
                 </p:diagram>
+                
                 <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
                                  update="dialog" oncomplete="PF('dlg').show();"  />
                 <p:dialog id="dialog" widgetVar="dlg" modal="true"
@@ -179,7 +182,6 @@
                                 center="#{dashboardController.dashboardView.centerGeoMap}" zoom="10" type="ROADMAP"
                                 model="#{dashboardController.dashboardView.tp_map}" styleClass="ui-dialog-diagram"/>
                         <!--                                fitBounds="true"-->
-
                     </p:panelGrid>
                 </p:dialog>
             </p:panel>
@@ -190,14 +192,9 @@
                 <f:facet name="actions">
                     <a href="#" id="timeGapDiagram_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
                 </f:facet>
-
                 <p:carousel id="timeGapDiaGrid" value="#{dashboardController.dashboardView.timeGapDiagrams}" itemStyle="text-align:center; width:500px"  var="timeGapModel"  responsive="true">
                     <p:chart id="timeGapDiagram" type="bar" model="#{timeGapModel}" style="height:300px;width:300px "  responsive="true"/> 
-
                 </p:carousel>
-
-
-
             </p:panel>
         </p:panelGrid>
         <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
@@ -252,9 +249,6 @@
                           responsive="true">
                     <p:ajax   event="itemSelect" listener="#{dashboardController.itemSelect}" oncomplete="func()" ></p:ajax>
                 </p:chart>
-
-
-
                 <p:dialog widgetVar="dlgChart" id="dialogChart" header="Touchpoint Reaction" width="400" responsive="true" showHeader="true" >
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-column-layout">
                         <h:outputText value="TouchPoint Name:"/>
@@ -270,22 +264,11 @@
                     </p:panelGrid>
                 </p:dialog>
             </p:panel>
-
-
             <p:panel header="service gap for add touchpoint" class="panel panel-default">
                 <f:facet name="actions">
                     <a href="#" id="ser_add_touch_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
                 </f:facet>
             </p:panel>
         </p:panelGrid>
-        <!--<p:panelGrid columns="1" layout="grid">
-                <p:panel widgetVar="fr1" id="fr1">
-                    <h:inputText value="hello" />
-                     <p:growl id="growl" life="3000" />
- 
-    <p:gmap id="gmap" center="#{dashboardController.dashboardView.centerGeoMap}" zoom="13" type="hybrid" style="width:100%;height:400px" model="#{dashboardController.dashboardView.polylineModel}">
-        
-    </p:gmap>       
-            </p:panelGrid>-->
     </h:form>  
 </ui:composition>
