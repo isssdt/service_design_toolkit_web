@@ -138,7 +138,7 @@ public class DashboardController implements Serializable {
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
         dashboardView.getIndExpMapModel().clear();
         dashboardView.getTimeGapDiagrams().clear();
-//        initDummyIndExpMapChart();
+        initDummyIndExpMapChart();
         updateIntegrationMap(journeyDTO);
         updateSnakeMap(journeyDTO);
         updateFeildResearcherList(journeyDTO);
