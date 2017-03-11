@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TouchpointFieldResearcher.findByStatusAndFieldResearcherName", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.status = :status and t.fieldResearcherId.sdtUser.username = :username"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyName", 
-            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL ORDER BY t.touchpointId.sequenceNo"),
+            query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.ratingId IS NOT NULL AND t.touchpointId.subSeqNo IS NULL ORDER BY t.touchpointId.sequenceNo"),
     @NamedQuery(name = "TouchpointFieldResearcher.findByJourneyNameAndUsername", 
             query = "SELECT t FROM TouchpointFieldResearcher t WHERE t.touchpointId.journeyId.journeyName = :journeyName and t.fieldResearcherId.sdtUser.username = :username and t.ratingId IS NOT NULL ORDER BY t.touchpointId.sequenceNo, t.touchpointId.subSeqNo"),
     @NamedQuery(name = "TouchpointFieldResearcher.00002", 

@@ -153,6 +153,9 @@ public class JourneyService implements JourneyServiceLocal {
         }
 
         for (TouchPoint touchPoint : journey.getTouchPointList()) {
+            if (null != touchPoint.getSubSeqNo()) {
+                continue;
+            }
             TouchpointFieldResearcher touchpointFieldResearcher = new TouchpointFieldResearcher();
             touchpointFieldResearcher.setTouchpointId(touchPoint);
             touchpointFieldResearcher.setFieldResearcherId(sdtUser.getFieldResearcher());
