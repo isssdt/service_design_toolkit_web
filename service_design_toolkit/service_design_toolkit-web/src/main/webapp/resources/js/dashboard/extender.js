@@ -6,9 +6,9 @@ function extender() {
                 show: true,
                 objects: [{horizontalLine:{
                 shadow: false,
-                lineWidth:5,
+                lineWidth:1,
                 xOffset: 0,
-                color:"rgb(89, 198, 154)",
+                color:"rgb(0, 0, 0)",
                 y:3
             }}]}
         }

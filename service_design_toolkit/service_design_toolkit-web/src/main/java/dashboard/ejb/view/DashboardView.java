@@ -30,6 +30,7 @@ public class DashboardView implements Serializable {
     private String centerGeoMap = "1.2971342, 103.7777567";
     private CartesianChartModel integrationMapModel;
     private CartesianChartModel indExpMapModel;
+    private CartesianChartModel serviceGapDiagram;
     private DefaultDiagramModel snakeModel;
     private List<HorizontalBarChartModel> timeGapDiagrams;
     private List<FieldResearcherDTO> fieldResearcherDTOList;
@@ -46,6 +47,7 @@ public class DashboardView implements Serializable {
         tp_map = new DefaultMapModel();
         integrationMapModel = new LineChartModel();
         indExpMapModel = new LineChartModel();
+        serviceGapDiagram = new LineChartModel();
         polylineModel = new DefaultMapModel();        
     }
 
@@ -151,5 +153,12 @@ public class DashboardView implements Serializable {
 
     public void setTimeGapDiagrams(List<HorizontalBarChartModel> timeGapDiagrams) {
         this.timeGapDiagrams = timeGapDiagrams;
+    }
+    public CartesianChartModel getServiceGapDiagram() {
+        return serviceGapDiagram;
+    }
+
+    public void setServiceGapDiagram(CartesianChartModel serviceGapDiagram) {
+        this.serviceGapDiagram = serviceGapDiagram;
     }
 }

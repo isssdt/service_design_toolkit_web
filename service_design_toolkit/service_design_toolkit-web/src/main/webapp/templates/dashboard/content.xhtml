@@ -116,7 +116,7 @@
                 <p:outputLabel for="journey_list" value="Journey" />
                 <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
                     <p:ajax listener="#{dashboardController.onJourneyChange()}" 
-                            update="combine_map, integration_map , dia, fr, ind_Exp, timeGapDiaGrid" />
+                            update="combine_map, integration_map , dia, fr, ind_Exp, timeGapDiaGrid, service_gap" />
                     <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                     <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
@@ -188,14 +188,15 @@
         </p:panelGrid>
 
         <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
-            <p:panel  id="timegap" header="Time Gap Diagram" styleClass="ui-dashboard-layout" class="panel panel-default">
+<!--            <p:panel  id="timegap" header="Time Gap Diagram" styleClass="ui-dashboard-layout" class="panel panel-default">
                 <f:facet name="actions">
                     <a href="#" id="timeGapDiagram_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
-                </f:facet>
-                <p:carousel id="timeGapDiaGrid" value="#{dashboardController.dashboardView.timeGapDiagrams}" itemStyle="text-align:center; width:500px"  var="timeGapModel"  responsive="true">
-                    <p:chart id="timeGapDiagram" type="bar" model="#{timeGapModel}" style="height:300px;width:300px "  responsive="true"/> 
+                </f:facet>-->
+                <p:carousel id="timeGapDiaGrid" headerText="Time Gap Diagram" value="#{dashboardController.dashboardView.timeGapDiagrams}" 
+                            itemStyle="text-align:center; width:500px" var="timeGapModel" responsive="true" >
+                    <p:chart id="timeGapDiagram" type="bar" model="#{timeGapModel}" style="width:300px "  responsive="true"/> 
                 </p:carousel>
-            </p:panel>
+<!--            </p:panel>-->
         </p:panelGrid>
         <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
             <p:panel header="FR and TP Location" styleClass="ui-dashboard-layout" class="panel panel-default">
@@ -233,7 +234,7 @@
             <p:panel id ="fr" widgetVar="fr">
                 <p:outputLabel for="fr_list" value="FieldResearcher" />
                 <p:selectOneMenu id="fr_list" value="#{dashboardController.dashboardModel.fieldResearcherName}">
-                    <p:ajax listener="#{dashboardController.onFieldResearcherChange()}" update = "ind_Exp"/>
+                    <p:ajax listener="#{dashboardController.onFieldResearcherChange()}" update = "ind_Exp, service_gap"/>
                     <f:selectItem itemLabel="Select Field Researcher" itemValue="" noSelectionOption="true" />                         
                     <f:selectItems value="#{dashboardController.dashboardView.frMap}"/>
                 </p:selectOneMenu>
@@ -268,6 +269,9 @@
                 <f:facet name="actions">
                     <a href="#" id="ser_add_touch_click" role="button" title="Toggle fullscreen"><i class="glyphicon glyphicon-resize-full"></i></a>
                 </f:facet>
+                <p:chart  widgetVar="service_gap" id="service_gap" type="line" model="#{dashboardController.dashboardView.serviceGapDiagram}"
+                          responsive="true">
+                </p:chart>
             </p:panel>
         </p:panelGrid>
     </h:form>  
