@@ -27,6 +27,7 @@ public class GeoMapView extends AbstractView implements Serializable {
     private TouchPointDTO touchPointDTO;
     private String centerGeoMap;
     private MapModel touchPointLocationModel;
+    private String radius;
 
     /**
      * Creates a new instance of GeoMapView
@@ -74,6 +75,14 @@ public class GeoMapView extends AbstractView implements Serializable {
 
     public void setTouchPointLocationModel(MapModel touchPointLocationModel) {
         this.touchPointLocationModel = touchPointLocationModel;
+    }
+    
+    public String getRadius() {
+        return radius;
+    }
+
+    public void setRadius(String radius) {
+        this.radius = radius;
     }
     
 }
