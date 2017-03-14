@@ -68,7 +68,7 @@ public class PhotoUpload {
         String fileName = "";
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-        List<InputPart> inputParts = uploadForm.get("uploadedFile");
+        List<InputPart> inputParts = uploadForm.get("uploadedFile");        
 
         for (InputPart inputPart : inputParts) {
 

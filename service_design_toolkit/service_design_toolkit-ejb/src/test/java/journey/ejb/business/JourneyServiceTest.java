@@ -375,20 +375,20 @@ public class JourneyServiceTest {
         TouchPointFieldResearcherListDTO touchPointFieldResearcherListDTO = getListByID(journeyDTO, sdtUserDTO);
         List<TouchPointFieldResearcherDTO> touchPointFieldResearcherDTOList = touchPointFieldResearcherListDTO.getTouchPointFieldResearcherDTOList();
         
-        Assert.assertEquals(45 / 60 / 24, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
+        Assert.assertEquals((double)45 / 60 / 24, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
         
         //test case: Expected: Day, Actual: Hour
         touchpointFieldResearcher1.getTouchpointId().setDuration(1);
         touchpointFieldResearcher1.getTouchpointId().setDurationUnit(new MasterData(common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID));
         //set duration and duration unit
-        touchpointFieldResearcher1.setDuration(2);        
+        touchpointFieldResearcher1.setDuration(7897);        
         touchpointFieldResearcher1.setDurationUnit(new MasterData(common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID)); 
         
         //call getTouchPointFiedlResearcherListOfJourney method
         touchPointFieldResearcherListDTO = getListByID(journeyDTO, sdtUserDTO);
         touchPointFieldResearcherDTOList = touchPointFieldResearcherListDTO.getTouchPointFieldResearcherDTOList();
         
-        Assert.assertEquals(2 / 24, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
+        Assert.assertEquals((double)7897 / 24, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
         
         //test case: Expected: Day, Actual: Day
         touchpointFieldResearcher1.getTouchpointId().setDuration(1);
@@ -407,14 +407,15 @@ public class JourneyServiceTest {
         touchpointFieldResearcher1.getTouchpointId().setDuration(1);
         touchpointFieldResearcher1.getTouchpointId().setDurationUnit(new MasterData(common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID));        
         //set duration and duration unit
-        touchpointFieldResearcher1.setDuration(6);        
+        touchpointFieldResearcher1.setDuration(30);        
         touchpointFieldResearcher1.setDurationUnit(new MasterData(common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID));
         
         //call getTouchPointFiedlResearcherListOfJourney method
         touchPointFieldResearcherListDTO = getListByID(journeyDTO, sdtUserDTO);
         touchPointFieldResearcherDTOList = touchPointFieldResearcherListDTO.getTouchPointFieldResearcherDTOList();
+        System.out.println("converted: " + touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration());
         
-        Assert.assertEquals(6 / 60, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
+        Assert.assertEquals((double)30 / 60, touchPointFieldResearcherDTOList.get(0).getConvertedToExepectedDuration(), 0.0001);
         
         //test case: Expected: Hour, Actual: Hour
         touchpointFieldResearcher1.getTouchpointId().setDuration(1);

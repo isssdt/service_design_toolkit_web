@@ -336,8 +336,8 @@ public class JourneyService implements JourneyServiceLocal {
             touchPointFieldResearcherDTO.setTouchpointDTO(touchPointDTO);
             touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
             touchPointFieldResearcherDTO.setRatingDTO(ratingDTO);
-            touchPointFieldResearcherDTO.setServerPhotoPath(ConstantValues.SERVER_PHOTO_PATH + journeyDTO.getJourneyName() + "_" 
-                    + touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + "_" 
+            touchPointFieldResearcherDTO.setServerPhotoPath(ConstantValues.SERVER_PHOTO_PATH + journeyDTO.getJourneyName() + "_"
+                    + touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + "_"
                     + touchPointFieldResearcherDTO.getFieldResearcherDTO().getSdtUserDTO().getUsername() + ".jpg");
             convertDurationToExpectedUnit(touchPointFieldResearcherDTO);
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
@@ -386,8 +386,8 @@ public class JourneyService implements JourneyServiceLocal {
             touchPointFieldResearcherDTO.setFieldResearcherDTO(fieldResearcherDTO);
             touchPointFieldResearcherDTO.setRatingDTO(ratingDTO);
             convertDurationToExpectedUnit(touchPointFieldResearcherDTO);
-            touchPointFieldResearcherDTO.setServerPhotoPath(ConstantValues.SERVER_PHOTO_PATH + journeyDTO.getJourneyName() + "_" 
-                    + touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + "_" 
+            touchPointFieldResearcherDTO.setServerPhotoPath(ConstantValues.SERVER_PHOTO_PATH + journeyDTO.getJourneyName() + "_"
+                    + touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + "_"
                     + sdtUserDTO.getUsername() + ".jpg");
             touchPointFieldResearcherDTOList.add(touchPointFieldResearcherDTO);
         }
@@ -399,10 +399,27 @@ public class JourneyService implements JourneyServiceLocal {
     @Override
     public JourneyListDTO findJourneyListForRegister(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {
         JourneyFacadeLocal journeyFacade = (JourneyFacadeLocal) factory.getFacade(JourneyFacadeLocal.class.toString());
+        String query = "select b.* "
+                + "from journey_field_researcher a, journey b, sdt_user c "
+                + "where a.journey_id = b.id "
+                + "and a.field_researcher_id = c.id "
+                + "and c.username = ? "
+                + "union "
+                + "select * from journey a "
+                + "where a.start_date <= ? "
+                + "and a.end_date >= ? "
+                + "and a.can_be_registered = 'Y'";
+
+        List<Object> paramsList = new ArrayList<>();
+        paramsList.add(sdtUserDTO.getUsername());
+        paramsList.add(new Date());
+        paramsList.add(new Date());
+
         Map<String, Object> params = new HashMap<>();
         params.put("startDate", new Date());
         params.put("endDate", new Date());
-        List<Journey> journeyList = journeyFacade.findListByQueryName(ConstantValues.QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED, params);
+//        List<Journey> journeyList = journeyFacade.findListByQueryName(ConstantValues.QUERY_JOURNEY_FIND_JOURNEY_THAT_CAN_BE_REGISTERED, params);
+        List<Journey> journeyList = journeyFacade.findListByNativeQuery(query, paramsList);
 
         JourneyFieldResearcherFacadeLocal journeyFieldResearcherFacade = (JourneyFieldResearcherFacadeLocal) factory
                 .getFacade(JourneyFieldResearcherFacadeLocal.class.toString());
@@ -466,20 +483,25 @@ public class JourneyService implements JourneyServiceLocal {
             TimeUnit timeUnit = TimeUnit.HOURS;
             if (common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
                 touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
-                        (double) timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.MINUTES));
+                        (double) touchPointFieldResearcherDTO.getDuration() / 60);
             } else if (common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
                 touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
                         (double) timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.DAYS));
             }
         } else if (common.constant.MasterData.TOUCH_POINT_DURATION_DAYS_ID.equals(touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getId())) {
-            TimeUnit timeUnit = TimeUnit.DAYS;
             if (common.constant.MasterData.TOUCH_POINT_DURATION_MINS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
                 touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
-                        (double) timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.MINUTES));
+                        (double) touchPointFieldResearcherDTO.getDuration() / 60 / 24);
             } else if (common.constant.MasterData.TOUCH_POINT_DURATION_HOURS_ID.equals(touchPointFieldResearcherDTO.getDurationUnitDTO().getId())) {
                 touchPointFieldResearcherDTO.setConvertedToExepectedDuration(
-                        (double) timeUnit.convert(touchPointFieldResearcherDTO.getDuration(), TimeUnit.HOURS));
+                        (double) touchPointFieldResearcherDTO.getDuration() / 24);
             }
         }
+//        System.out.println(touchPointFieldResearcherDTO.getTouchpointDTO().getTouchPointDesc() + "|" +
+//                touchPointFieldResearcherDTO.getTouchpointDTO().getMasterDataDTO().getDataValue() + "|" +
+//                touchPointFieldResearcherDTO.getTouchpointDTO().getDuration() + "|" +
+//                touchPointFieldResearcherDTO.getDurationUnitDTO().getDataValue() + "|" +
+//                touchPointFieldResearcherDTO.getDuration() + "|" +
+//                touchPointFieldResearcherDTO.getConvertedToExepectedDuration());
     }
 }
