@@ -548,6 +548,8 @@ public class DashboardController implements Serializable {
     }
      
     public void showDialogOnClickTouchPoint() {
+        isGeoJourney = false;
+            isNonGeoJourney = false;
           System.out.println("hellooo");
          TouchPointDTO touchPointDTOModel =new TouchPointDTO();
           String touchPointDesc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("touchPointDesc");
@@ -583,24 +585,23 @@ public class DashboardController implements Serializable {
           dashboardView.getTp_map().getMarkers().clear();
         
         for (TouchPointDTO touchPointDTO : touchPointDTOList) {
-           if(!touchPointDTO.getLatitude().equals("NONE")){
+            if(!touchPointDTO.getLatitude().equals("NONE")){
                isGeoJourney = true;
-               isNonGeoJourney = false;
-            if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
+               if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
+                
             Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
                  ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
             dashboardView.getTp_map().addOverlay(marker);
             }else{
-                Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
-                    Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
-                    ConstantValues.MARKER_ICON_TOUCH_POINT);
-                dashboardView.getTp_map().addOverlay(marker);
+                   Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                           Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null,
+                           ConstantValues.MARKER_ICON_TOUCH_POINT);
+                   dashboardView.getTp_map().addOverlay(marker);
             }
-           } else {
-               isGeoJourney = false;
+           } 
+           if(isGeoJourney!=true) {
                isNonGeoJourney = true;
-                      
            }
         }
           }
