@@ -25,6 +25,7 @@ public class ACTION_GMAP_TOUCH_POINT_LOCATION_AJAX implements ActionHandler {
     @Override
     public void execute(AbstractView view, FacesEvent event) {        
         GeoMapView geoMapView = (GeoMapView) view;
+        geoMapView.getTouchPointLocationModel().getCircles().clear();
         List<GeocodeResult> geocodeResultList = ((GeocodeEvent) event).getResults();
         String radius = geoMapView.getRadius();
         
