@@ -40,6 +40,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import static org.jboss.logging.MDC.getMap;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
@@ -64,6 +65,9 @@ public class DashboardController implements Serializable {
 
     DashboardModel dashboardModel;
     
+    private Boolean isGeoJourney;
+    
+    private Boolean isNonGeoJourney;
 
     /**
      * Creates a new instance of DashboardController
@@ -75,6 +79,8 @@ public class DashboardController implements Serializable {
     public void init() {
         dashboardModel = new DashboardModel();
         dashboardView = new DashboardView();
+        isGeoJourney = false;
+        isNonGeoJourney = false;
         initDummyIntMapChart();
         initDummyIndExpMapChart();
         initsnakeModel();
@@ -108,6 +114,22 @@ public class DashboardController implements Serializable {
 
     public void setDashboardView(DashboardView dashboardView) {
         this.dashboardView = dashboardView;
+    }
+    
+    public Boolean getIsGeoJourney() {
+        return isGeoJourney;
+    }
+
+    public void setIsGeoJourney(Boolean isGeoJourney) {
+        this.isGeoJourney = isGeoJourney;
+    }
+    
+    public Boolean getIsNonGeoJourney() {
+        return isNonGeoJourney;
+    }
+
+    public void setIsNonGeoJourney(Boolean isNonGeoJourney) {
+        this.isNonGeoJourney = isNonGeoJourney;
     }
 
     public List<JourneyDTO> getActiveJourneyList() throws AppException, CustomReasonPhraseException {
@@ -562,6 +584,8 @@ public class DashboardController implements Serializable {
         
         for (TouchPointDTO touchPointDTO : touchPointDTOList) {
            if(!touchPointDTO.getLatitude().equals("NONE")){
+               isGeoJourney = true;
+               isNonGeoJourney = false;
             if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
             Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
                     Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
@@ -573,6 +597,10 @@ public class DashboardController implements Serializable {
                     ConstantValues.MARKER_ICON_TOUCH_POINT);
                 dashboardView.getTp_map().addOverlay(marker);
             }
+           } else {
+               isGeoJourney = false;
+               isNonGeoJourney = true;
+                      
            }
         }
           }

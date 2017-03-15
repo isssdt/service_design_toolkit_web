@@ -162,8 +162,8 @@
                 </p:diagram>
                 
                 <p:remoteCommand name="myRemote" actionListener="#{dashboardController.showDialogOnClickTouchPoint}" 
-                                 update="dialog" oncomplete="PF('dlg').show();"  />
-                <p:dialog id="dialog" widgetVar="dlg" modal="true"
+                                 update="dialog, dialog1" oncomplete="" />
+                <p:dialog id="dialog" widgetVar="dlg" modal="true" visible="#{dashboardController.isGeoJourney}" 
                           header="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc} of #{dashboardController.dashboardModel.journeyName}"
                           fitViewport="true"
                           width="700" height="500">
@@ -178,10 +178,28 @@
                             <h:outputText value="Channel Description:"/>
                             <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
                         </h:panelGrid>
-                        <p:gmap id="tp_map" widgetVar="tp_map"
+                        <p:gmap id="tp_map" widgetVar="tp_map" 
                                 center="#{dashboardController.dashboardView.centerGeoMap}" zoom="10" type="ROADMAP"
                                 model="#{dashboardController.dashboardView.tp_map}" styleClass="ui-dialog-diagram"/>
                         <!--                                fitBounds="true"-->
+                    </p:panelGrid>
+                </p:dialog>
+                
+                <p:dialog id="dialog1" widgetVar="dlg1" modal="true" visible="#{dashboardController.isNonGeoJourney}"
+                          header="#{dashboardController.dashboardModel.touchPointDTO.touchPointDesc} of #{dashboardController.dashboardModel.journeyName}"
+                          fitViewport="true"
+                          width="700" height="100">
+                    <p:panelGrid columns="1" layout="grid">
+                        <h:panelGrid columns="2" styleClass="ui-column-layout" >
+                            <h:outputText value="Action:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.action}" />
+
+                            <h:outputText value="Channel:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
+
+                            <h:outputText value="Channel Description:"/>
+                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
+                        </h:panelGrid>
                     </p:panelGrid>
                 </p:dialog>
             </p:panel>
