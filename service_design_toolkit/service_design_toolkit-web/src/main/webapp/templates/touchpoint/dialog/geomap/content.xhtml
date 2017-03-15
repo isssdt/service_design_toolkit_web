@@ -23,16 +23,19 @@
             </p:commandButton>
         </h:panelGrid>        
         <p:gmap id="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
-                widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
+                 
                 center="#{touchpoint_ejb_view_GeoMapView.centerGeoMap}" zoom="#{ConstantValues.CONSTANT_GEO_MAP_ZOOM_LEVEL}" 
                 type="#{ConstantValues.CONSTANT_GEO_MAP_TYPE_ROADMAP}" model="#{touchpoint_ejb_view_GeoMapView.touchPointLocationModel}"                 
-                style="width:100%;height:400px">
+                style="width:100%;height:400px" onPointClick="handlePointClick(event);" widgetVar="map">
             <p:ajax event="geocode" listener="#{touchpoint_ejb_view_GeoMapView.onGeoCode}" update="@this" />
         </p:gmap>
+<!--        widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"-->
         <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID}"
                          actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" ajax="false">
         </p:commandButton>
+        <h:inputHidden id="lat" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.latitude}" />
+        <h:inputHidden id="lng" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.longitude}" />
     </h:form>
 </ui:composition>
 

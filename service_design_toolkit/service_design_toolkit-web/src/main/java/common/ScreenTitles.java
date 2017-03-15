@@ -20,7 +20,7 @@ public class ScreenTitles {
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER = "No. of Field Researcher";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID = "SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_MESSAGE = "Please provide No. of Field Researcher for this Journey";
-    public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE = "Please provide a number which is greater than 1 for No. of Field Researcher";
+    public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE = "Please provide a number between 1 and 20 for No. of Field Researcher";
     public static final String SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_CONVERTER_MESSAGE = "Please enter number only for No. of Field Researcher";
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE = "Start Date";
     public static final String SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID = "SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_START_DATE_ID";

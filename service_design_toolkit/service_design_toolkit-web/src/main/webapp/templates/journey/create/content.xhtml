@@ -5,7 +5,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui">    
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles" /> 
-    <style type="text/css">
+<!--    <style type="text/css">
                 .ui-name-field {
                     width: 280px;
                 }
@@ -13,7 +13,7 @@
                 .ui-no-field {
                     width: 70px;
                 }
-                </style>
+                </style>-->
     <h:form prependId="false">                         
         <h3 style="margin-top:10px; font-family: Lucida Grande"><font size="+3" color="#2C6A99">Create Journey</font></h3>
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />            
@@ -51,13 +51,13 @@
                     <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
                          value="#{journey_ejb_view_CreateView.journeyDTO.noOfFieldResearcher}" 
                          required="true" 
-                         maxlength="3"
+                         maxlength="2"
                          styleClass="ui-no-field"
                          converterMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_CONVERTER_MESSAGE}"
-                         placeholder="Max No." 
+                         placeholder="Max 20" 
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_MESSAGE}"
                          validatorMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_VALIDATOR_MESSAGE}">
-                        <f:validateLongRange minimum="1"/>
+                        <f:validateLongRange minimum="1" maximum="20"/>
                     </p:inputText>
                     
                     <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE_ID}"

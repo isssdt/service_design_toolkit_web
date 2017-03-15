@@ -16,9 +16,9 @@
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_NAME_MESSAGE}"/>                             
             <p:outputLabel value="*" />
             <p:inputTextarea id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_ID}" 
-                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION}"
+                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION} (No More Than 150 characters)"
                          value="#{touchpoint_ejb_view_CreateView.touchPointDTO.action}" 
-                         required="true" cols ="35" rows="5"
+                         required="true" cols ="35" rows="5" maxlength="150"
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_TOUCH_POINT_ACTION_MESSAGE}" />
         </h:panelGrid>
         <h:panelGrid columns="3" cellpadding="8"> 
