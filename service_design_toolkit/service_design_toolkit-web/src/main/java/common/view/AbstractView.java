@@ -13,6 +13,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.event.map.PointSelectEvent;
 
 /**
  *
@@ -44,6 +45,10 @@ public abstract class AbstractView {
     }
     
     public void onGeoCode(GeocodeEvent event) {
+        controller.actionListener(event);
+    }
+    
+    public void onPointSelect(PointSelectEvent event) {
         controller.actionListener(event);
     }
     

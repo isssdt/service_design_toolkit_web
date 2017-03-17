@@ -13,9 +13,15 @@
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE}"
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS}"/>            
             <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" style="width:60px"
-                         value="#{touchpoint_ejb_view_GeoMapView.radius}" required="true"
-                         requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_MESSAGE}"
-                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" minValue="0">                    
+                           value="#{touchpoint_ejb_view_GeoMapView.radius}" required="true"
+                           requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_MESSAGE}"
+                           placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" 
+
+                           minValue="0"> 
+                <p:ajax event="valueChange"
+                        listener="#{touchpoint_ejb_view_GeoMapView.onRadiusEntered}"
+                        process="@this" 
+                        update="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" />
             </p:inputNumber>>          
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}"  
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID}"
@@ -23,13 +29,15 @@
             </p:commandButton>
         </h:panelGrid>        
         <p:gmap id="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
-                widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"
+                widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"  
                 center="#{touchpoint_ejb_view_GeoMapView.centerGeoMap}" zoom="#{ConstantValues.CONSTANT_GEO_MAP_ZOOM_LEVEL}" 
                 type="#{ConstantValues.CONSTANT_GEO_MAP_TYPE_ROADMAP}" model="#{touchpoint_ejb_view_GeoMapView.touchPointLocationModel}"                 
                 style="width:100%;height:400px" >
             <p:ajax event="geocode" listener="#{touchpoint_ejb_view_GeoMapView.onGeoCode}" update="@this" />
+            <p:ajax event="pointSelect" listener="#{touchpoint_ejb_view_GeoMapView.onPointSelect}" update="@this"/>
         </p:gmap>
-<!--        widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"-->
+<!--        widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"
+            onPointClick="handlePointClick(event);"-->
         <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID}"
                          actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" ajax="false">

@@ -5,16 +5,23 @@
  */
 package touchpoint.ejb.view;
 
+import static com.sun.javafx.logging.PulseLogger.addMessage;
 import common.constant.ConstantValues;
 import common.ejb.business.ServiceFactory;
 import common.utils.Utils;
 import common.view.AbstractView;
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.map.Circle;
 import touchpoint.dto.TouchPointDTO;
 import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import touchpoint.controller.TouchPointController;
 
 /**
@@ -24,16 +31,18 @@ import touchpoint.controller.TouchPointController;
 @Named(value = "touchpoint_ejb_view_GeoMapView")
 @ViewScoped
 public class GeoMapView extends AbstractView implements Serializable {
+
     private TouchPointDTO touchPointDTO;
     private String centerGeoMap;
     private MapModel touchPointLocationModel;
     private String radius;
+    private LatLng latlng;
 
     /**
      * Creates a new instance of GeoMapView
      */
     public GeoMapView() {
-        super();                
+        super();
     }
 
     @Override
@@ -43,7 +52,7 @@ public class GeoMapView extends AbstractView implements Serializable {
 
     @Override
     public void initData() {
-        touchPointDTO = (TouchPointDTO)Utils.getAttributeOfSession(TouchPointDTO.class.toString());
+        touchPointDTO = (TouchPointDTO) Utils.getAttributeOfSession(TouchPointDTO.class.toString());
         centerGeoMap = ConstantValues.CONSTANT_GEO_MAP_CENTER;
         touchPointLocationModel = new DefaultMapModel();
     }
@@ -76,7 +85,7 @@ public class GeoMapView extends AbstractView implements Serializable {
     public void setTouchPointLocationModel(MapModel touchPointLocationModel) {
         this.touchPointLocationModel = touchPointLocationModel;
     }
-    
+
     public String getRadius() {
         return radius;
     }
@@ -84,5 +93,25 @@ public class GeoMapView extends AbstractView implements Serializable {
     public void setRadius(String radius) {
         this.radius = radius;
     }
-    
+    private Marker marker;
+
+    public void onRadiusEntered(AjaxBehaviorEvent event) {
+        touchPointLocationModel = new DefaultMapModel();
+        Circle circle1 = new Circle(latlng, Double.parseDouble(radius));
+        circle1.setStrokeColor("#d93c3c");
+        circle1.setFillColor("#d93c3c");
+        circle1.setFillOpacity(0.5);
+        touchPointLocationModel.addOverlay(marker);
+        touchPointLocationModel.addOverlay(circle1);
+    }
+
+    @Override
+    public void onPointSelect(PointSelectEvent event) {
+        touchPointLocationModel = new DefaultMapModel();
+        latlng = event.getLatLng();
+        marker = new Marker(latlng, "helo");
+        touchPointLocationModel.addOverlay(marker);
+        
+    }
+
 }
