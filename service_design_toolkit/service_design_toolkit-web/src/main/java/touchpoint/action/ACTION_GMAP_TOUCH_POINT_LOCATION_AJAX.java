@@ -43,6 +43,7 @@ public class ACTION_GMAP_TOUCH_POINT_LOCATION_AJAX implements ActionHandler {
         geoMapView.getTouchPointDTO().setLatitude(String.valueOf(center.getLat()));
         geoMapView.getTouchPointDTO().setLongitude(String.valueOf(center.getLng()));
         geoMapView.getTouchPointDTO().setChannelDescription(geocodeResultList.get(0).getAddress());
+        geoMapView.getTouchPointDTO().setRadius(radius);
     }
 
 }

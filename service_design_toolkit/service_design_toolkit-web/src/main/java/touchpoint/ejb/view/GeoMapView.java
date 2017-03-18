@@ -11,14 +11,17 @@ import common.ejb.business.ServiceFactory;
 import common.utils.Utils;
 import common.view.AbstractView;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.Circle;
 import touchpoint.dto.TouchPointDTO;
 import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
@@ -93,25 +96,4 @@ public class GeoMapView extends AbstractView implements Serializable {
     public void setRadius(String radius) {
         this.radius = radius;
     }
-    private Marker marker;
-
-    public void onRadiusEntered(AjaxBehaviorEvent event) {
-        touchPointLocationModel = new DefaultMapModel();
-        Circle circle1 = new Circle(latlng, Double.parseDouble(radius));
-        circle1.setStrokeColor("#d93c3c");
-        circle1.setFillColor("#d93c3c");
-        circle1.setFillOpacity(0.5);
-        touchPointLocationModel.addOverlay(marker);
-        touchPointLocationModel.addOverlay(circle1);
-    }
-
-    @Override
-    public void onPointSelect(PointSelectEvent event) {
-        touchPointLocationModel = new DefaultMapModel();
-        latlng = event.getLatLng();
-        marker = new Marker(latlng, "helo");
-        touchPointLocationModel.addOverlay(marker);
-        
-    }
-
 }
