@@ -7,11 +7,9 @@
     <h:form prependId="false">
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.MasterData" var="MasterData"/> 
-        <h:outputText value="#{journey_ejb_view_ConfirmationView.journeyDTO.journeyName}"/>
         <p:outputPanel deferred="true">
-            <h3>"#{journey_ejb_view_ConfirmationView.journeyDTO.journeyName}"</h3>            
+            <h4>Journey </h4> <h2>#{journey_ejb_view_ConfirmationView.journeyDTO.journeyName}</h2> <h4>has been created!</h4>            
         </p:outputPanel>     
-        
         <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION_ID}"
                          actionListener="#{journey_ejb_view_ConfirmationView.actionListener}" >

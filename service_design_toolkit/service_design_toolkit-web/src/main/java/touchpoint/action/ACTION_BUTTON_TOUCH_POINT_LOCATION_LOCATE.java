@@ -27,7 +27,7 @@ public class ACTION_BUTTON_TOUCH_POINT_LOCATION_LOCATE implements ActionHandler 
         geoMapView.getTouchPointDTO().setRadius(null);
         
         RequestContext context = RequestContext.getCurrentInstance();
-        context.update(ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID);
+        context.update(ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID);
         context.execute(ScreenTitles.SCREEN_COMPONENT_JS_FUNCTION_LOCATE_TOUCH_POINT);
     }
     

@@ -9,7 +9,7 @@
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />
         <h:panelGrid columns="3" cellpadding="6">                                
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" 
-                         onfocus="initAutocomplete()" style="width:650px" required="true" 
+                         onfocus="initAutocomplete()" style="width:650px" required="true" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.channelDescription}"
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE}"
                          placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS}"/>            
             <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" style="width:60px"
@@ -29,6 +29,7 @@
                 type="#{ConstantValues.CONSTANT_GEO_MAP_TYPE_ROADMAP}" model="#{touchpoint_ejb_view_GeoMapView.touchPointLocationModel}"                 
                 style="width:100%;height:400px" >
             <p:ajax event="geocode" listener="#{touchpoint_ejb_view_GeoMapView.onGeoCode}" update="@this" />
+            <p:ajax event="pointSelect" listener="#{touchpoint_ejb_view_GeoMapView.onPointSelect}" update="@form"/>
         </p:gmap>
         <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID}"

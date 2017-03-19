@@ -28,10 +28,8 @@ public class ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX implements ActionHan
     public void execute(AbstractView view, FacesEvent event) {
         ConfirmationView confirmationView = (ConfirmationView)view;
         try {
-            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
-            System.out.println("inside try");
+            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_DASHBORAD_PAGE);
         } catch (IOException ex) {
-            System.out.println("inside catch");
             Logger.getLogger(ACTION_BUTTON_CONFIRMATION_CREATE_JOURNEY_AJAX.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
