@@ -32,6 +32,5 @@ public class ACTION_BUTTON_CREATE_JOURNEY_NEXT implements ActionHandler {
         } catch (IOException ex) {
             Logger.getLogger(ACTION_BUTTON_CREATE_JOURNEY_NEXT.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
+    } 
 }

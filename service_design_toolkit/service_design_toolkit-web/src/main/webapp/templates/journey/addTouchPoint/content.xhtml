@@ -9,7 +9,7 @@
                 display: block;
                 float: left;
                 height: 50px;
-                background: #3498db;
+                background: gainsboro;
                 text-align: center;
                 padding: 30px 40px 0 40px;
                 position: relative;
@@ -23,7 +23,7 @@
                 content: "";  
                 border-top: 40px solid transparent;
                 border-bottom: 40px solid transparent;
-                border-left: 40px solid #3498db;
+                border-left: 40px solid gainsboro;
                 position: absolute; right: -40px; top: 0;
                 z-index: 2;
         }
@@ -87,8 +87,7 @@
         
         <p:panelGrid columns="1" layout="grid">
             <p:diagram  id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
-                value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" 
-                style="width: 100%; height: 350px" styleClass="ui-widget-content" var="touchpoint">
+                value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" styleClass="ui-widget-content" var="touchpoint">
                     <f:facet name="element">
                         <h:panelGrid columns="3">
                             <h:commandLink rendered="#{touchpoint.channelDTO.channelName eq 'Face To Face' }">

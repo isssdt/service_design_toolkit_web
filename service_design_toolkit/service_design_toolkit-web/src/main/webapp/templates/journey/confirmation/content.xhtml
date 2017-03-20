@@ -8,12 +8,32 @@
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.MasterData" var="MasterData"/> 
         <p:outputPanel deferred="true">
-            <h4>Journey </h4> <h2>#{journey_ejb_view_ConfirmationView.journeyDTO.journeyName}</h2> <h4>has been created!</h4>            
-        </p:outputPanel>     
+            <h4>Journey #{journey_ejb_view_ConfirmationView.journeyDTO.journeyName} has been created!</h4>            
+        </p:outputPanel>
+<!--        <p:dataTable var="tp" value="#{journey_ejb_view_ConfirmationView.journeyDTO.touchPointDTOList}">
+            <p:column headerText="Name">
+                <h:outputText value="#{tp.touchPointDesc}" />
+            </p:column>
+
+            <p:column headerText="Channel">
+                <h:outputText value="#{tp.channelDTO.channelName}" />
+            </p:column>
+
+            <p:column headerText="website/location">
+                <h:outputText value="#{tp.channelDescription}" />
+            </p:column>
+
+            <p:column headerText="duration">
+                <h:outputText value="#{tp.duration}" />
+            </p:column>
+            
+            <p:column headerText="unit">
+                <h:outputText value="#{tp.masterDataDTO.dataValue}" />
+            </p:column>
+        </p:dataTable>-->
         <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION}" style="font-family: Lucida Grande"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_JOURNEY_CONFIRMATION_ID}"
-                         actionListener="#{journey_ejb_view_ConfirmationView.actionListener}" >
-             
+                         actionListener="#{journey_ejb_view_ConfirmationView.actionListener}" >  
         </p:commandButton>
     </h:form>
 </ui:composition>

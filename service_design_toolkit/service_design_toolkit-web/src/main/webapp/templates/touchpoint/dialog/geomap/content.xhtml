@@ -7,17 +7,18 @@
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.ConstantValues" var="ConstantValues"/>
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />
-        <h:panelGrid columns="3" cellpadding="6">                                
+        <h:panelGrid columns="4" cellpadding="6">                                
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" 
-                         onfocus="initAutocomplete()" style="width:650px" required="true" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.channelDescription}"
+                         onfocus="initAutocomplete()" style="width:630px" required="true" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.channelDescription}"
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE}"
-                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS}"/>            
-            <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" style="width:60px"
+                         placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS}"/>
+            <p:outputLabel value="Radius"/>
+            <p:inputNumber id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_ID}" style="width:40px"
                            value="#{touchpoint_ejb_view_GeoMapView.radius}" 
                            requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS_MESSAGE}"
                            placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" 
-                           minValue="0"> 
-            </p:inputNumber>        
+                           minValue="0" symbol=" meters" symbolPosition="s"> 
+            </p:inputNumber>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}"  
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID}"
                              actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" ajax="true">

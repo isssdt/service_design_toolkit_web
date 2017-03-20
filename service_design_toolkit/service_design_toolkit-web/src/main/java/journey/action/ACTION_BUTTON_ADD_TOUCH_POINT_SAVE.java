@@ -55,15 +55,7 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_SAVE implements ActionHandler {
         options.put("draggable", true);
         options.put("modal", true);
         options.put("resizable", false);
-        RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_JOURNEY_CREATED_CONFIRMATION, options, null);
-//        Utils.removeAttributeOfSession(addTouchPointView.getJourneyDTO());
-//        Utils.postMessage(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "A Journey has been created", null, 
-//                null, true);
-//        try {
-//            Utils.forwardToPage(FacesContext.getCurrentInstance(), ConstantValues.URI_CREATE_JOURNEY_PAGE);
-//        } catch (IOException ex) {
-//            Logger.getLogger(ACTION_BUTTON_ADD_TOUCH_POINT_SAVE.class.getName()).log(Level.SEVERE, null, ex);
-//        }        
+        options.put("responsive", true);
+        RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_JOURNEY_CREATED_CONFIRMATION, options, null);       
     }
-    
 }

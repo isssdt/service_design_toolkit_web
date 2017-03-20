@@ -105,6 +105,8 @@ public class GeoMapView extends AbstractView implements Serializable {
     Circle circle1;
     
     public void onPointSelect(PointSelectEvent event) {
+        touchPointLocationModel.getMarkers().clear();
+        touchPointLocationModel.getCircles().clear();
         latlng = event.getLatLng();
         marker = new Marker(latlng, "helo");
         touchPointDTO.setLatitude(String.valueOf(latlng.getLat()));
@@ -129,8 +131,9 @@ public class GeoMapView extends AbstractView implements Serializable {
         //context.execute(ScreenTitles.SCREEN_COMPONENT_JS_FUNCTION_LOCATE_TOUCH_POINT);
     }
     private void sendGet() throws Exception {
-		String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo";
-		URL obj = new URL(url);
+		String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latlng.getLat()+","+latlng.getLng()+"&key=AIzaSyDTfYgSvgKe9cbMi4RxsmLGUZU5acZpZIo";
+		      System.out.println("string url"+url);
+                URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 		int responseCode = con.getResponseCode();
