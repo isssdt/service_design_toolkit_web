@@ -6,8 +6,9 @@
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles" /> 
     <h:form prependId="false">
         <p:messages id="messages" autoUpdate="true" closable="true" />
+        <p:panel style="height: 300px; width: 500px; background: grey; margin-left: auto; margin-right: auto; margin-top: 10%">        
             <h:panelGrid columns="2" cellpadding="5"  
-                     style="background-color: buttonhighlight; margin-left: auto; margin-right: auto; margin-top: 10%">        
+                     style="background: buttonhighlight; margin-left: auto; margin-right: auto; margin-top: 15%; border-radius: 7px">        
             <h:outputLabel for="username" value="Username:"/>
             <p:inputText id="username" value="#{auth_ejb_view_loginView.sdtUserDTO.username}" required="true" label="Username" />
             
@@ -20,7 +21,8 @@
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID}"
                              action="#{authControl.resetPassword()}" ajax="false" /> 
-
-            </h:panelGrid> 
+            
+            </h:panelGrid>
+        </p:panel>
     </h:form>
 </ui:composition>

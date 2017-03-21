@@ -73,23 +73,13 @@
                              ajax="true">
                 <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" />
             </p:commandButton>
-            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
-                             id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
-                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" ajax="true">  
-                <p:ajax event="dialogReturn" listener="#{journey_ejb_view_ConfirmationView.onDialogReturnListener}" />
-            </p:commandButton>
-            <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
-                             actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" style="display: none;">
-                <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
-                        update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
-            </p:commandButton>            
         </h:panelGrid>  
         
-        <p:panelGrid columns="1" layout="grid">
+        <p:panelGrid columns="1" layout="grid" style="border-color: transparent">
             <p:diagram  id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
                 value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" styleClass="ui-widget-content" var="touchpoint">
                     <f:facet name="element">
-                        <h:panelGrid columns="3">
+                        <p:panelGrid columns="3">
                             <h:commandLink rendered="#{touchpoint.channelDTO.channelName eq 'Face To Face' }">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                             </h:commandLink>
@@ -111,9 +101,22 @@
                                 <i class="fa fa-map-marker" aria-hidden="true" ></i>
                                 <f:ajax ></f:ajax>
                             </h:commandLink>
-                        </h:panelGrid>
+                        </p:panelGrid>
                     </f:facet>
             </p:diagram> 
-        </p:panelGrid>              
+        </p:panelGrid>
+        <p:panelGrid>
+            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
+                                 id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
+                                 actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" 
+                                 ajax="true">  
+                    <p:ajax event="dialogReturn" listener="#{journey_ejb_view_ConfirmationView.onDialogReturnListener}" />
+            </p:commandButton>
+            <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
+                                 actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" style="display: none;">
+                    <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
+                            update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
+            </p:commandButton>
+        </p:panelGrid>
     </h:form>    
 </ui:composition>
