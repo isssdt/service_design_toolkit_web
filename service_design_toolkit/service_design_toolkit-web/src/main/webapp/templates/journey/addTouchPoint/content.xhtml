@@ -47,11 +47,12 @@
     <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
     <h:form prependId="false" id="#{ScreenTitles.SCREEN_COMPONENT_FORM_ID}">  
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" /> 
-        <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="6">            
+        <h:panelGrid columns="4" style="margin-bottom:10px; width: 100%; background: border-box;"  cellpadding="3">            
             <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
                            value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME}" />
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NAME_ID}" 
-                         value="#{journey_ejb_view_addTouchPointView.journeyDTO.journeyName}" readonly="true" />                
+                         value="#{journey_ejb_view_addTouchPointView.journeyDTO.journeyName}" 
+                         readonly="true"  />                
             <p:outputLabel for="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
                            value="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER}" />                    
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_CREATE_JOURNEY_NO_OF_FIELD_RESEARCHER_ID}" 
@@ -75,11 +76,11 @@
             </p:commandButton>
         </h:panelGrid>  
         
-        <p:panelGrid columns="1" layout="grid" style="border-color: transparent">
+        <p:panelGrid columns="1" layout="grid"  style=" width: 100%">
             <p:diagram  id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
                 value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" styleClass="ui-widget-content" var="touchpoint">
                     <f:facet name="element">
-                        <p:panelGrid columns="3">
+                        <h:panelGrid columns="3">
                             <h:commandLink rendered="#{touchpoint.channelDTO.channelName eq 'Face To Face' }">
                                 <i class="fa fa-users" aria-hidden="true"></i>
                             </h:commandLink>
@@ -101,22 +102,24 @@
                                 <i class="fa fa-map-marker" aria-hidden="true" ></i>
                                 <f:ajax ></f:ajax>
                             </h:commandLink>
-                        </p:panelGrid>
+                        </h:panelGrid>
                     </f:facet>
             </p:diagram> 
         </p:panelGrid>
-        <p:panelGrid>
+        <h:panelGrid columns="2" style="width: 80%; margin-top: 20px">
+            <p:commandButton value="Cancel" id="cancel" ajax="true" style=" float: left"> 
+            </p:commandButton>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
                                  id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
                                  actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" 
-                                 ajax="true">  
+                                 ajax="true" style=" float: right">  
                     <p:ajax event="dialogReturn" listener="#{journey_ejb_view_ConfirmationView.onDialogReturnListener}" />
             </p:commandButton>
-            <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
+        </h:panelGrid>
+        <p:commandButton value="Hidden" id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_HIDDEN_ID}" 
                                  actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" style="display: none;">
                     <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
                             update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
-            </p:commandButton>
-        </p:panelGrid>
+        </p:commandButton>
     </h:form>    
 </ui:composition>

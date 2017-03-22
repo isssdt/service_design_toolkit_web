@@ -113,17 +113,18 @@
 
     <h:form>
         
-        <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
-            <p:panel closable="true"> 
-                <p:outputLabel for="journey_list" value="Journey" />
-                <p:selectOneMenu id="journey_list" value="#{dashboardController.dashboardModel.journeyName}">
+<!--        <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
+            <p:panel closable="true"> -->
+<!--                <p:outputLabel for="journey_list" value="Journey" />-->
+                <p:selectOneMenu id="journey_list"  style="position: relative;left: 250px; bottom: 38px" 
+                                 value="#{dashboardController.dashboardModel.journeyName}">
                     <p:ajax listener="#{dashboardController.onJourneyChange()}" 
                             update="combine_map, integration_map , dia, fr, ind_Exp, timeGapDiaGrid, service_gap" />
                     <f:selectItem itemLabel="Select Journey" itemValue="" noSelectionOption="true" />                         
                     <f:selectItems value="#{dashboardController.dashboardView.journeyNameMap}"/>
                 </p:selectOneMenu>
-            </p:panel>
-        </p:panelGrid>
+<!--            </p:panel>
+        </p:panelGrid>-->
 
         <p:panelGrid columns="1" layout="grid" styleClass="ui-noborder">
             <p:panel  id="snake_view" header="Cutomer Journey Map" styleClass="ui-dashboard-layout" class="panel panel-default">

@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Named(value = "mainController")
 @SessionScoped
 public class MainController implements Serializable {
-
+    
     /**
      * Creates a new instance of MainController
      */

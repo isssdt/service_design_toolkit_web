@@ -5,17 +5,15 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">       
     <h:form>
-        <p:menubar>
-            <p:menuitem value="Dashboard" action="#{mainController.dashboardPage()}" ajax="false" />                
-            <p:submenu label="Journey">
-                <p:menuitem value="New" action="#{mainController.createJourneyPage()}" ajax="false" />                
+        <p:menubar style="margin-top: 2px">
+            <p:menuitem value="Dashboard" action="#{mainController.dashboardPage()}" 
+                        style="margin-left: 10px" ajax="false" />                
+            <p:menuitem value="Create Journey" action="#{mainController.createJourneyPage()}" ajax="false" 
+                        style="margin-left: 10px" />                
+            <p:submenu label="Account" style=" position: relative;left: 75%">
+                <p:menuitem value="Change Password" action="#{mainController.changePasswordPage()}" ajax="false" />
+                <p:menuitem value="Log out" action="#{authControl.logout()}" ajax="false"/>
             </p:submenu>
-            <p:submenu label="Account">
-                <p:menuitem value="Change Password" action="#{mainController.changePasswordPage()}" ajax="false" />                
-            </p:submenu>
-            <f:facet name="options">
-                <p:commandButton value="Log out" action="#{authControl.logout()}" ajax="false"/>                
-            </f:facet>
         </p:menubar>      
     </h:form>      
 </ui:composition>
