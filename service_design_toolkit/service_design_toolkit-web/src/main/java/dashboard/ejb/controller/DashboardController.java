@@ -410,7 +410,6 @@ public class DashboardController implements Serializable {
         chartSeries.set(" ", 0);
         chartSeries.setLabel(" ");
         dashboardView.getIntegrationMapModel().addSeries(chartSeries);
-
 //        dashboardView.getIndExpMapModel().addSeries(chartSeries);
     }
     

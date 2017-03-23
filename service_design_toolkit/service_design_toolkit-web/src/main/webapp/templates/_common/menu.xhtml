@@ -5,12 +5,12 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">       
     <h:form>
-        <p:menubar style="margin-top: 2px">
+        <p:menubar  style="margin-top: 2px">
             <p:menuitem value="Dashboard" action="#{mainController.dashboardPage()}" 
                         style="margin-left: 10px" ajax="false" />                
             <p:menuitem value="Create Journey" action="#{mainController.createJourneyPage()}" ajax="false" 
-                        style="margin-left: 10px" />                
-            <p:submenu label="Account" style=" position: relative;left: 75%">
+                        style="margin-left: 10px" />  
+            <p:submenu label="Account" style="position: absolute; left: 87%">
                 <p:menuitem value="Change Password" action="#{mainController.changePasswordPage()}" ajax="false" />
                 <p:menuitem value="Log out" action="#{authControl.logout()}" ajax="false"/>
             </p:submenu>
