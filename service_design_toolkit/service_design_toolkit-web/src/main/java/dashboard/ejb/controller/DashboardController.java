@@ -643,8 +643,10 @@ public class DashboardController implements Serializable {
         String channelDesc = dashboardModel.getTouchPointDTO().getChannelDescription();
         System.out.println("channelDesc for url" + channelDesc);
         urlResult = openByBrower(channelDesc);
-        if(urlResult != true) {
-             disableURL = true;
+        if(isNonGeoJourney == true) {
+             disableURL = false;
+        } else {
+            disableURL = true;
         }
     }
     

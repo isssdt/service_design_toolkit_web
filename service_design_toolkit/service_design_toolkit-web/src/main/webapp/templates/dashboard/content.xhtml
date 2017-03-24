@@ -172,7 +172,9 @@
                             <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
 
                             <h:outputText value="Channel Description:"/>
-                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
+                            <p:commandLink actionListener="#{dashboardController.showAccessWebsite}" disabled="#{dashboardController.disableURL}"
+                                           value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}">
+                            </p:commandLink>
                         </h:panelGrid>
                         <p:gmap id="tp_map" widgetVar="tp_map" 
                                 center="#{dashboardController.dashboardView.centerGeoMap}" zoom="10" type="ROADMAP"
@@ -194,7 +196,7 @@
                             <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
 
                             <h:outputText value="Channel Description:"/>
-                            <p:commandLink actionListener="#{dashboardController.showAccessWebsite}"
+                            <p:commandLink actionListener="#{dashboardController.showAccessWebsite}" disabled="#{dashboardController.disableURL}"
                                            value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}">
                             </p:commandLink>
 
