@@ -12,6 +12,8 @@ import common.exception.CustomReasonPhraseException;
 import common.utils.Utils;
 import dashboard.ejb.model.DashboardModel;
 import dashboard.ejb.view.DashboardView;
+import java.io.IOException;
+import java.io.InputStream;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -48,6 +50,8 @@ import org.primefaces.model.map.Polyline;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 
+import java.net.URL;
+
 /**
  *
  * @author longnguyen
@@ -68,6 +72,12 @@ public class DashboardController implements Serializable {
     private Boolean isGeoJourney;
     
     private Boolean isNonGeoJourney;
+    
+    private Boolean urlResult;
+    
+    private Boolean disableURL;
+    
+    public static final String OS_NAME = System.getProperty("os.name").toLowerCase();
 
     /**
      * Creates a new instance of DashboardController
@@ -81,6 +91,8 @@ public class DashboardController implements Serializable {
         dashboardView = new DashboardView();
         isGeoJourney = false;
         isNonGeoJourney = false;
+        urlResult = false;
+        disableURL = false;
         initDummyIntMapChart();
         initDummyIndExpMapChart();
         initsnakeModel();
@@ -130,6 +142,22 @@ public class DashboardController implements Serializable {
 
     public void setIsNonGeoJourney(Boolean isNonGeoJourney) {
         this.isNonGeoJourney = isNonGeoJourney;
+    }
+    
+    public Boolean getUrlResult() {
+        return urlResult;
+    }
+
+    public void setUrlResult(Boolean urlResult) {
+        this.urlResult = urlResult;
+    }
+
+    public Boolean getDisableURL() {
+        return disableURL;
+    }
+
+    public void setDisableURL(Boolean disableURL) {
+        this.disableURL = disableURL;
     }
 
     public List<JourneyDTO> getActiveJourneyList() throws AppException, CustomReasonPhraseException {
@@ -543,10 +571,10 @@ public class DashboardController implements Serializable {
      
     public void showDialogOnClickTouchPoint() {
         isGeoJourney = false;
-            isNonGeoJourney = false;
-          System.out.println("hellooo");
-         TouchPointDTO touchPointDTOModel =new TouchPointDTO();
-          String touchPointDesc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("touchPointDesc");
+        isNonGeoJourney = false;
+        System.out.println("hellooo");
+        TouchPointDTO touchPointDTOModel =new TouchPointDTO();
+        String touchPointDesc = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("touchPointDesc");
          
           touchPointDTOModel.setTouchPointDesc(touchPointDesc);
           System.out.println("desc model"+touchPointDTOModel.getTouchPointDesc());
@@ -578,30 +606,79 @@ public class DashboardController implements Serializable {
           System.out.println("size "+touchPointDTOList.size()+dashboardModel.getJourneyName());
           dashboardView.getTp_map().getMarkers().clear();
         
-        for (TouchPointDTO touchPointDTO : touchPointDTOList) {
-            if(!touchPointDTO.getLatitude().equals("NONE")){
-               isGeoJourney = true;
-               if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
-                
-            Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
-                    Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null, 
-                 ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
-            dashboardView.getTp_map().addOverlay(marker);
-            }else{
-                   Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
-                           Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null,
-                           ConstantValues.MARKER_ICON_TOUCH_POINT);
-                   dashboardView.getTp_map().addOverlay(marker);
+       for (TouchPointDTO touchPointDTO : touchPointDTOList) {
+           isNonGeoJourney = false;
+                if(!touchPointDTO.getLatitude().equals("NONE")){
+                    isGeoJourney = true;
+                    if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
+                        
+                        Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                                Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null,
+                                ConstantValues.MARKER_ICON_TOUCH_POINT_CURRENT);
+                        String channelDesc = touchPointDTO.getChannelDescription();
+                        dashboardModel.getTouchPointDTO().setChannelDescription(channelDesc);
+                        dashboardView.getTp_map().addOverlay(marker);
+                    }else{
+                        Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
+                                Double.parseDouble(touchPointDTO.getLongitude())), touchPointDTO.getTouchPointDesc(), null,
+                                ConstantValues.MARKER_ICON_TOUCH_POINT);
+                        dashboardView.getTp_map().addOverlay(marker);
+                    }
+                }else{
+                    if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
+                        String channelDesc = touchPointDTO.getChannelDescription();
+                        dashboardModel.getTouchPointDTO().setChannelDescription(channelDesc);
+                        System.out.println("channel Description"+channelDesc);
+                    }
+                }
+                if(isGeoJourney!=true) {
+                    isNonGeoJourney = true;
+                }
             }
-           } 
-           if(isGeoJourney!=true) {
-               isNonGeoJourney = true;
-           }
         }
-          }
-          
-        
-}
+    }
+    
+    public void showAccessWebsite() {
+        String channelDesc = dashboardModel.getTouchPointDTO().getChannelDescription();
+        System.out.println("channelDesc for url" + channelDesc);
+        urlResult = openByBrower(channelDesc);
+        if(urlResult != true) {
+             disableURL = true;
+        }
+    }
+    
+    public static boolean openByBrower(String s) { 
+        String url = "http://" + s;
+        Runtime run = Runtime.getRuntime();  
+        if (null == url || "".equals(url)) {  
+            return false;  
+        }  
+        try {  
+            // 根据系统打开网址  
+            if (OS_NAME.indexOf("win") > -1) {  
+                run.exec("rundll32.exe url.dll,FileProtocolHandler " + url);  
+            } else if (OS_NAME.indexOf("mac") > -1) {  
+                run.exec("open " + url);  
+            } else if (OS_NAME.indexOf("nux") > -1 || OS_NAME.indexOf("nix") > -1) {  
+                String[] cmd = new String[2];  
+                cmd[0] = "firefox";  
+                cmd[1] = url;  
+                try {  
+                    run.exec(cmd);  
+                } catch (IOException e) {  
+                    cmd[0] = "xdg-open";  
+                    run.exec(cmd);  
+                }  
+            } else {  
+                return false;  
+            }  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+            return false;  
+        }  
+        return true;  
+    }  
+ 
       public void itemSelect(ItemSelectEvent event) {
 
         ChartSeries current=dashboardView.getIndExpMapModel().getSeries().get(0);

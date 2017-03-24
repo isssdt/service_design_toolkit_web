@@ -194,7 +194,10 @@
                             <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDTO.channelName}" />
 
                             <h:outputText value="Channel Description:"/>
-                            <h:outputText value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}" />
+                            <p:commandLink actionListener="#{dashboardController.showAccessWebsite}"
+                                           value="#{dashboardController.dashboardModel.touchPointDTO.channelDescription}">
+                            </p:commandLink>
+
                         </h:panelGrid>
                     </p:panelGrid>
                 </p:dialog>
