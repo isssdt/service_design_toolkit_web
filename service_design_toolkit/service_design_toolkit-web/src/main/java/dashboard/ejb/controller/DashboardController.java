@@ -176,6 +176,8 @@ public class DashboardController implements Serializable {
 
     public void onJourneyChange() {
         JourneyDTO journeyDTO = new JourneyDTO();
+        isGeoJourney = false;
+        isNonGeoJourney = false;
         journeyDTO.setJourneyName(dashboardModel.getJourneyName());
         dashboardView.getIndExpMapModel().clear();
         dashboardView.getTimeGapDiagrams().clear();
@@ -607,9 +609,9 @@ public class DashboardController implements Serializable {
           dashboardView.getTp_map().getMarkers().clear();
         
        for (TouchPointDTO touchPointDTO : touchPointDTOList) {
-           isNonGeoJourney = false;
                 if(!touchPointDTO.getLatitude().equals("NONE")){
                     isGeoJourney = true;
+                    isNonGeoJourney = false;
                     if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
                         
                         Marker marker = new Marker(new LatLng(Double.parseDouble(touchPointDTO.getLatitude()),
@@ -625,14 +627,13 @@ public class DashboardController implements Serializable {
                         dashboardView.getTp_map().addOverlay(marker);
                     }
                 }else{
+                    isGeoJourney = false;
+                    isNonGeoJourney = true;
                     if(touchPointDTO.getTouchPointDesc().equals(dashboardModel.getTouchPointDTO().getTouchPointDesc())){
                         String channelDesc = touchPointDTO.getChannelDescription();
                         dashboardModel.getTouchPointDTO().setChannelDescription(channelDesc);
                         System.out.println("channel Description"+channelDesc);
                     }
-                }
-                if(isGeoJourney!=true) {
-                    isNonGeoJourney = true;
                 }
             }
         }
@@ -654,7 +655,7 @@ public class DashboardController implements Serializable {
             return false;  
         }  
         try {  
-            // 根据系统打开网址  
+            //open url according to system  
             if (OS_NAME.indexOf("win") > -1) {  
                 run.exec("rundll32.exe url.dll,FileProtocolHandler " + url);  
             } else if (OS_NAME.indexOf("mac") > -1) {  
