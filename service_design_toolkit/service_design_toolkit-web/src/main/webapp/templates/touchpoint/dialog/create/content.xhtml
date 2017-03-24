@@ -63,7 +63,7 @@
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_ADD}" 
                          actionListener="#{touchpoint_ejb_view_CreateView.actionListener}" 
                          disabled="#{touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_FACE_TO_FACE or
-                                     touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_KIOSK}"
+                                touchpoint_ejb_view_CreateView.touchPointDTO.channelDTO.channelName eq MasterData.CHANNEL_KIOSK}"
                          ajax="false" />
         <p:commandButton id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION_ID}"                          
                          value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_CREATE_TOUCH_POINT_SPECFIY_LOCATION}" 

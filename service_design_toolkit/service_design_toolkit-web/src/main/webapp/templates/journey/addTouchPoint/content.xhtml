@@ -68,14 +68,13 @@
                         value="#{journey_ejb_view_addTouchPointView.journeyDTO.endDate}" 
                         label="#{ScreenTitles.SCREEN_COMPONENT_CALENDAR_CREATE_JOURNEY_END_DATE}" showOn="none"
                         readonlyInput="true"/>                             
-            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD}" 
+        </h:panelGrid>  
+        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_ADD_ID}" 
                              actionListener="#{journey_ejb_view_addTouchPointView.actionListener}" 
                              ajax="true">
                 <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" />
-            </p:commandButton>
-        </h:panelGrid>  
-        
+        </p:commandButton>
         <p:panelGrid columns="1" layout="grid"  style=" width: 100%">
             <p:diagram  id="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}" 
                 value="#{journey_ejb_view_addTouchPointView.journeyVisualization}" styleClass="ui-widget-content" var="touchpoint">
@@ -107,7 +106,8 @@
             </p:diagram> 
         </p:panelGrid>
         <h:panelGrid columns="2" style="width: 80%; margin-top: 20px">
-            <p:commandButton value="Cancel" id="cancel" ajax="true" style=" float: left"> 
+            <p:commandButton value="Cancel" id="cancel" ajax="true" style=" float: left"
+                             onclick="PF('cancel_dialog').show();"> 
             </p:commandButton>
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE}" 
                                  id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_ADD_TOUCH_POINT_SAVE_ID}" 
@@ -121,5 +121,20 @@
                     <p:ajax event="dialogReturn" listener="#{journey_ejb_view_addTouchPointView.onDialogReturnListener}" 
                             update="#{ScreenTitles.SCREEN_COMPONENT_DIAGRAM_ADD_TOUCH_POINT_TOUCH_POINT_VISUALIZATION_ID}"/>
         </p:commandButton>
+        <p:dialog widgetVar="cancel_dialog">
+            <h3>You will loose all your progress!</h3>
+            <br></br>
+            <h2>Are you sure?</h2>
+            <br></br>
+            <p:panelGrid id ="yes_no_button">
+                <p:commandButton value="Yes" id="yes" ajax="true" style=" float: right"
+                                 action="/dashboard/dashboard.xhtml?faces-redirect=true"> 
+                </p:commandButton>
+                
+                <p:commandButton value="No" id="no" ajax="true" style=" float: left"
+                                 onclick="PF('cancel_dialog').hide();">
+                </p:commandButton>
+            </p:panelGrid>
+        </p:dialog>
     </h:form>    
 </ui:composition>
