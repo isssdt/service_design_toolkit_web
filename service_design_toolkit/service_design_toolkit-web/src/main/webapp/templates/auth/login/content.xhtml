@@ -20,7 +20,7 @@
                              actionListener="#{auth_ejb_view_loginView.actionEventHandler}" ajax="false" /> 
             <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD}" 
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID}"
-                             action="#{authControl.resetPassword()}" ajax="false" /> 
+                             actionListener="#{auth_ejb_view_loginView.actionEventHandler}" ajax="false" /> 
             
             </h:panelGrid>
         </p:panel>

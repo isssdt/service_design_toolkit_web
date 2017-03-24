@@ -5,10 +5,12 @@
  */
 package common.util;
 
+import javax.mail.Session;
+
 /**
  *
  * @author longnguyen
  */
 public interface MailBridge {
-    public void sendMail(String from, String to, String content, String subject) throws Exception;
+    public void sendMail(Session mailSession, String from, String to, String content, String subject) throws Exception;
 }

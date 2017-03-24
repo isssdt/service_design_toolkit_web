@@ -6,7 +6,7 @@
 package auth.action;
 
 import auth.ejb.view.LoginView;
-import common.action.ActionHandler;
+import common.action.GenericActionHandler;
 import common.constant.ConstantValues;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
@@ -16,7 +16,7 @@ import common.view.AbstractView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.event.FacesEvent;
+import javax.faces.event.ActionEvent;
 import user.ejb.business.UserServiceLocal;
 import user.ejb.controller.AuthController;
 
@@ -24,10 +24,10 @@ import user.ejb.controller.AuthController;
  *
  * @author longnguyen
  */
-public class ACTION_BUTTON_LOGIN_RESET_PASSWORD implements ActionHandler {
+public class ACTION_BUTTON_LOGIN_RESET_PASSWORD implements GenericActionHandler<ActionEvent> {
 
     @Override
-    public void execute(AbstractView view, FacesEvent event) {
+    public void execute(AbstractView view, ActionEvent event) {
         RESTReponse response = null;
         try {
             UserServiceLocal userService = (UserServiceLocal) view.getServices().getBusinessService(UserServiceLocal.class.toString());
@@ -43,7 +43,7 @@ public class ACTION_BUTTON_LOGIN_RESET_PASSWORD implements ActionHandler {
         } catch (AppException | CustomReasonPhraseException ex) {
             Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
             Utils.postMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null, null);
-        }        
+        }   
     }
 
 }

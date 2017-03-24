@@ -12,6 +12,10 @@ package common.constant;
 public class ConstantValues {
 
     public static final String SERVER_PHOTO_PATH = "/images/";
+    
+    public static final String SERVER_PHOTO_LOCATION_ID = "SERVER_PHOTO_LOCATION_ID";
+    
+    
     /**
      * From Address for Reset Password Email
      */

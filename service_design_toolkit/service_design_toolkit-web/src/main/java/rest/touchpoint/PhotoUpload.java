@@ -85,9 +85,7 @@ public class PhotoUpload {
                 //constructs upload file path
                 fileName = "/home/ubuntu/sdt_photos/" + fileName;
 
-                writeFile(bytes, fileName);
-
-                System.out.println("Done");
+                writeFile(bytes, fileName);               
 
             } catch (IOException e) {
                 e.printStackTrace();

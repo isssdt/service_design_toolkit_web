@@ -9,11 +9,7 @@ import common.ejb.business.BusinessService;
 import common.rest.dto.RESTReponse;
 import common.exception.AppException;
 import common.exception.CustomReasonPhraseException;
-import javax.ejb.Asynchronous;
 import javax.ejb.Local;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
-import javax.enterprise.event.Observes;
 import user.dto.FieldResearcherDTO;
 import user.dto.SdtUserDTO;
 

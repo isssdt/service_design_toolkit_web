@@ -6,6 +6,7 @@
 package common.action;
 
 import auth.action.ACTION_BUTTON_ACTION_EVENT_LOGIN_LOGIN;
+import auth.action.ACTION_BUTTON_LOGIN_RESET_PASSWORD;
 import common.ScreenTitles;
 import javax.faces.event.ActionEvent;
 
@@ -19,6 +20,9 @@ public class ActionActionEventFactory implements ActionAbstractFactory {
         if (ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_LOGIN_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_ACTION_EVENT_LOGIN_LOGIN();
         } 
+        if (ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID.equals(event.getComponent().getId())) {
+            return new ACTION_BUTTON_LOGIN_RESET_PASSWORD();
+        }
         return null;
     }
 }

@@ -29,6 +29,9 @@ import common.dto.RatingDTO;
 import common.entity.Channel;
 import common.entity.MasterData;
 import common.entity.Rating;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import journey.ejb.eao.ChannelFacadeLocal;
 import journey.ejb.eao.JourneyFacadeLocal;
@@ -289,5 +292,5 @@ public class TouchPointService implements TouchPointServiceLocal {
         
         
         return new RESTReponse(touchPoint.getId().toString());
-    }
+    }    
 }
