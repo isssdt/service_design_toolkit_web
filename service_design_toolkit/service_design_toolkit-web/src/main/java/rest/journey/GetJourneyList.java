@@ -29,7 +29,8 @@ import user.dto.SdtUserDTO;
  */
 @Path("get_journey_list_for_register")
 @RequestScoped
-public class GetJourneyList {
+public class GetJourneyList {    
+    
 
     @Context
     private UriInfo context;
@@ -66,10 +67,10 @@ public class GetJourneyList {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postJson(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {        
+    public Response postJson(SdtUserDTO sdtUserDTO) throws AppException, CustomReasonPhraseException {                
         return Response.status(200)
 				.entity(journeyService.findJourneyListForRegister(sdtUserDTO), new Annotation[0])
 				.header("Access-Control-Allow-Headers", "X-extra-header")
-				.allow("OPTIONS").build();   
+				.allow("OPTIONS").build();           
     }
 }

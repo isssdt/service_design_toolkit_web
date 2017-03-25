@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -34,6 +35,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @Path("photo_upload")
 @RequestScoped
 public class PhotoUpload {
+    @Resource(mappedName = "java:global/photoLocation")
+    private String photoLocation;    
 
     @Context
     private UriInfo context;
