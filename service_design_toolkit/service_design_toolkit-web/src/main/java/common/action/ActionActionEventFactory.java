@@ -5,6 +5,7 @@
  */
 package common.action;
 
+import auth.action.ACTION_BUTTON_ACTION_EVENT_CHANGE_PASSWORD_CHANGE;
 import auth.action.ACTION_BUTTON_ACTION_EVENT_LOGIN_LOGIN;
 import auth.action.ACTION_BUTTON_LOGIN_RESET_PASSWORD;
 import common.ScreenTitles;
@@ -22,6 +23,9 @@ public class ActionActionEventFactory implements ActionAbstractFactory {
         } 
         if (ScreenTitles.SCREEN_COMPONENT_BUTTON_LOGIN_RESET_PASSWORD_ID.equals(event.getComponent().getId())) {
             return new ACTION_BUTTON_LOGIN_RESET_PASSWORD();
+        }
+        if (ScreenTitles.SCREEN_COMPONENT_BUTTON_CHANGE_PASSWORD_CHANGE_ID.equals(event.getComponent().getId())) {
+            return new ACTION_BUTTON_ACTION_EVENT_CHANGE_PASSWORD_CHANGE();
         }
         return null;
     }
