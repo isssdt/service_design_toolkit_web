@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -52,6 +53,9 @@ public class UserService implements UserServiceLocal {
     
     @Inject
     private Event<SdtUserDTO> eventProducer;
+    
+    @Resource(mappedName = "java:global/username")
+    private String username; 
 
     @Override
     public RESTReponse refreshCurrentLocation(FieldResearcherDTO fieldResearcherDTO) {
@@ -160,9 +164,14 @@ public class UserService implements UserServiceLocal {
             return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
         }
 
+        //wrong username
+        if (!username.equals(sdtUserDTO.getUsername())) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
+        }
+
         //get SdtUser base on username and password
         Map<String, Object> params = new HashMap<>();
-        params.put("username", sdtUserDTO.getUsername());
+        params.put("username", ConstantValues.USER_RESEARCH_OWNER);
         params.put("password", sdtUserDTO.getPassword());
         SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params);
 
@@ -184,12 +193,12 @@ public class UserService implements UserServiceLocal {
 
         //get SdtUser base on username
         Map<String, Object> params = new HashMap<>();
-        params.put("username", sdtUserDTO.getUsername());
+        params.put("username", ConstantValues.USER_RESEARCH_OWNER);
         SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_FIND_BY_USERNAME, params);
 
-        //can not get SdtUser, this means incorrect username
-        if (null == sdtUser) {
-            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME);
+        //wrong username
+        if (!username.equals(sdtUserDTO.getUsername())) {
+            return new RESTReponse(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD);
         }
 
         //reset password        
@@ -220,7 +229,7 @@ public class UserService implements UserServiceLocal {
 
         //get SdtUser base on username and old password
         Map<String, Object> params = new HashMap<>();
-        params.put("username", sdtUserDTO.getUsername());
+        params.put("username", ConstantValues.USER_RESEARCH_OWNER);
         params.put("password", sdtUserDTO.getOldPassword());
         SdtUser sdtUser = factory.getSdtUserFacade().findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params);
 

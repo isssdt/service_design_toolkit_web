@@ -15,6 +15,8 @@ public class ConstantValues {
     
     public static final String SERVER_PHOTO_LOCATION_ID = "SERVER_PHOTO_LOCATION_ID";
     
+    public static final String USER_RESEARCH_OWNER = "USER_RESEARCH_OWNER";
+    
     
     /**
      * From Address for Reset Password Email

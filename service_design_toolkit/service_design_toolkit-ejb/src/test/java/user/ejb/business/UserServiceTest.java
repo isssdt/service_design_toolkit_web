@@ -13,7 +13,6 @@ import common.exception.CustomReasonPhraseException;
 import common.rest.dto.RESTReponse;
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.event.Event;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -39,7 +38,7 @@ public class UserServiceTest {
     SdtUserFacadeLocal sdtUserFacade;
     FieldResearcherFacadeLocal fieldResearcherFacade;
     EAOFactory factory;
-    
+    String username = "rock_mozart_ndlong@yahoo.com";
     
     public UserServiceTest() {
     }
@@ -58,12 +57,13 @@ public class UserServiceTest {
         factory = new EAOFactory();
         this.userRoleFacade = Mockito.mock(UserRoleFacadeLocal.class);
         this.sdtUserFacade = Mockito.mock(SdtUserFacadeLocal.class);
-        this.fieldResearcherFacade = Mockito.mock(FieldResearcherFacadeLocal.class);
+        this.fieldResearcherFacade = Mockito.mock(FieldResearcherFacadeLocal.class);        
         
         final EJBTestInjector injector = new EJBTestInjector();
         injector.assign(FieldResearcherFacadeLocal.class, fieldResearcherFacade);
         injector.assign(UserRoleFacadeLocal.class, userRoleFacade);
         injector.assign(SdtUserFacadeLocal.class, sdtUserFacade);
+        injector.assign(String.class, username);
         
         injector.inject(factory);        
         injector.assign(EAOFactory.class, factory);
@@ -97,11 +97,11 @@ public class UserServiceTest {
     @Test
     public void testAuthenticate() throws AppException, CustomReasonPhraseException {
         //create SDTUser
-        SdtUser sdtUser = new SdtUser("password", "username", null, null, null);
+        SdtUser sdtUser = new SdtUser("password", ConstantValues.USER_RESEARCH_OWNER, null, null, null);
         
         //mocking the authenticate query
         Map<String, Object> params = new HashMap<>();
-        params.put("username", "username");
+        params.put("username", ConstantValues.USER_RESEARCH_OWNER);
         params.put("password", "password");
         Mockito.when(sdtUserFacade.findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params)).thenReturn(sdtUser);
         
@@ -112,7 +112,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set username only
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         response = userService.authenticate(sdtUserDTO);
         //it should be failed
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
@@ -125,7 +125,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());   
         
         //set username and password
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword("password");
         response = userService.authenticate(sdtUserDTO);
         //it should be successful
@@ -165,11 +165,11 @@ public class UserServiceTest {
     @Test
     public void testChangePassword() throws AppException, CustomReasonPhraseException {
         //create SDTUser
-        SdtUser sdtUser = new SdtUser("oldpassword", "username", null, null, null);
+        SdtUser sdtUser = new SdtUser("oldpassword", ConstantValues.USER_RESEARCH_OWNER, null, null, null);
         
         //mocking the authenticate query
         Map<String, Object> params = new HashMap<>();
-        params.put("username", "username");   
+        params.put("username", ConstantValues.USER_RESEARCH_OWNER);   
         params.put("password", "oldpassword");
         Mockito.when(sdtUserFacade.findSingleByQueryName(ConstantValues.SDT_USER_QUERY_AUTHENTICATE, params)).thenReturn(sdtUser);
         
@@ -180,7 +180,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set username only
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword(null);
         sdtUserDTO.setOldPassword(null);
         response = userService.changePassword(sdtUserDTO);
@@ -204,7 +204,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set username and password only
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword("newpassword");
         sdtUserDTO.setOldPassword(null);       
         response = userService.changePassword(sdtUserDTO);
@@ -212,7 +212,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set username and password only
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword("newpassword");
         sdtUserDTO.setOldPassword(null);       
         response = userService.changePassword(sdtUserDTO);
@@ -220,7 +220,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set username and old password only
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword(null);
         sdtUserDTO.setOldPassword("oldpassword");       
         response = userService.changePassword(sdtUserDTO);
@@ -236,7 +236,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_INCORRECT_USERNAME_OR_PASSWORD, response.getMessage());
         
         //set old password and new password the same
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword("oldpassword");
         sdtUserDTO.setOldPassword("oldpassword");       
         response = userService.changePassword(sdtUserDTO);
@@ -244,7 +244,7 @@ public class UserServiceTest {
         Assert.assertEquals(ConstantValues.SDT_USER_ERROR_NEW_OLD_PASSWORD_SAME, response.getMessage());
         
         //set everything correctly
-        sdtUserDTO.setUsername("username");
+        sdtUserDTO.setUsername("rock_mozart_ndlong@yahoo.com");
         sdtUserDTO.setPassword("newpassword");
         sdtUserDTO.setOldPassword("oldpassword");       
         response = userService.changePassword(sdtUserDTO);
