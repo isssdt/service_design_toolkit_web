@@ -26,6 +26,7 @@ public class ACTION_BUTTON_ADD_TOUCH_POINT_ADD implements ActionHandler {
         options.put("draggable", true);
         options.put("modal", true);
         options.put("resizable", false);
+        options.put("top", 100);
         RequestContext.getCurrentInstance().openDialog(ConstantValues.DIALOG_LOCATION_CREATE_TOUCH_POINT, options, null);
     }
 }

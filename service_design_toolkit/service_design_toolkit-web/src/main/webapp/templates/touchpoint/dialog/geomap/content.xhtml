@@ -7,7 +7,7 @@
         <p:importConstants type="common.ScreenTitles" var="ScreenTitles"/>
         <p:importConstants type="common.constant.ConstantValues" var="ConstantValues"/>
         <p:messages id="#{ScreenTitles.SCREEN_COMPONENT_MESSAGES_ID}" showDetail="false" autoUpdate="true" closable="true" />
-        <h:panelGrid columns="4" cellpadding="6">                                
+        <h:panelGrid columns="3" cellpadding="6">                                
             <p:inputText id="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_ID}" 
                          onfocus="initAutocomplete()" style="width:630px" required="true" value="#{touchpoint_ejb_view_GeoMapView.touchPointDTO.channelDescription}"
                          requiredMessage="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_ADDRESS_MESSAGE}"
@@ -19,11 +19,12 @@
                            placeholder="#{ScreenTitles.SCREEN_COMPONENT_TEXT_FIELD_TOUCH_POINT_LOCATION_RADIUS}" 
                            minValue="0" symbol=" meters" symbolPosition="s"> 
             </p:inputNumber>
-            <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}"  
+        </h:panelGrid>
+        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE}"  
                              id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_LOCATE_ID}"
-                             actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" ajax="true">
-            </p:commandButton>
-        </h:panelGrid>        
+                             actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" 
+                             ajax="true" style=" margin-top: 5px; margin-bottom: 5px">
+        </p:commandButton>
         <p:gmap id="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}" 
                 widgetVar="#{ScreenTitles.SCREEN_COMPONENT_GMAP_TOUCH_POINT_LOCATION_ID}"  
                 center="#{touchpoint_ejb_view_GeoMapView.centerGeoMap}" zoom="#{ConstantValues.CONSTANT_GEO_MAP_ZOOM_LEVEL}" 
@@ -32,7 +33,7 @@
             <p:ajax event="geocode" listener="#{touchpoint_ejb_view_GeoMapView.onGeoCode}" update="@this" />
             <p:ajax event="pointSelect" listener="#{touchpoint_ejb_view_GeoMapView.onPointSelect}" update="@form"/>
         </p:gmap>
-        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="font-family: Lucida Grande"  
+        <p:commandButton value="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET}" style="margin-top: 10px"  
                          id="#{ScreenTitles.SCREEN_COMPONENT_BUTTON_TOUCH_POINT_LOCATION_SET_ID}"
                          actionListener="#{touchpoint_ejb_view_GeoMapView.actionListener}" ajax="false">
         </p:commandButton>

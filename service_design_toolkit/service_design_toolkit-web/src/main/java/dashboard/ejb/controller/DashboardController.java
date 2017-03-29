@@ -79,6 +79,7 @@ public class DashboardController implements Serializable {
     
     public static final String OS_NAME = System.getProperty("os.name").toLowerCase();
 
+
     /**
      * Creates a new instance of DashboardController
      */
@@ -376,13 +377,6 @@ public class DashboardController implements Serializable {
         ChartSeries cs;
         double b1=0;
         TouchPointFieldResearcherListDTO touchPointFieldResearcherDTOList = journeyService.getTouchPointFiedlResearcherListOfJourney(journeyDTO);
-        for (int i=1;i<touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().size();i++){
-            System.out.println("inside check" +touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(i).getTouchpointDTO().getTouchPointDesc());
-            System.out.println("inside check" +touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(i).getDuration());
-            System.out.println("inside check" +touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(i).getConvertedToExepectedDuration()); 
-            System.out.println("inside check" +touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(i).getFieldResearcherDTO().getSdtUserDTO().getUsername());          
-            
-        }
         for (int i = 0; i<tplist.size(); i++){
             cs = new ChartSeries();
             tgdia = new HorizontalBarChartModel();
@@ -393,10 +387,10 @@ public class DashboardController implements Serializable {
             for (int j=0; j<touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().size(); j++){
                 if (touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getTouchpointDTO().getTouchPointDesc().equals(tplist.get(i).getTouchPointDesc())){   
                     cs.set(touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getFieldResearcherDTO().getSdtUserDTO().getUsername()
-                            ,touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getConvertedToExepectedDuration());
+                            ,touchPointFieldResearcherDTOList.getTouchPointFieldResearcherDTOList().get(j).getConvertedToExepectedDuration());    
                 }
             }            
-            tgdia.setShowDatatip(true);
+            tgdia.setShowDatatip(false);
             tgdia.getAxis(AxisType.X).setLabel(tplist.get(i).getMasterDataDTO().getDataValue());
             tgdia.setMouseoverHighlight(true);
             tgdia.addSeries(cs);
