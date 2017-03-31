@@ -46,8 +46,6 @@ sudo useradd --system --shell /bin/false wildfly
 sudo mkdir -p /var/log/wildfly
 sudo chown -R wildfly:wildfly /opt/wildfly-9.0.1.Final/
 sudo chown -R wildfly:wildfly /var/log/wildfly
-#this command is used to grant permission on wildfly to save photos
-#sudo chown -R wildfly:wildfly /pathToPhots
 
 # Tunning
 sudo sed -i 's|   JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"|   JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:NewRatio=2 -XX:PermSize=64m -Djava.net.preferIPv4Stack=true"|g' /opt/wildfly-9.0.1.Final/bin/standalone.conf
@@ -56,3 +54,17 @@ sudo update-rc.d wildfly9 defaults
 sudo update-rc.d wildfly9 enable
 
 sudo service wildfly9 status
+
+cd /opt/wildfly-9.0.1.Final/modules/system/layers/base/com
+sudo mkdir sql
+cd /opt/wildfly-9.0.1.Final/modules/system/layers/base/com/sql
+sudo mkdir mysql
+cd /opt/wildfly-9.0.1.Final/modules/system/layers/base/com/sql/mysql
+sudo mkdir main
+
+cd /home
+sudo mkdir service_design_toolkit
+cd /home/service_design_toolkit
+sudo mkdir photos
+#this command is used to grant permission on wildfly to save photos
+sudo chown -R wildfly:wildfly /home/service_design_toolkit/photos

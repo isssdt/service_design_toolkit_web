@@ -86,7 +86,7 @@ public class PhotoUpload {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
 
                 //constructs upload file path
-                fileName = "/home/ubuntu/sdt_photos/" + fileName;
+                fileName = photoLocation + fileName;
 
                 writeFile(bytes, fileName);               
 
