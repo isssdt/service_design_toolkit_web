@@ -139,18 +139,18 @@ public class JourneyService implements JourneyServiceLocal {
             throw Utils.throwAppException(message, JourneyService.class.getName(),
                     Response.Status.NOT_FOUND.getStatusCode());
         }
+        
+        if (journey.getJourneyFieldResearcherList().size() + 1 == journey.getNoOfFieldResearcher()) {
+            journey.setCanBeRegistered('N');
+            factory.getJourneyFacade().edit(journey);
+        }
 
         journeyFieldResearcher = new JourneyFieldResearcher();
         journeyFieldResearcher.setJourneyId(journey);
         journeyFieldResearcher.setFieldResearcherId(sdtUser.getFieldResearcher());
         journeyFieldResearcher.setStatus(ConstantValues.JOURNEY_FIELD_RESEARCHER_STATUS_IN_PROGRESS);
 
-        factory.getJourneyFieldResearcherFacade().create(journeyFieldResearcher);
-
-        if (journey.getJourneyFieldResearcherList().size() + 1 == journey.getNoOfFieldResearcher()) {
-            journey.setCanBeRegistered('N');
-            factory.getJourneyFacade().edit(journey);
-        }
+        factory.getJourneyFieldResearcherFacade().create(journeyFieldResearcher);        
 
         for (TouchPoint touchPoint : journey.getTouchPointList()) {
             if (null != touchPoint.getSubSeqNo()) {
